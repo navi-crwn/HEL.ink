@@ -8,6 +8,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use App\Services\LoginRecorder;
 use App\Services\TurnstileService;
+use App\Support\AfterLogin;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,7 +50,7 @@ class AuthenticatedSessionController extends Controller
             }
         }
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended(AfterLogin::home($request->user()));
     }
 
     public function destroy(Request $request): RedirectResponse

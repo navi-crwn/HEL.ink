@@ -28,6 +28,21 @@ return [
     // The shared HMAC secret for SSO tickets. Per-app overrides: HOP_SSO_SECRET_LINKHOP, …
     'sso_secret' => env('HOP_SSO_SECRET'),
 
+    // Imperium, the admin control panel. Admins who sign in at the hub land there
+    // (the hub dashboard stays one click away). citadel.hel.ink works from anywhere
+    // through Cloudflare Access; imperium.hel.ink only over Tailscale.
+    'control_url' => rtrim((string) env('HOP_CONTROL_URL', ''), '/'),
+
+    // Apps from the HOP ID registry table (`apps`), which has no column for these.
+    'registry_taglines' => [
+        'notehop' => 'Encrypted notes you share with a link.',
+    ],
+    'registry_repos' => [
+        'notehop' => 'https://github.com/navi-crwn/NoteHop',
+    ],
+    'registry_health' => [],   // default /healthz
+    'registry_logout' => [],   // slug => path that signs the visitor out, e.g. '/auth/sso/logout'
+
     // Seconds a sign-in ticket for an app stays valid.
     'ticket_ttl' => 120,
 
@@ -82,6 +97,22 @@ return [
             'color' => 'sky',
             'repo' => null,
             'enabled' => (bool) env('PIXELHOP_ENABLED', true),
+        ],
+        'notehop' => [
+            'name' => 'NoteHop',
+            'tagline' => 'Encrypted notes you share with a link.',
+            'url' => env('NOTEHOP_URL', 'https://note.hel.ink'),
+            // Signs in with its own secret and callback from the HOP ID registry (`apps`).
+            'registry' => true,
+            'public_prefix' => null,
+            'logout' => env('NOTEHOP_LOGOUT_PATH'),
+            'export' => null,
+            'health' => env('NOTEHOP_HEALTH_PATH', '/healthz'),
+            'check' => env('NOTEHOP_CHECK_URL'),
+            'icon' => 'note',
+            'color' => 'emerald',
+            'repo' => 'https://github.com/navi-crwn/NoteHop',
+            'enabled' => (bool) env('NOTEHOP_ENABLED', true),
         ],
     ],
 

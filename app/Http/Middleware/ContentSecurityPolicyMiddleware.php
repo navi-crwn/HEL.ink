@@ -28,7 +28,8 @@ class ContentSecurityPolicyMiddleware
             "base-uri 'self'",
             // Signing in from an app ends in a redirect to the app after the
             // form post; form-action applies to that redirect too.
-            trim("form-action 'self' ".implode(' ', HopApps::origins())),
+            // The logout chain ends on the public home page (hel.ink), so that host is allowed too.
+            trim("form-action 'self' ".implode(' ', array_unique(array_filter([...HopApps::origins(), self::origin((string) config('hop.public_url'))])))),
             "frame-ancestors 'none'",
             'upgrade-insecure-requests',
         ];
@@ -45,5 +46,12 @@ class ContentSecurityPolicyMiddleware
         $response->headers->set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
 
         return $response;
+    }
+
+    private static function origin(string $url): ?string
+    {
+        $p = parse_url($url);
+
+        return ! empty($p['scheme']) && ! empty($p['host']) ? $p['scheme'].'://'.$p['host'].(isset($p['port']) ? ':'.$p['port'] : '') : null;
     }
 }

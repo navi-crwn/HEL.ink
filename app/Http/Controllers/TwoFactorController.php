@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\AfterLogin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use PragmaRX\Google2FA\Google2FA;
@@ -113,7 +114,7 @@ class TwoFactorController extends Controller
         if ($valid) {
             $request->session()->put('2fa_verified', true);
 
-            return redirect()->intended(route('dashboard'));
+            return redirect()->intended(AfterLogin::home($request->user()));
         }
 
         return back()->withErrors(['code' => 'The provided code is invalid.']);

@@ -150,4 +150,11 @@ class SsoIssuerTest extends TestCase
         $res->assertRedirect('https://link.example.com/auth/sso/logout?next='.rawurlencode(route('home')));
         $this->assertGuest();
     }
+
+    public function test_form_action_allows_the_public_home_page_where_the_logout_chain_ends(): void
+    {
+        config()->set('hop.public_url', 'https://hel.example.com');
+        $csp = (string) $this->get('/login')->headers->get('Content-Security-Policy');
+        $this->assertMatchesRegularExpression('#form-action [^;]*https://hel\\.example\\.com#', $csp);
+    }
 }

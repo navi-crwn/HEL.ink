@@ -1,0 +1,24 @@
+{
+    "name": "hop/safety",
+    "description": "HOP shared package: safety.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.3",
+        "illuminate/support": "^12.0",
+        "symfony/html-sanitizer": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Hop\\Safety\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Hop\\Safety\\SafetyServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable"
+}

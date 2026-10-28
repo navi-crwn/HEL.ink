@@ -7,6 +7,7 @@ use App\Mail\WelcomeEmail;
 use App\Models\User;
 use App\Services\LoginRecorder;
 use App\Services\NotificationService;
+use App\Support\AfterLogin;
 use App\Support\Username;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -78,7 +79,7 @@ class GoogleAuthController extends Controller
                 Auth::login($user, true);
                 app(LoginRecorder::class)->record($user, request()->ip(), request()->userAgent(), 'google');
 
-                return redirect()->intended('dashboard')->with('success', 'Welcome back, '.$user->name.'!');
+                return redirect()->intended(AfterLogin::home($user))->with('success', 'Welcome back, '.$user->name.'!');
             } else {
                 $user = User::create([
                     'name' => $googleUser->name,

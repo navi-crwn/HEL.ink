@@ -13,6 +13,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SsoController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TwoFactorController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -116,6 +117,10 @@ Route::domain(config('hop.public_host'))->group(function () {
     if (config('hop.public_host') !== config('hop.hub_host')) {
         // Accounts live on the hub host.
         Route::get('/login', fn () => redirect()->to(hub_url('login')));
+        // Before the split, apps (Imperium, NoteHop, …) started sign-in at hel.ink/sso/{app}; it is the hub's now.
+        Route::get('/sso/{path}', fn (Request $request, string $path) => redirect()->away(
+            hub_url('sso/'.$path).($request->getQueryString() ? '?'.$request->getQueryString() : '')
+        ))->where('path', '[a-z0-9-]{1,32}(/google)?');
         Route::get('/register', fn () => redirect()->to(hub_url('register')));
         Route::get('/dashboard', fn () => redirect()->to(hub_url('dashboard')));
     }

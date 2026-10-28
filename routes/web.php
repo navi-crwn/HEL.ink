@@ -54,9 +54,12 @@ $marketing = function () {
 };
 
 // ---------------------------------------------------------------- hub.hel.ink
-Route::domain(config('hop.hub_host'))->group(function () use ($brand, $marketing) {
-    $brand();
-    $marketing();
+// Brand assets and marketing pages answer on both hosts under one route name each,
+// so they are registered once, without a domain (route:cache refuses duplicate names).
+$brand();
+$marketing();
+
+Route::domain(config('hop.hub_host'))->group(function () use ($marketing) {
     Route::get('/', fn () => auth()->check() ? redirect()->route('dashboard') : redirect()->route('login'))->name('hub.home');
     Route::get('/onboarding', fn () => view('auth.onboarding'))->name('onboarding');
     Route::post('/onboarding/skip', fn () => redirect()->route('dashboard'))->name('onboarding.skip');
@@ -108,11 +111,9 @@ Route::domain(config('hop.hub_host'))->group(function () use ($brand, $marketing
 });
 
 // ---------------------------------------------------------------- hel.ink
-Route::domain(config('hop.public_host'))->group(function () use ($brand, $marketing) {
+Route::domain(config('hop.public_host'))->group(function () {
     Route::get('/', HomeController::class)->name('home');
     if (config('hop.public_host') !== config('hop.hub_host')) {
-        $brand();
-        $marketing();
         // Accounts live on the hub host.
         Route::get('/login', fn () => redirect()->to(hub_url('login')));
         Route::get('/register', fn () => redirect()->to(hub_url('register')));

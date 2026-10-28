@@ -1,0 +1,23 @@
+{
+    "name": "hop/auth",
+    "description": "HOP shared package: auth.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.3",
+        "illuminate/support": "^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Hop\\Auth\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Hop\\Auth\\AuthServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable"
+}

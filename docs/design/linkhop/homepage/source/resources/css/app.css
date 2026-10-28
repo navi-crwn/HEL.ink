@@ -1,0 +1,330 @@
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/forms';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+    --font-sans: Inter, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/*
+| Tailwind 4 with the v3 look. Two v3 defaults are put back: borders were gray-200 (now
+| currentcolor) and buttons had a pointer cursor. The component classes stay plain CSS in
+| the components layer, so they keep their v3 order: a later class (.btn-primary) still
+| wins over an earlier one (.btn-sm). Classes used with variants (hover:text-ink) are @utility.
+*/
+@layer base {
+    *, ::after, ::before, ::backdrop, ::file-selector-button { border-color: var(--color-gray-200, currentcolor); }
+    button:not(:disabled), [role='button']:not(:disabled) { cursor: pointer; }
+}
+
+@utility text-ink { color: rgb(var(--ink)); }
+@utility text-muted { color: rgb(var(--muted)); }
+
+/*
+|--------------------------------------------------------------------------
+| HEL.ink design system — glass UI
+|--------------------------------------------------------------------------
+| Translucent surfaces over a soft gradient backdrop, in light and dark.
+| Use the component classes below for new markup; the "skin" section at the
+| bottom converts legacy card markup inside the app shell automatically.
+*/
+
+@layer base {
+    :root {
+        --bg: 241 245 249;            /* slate-100 */
+        --glass: 255 255 255;
+        --glass-alpha: 0.62;
+        --glass-border: 255 255 255;
+        --glass-border-alpha: 0.7;
+        --ink: 15 23 42;              /* slate-900 */
+        --muted: 100 116 139;         /* slate-500 */
+        --accent: 99 102 241;         /* indigo-500 */
+        --accent-2: 139 92 246;       /* violet-500 */
+        --shadow: 15 23 42;
+    }
+    .dark {
+        --bg: 8 11 24;
+        --glass: 22 27 48;
+        --glass-alpha: 0.55;
+        --glass-border: 255 255 255;
+        --glass-border-alpha: 0.08;
+        --ink: 241 245 249;
+        --muted: 148 163 184;
+        --shadow: 0 0 0;
+    }
+
+    html { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
+    h1, h2, h3 { text-wrap: balance; }
+    body { @apply font-sans antialiased; color: rgb(var(--ink)); }
+
+    /* Soft gradient backdrop that the glass surfaces blur. */
+    .app-bg {
+        background-color: rgb(var(--bg));
+        background-image:
+            radial-gradient(40rem 28rem at 8% -6%, rgb(129 140 248 / 0.18), transparent 60%),
+            radial-gradient(36rem 26rem at 100% 0%, rgb(125 211 252 / 0.14), transparent 60%),
+            radial-gradient(42rem 30rem at 85% 105%, rgb(148 163 184 / 0.16), transparent 60%);
+        background-attachment: fixed;
+    }
+    .dark .app-bg {
+        background-image:
+            radial-gradient(40rem 28rem at 8% -6%, rgb(99 102 241 / 0.18), transparent 60%),
+            radial-gradient(36rem 26rem at 100% 0%, rgb(14 165 233 / 0.10), transparent 60%),
+            radial-gradient(42rem 30rem at 85% 105%, rgb(71 85 105 / 0.18), transparent 60%);
+    }
+
+    ::selection { background: rgb(var(--accent) / 0.25); }
+    * { scrollbar-width: thin; scrollbar-color: rgb(var(--muted) / 0.35) transparent; }
+}
+
+@layer components {
+    /* Surfaces */
+    .glass, .glass-card, .glass-strong, .btn-soft, .stat {
+        background-color: rgb(var(--glass) / var(--glass-alpha));
+        border: 1px solid rgb(var(--glass-border) / var(--glass-border-alpha));
+        box-shadow: 0 1px 0 rgb(255 255 255 / 0.35) inset, 0 8px 32px -12px rgb(var(--shadow) / 0.18);
+        -webkit-backdrop-filter: blur(18px) saturate(160%);
+        backdrop-filter: blur(18px) saturate(160%);
+    }
+    .dark :is(.glass, .glass-card, .glass-strong, .btn-soft, .stat) { box-shadow: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 8px 32px -12px rgb(0 0 0 / 0.6); }
+    .glass-card { @apply rounded-2xl p-4 sm:p-5; }
+    .glass-strong { background-color: rgb(var(--glass) / 0.85); }
+    .glass-inset {
+        background-color: rgb(var(--glass) / 0.45);
+        border: 1px solid rgb(var(--glass-border) / calc(var(--glass-border-alpha) * 0.8));
+        @apply rounded-xl;
+    }
+
+    /* Typography helpers */
+    .eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.14em]; color: rgb(var(--muted)); }
+    .page-title { @apply text-xl font-semibold tracking-tight sm:text-2xl; color: rgb(var(--ink)); }
+    .section-title { @apply text-sm font-semibold; color: rgb(var(--ink)); }
+
+    /* Buttons */
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl px-4 py-2 text-sm font-semibold
+               transition duration-150 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400/60
+               disabled:cursor-not-allowed disabled:opacity-50;
+    }
+    .btn-sm { @apply rounded-lg px-3 py-1.5 text-xs; }
+    /* The variants below include .btn after .btn-sm, as applying .btn did with Tailwind 3,
+       so .btn-sm does not shrink them. */
+    .btn-primary, .btn-ghost, .btn-soft, .btn-danger {
+        @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl px-4 py-2 text-sm font-semibold
+               transition duration-150 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400/60
+               disabled:cursor-not-allowed disabled:opacity-50;
+    }
+    /* Neutral solid primary (ink on light, white on dark); the accent is kept for links/active states. */
+    .btn-primary {
+        @apply bg-slate-900 text-white shadow-xs hover:bg-slate-800 active:scale-[0.98]
+               dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100;
+    }
+    .btn-ghost { @apply hover:bg-slate-900/5 dark:hover:bg-white/10; color: rgb(var(--ink)); }
+    .btn-soft { color: rgb(var(--ink)); }
+    .btn-soft:hover { background-color: rgb(var(--glass) / 0.9); }
+    .btn-danger { @apply bg-rose-500/90 text-white hover:bg-rose-500; }
+    .icon-btn {
+        @apply inline-flex h-9 w-9 items-center justify-center rounded-xl transition hover:bg-slate-900/5 dark:hover:bg-white/10;
+        color: rgb(var(--muted));
+    }
+    .icon-btn:hover { color: rgb(var(--ink)); }
+
+    /* Form controls */
+    .input {
+        @apply block w-full rounded-xl border px-3.5 py-2.5 text-sm shadow-none outline-hidden transition
+               placeholder:text-slate-400 focus:ring-2 focus:ring-indigo-400/40;
+        color: rgb(var(--ink));
+        background-color: rgb(var(--glass) / 0.6);
+        border-color: rgb(var(--muted) / 0.25);
+    }
+    .input:focus { border-color: rgb(var(--accent) / 0.6); }
+    /* Keep room for the select chevron that @tailwindcss/forms draws. */
+    select.input { padding-right: 2.25rem; }
+    .label { @apply mb-1.5 block text-xs font-medium; color: rgb(var(--muted)); }
+
+    /* Chips / badges */
+    .chip, .chip-green, .chip-gray, .chip-red, .chip-blue, .chip-amber { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold; }
+    .chip-green { @apply bg-emerald-500/15 text-emerald-700 dark:text-emerald-300; }
+    .chip-gray { @apply bg-slate-500/15 text-slate-600 dark:text-slate-300; }
+    .chip-red { @apply bg-rose-500/15 text-rose-700 dark:text-rose-300; }
+    .chip-blue { @apply bg-indigo-500/15 text-indigo-700 dark:text-indigo-300; }
+    .chip-amber { @apply bg-amber-500/15 text-amber-700 dark:text-amber-300; }
+
+    /* Navigation */
+    .nav-item {
+        @apply flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition;
+        color: rgb(var(--muted));
+    }
+    .nav-item:hover { color: rgb(var(--ink)); background-color: rgb(var(--glass) / 0.6); }
+    .nav-item-active {
+        color: rgb(var(--ink));
+        background-color: rgb(var(--glass) / 0.9);
+        box-shadow: 0 4px 14px -8px rgb(var(--shadow) / 0.35), inset 0 0 0 1px rgb(var(--glass-border) / var(--glass-border-alpha));
+    }
+    .nav-item-active svg { color: rgb(var(--accent)); }
+    .nav-sub { @apply block rounded-lg px-3 py-1.5 text-[13px] transition; color: rgb(var(--muted)); }
+    .nav-sub:hover, .nav-sub-active { color: rgb(var(--ink)); }
+    .nav-sub-active { @apply font-semibold; }
+
+    /* Compact metric tiles */
+    .stat { @apply rounded-2xl px-4 py-3; }
+    .stat-label { @apply text-[11px] font-medium uppercase tracking-wider; color: rgb(var(--muted)); }
+    .stat-value { @apply mt-0.5 text-xl font-semibold tabular-nums tracking-tight sm:text-2xl; color: rgb(var(--ink)); }
+
+    /* Lists & tables */
+    .list-row { @apply flex items-center gap-3 px-4 py-3 transition; }
+    .list-row:hover { background-color: rgb(var(--glass) / 0.5); }
+    .divide-glass > * + * { border-top: 1px solid rgb(var(--muted) / 0.14); }
+    .table-glass { @apply min-w-full text-sm; }
+    .table-glass thead th { @apply px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-wider; color: rgb(var(--muted)); }
+    .table-glass tbody tr { border-top: 1px solid rgb(var(--muted) / 0.14); }
+    .table-glass tbody td { @apply px-4 py-3; }
+    .table-glass tbody tr:hover { background-color: rgb(var(--glass) / 0.45); }
+
+    .progress { @apply h-1.5 overflow-hidden rounded-full bg-slate-900/10 dark:bg-white/10; }
+    .progress > span { @apply block h-full rounded-full; }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Legacy skin
+|--------------------------------------------------------------------------
+| Older pages build cards from utilities (bg-white + rounded-* + border).
+| Inside the app shell, render those as glass so every page matches without
+| rewriting each one. New markup should use .glass / .glass-card directly.
+*/
+.app-shell :is(.rounded-xl, .rounded-2xl, .rounded-3xl):is(.bg-white, .bg-slate-50, .bg-gray-50):not(.no-skin, input, select, textarea, button) {
+    background-color: rgb(var(--glass) / var(--glass-alpha)) !important;
+    border-color: rgb(var(--glass-border) / var(--glass-border-alpha)) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(16px) saturate(150%);
+}
+.dark .app-shell :is(.rounded-xl, .rounded-2xl, .rounded-3xl):is(.dark\:bg-slate-900, .dark\:bg-gray-900, .dark\:bg-slate-800, .dark\:bg-gray-800, .dark\:bg-slate-900\/50, .dark\:bg-slate-800\/50):not(.no-skin, input, select, textarea, button) {
+    background-color: rgb(var(--glass) / var(--glass-alpha)) !important;
+    border-color: rgb(var(--glass-border) / var(--glass-border-alpha)) !important;
+}
+.app-shell :is(input[type=text], input[type=email], input[type=url], input[type=password], input[type=search], input[type=number], input[type=date], input[type=datetime-local], select, textarea):not(.no-skin):is(.bg-white, .dark\:bg-slate-800, .dark\:bg-gray-800, .dark\:bg-slate-900) {
+    background-color: rgb(var(--glass) / 0.6) !important;
+}
+
+/* Legacy selects set px-* utilities that would hide the chevron under the text. */
+.app-shell select:not([multiple]) { padding-right: 2.25rem; }
+
+[x-cloak] { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Auth pages: map Breeze's gray utilities onto the theme tokens. */
+.auth-card :is(.text-gray-600, .text-gray-700, .text-gray-500, .dark\:text-gray-400, .dark\:text-gray-300) { color: rgb(var(--muted)); }
+.auth-card :is(.text-gray-900, .dark\:text-gray-100, .dark\:text-white) { color: rgb(var(--ink)); }
+.auth-card :is(.bg-white, .dark\:bg-gray-800, .dark\:bg-gray-900):not(input) { background-color: rgb(var(--glass) / 0.6) !important; }
+.auth-card .relative > .relative > span[class*="px-"] { background-color: rgb(var(--glass)) !important; border-radius: 9999px; }
+.auth-card :is(.rounded-md) { border-radius: 0.75rem; }
+.auth-card :is(.border-gray-300, .dark\:border-gray-600, .dark\:border-gray-700) { border-color: rgb(var(--muted) / 0.25) !important; }
+.auth-card input[type=checkbox] { @apply rounded-sm border-slate-400/50 text-indigo-500; }
+.auth-card input[type=checkbox]:not(:checked) { @apply bg-transparent; }
+.auth-card input[type=checkbox]:checked { background-color: rgb(99 102 241) !important; border-color: rgb(99 102 241) !important; }
+
+/* Legacy solid blue buttons follow the neutral primary style. */
+.app-shell :is(button, a, input[type=submit]):is(.bg-blue-600, .bg-indigo-600):not(.no-skin) {
+    background-color: rgb(15 23 42) !important; color: #fff !important; box-shadow: none !important;
+}
+.dark .app-shell :is(button, a, input[type=submit]):is(.bg-blue-600, .bg-indigo-600):not(.no-skin) {
+    background-color: #fff !important; color: rgb(15 23 42) !important;
+}
+
+/*
+| space-x-* / space-y-* keep their Tailwind 3 rule: every visible child after the first gets
+| the gap as a top/left margin. Tailwind 4 puts it at the bottom/right of every child but
+| the last instead, which drops the gap after the hidden @csrf inputs at the top of a form.
+| The unlayered rules switch the v4 margins off; the utilities add the v3 ones.
+*/
+:where([class*='space-y-']) > :not(:last-child) { margin-block-end: 0; }
+:where([class*='space-x-']) > :not(:last-child) { margin-inline-end: 0; }
+
+@utility space-y-* {
+    & > :not([hidden]) ~ :not([hidden]) {
+        margin-top: calc(var(--spacing) * --value(number));
+        margin-bottom: 0;
+    }
+}
+
+@utility space-x-* {
+    & > :not([hidden]) ~ :not([hidden]) {
+        margin-left: calc(var(--spacing) * --value(number));
+        margin-right: 0;
+    }
+}
+
+/*
+| Floating HOP tiles (auth pages). The layer sits under the card; each sprite is moved
+| by hop-float.js with translate3d, the tile inside tumbles slowly for a 3D feel and
+| its colours come from the hop-theme-N class, swapped on every bounce.
+*/
+.hop-float {
+    position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
+    perspective: 900px; opacity: 0; transition: opacity 1.2s ease;
+}
+.hop-float.is-ready { opacity: 1; }
+.hop-sprite {
+    position: absolute; top: 0; left: 0; width: clamp(52px, 9vw, 84px); aspect-ratio: 1;
+    will-change: transform; transform-style: preserve-3d;
+}
+.hop-tile {
+    position: relative; width: 100%; height: 100%; transform-style: preserve-3d;
+    animation: hop-tumble 11s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -1.9s);
+}
+.hop-face {
+    position: absolute; inset: 0; display: grid; place-items: center; border-radius: 22%;
+    background: linear-gradient(135deg, var(--hop-a), var(--hop-b) 55%, var(--hop-c));
+    /* Thickness that follows the rounded shape: a hard dark lip under the face, then a soft tinted glow. */
+    box-shadow: 0 5px 0 0 rgb(0 0 0 / 0.22), 0 18px 40px -14px rgb(var(--hop-shadow) / 0.55), inset 0 1px 0 rgb(255 255 255 / 0.5);
+    transition: background 0.6s ease, box-shadow 0.6s ease;
+}
+.hop-face::before { /* glass highlight */
+    content: ""; position: absolute; inset: 0; border-radius: inherit;
+    background: radial-gradient(120% 90% at 20% 0%, rgb(255 255 255 / 0.55), transparent 55%);
+}
+.hop-face > img, .hop-face > svg { width: 58%; height: 58%; position: relative; filter: drop-shadow(0 2px 2px rgb(0 0 0 / 0.25)); }
+.hop-sprite.is-bounce .hop-tile { animation: hop-tumble 11s ease-in-out infinite, hop-squash 0.45s ease-out; animation-delay: calc(var(--i, 0) * -1.9s), 0s; }
+@keyframes hop-tumble {
+    0%   { transform: rotateX(10deg) rotateY(-14deg); }
+    50%  { transform: rotateX(-12deg) rotateY(16deg); }
+    100% { transform: rotateX(10deg) rotateY(-14deg); }
+}
+@keyframes hop-squash {
+    0% { scale: 1; } 35% { scale: 1.12 0.9; } 70% { scale: 0.95 1.06; } 100% { scale: 1; }
+}
+/* Six multi-colour themes; never one flat colour. */
+.hop-theme-0 { --hop-a: #fb923c; --hop-b: #ec4899; --hop-c: #7c3aed; --hop-shadow: 236 72 153; }
+.hop-theme-1 { --hop-a: #22d3ee; --hop-b: #3b82f6; --hop-c: #8b5cf6; --hop-shadow: 59 130 246; }
+.hop-theme-2 { --hop-a: #a3e635; --hop-b: #22d3ee; --hop-c: #8b5cf6; --hop-shadow: 34 211 238; }
+.hop-theme-3 { --hop-a: #fbbf24; --hop-b: #f43f5e; --hop-c: #6d28d9; --hop-shadow: 244 63 94; }
+.hop-theme-4 { --hop-a: #34d399; --hop-b: #06b6d4; --hop-c: #2563eb; --hop-shadow: 6 182 212; }
+.hop-theme-5 { --hop-a: #f472b6; --hop-b: #fb7185; --hop-c: #f59e0b; --hop-shadow: 251 113 133; }
+.dark .hop-face { box-shadow: 0 5px 0 0 rgb(0 0 0 / 0.35), 0 18px 40px -14px rgb(var(--hop-shadow) / 0.7), inset 0 1px 0 rgb(255 255 255 / 0.35); }
+@media (max-width: 640px) {
+    .hop-float { opacity: 0; } .hop-float.is-ready { opacity: 0.85; }
+    .hop-sprite:nth-child(n+5) { display: none; } /* four tiles are plenty on a phone */
+}
+@media (prefers-reduced-motion: reduce) {
+    .hop-tile { animation: none; transform: rotateX(8deg) rotateY(-10deg); }
+}
+
+/* Home hero: the italic serif accent word, as on the other Hop sites */
+.hop-serif {
+    font-family: 'Instrument Serif', ui-serif, Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+}
+
+/* Home hero hop scene (resources/js/hop-hero.js) */
+.hop-pill[aria-pressed="true"] { color: #fff; border-color: transparent; background-image: linear-gradient(90deg, #6366f1, #0ea5e9, #d946ef); }

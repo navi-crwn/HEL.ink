@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LinkHop map mockup</title>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js"}}</script>
+<style>
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:#f6f7fb;color:#0e1018}
+.wrap{max-width:1000px;margin:0 auto;padding:20px 16px}
+#scene{height:470px}
+#scene canvas{display:block;width:100%;height:100%}
+.row{display:flex;align-items:center;justify-content:center;gap:12px;font:13px ui-monospace,Menlo,monospace}
+.pill{border-radius:999px;padding:8px 16px;background:#fff;border:1px solid #c7d2fe;color:#4338ca;font-weight:600}
+.dest{border-color:#f5d0fe;color:#475569;font-weight:400;max-width:440px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.arrow{color:#d946ef;font-size:22px}
+.cap{font:600 12px Inter,sans-serif;color:#6b7185;letter-spacing:.2em;text-transform:uppercase;text-align:center;margin:0}
+</style></head>
+<body><div class="wrap">
+<p class="cap">Mockup · peta gaya satelit · A–E → hel.ink → Z</p>
+<div id="scene"></div>
+<div class="row"><span class="pill" id="short">hel.ink/school</span><span class="arrow">→</span><span class="pill dest" id="dest"></span></div>
+</div>
+<script type="module">
+import * as THREE from 'three';
+
+const el = document.getElementById('scene');
+const r = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+r.setPixelRatio(Math.min(devicePixelRatio, 2)); r.setSize(el.clientWidth, el.clientHeight);
+r.shadowMap.enabled = true; r.shadowMap.type = THREE.PCFSoftShadowMap;
+el.appendChild(r.domElement);
+const scene = new THREE.Scene();
+const cam = new THREE.PerspectiveCamera(30, el.clientWidth / el.clientHeight, .1, 200);
+cam.position.set(0, 21, 18.5); cam.lookAt(0, 0, .4);
+scene.add(new THREE.HemisphereLight(0xffffff, 0xc7d2fe, 1.6));
+const sun = new THREE.DirectionalLight(0xffffff, 2); sun.position.set(-6, 14, 8); sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048); Object.assign(sun.shadow.camera, { left: -14, right: 14, top: 10, bottom: -10 }); scene.add(sun);
+
+// The map: a tilted tile drawn like a map app's satellite/terrain view. Abstract, no real place:
+// soft blocks, a river, a dotted grid and a few roads.
+const W = 2048, H = 1280, c = document.createElement('canvas'); c.width = W; c.height = H; const g = c.getContext('2d');
+g.fillStyle = '#e8edf7'; g.fillRect(0, 0, W, H);
+const rnd = (() => { let s = 7; return () => (s = (s * 16807) % 2147483647) / 2147483647; })();
+for (let i = 0; i < 70; i++) { // city blocks and parks
+  const x = rnd() * W, y = rnd() * H, w = 80 + rnd() * 220, h = 60 + rnd() * 160;
+  g.fillStyle = rnd() < .28 ? '#d1fae5' : rnd() < .5 ? '#dfe5f2' : '#f1f4fa'; g.beginPath(); g.roundRect(x, y, w, h, 18); g.fill();
+}
+g.strokeStyle = '#c7e7fb'; g.lineWidth = 46; g.lineCap = 'round'; g.beginPath(); // river
+g.moveTo(-40, 980); g.bezierCurveTo(500, 760, 820, 1240, 1300, 1000); g.bezierCurveTo(1700, 800, 1900, 1100, W + 40, 900); g.stroke();
+g.strokeStyle = '#ffffff'; g.lineWidth = 22; // roads
+[[0, 420, W, 360], [0, 760, W, 820], [560, 0, 640, H], [1420, 0, 1360, H]].forEach(([a, b, x2, y2]) => { g.beginPath(); g.moveTo(a, b); g.lineTo(x2, y2); g.stroke(); });
+g.fillStyle = 'rgba(99,102,241,.16)'; // dotted grid, the "satellite" overlay
+for (let x = 16; x < W; x += 32) for (let y = 16; y < H; y += 32) { g.beginPath(); g.arc(x, y, 2.4, 0, 7); g.fill(); }
+const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
+const map = new THREE.Mesh(new THREE.BoxGeometry(22, .4, 13.75), [0, 0, new THREE.MeshStandardMaterial({ map: tex, roughness: .9 }), 0, 0, 0].map(m => m || new THREE.MeshStandardMaterial({ color: '#cbd5e1' })));
+map.position.y = -.2; map.receiveShadow = true; scene.add(map);
+
+const mat = (col, o = {}) => new THREE.MeshStandardMaterial({ color: col, roughness: .45, ...o });
+function label(text, color, bg = '#fff', w = 1.6) {
+  const k = document.createElement('canvas'); k.width = 256; k.height = 96; const x = k.getContext('2d');
+  x.fillStyle = bg; x.beginPath(); x.roundRect(6, 6, 244, 84, 42); x.fill();
+  x.fillStyle = color; x.font = '700 46px ui-monospace, Menlo, monospace'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(text, 128, 52);
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(k), depthTest: false })); s.scale.set(w, w * .375, 1); scene.add(s); return s;
+}
+// a map pin: a disc on the ground with a soft ring
+function spot(x, z, color, size = .7) {
+  const d = new THREE.Mesh(new THREE.CylinderGeometry(size, size, .08, 40), mat(color, { transparent: true, opacity: .9 }));
+  d.position.set(x, .04, z); d.receiveShadow = true; scene.add(d);
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(size + .15, .04, 8, 48), mat(color)); ring.rotation.x = Math.PI / 2; ring.position.set(x, .06, z); scene.add(ring);
+  return d;
+}
+
+// Points A–E around the edge, each with its own bunny and its own kind of link; Z is where links go.
+const SPOTS = [
+  { id: 'A', at: [-8.6, -3.8], color: '#0ea5e9', slug: 'school',  url: 'school.example.com/students/2026/semester-2/assignments/final-project-guidelines.pdf' },
+  { id: 'B', at: [-3.2, -4.9], color: '#22c55e', slug: 'shop',    url: 'shop.example.com/collections/summer-sale/products/linen-shirt?color=sand' },
+  { id: 'C', at: [-8.8, 3.6],  color: '#f59e0b', slug: 'cafe',    url: 'cafe.example.com/menu/today/lunch-specials-and-cold-drinks' },
+  { id: 'D', at: [3.4, 4.6],   color: '#ec4899', slug: 'event',   url: 'events.example.com/2026/jakarta-tech-meetup/registration?ref=newsletter' },
+  { id: 'E', at: [2.8, -4.6],  color: '#8b5cf6', slug: 'jobs',    url: 'careers.example.com/jobs/frontend-engineer-remote-asia-2026' },
+];
+const HUB = new THREE.Vector3(-1.2, 0, 0), Z = new THREE.Vector3(8.4, 0, .4);
+const hub = spot(HUB.x, HUB.z, '#6366f1', 1.1); label('hel.ink', '#4f46e5', '#fff', 2.2).position.set(HUB.x, 1.9, HUB.z + .2);
+spot(Z.x, Z.z, '#d946ef', .9); label('Z', '#c026d3').position.set(Z.x, 1.5, Z.z);
+const zPost = new THREE.Mesh(new THREE.CylinderGeometry(.06, .06, 1.1, 12), mat('#d946ef')); zPost.position.set(Z.x, .55, Z.z); scene.add(zPost);
+
+// the bunny: the logo head in soft 3D, a different colour at every point
+function bunny(color) {
+  const grp = new THREE.Group(), m = new THREE.MeshPhysicalMaterial({ color, roughness: .3, clearcoat: 1 });
+  const head = new THREE.Mesh(new THREE.TorusGeometry(.34, .15, 20, 40), m); head.castShadow = true; grp.add(head);
+  [-1, 1].forEach(s => { const e = new THREE.Mesh(new THREE.CapsuleGeometry(.12, .52, 8, 16), m); e.position.set(s * .15, .72, 0); e.rotation.z = -s * .22; e.castShadow = true; grp.add(e); });
+  grp.rotation.z = -.15; scene.add(grp); return grp;
+}
+const bunnies = SPOTS.map(s => {
+  spot(s.at[0], s.at[1], s.color);
+  label(s.id, s.color).position.set(s.at[0], 1.9, s.at[1]);
+  const b = bunny(s.color); b.userData.home = new THREE.Vector3(s.at[0], .55, s.at[1]); b.position.copy(b.userData.home); return b;
+});
+
+// dotted trail (two hops) and the arrow to Z
+const dots = []; for (let i = 0; i < 40; i++) { const d = new THREE.Mesh(new THREE.SphereGeometry(.07, 10, 10), mat('#a5b4fc')); scene.add(d); dots.push(d); }
+const arc = (a, b, h, k) => new THREE.Vector3(a.x + (b.x - a.x) * k, .55 + Math.sin(k * Math.PI) * h, a.z + (b.z - a.z) * k);
+const toZ = new THREE.QuadraticBezierCurve3(new THREE.Vector3(HUB.x + 1, .3, HUB.z), new THREE.Vector3((HUB.x + Z.x) / 2, 2.2, (HUB.z + Z.z) / 2), new THREE.Vector3(Z.x - 1.1, .3, Z.z));
+const arrowMat = mat('#d946ef', { emissive: '#d946ef', emissiveIntensity: .35 });
+const tube = new THREE.Mesh(new THREE.TubeGeometry(toZ, 48, .08, 10), arrowMat); scene.add(tube);
+const cone = new THREE.Mesh(new THREE.ConeGeometry(.24, .55, 20), arrowMat); cone.position.copy(toZ.getPoint(1)); cone.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), toZ.getTangent(1)); scene.add(cone);
+
+const q = new URLSearchParams(location.search), fixed = q.get('t'), who0 = +(q.get('who') || 0), PERIOD = 4200;
+const ease = f => f < .5 ? 2 * f * f : 1 - (-2 * f + 2) ** 2 / 2, clamp = v => Math.min(1, Math.max(0, v));
+function frame(time) {
+  const i = fixed !== null ? who0 : Math.floor(time / PERIOD) % SPOTS.length, p = fixed !== null ? +fixed : (time % PERIOD) / PERIOD;
+  bunnies.forEach((b, k) => { if (k !== i) { b.position.copy(b.userData.home); b.position.y = .55 + Math.abs(Math.sin(time / 380 + k)) * .1; b.visible = true; } });
+  const b = bunnies[i], A = b.userData.home;
+  // 0.05–0.40 hop A → hel.ink, 0.40–0.50 pause on hel.ink, 0.50–0.85 hop hel.ink → Z, then home again
+  const h1 = ease(clamp((p - .05) / .35)), h2 = ease(clamp((p - .5) / .35));
+  b.position.copy(p < .5 ? arc(A, HUB, 3, h1) : arc(HUB, Z, 2.4, h2));
+  b.visible = p < .93;
+  hub.material.emissive = new THREE.Color('#6366f1'); hub.material.emissiveIntensity = p > .4 && p < .55 ? .6 : 0;
+  dots.forEach((d, k) => { const t = k / 19; d.visible = k < 20 ? t <= h1 && p < .93 && h1 > 0 : false; if (k < 20) d.position.copy(arc(A, HUB, 3, t)).setY(arc(A, HUB, 3, t).y - .2); });
+  const grow = clamp((p - .45) / .25); tube.visible = cone.visible = grow > 0; tube.geometry.setDrawRange(0, Math.floor(grow * tube.geometry.index.count / 3) * 3); cone.visible = grow >= 1;
+  document.getElementById('short').textContent = 'hel.ink/' + SPOTS[i].slug;
+  const dest = document.getElementById('dest'); dest.textContent = SPOTS[i].url; dest.style.opacity = p > .7 ? 1 : .35;
+  r.render(scene, cam);
+}
+if (fixed !== null) { frame(0); document.body.dataset.ready = 1; } else (function loop(t) { frame(t); requestAnimationFrame(loop); })(0);
+</script>
+</body></html>

@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LinkHop holo map</title>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js"}}</script>
+<style>
+:root{--bg:#f6f7fb;--ink:#0e1018;--muted:#6b7185;--pill:#fff;--line:#d9def0}
+.dark{--bg:#0b0e1a;--ink:#e5e7f0;--muted:#8b91a8;--pill:rgba(255,255,255,.05);--line:rgba(255,255,255,.12)}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);transition:background .3s}
+.wrap{max-width:1040px;margin:0 auto;padding:18px 16px}
+.top{display:flex;align-items:center;justify-content:space-between}
+.cap{font:600 12px Inter,sans-serif;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;margin:0}
+button{font:600 12px Inter,sans-serif;border:1px solid var(--line);background:var(--pill);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer}
+#scene{height:480px;position:relative}
+#scene canvas{display:block;width:100%;height:100%}
+#story{position:absolute;left:0;right:0;top:6px;text-align:center;font:600 13px Inter,sans-serif;color:var(--muted)}
+.url{display:flex;justify-content:center;margin-top:2px}
+.url code{font:13px ui-monospace,Menlo,monospace;border:1px solid var(--line);background:var(--pill);border-radius:999px;padding:9px 18px;max-width:640px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:220px;text-align:center}
+.url code.short{color:#6366f1;font-weight:700}
+.dark .url code.short{color:#a5b4fc}
+</style></head>
+<body><div class="wrap">
+<div class="top"><p class="cap">Mockup · holographic link map</p><button id="theme">Dark / light</button></div>
+<div id="scene"><div id="story"></div></div>
+<div class="url"><code id="url">hel.ink</code></div>
+</div>
+<script type="module">
+import * as THREE from 'three';
+
+// ---------------------------------------------------------------- setup
+const q = new URLSearchParams(location.search);
+if (q.get('dark') === '1') document.documentElement.classList.add('dark');
+const isDark = () => document.documentElement.classList.contains('dark');
+document.getElementById('theme').onclick = () => { document.documentElement.classList.toggle('dark'); applyTheme(); };
+
+const el = document.getElementById('scene');
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.setSize(el.clientWidth, el.clientHeight);
+el.prepend(renderer.domElement);
+const scene = new THREE.Scene();
+const cam = new THREE.PerspectiveCamera(30, el.clientWidth / el.clientHeight, .1, 200);
+cam.position.set(0, 20, 17); cam.lookAt(0, 0, .6);
+const hemi = new THREE.HemisphereLight(0xffffff, 0x6366f1, 1.4); scene.add(hemi);
+const sun = new THREE.DirectionalLight(0xffffff, 1.6); sun.position.set(-6, 14, 8); scene.add(sun);
+const cursorLight = new THREE.PointLight(0xd946ef, 18, 9, 1.6); cursorLight.position.set(0, 2.5, 0); scene.add(cursorLight);
+
+const SKY = new THREE.Color('#0ea5e9'), IND = new THREE.Color('#6366f1'), FUC = new THREE.Color('#d946ef');
+const grad = t => t < .5 ? SKY.clone().lerp(IND, t * 2) : IND.clone().lerp(FUC, (t - .5) * 2);
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v)), ease = f => f < .5 ? 2 * f * f : 1 - (-2 * f + 2) ** 2 / 2;
+const hash = (a, b) => { const s = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return s - Math.floor(s); };
+
+// ---------------------------------------------------------------- the sea: a board of pixel columns
+const CELL = .2, NX = 115, NZ = 66, BW = NX * CELL, BD = NZ * CELL;
+const sea = new THREE.InstancedMesh(new THREE.BoxGeometry(.1, 1, .1), new THREE.MeshStandardMaterial({ roughness: .35, metalness: .15, transparent: true, opacity: .8 }), NX * NZ);
+scene.add(sea);
+const cells = [];
+for (let i = 0; i < NX; i++) for (let k = 0; k < NZ; k++) cells.push({ x: -BW / 2 + (i + .5) * CELL, z: -BD / 2 + (k + .5) * CELL, n: hash(i, k), explored: 0 });
+const tmpM = new THREE.Matrix4(), tmpC = new THREE.Color(), tmpQ = new THREE.Quaternion(), tmpS = new THREE.Vector3(), tmpP = new THREE.Vector3();
+let SEA_BASE, SEA_HI;
+function applyTheme() {
+  SEA_BASE = new THREE.Color(isDark() ? '#1e2440' : '#c9d1e6');
+  SEA_HI = isDark() ? .9 : .55;
+  sea.material.opacity = isDark() ? .85 : .7;
+  hemi.intensity = isDark() ? 1.0 : 1.5;
+}
+applyTheme();
+
+// a "country": a wobbly blob of cells that rises out of the sea
+function region(cx, cz, R, seed) {
+  const a = hash(seed, 1) * 6, b = hash(seed, 2) * 6;
+  return { cx, cz, R, rAt: th => R * (1 + .22 * Math.sin(3 * th + a) + .14 * Math.sin(5 * th + b) + .08 * Math.sin(9 * th + a * 2)) };
+}
+function inRegion(rg, x, z) {
+  const dx = x - rg.cx, dz = z - rg.cz, d = Math.hypot(dx, dz), r = rg.rAt(Math.atan2(dz, dx));
+  return d < r ? 1 - d / r : -1;
+}
+
+// ---------------------------------------------------------------- voxel models (positions in local units)
+function ellipsoid(out, cx, cy, cz, rx, ry, rz, s) {
+  for (let x = cx - rx; x <= cx + rx; x += s) for (let y = cy - ry; y <= cy + ry; y += s) for (let z = cz - rz; z <= cz + rz; z += s)
+    if (((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2 + ((z - cz) / rz) ** 2 <= 1) out.push([x, y, z]);
+  return out;
+}
+function boxV(out, x0, y0, z0, x1, y1, z1, s, hollow = false) {
+  for (let x = x0; x <= x1 + 1e-6; x += s) for (let y = y0; y <= y1 + 1e-6; y += s) for (let z = z0; z <= z1 + 1e-6; z += s) {
+    if (hollow && x > x0 + 1e-6 && x < x1 - 1e-6 && z > z0 + 1e-6 && z < z1 - 1e-6 && y < y1 - 1e-6) continue;
+    out.push([x, y, z]);
+  }
+  return out;
+}
+// the bunny: a sitting rabbit, facing +x, made of small cubes (not the logo)
+function bunnyVoxels() {
+  const v = [], s = .075;
+  ellipsoid(v, 0, .28, 0, .3, .24, .2, s);          // body
+  ellipsoid(v, .26, .52, 0, .16, .15, .14, s);       // head
+  ellipsoid(v, .18, .98, -.06, .05, .3, .04, s);     // ears, long
+  ellipsoid(v, .26, .98, .07, .05, .3, .04, s);
+  ellipsoid(v, -.3, .32, 0, .08, .08, .08, s);       // tail
+  ellipsoid(v, .2, .06, -.1, .1, .05, .06, s);       // feet
+  ellipsoid(v, .2, .06, .1, .1, .05, .06, s);
+  return v;
+}
+const S = .14;
+const BUILD = {
+  school(v = []) { boxV(v, -.8, 0, -.45, .8, .56, .45, S, true); for (let i = 0; i < 4; i++) boxV(v, -.8 + i * .14, .7 + i * .14, -.45, .8 - i * .14, .7 + i * .14, .45, S); boxV(v, .84, 0, -.05, .84, 1.4, -.05, S); boxV(v, .98, 1.12, -.05, 1.26, 1.4, -.05, S); return v; },
+  mall(v = []) { boxV(v, -1, 0, -.6, 1, .7, .6, S, true); boxV(v, -.7, .84, .6, .7, 1.12, .6, S); boxV(v, -.2, 0, .6, .2, .42, .6, S); return v; },
+  government(v = []) { boxV(v, -1, 0, -.6, 1, .14, .6, S); for (const x of [-.8, -.27, .27, .8]) boxV(v, x, .28, .45, x, .84, .45, S); boxV(v, -.9, .28, -.5, .9, .84, .3, S, true); ellipsoid(v, 0, .98, -.1, .5, .42, .5, S); return v; },
+  stadium(v = []) { for (let a = 0; a < Math.PI * 2; a += .13) for (let y = 0; y < .5; y += S) for (const r of [.8, .95]) v.push([Math.cos(a) * r * 1.2, y + (r > .9 ? .14 : 0), Math.sin(a) * r]); return v; },
+  tv(v = []) { boxV(v, -.4, 0, -.4, .4, .28, .4, S); boxV(v, -.07, .42, -.07, .07, 2.1, .07, S); ellipsoid(v, 0, 1.6, 0, .28, .2, .28, S); boxV(v, 0, 2.24, 0, 0, 2.66, 0, S); return v; },
+  concert(v = []) { boxV(v, -1, 0, -.4, 1, .28, .5, S); for (let a = 0; a <= Math.PI; a += .12) v.push([Math.cos(a) * 1, .42 + Math.sin(a) * 1, -.4]); for (const x of [-1.1, 1.1]) boxV(v, x, 0, .3, x, .84, .3, S); return v; },
+  hospital(v = []) { boxV(v, -.7, 0, -.5, .7, 1.12, .5, S, true); boxV(v, -.07, 1.26, -.07, .07, 1.82, .07, S); boxV(v, -.35, 1.54, -.07, .35, 1.54, .07, S); return v; },
+};
+// voxel object: an InstancedMesh whose cubes can fly up from the sea into place ("built like a puzzle")
+function voxelObject(points, colorAt, size) {
+  const m = new THREE.InstancedMesh(new THREE.BoxGeometry(size * .9, size * .9, size * .9), new THREE.MeshStandardMaterial({ roughness: .3, metalness: .1, transparent: true, opacity: .95 }), points.length);
+  const maxY = Math.max(...points.map(p => p[1])) || 1;
+  points.forEach((p, i) => m.setColorAt(i, colorAt(p, maxY)));
+  m.userData = { points, maxY, scale: 1, delay: points.map(p => p[1] / maxY * .6 + hash(p[0], p[2]) * .25) };
+  scene.add(m); return m;
+}
+function placeVoxels(m, at, k, rotY = 0, lift = 0, scale = m.userData.scale || 1) {
+  const { points, delay } = m.userData, c = Math.cos(rotY), s = Math.sin(rotY);
+  points.forEach((p, i) => {
+    const f = ease(clamp((k - delay[i]) / .35)), x = p[0] * c - p[2] * s, z = p[0] * s + p[2] * c;
+    const fromY = -1.5 - hash(i, 9) * 1.5;
+    tmpP.set(at.x + x * scale, at.y + lift + (fromY + (p[1] - fromY) * f) * scale, at.z + z * scale);
+    tmpS.setScalar(f < .02 ? 0 : scale);
+    m.setMatrixAt(i, tmpM.compose(tmpP, tmpQ, tmpS));
+  });
+  m.instanceMatrix.needsUpdate = true; m.visible = k > 0;
+}
+
+// ---------------------------------------------------------------- scenarios
+const LINKS = [
+  ['school', 'school', 'school.example.com/students/2026/semester-2/assignments/final-project-guidelines.pdf'],
+  ['sale', 'mall', 'shop.example.com/collections/summer-sale/products/linen-shirt?color=sand&size=m'],
+  ['permit', 'government', 'gov.example.go.id/services/business-permit/apply?step=1&lang=id'],
+  ['finals', 'stadium', 'tickets.example.com/football/2026/cup-final/seat-map?section=north'],
+  ['live', 'tv', 'tv.example.com/live/evening-news-2026-10-28?quality=1080p'],
+  ['tour', 'concert', 'concerts.example.com/tour-2026/jakarta/presale?code=HOP25'],
+  ['checkup', 'hospital', 'clinic.example.com/appointments/new?department=general&doctor=any'],
+];
+const SCENARIOS = ['hop', 'share', 'pass-ok', 'pass-fail'];
+const rnd = seed => { let s = seed * 9301 + 49297; return () => (s = (s * 9301 + 49297) % 233280) / 233280; };
+const pickPoint = (r, avoid = []) => { for (;;) { const p = new THREE.Vector3(-BW / 2 + 2.2 + r() * (BW - 4.4), 0, -BD / 2 + 1.8 + r() * (BD - 3.6)); if (avoid.every(a => a.distanceTo(p) > 7)) return p; } };
+
+function makeRun(n) {
+  const r = rnd(n + 3), type = SCENARIOS[n % SCENARIOS.length], link = LINKS[Math.floor(r() * LINKS.length)];
+  const A = pickPoint(r), B = type === 'share' ? pickPoint(r, [A]) : null;
+  const from = B || A, D = pickPoint(r, [A, from]);
+  const hub = type === 'share' ? A.clone().lerp(B, .5) : from.clone().lerp(D, .5);   // hel.ink sits between two positions
+  hub.z += (r() - .5) * 1.2;
+  const run = {
+    n, type, link, A, B, D, hub,
+    rA: region(A.x, A.z, 1.3 + r() * .6, n + 1), rB: B && region(B.x, B.z, 1.2 + r() * .6, n + 2),
+    rD: region(D.x, D.z, 1.6 + r() * .5, n + 3), rH: region(hub.x, hub.z, .8, n + 4),
+    bunnyA: voxelObject(bunnyVoxels(), p => new THREE.Color('#f0f9ff').lerp(SKY, p[1] * .45), .075),
+    bunnyB: B ? voxelObject(bunnyVoxels(), p => new THREE.Color('#fdf4ff').lerp(FUC, p[1] * .45), .075) : null,
+    building: voxelObject(BUILD[link[1]](), (p, my) => grad(clamp(.25 + p[1] / my * .75)), S),
+    lock: voxelObject([...boxV([], -.21, 0, -.07, .21, .35, .07, .07), ...Array.from({ length: 9 }, (_, i) => [Math.cos(Math.PI * i / 8) * .15, .42 + Math.sin(Math.PI * i / 8) * .15, 0])], () => new THREE.Color(isDark() ? '#e5e7f0' : '#334155'), .07),
+    packet: new THREE.Mesh(new THREE.BoxGeometry(.22, .22, .22), new THREE.MeshStandardMaterial({ color: '#d946ef', emissive: '#d946ef', emissiveIntensity: .8 })),
+    trail: new THREE.InstancedMesh(new THREE.BoxGeometry(.07, .07, .07), new THREE.MeshBasicMaterial({ color: '#a5b4fc' }), 60),
+    label: makeLabel('hel.ink'),
+  };
+  run.bunnyA.userData.scale = 2.6; if (run.bunnyB) run.bunnyB.userData.scale = 2.6; run.building.userData.scale = 1.35;
+  scene.add(run.packet, run.trail);
+  run.dur = { hop: 7.5, share: 9, 'pass-ok': 9, 'pass-fail': 8 }[type];
+  return run;
+}
+function disposeRun(run) { for (const k of ['bunnyA', 'bunnyB', 'building', 'lock', 'packet', 'trail', 'label']) if (run[k]) { scene.remove(run[k]); run[k].geometry?.dispose(); } }
+function makeLabel(text) {
+  const c = document.createElement('canvas'); c.width = 256; c.height = 80; const g = c.getContext('2d');
+  g.fillStyle = 'rgba(255,255,255,.92)'; g.beginPath(); g.roundRect(4, 4, 248, 72, 36); g.fill();
+  g.fillStyle = '#4f46e5'; g.font = '700 40px ui-monospace, Menlo, monospace'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(text, 128, 42);
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), depthTest: false, transparent: true })); s.scale.set(2, .63, 1); scene.add(s); return s;
+}
+const hopPos = (a, b, h, k) => new THREE.Vector3(a.x + (b.x - a.x) * k, a.y + (b.y - a.y) * k + Math.sin(k * Math.PI) * h, a.z + (b.z - a.z) * k);
+const ABC = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/_-.?=&%#';
+function scramble(from, to, k, seed) { // "encrypted" morph: length and letters slide from one string to the other
+  if (k <= 0) return from; if (k >= 1) return to;
+  const len = Math.round(from.length + (to.length - from.length) * k), done = Math.floor(len * Math.max(0, k * 1.4 - .4));
+  let out = ''; for (let i = 0; i < len; i++) out += i < done ? (to[i] ?? '') : ABC[Math.floor(hash(i + seed, Math.floor(k * 40)) * ABC.length)];
+  return out;
+}
+
+// heights of the rising land at time t (seconds into the run); explored land stays slightly lit afterwards
+function landAt(run, t) {
+  const L = [];
+  const up = (t0, t1) => ease(clamp((t - t0) / (t1 - t0)));
+  const sink = 1 - ease(clamp((t - (run.dur - 1)) / .9));
+  if (run.type === 'share') {
+    L.push([run.rA, .9 * up(.2, 1) * sink], [run.rB, .9 * up(1.2, 2) * sink], [run.rH, .55 * up(2.4, 3) * sink], [run.rD, 1.1 * up(5, 5.8) * sink]);
+  } else {
+    L.push([run.rA, .9 * up(.2, 1) * sink], [run.rH, .55 * up(1.6, 2.2) * sink]);
+    const dUp = run.type === 'pass-fail' ? 0 : up(run.type === 'hop' ? 3.2 : 4.8, run.type === 'hop' ? 4 : 5.6);
+    L.push([run.rD, 1.1 * dUp * sink]);
+  }
+  return L;
+}
+
+// ---------------------------------------------------------------- per-frame
+const story = document.getElementById('story'), urlEl = document.getElementById('url');
+const mouse = new THREE.Vector2(9, 9), ray = new THREE.Raycaster(), plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0), cursor = new THREE.Vector3(3, 0, -1);
+el.addEventListener('pointermove', e => { const b = el.getBoundingClientRect(); mouse.set((e.clientX - b.left) / b.width * 2 - 1, -(e.clientY - b.top) / b.height * 2 + 1); });
+
+function render(run, t) {
+  const L = landAt(run, t), dark = isDark();
+  if (mouse.x < 5) { ray.setFromCamera(mouse, cam); ray.ray.intersectPlane(plane, cursor); }
+  cursorLight.position.set(cursor.x, 2.4, cursor.z); cursorLight.color.copy(grad(clamp((cursor.x + BW / 2) / BW)));
+  const heightAt = (x, z) => { let h = 0; for (const [rg, a] of L) if (a > 0) { const w = inRegion(rg, x, z); if (w > 0) h = Math.max(h, a * (.35 + .65 * w) * (.75 + .5 * hash(x * 7, z * 7))); } return h; };
+  cells.forEach((c, i) => {
+    const raw = heightAt(c.x, c.z), h = Math.round(raw / .1) * .1;           // terraced, pixel-like
+    if (raw > .2) c.explored = 1;
+    const wave = .04 + .03 * Math.sin(t * 1.6 + c.x * .7 + c.z * .5);
+    const top = Math.max(.06, h + wave);
+    tmpP.set(c.x, top / 2 - .1, c.z); tmpS.set(1, top, 1); sea.setMatrixAt(i, tmpM.compose(tmpP, tmpQ, tmpS));
+    const near = clamp(1 - Math.hypot(c.x - cursor.x, c.z - cursor.z) / 3.2);
+    const g = grad(clamp((c.x + BW / 2) / BW));
+    tmpC.copy(SEA_BASE).lerp(g, clamp(h * .9 * SEA_HI + c.explored * .12 + near * .35 + (dark ? .05 : 0)));
+    if (dark) tmpC.multiplyScalar(.8 + h * .5 + near * .4);
+    sea.setColorAt(i, tmpC);
+  });
+  sea.instanceMatrix.needsUpdate = true; sea.instanceColor.needsUpdate = true;
+
+  const ground = (p, rg, a) => p.clone().setY(Math.round(a / .1) * .1 + .02);
+  const ty = run.type, [slug, bType, long] = run.link, short = `hel.ink/${slug}`;
+  const A = ground(run.A, run.rA, .9 * .9), H = ground(run.hub, run.rH, .55 * .9), D = ground(run.D, run.rD, 1.1 * .9), Dd = D.clone().add(new THREE.Vector3(-1.9, 0, .9));
+  const sink = clamp((t - (run.dur - 1)) / .9);
+  run.label.position.set(run.hub.x, 1.9, run.hub.z); run.label.material.opacity = clamp((t - 1.8) / .4) * (1 - sink);
+  run.packet.visible = false; run.lock.visible = false; run.trail.count = 0;
+  let caption = '', url = long, urlShort = false;
+  const bunnyIn = clamp((t - .7) / .5);
+  const face = (a, b) => Math.atan2(-(b.z - a.z), b.x - a.x);
+  const trail = (a, b, h, k) => { const n = Math.floor(k * 30); run.trail.count = n; for (let i = 0; i < n; i++) { const p = hopPos(a, b, h, i / 30); run.trail.setMatrixAt(i, tmpM.compose(p.setY(p.y + .3), tmpQ, tmpS.setScalar(1))); } run.trail.instanceMatrix.needsUpdate = true; };
+  run.building.visible = false;
+
+  if (ty === 'hop') {
+    const h1 = ease(clamp((t - 2) / 1)), h2 = ease(clamp((t - 4.2) / 1));
+    const pos = t < 4.2 ? hopPos(A, H, 2.6, h1) : hopPos(H, Dd, 2.2, h2);
+    placeVoxels(run.bunnyA, pos, bunnyIn * (1 - sink), t < 4.2 ? face(A, H) : face(H, D));
+    if (t > 2 && t < 3.1) trail(A, H, 2.6, h1); else if (t > 4.2 && t < 5.3) trail(H, Dd, 2.2, h2);
+    placeVoxels(run.building, D, clamp((t - 3.4) / 1.2) * (1 - sink));
+    url = t < 2.4 ? long : t < 3.2 ? scramble(long, short, (t - 2.4) / .8, 1) : t < 4.2 ? short : t < 5 ? scramble(short, long, (t - 4.2) / .8, 2) : long;
+    urlShort = t >= 3.2 && t < 4.2;
+    caption = t < 2 ? 'A bunny wants to share a long link…' : t < 4.2 ? 'It hops to hel.ink: the link gets short' : 'and on to where the link goes';
+  } else if (ty === 'share') {
+    placeVoxels(run.bunnyA, A, bunnyIn * (1 - sink), face(A, H));
+    const B = ground(run.B, run.rB, .81), inB = clamp((t - 1.6) / .5);
+    const k1 = ease(clamp((t - 2.8) / 1)), k2 = ease(clamp((t - 3.9) / 1));
+    if (t > 2.8 && t < 4.9) { run.packet.visible = true; run.packet.position.copy(t < 3.9 ? hopPos(A, H, 1.4, k1) : hopPos(H, B, 1.4, k2)).y += .4; run.packet.rotation.y = t * 3; }
+    const h3 = ease(clamp((t - 6) / 1));
+    placeVoxels(run.bunnyB, t < 6 ? B : hopPos(B, Dd, 2.4, h3), inB * (1 - sink), t < 6 ? face(B, H) : face(B, D));
+    if (t > 6 && t < 7) trail(B, Dd, 2.4, h3);
+    placeVoxels(run.building, D, clamp((t - 5.1) / 1.2) * (1 - sink));
+    url = t < 3.2 ? long : t < 4 ? scramble(long, short, (t - 3.2) / .8, 3) : t < 6 ? short : t < 6.8 ? scramble(short, long, (t - 6) / .8, 4) : long;
+    urlShort = t >= 4 && t < 6;
+    caption = t < 2.8 ? 'Two bunnies, far apart' : t < 4.9 ? 'One sends a long link; hel.ink makes it short on the way' : t < 6 ? 'The other one gets hel.ink/' + slug : 'and hops to where it goes';
+  } else {
+    const ok = ty === 'pass-ok';
+    const h1 = ease(clamp((t - 2) / 1));
+    let pos = hopPos(A, H, 2.6, h1);
+    run.lock.visible = t > 3.1 && t < run.dur - 1;
+    const shake = !ok && t > 4.3 && t < 5 ? Math.sin(t * 60) * .08 : 0;
+    placeVoxels(run.lock, new THREE.Vector3(H.x + 1.2 + shake, H.y + 1.1, H.z), clamp((t - 3.1) / .4), 0, 0, 2.4);
+    if (ok) {
+      const h2 = ease(clamp((t - 5.8) / 1));
+      if (t > 5.8) pos = hopPos(H, Dd, 2.2, h2);
+      placeVoxels(run.building, D, clamp((t - 5) / 1.2) * (1 - sink));
+      if (t > 5.8 && t < 6.9) trail(H, Dd, 2.2, h2);
+      if (t > 4.6) run.lock.visible = false;
+    } else if (t > 5.2) {
+      pos = hopPos(H, A, 1.6, ease(clamp((t - 5.2) / 1)));   // can't go on: hops back home
+    }
+    if (t > 2 && t < 3.1) trail(A, H, 2.6, h1);
+    placeVoxels(run.bunnyA, pos, bunnyIn * (1 - sink), t < 5.2 ? face(A, H) : ok ? face(H, D) : face(H, A));
+    const dots = '•'.repeat(clamp(Math.floor((t - 3.4) / .2), 0, 6));
+    url = t < 2.4 ? long : t < 3.2 ? scramble(long, short, (t - 2.4) / .8, 5) : short;
+    if (ok && t > 5.8) url = t < 6.6 ? scramble(short, long, (t - 5.8) / .8, 6) : long;
+    urlShort = url === short;
+    caption = t < 2 ? 'This link has a password' : t < 4.4 ? `Password ${dots}` : ok ? (t < 5.8 ? 'Unlocked ✓' : 'In it goes') : (t < 5.2 ? 'Wrong password ✕' : 'No hop this time');
+    if (!ok && t > 4.3 && t < 5.2) run.lock.material.color.set('#ef4444'); else run.lock.material.color.set('#ffffff');
+  }
+  story.textContent = caption;
+  urlEl.textContent = url; urlEl.classList.toggle('short', urlShort);
+  renderer.render(scene, cam);
+}
+
+// ---------------------------------------------------------------- run: ?s=hop|share|pass-ok|pass-fail&t=seconds freezes a moment
+let run = null, n = 0;
+const fixedS = q.get('s'), fixedT = q.get('t');
+if (fixedS) {
+  n = SCENARIOS.indexOf(fixedS) + 4 * (+q.get('seed') || 0);
+  run = makeRun(n);
+  const T = +fixedT;
+  for (let s = 0; s <= T; s += .25) landAt(run, s).forEach(([rg, a]) => { if (a > .3) cells.forEach(c => { if (inRegion(rg, c.x, c.z) > 0) c.explored = 1; }); });
+  if (q.get('mx')) { cursor.set(+q.get('mx'), 0, +q.get('mz')); }
+  render(run, T); document.body.dataset.ready = 1;
+} else {
+  let t0 = performance.now();
+  run = makeRun(n);
+  (function loop(now) {
+    let t = (now - t0) / 1000;
+    if (t > run.dur) { disposeRun(run); n++; run = makeRun(n); t0 = now; t = 0; }
+    render(run, t); requestAnimationFrame(loop);
+  })(t0);
+}
+</script>
+</body></html>

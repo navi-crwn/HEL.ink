@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HOP · Hop Easy Link</title>
+<meta name="description" content="The HOP family of free, open-source apps behind hel.ink: LinkHop, BioHop, PixelHop and the hub.">
+<style>
+  :root { --bg:#f8fafc; --fg:#0f172a; --muted:#64748b; --card:#fff; --line:#e2e8f0; --accent:#6366f1; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0b1020; --fg:#f1f5f9; --muted:#94a3b8; --card:#111827; --line:#1f2937; } }
+  body { margin:0; font-family: Inter, system-ui, sans-serif; background:var(--bg); color:var(--fg); }
+  main { max-width: 960px; margin: 0 auto; padding: 64px 16px; }
+  h1 { font-size: 2.5rem; margin: 0 0 8px; } .lead { color: var(--muted); font-size: 1.1rem; max-width: 60ch; }
+  .grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 40px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:20px; }
+  .card h2 { margin:0 0 4px; font-size:1.1rem; } .card p { margin:0 0 12px; color:var(--muted); font-size:.95rem; }
+  a { color: var(--accent); text-decoration: none; } a:hover { text-decoration: underline; }
+  footer { margin-top: 48px; color: var(--muted); font-size: .85rem; }
+</style>
+</head>
+<body>
+<main>
+  <p style="letter-spacing:.2em;text-transform:uppercase;font-size:.75rem;color:var(--accent)">Hop Easy Link</p>
+  <h1>One hop to every app.</h1>
+  <p class="lead">HOP is a small family of free, open-source web apps that share one account and one home at <a href="https://hel.ink">hel.ink</a>.</p>
+  <div class="grid">
+    <div class="card"><h2>Hub</h2><p>Home page, HOP ID accounts, launcher, announcements, status, watchdog.</p><a href="https://hub.hel.ink">hub.hel.ink</a> · <a href="https://github.com/navi-crwn/HEL.ink">source</a></div>
+    <div class="card"><h2>LinkHop</h2><p>Short links at hel.ink/l/…, QR codes, click analytics, API.</p><a href="https://link.hel.ink">link.hel.ink</a> · <a href="https://github.com/navi-crwn/LinkHop">source</a></div>
+    <div class="card"><h2>BioHop</h2><p>A link-in-bio page at hel.ink/b/… with blocks, themes and stats.</p><a href="https://bio.hel.ink">bio.hel.ink</a> · <a href="https://github.com/navi-crwn/BioHop">source</a></div>
+    <div class="card"><h2>PixelHop</h2><p>Image hosting with albums and direct links; signs in with HOP ID.</p><a href="https://p.hel.ink">p.hel.ink</a></div>
+  </div>
+  <footer>Self-hosting, the shared database and the nginx router are described in the <a href="https://github.com/navi-crwn/HEL.ink#readme">HEL.ink README</a>.</footer>
+</main>
+</body>
+</html>

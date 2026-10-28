@@ -17,7 +17,8 @@ class ContentSecurityPolicyMiddleware
         $response = $next($request);
         $csp = [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://fonts.bunny.net https://static.cloudflareinsights.com",
+            // 'unsafe-eval': Alpine.js evaluates x-data/x-on expressions with new Function().
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://fonts.bunny.net https://static.cloudflareinsights.com",
             "style-src 'self' 'unsafe-inline' https://fonts.bunny.net",
             "img-src 'self' data: https: blob:",
             "font-src 'self' https://fonts.bunny.net data:",

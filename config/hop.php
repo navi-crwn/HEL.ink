@@ -75,7 +75,8 @@ return [
             'start' => env('PIXELHOP_SSO_START', '/auth/helink'),
             'logout' => env('PIXELHOP_LOGOUT_PATH'),
             'export' => null,
-            'health' => '/up',
+            // PixelHop is not Laravel: its health endpoint is /healthz, not /up.
+            'health' => env('PIXELHOP_HEALTH_PATH', '/healthz'),
             'check' => env('PIXELHOP_CHECK_URL'),
             'secret' => env('HOP_SSO_SECRET_PIXELHOP', env('PIXELHOP_SSO_SECRET')),
             'icon' => 'image',

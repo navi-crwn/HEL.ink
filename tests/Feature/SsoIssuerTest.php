@@ -127,6 +127,20 @@ class SsoIssuerTest extends TestCase
             ->get($url)->assertRedirect(route('apps.open', ['app' => 'pixelhop']));
     }
 
+    public function test_an_app_can_send_the_browser_to_logout_with_a_get(): void
+    {
+        config()->set('hop.apps.linkhop.logout', '/auth/sso/logout');
+        config()->set('hop.apps.pixelhop.logout', null);
+        config()->set('hop.apps.biohop.enabled', false);
+
+        $this->signedIn()->get('/logout')
+            ->assertRedirect('https://link.example.com/auth/sso/logout?next='.rawurlencode(route('home')));
+        $this->assertGuest();
+
+        // A visitor whose hub session already ended still runs the chain instead of a 405.
+        $this->get('/logout')->assertRedirect();
+    }
+
     public function test_logout_chains_through_apps_with_a_logout_endpoint(): void
     {
         config()->set('hop.apps.linkhop.logout', '/auth/sso/logout');

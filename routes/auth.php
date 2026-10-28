@@ -61,3 +61,8 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [SsoController::class, 'logout'])
         ->name('logout');
 });
+
+// Apps (LinkHop, BioHop) sign the visitor out locally, then send the browser here with a GET.
+// It runs the same chained logout as the POST form, also when the hub session has already
+// expired, so the visitor always ends signed out everywhere and back on the home page.
+Route::get('logout', [SsoController::class, 'logout'])->name('logout.from-app');

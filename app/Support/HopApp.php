@@ -3,8 +3,9 @@
 namespace App\Support;
 
 /**
- * One app of the HOP family, as described in config/hop.php. The hub issues
- * SSO tickets for it, lists it in the launcher and watches its /up endpoint.
+ * One app of the HOP family: from config/hop.php (LinkHop, BioHop, PixelHop) or
+ * from the HOP ID registry table `apps` (Imperium, NoteHop, …). The hub issues
+ * SSO tickets for it, lists it in the launcher unless hidden, and watches it.
  */
 final class HopApp
 {
@@ -24,6 +25,8 @@ final class HopApp
         public readonly string $color,
         public readonly ?string $publicPrefix,
         public readonly ?string $repo,
+        public readonly bool $hidden = false,
+        public readonly array $capabilities = [],
     ) {}
 
     public static function fromConfig(string $slug, array $c): self
@@ -39,11 +42,60 @@ final class HopApp
             export: $c['export'] ?? null,
             health: (string) ($c['health'] ?? '/up'),
             check: $c['check'] ?? null,
-            secret: $c['secret'] ?: (config('hop.sso_secret') ?: null),
+            secret: ($c['secret'] ?? null) ?: (config('hop.sso_secret') ?: null),
             icon: (string) ($c['icon'] ?? 'globe'),
             color: (string) ($c['color'] ?? 'indigo'),
             publicPrefix: $c['public_prefix'] ?? null,
             repo: $c['repo'] ?? null,
+        );
+    }
+
+    /** An app from the registry table; its own secret, no logout or export endpoint known. */
+    public static function fromRegistry(\App\Models\HopApp $m, array $display = []): self
+    {
+        $slug = (string) $m->slug;
+        if ($display !== []) {
+            // Described in config/hop.php for people (name, tagline, icon, health); SSO stays the registry's.
+            return new self(
+                slug: $slug,
+                name: (string) ($display['name'] ?? $m->name),
+                tagline: (string) ($display['tagline'] ?? ''),
+                url: rtrim((string) $m->url, '/'),
+                callback: (string) ($m->callback_path ?: '/auth/sso/callback'),
+                start: $m->start_path ?: '/auth/sso',
+                logout: $display['logout'] ?? null,
+                export: $display['export'] ?? null,
+                health: (string) ($display['health'] ?? '/healthz'),
+                check: $display['check'] ?? null,
+                secret: $m->secrets()[0] ?? null,
+                icon: (string) ($display['icon'] ?? $m->icon ?? 'globe'),
+                color: (string) ($display['color'] ?? $m->color ?? 'indigo'),
+                publicPrefix: null,
+                repo: $display['repo'] ?? null,
+                hidden: false,
+                capabilities: (array) ($m->capabilities ?? []),
+            );
+        }
+
+        return new self(
+            slug: $slug,
+            name: (string) $m->name,
+            tagline: (string) config('hop.registry_taglines.'.$slug, ''),
+            url: rtrim((string) $m->url, '/'),
+            callback: (string) ($m->callback_path ?: '/auth/sso/callback'),
+            start: $m->start_path ?: '/auth/sso',
+            logout: config('hop.registry_logout.'.$slug),
+            export: null,
+            // The registry apps are Go services with /healthz (Laravel apps are in config).
+            health: (string) config('hop.registry_health.'.$slug, '/healthz'),
+            check: null,
+            secret: $m->secrets()[0] ?? null,
+            icon: (string) ($m->icon ?: 'globe'),
+            color: (string) ($m->color ?: 'indigo'),
+            publicPrefix: null,
+            repo: config('hop.registry_repos.'.$slug),
+            hidden: (bool) $m->getAttribute('hidden'),
+            capabilities: (array) ($m->capabilities ?? []),
         );
     }
 

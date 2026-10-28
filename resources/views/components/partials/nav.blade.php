@@ -13,9 +13,12 @@
         ['label' => 'Announcements', 'icon' => 'bell', 'route' => 'announcements.index', 'active' => 'announcements.*'],
         ['label' => 'Status', 'icon' => 'pulse', 'route' => 'status', 'active' => 'status'],
         ['label' => 'Settings', 'icon' => 'settings', 'route' => 'settings', 'active' => ['settings', 'profile.*']],
-        $isAdmin ? ['label' => 'Accounts', 'icon' => 'users', 'route' => 'admin.users.index', 'active' => 'admin.users.*'] : null,
-        $isAdmin ? ['label' => 'Manage announcements', 'icon' => 'shield', 'route' => 'admin.announcements.index', 'active' => 'admin.announcements.*'] : null,
     ]);
+    $adminItems = $isAdmin ? [
+        ['label' => 'Accounts', 'icon' => 'users', 'route' => 'admin.users.index', 'active' => 'admin.users.*'],
+        ['label' => 'Manage announcements', 'icon' => 'bell', 'route' => 'admin.announcements.index', 'active' => 'admin.announcements.*'],
+    ] : [];
+    $control = (string) config('hop.control_url');
 @endphp
 <ul class="space-y-1">
     @foreach ($items as $item)
@@ -28,4 +31,24 @@
     @endforeach
     <li class="px-3 pb-1 pt-4 text-[11px] font-semibold uppercase tracking-wider text-muted">Apps</li>
     <x-hop::nav-items />
+    @if ($isAdmin)
+        <li class="px-3 pb-1 pt-4 text-[11px] font-semibold uppercase tracking-wider text-muted">Admin</li>
+        @if ($control !== '')
+            <li>
+                <a href="{{ $control }}" class="nav-item">
+                    <svg class="h-[18px] w-[18px] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ $icons['shield'] }}"/></svg>
+                    <span class="flex-1">Imperium</span>
+                    <svg class="h-3.5 w-3.5 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M8 7h9v9"/></svg>
+                </a>
+            </li>
+        @endif
+        @foreach ($adminItems as $item)
+            <li>
+                <a href="{{ route($item['route']) }}" class="nav-item {{ request()->routeIs(...(array) $item['active']) ? 'nav-item-active' : '' }}">
+                    <svg class="h-[18px] w-[18px] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ $icons[$item['icon']] }}"/></svg>
+                    <span class="flex-1">{{ $item['label'] }}</span>
+                </a>
+            </li>
+        @endforeach
+    @endif
 </ul>

@@ -32,7 +32,11 @@ test('the public host has no short link, bio or api routes', function () {
     $this->get('https://hel.test/l/abc')->assertNotFound();
     $this->get('https://hel.test/b/abc')->assertNotFound();
     $this->get('https://hel.test/api/v1/links')->assertNotFound();
-    $this->get('https://hel.test/sso/linkhop')->assertNotFound();
+});
+
+test('apps that still start sign-in at the public host are sent to the hub', function () {
+    $this->get('https://hel.test/sso/imperium?state=abc&return_to=x')
+        ->assertRedirect('https://hub.hel.test/sso/imperium?return_to=x&state=abc');
 });
 
 test('the hub host serves accounts', function () {

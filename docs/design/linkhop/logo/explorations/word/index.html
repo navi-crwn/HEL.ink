@@ -1,0 +1,130 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800;1,900&family=Inter:wght@600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f4f5f9;font-family:Inter,sans-serif;padding:28px;display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.c{background:#fff;border-radius:22px;padding:30px 26px 18px;display:flex;flex-direction:column;align-items:center;gap:14px;border:1px solid #e6e8f0}
+.c.dark{background:#0e1018;border-color:#0e1018}
+.n{font:600 14px Inter;color:#6b7185;align-self:flex-start}
+.c.dark .n{color:#9aa0b4}
+svg text{font-family:Poppins;font-style:italic;font-weight:900}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0ea5e9"/><stop offset=".5" stop-color="#6366f1"/><stop offset="1" stop-color="#d946ef"/></linearGradient>
+    <linearGradient id="gv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset=".55" stop-color="#6366f1"/><stop offset="1" stop-color="#d946ef"/></linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <!-- bunny head (front), 100x100 box: two ears + round head -->
+    <symbol id="head" viewBox="0 0 100 100">
+      <ellipse cx="36" cy="26" rx="10" ry="25" transform="rotate(-14 36 26)"/>
+      <ellipse cx="64" cy="26" rx="10" ry="25" transform="rotate(14 64 26)"/>
+      <ellipse cx="50" cy="66" rx="32" ry="28"/>
+    </symbol>
+    <!-- #3 style: double chevron flying into a bunny head (side view) -->
+    <symbol id="arrowhead" viewBox="0 0 160 100">
+      <path d="M4 34h44v32H4z"/>
+      <path d="M40 18 70 50 40 82H62L92 50 62 18z"/>
+      <path d="M78 18 108 50 78 82H98L118 60V40L98 18z" opacity=".0"/>
+      <ellipse cx="122" cy="58" rx="30" ry="26"/>
+      <ellipse cx="112" cy="20" rx="8" ry="24" transform="rotate(-24 112 20)"/>
+      <ellipse cx="132" cy="18" rx="8" ry="23" transform="rotate(-4 132 18)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- 1 · icon (arrows into bunny) + italic gradient wordmark -->
+<div class="c"><span class="n">1 · ikon panah-kelinci + teks gaya no.1</span>
+<svg width="520" height="120" viewBox="0 0 520 120">
+  <use href="#arrowhead" x="0" y="12" width="150" height="94" fill="#0e1018"/>
+  <circle cx="132" cy="69" r="4.5" fill="#fff"/>
+  <text x="160" y="88" font-size="70" fill="url(#g)" letter-spacing="-2">LinkHop</text>
+  <text x="160" y="88" font-size="70" fill="url(#shine)" letter-spacing="-2">LinkHop</text>
+</svg></div>
+
+<div class="c dark"><span class="n">1b · sama, versi gelap</span>
+<svg width="520" height="120" viewBox="0 0 520 120">
+  <use href="#arrowhead" x="0" y="12" width="150" height="94" fill="url(#gv)"/>
+  <circle cx="132" cy="69" r="4.5" fill="#0e1018"/>
+  <text x="160" y="88" font-size="70" fill="url(#g)" letter-spacing="-2">LinkHop</text>
+  <text x="160" y="88" font-size="70" fill="url(#shine)" letter-spacing="-2">LinkHop</text>
+</svg></div>
+
+<!-- 2 · gradient arrows + gradient bunny, dark text -->
+<div class="c"><span class="n">2 · ikon bergradasi + teks tegas</span>
+<svg width="520" height="120" viewBox="0 0 520 120">
+  <use href="#arrowhead" x="0" y="12" width="150" height="94" fill="url(#gv)"/>
+  <circle cx="132" cy="69" r="4.5" fill="#fff"/>
+  <text x="162" y="88" font-size="70" fill="#0e1018" letter-spacing="-2">Link<tspan fill="url(#g)">Hop</tspan></text>
+</svg></div>
+
+<!-- 3 · P is a bunny head (#12 idea): "LinkHo" + custom P whose bowl is a bunny head -->
+<div class="c"><span class="n">3 · huruf P = kepala kelinci (ide no.12)</span>
+<svg width="520" height="130" viewBox="0 0 520 130">
+  <text x="10" y="100" font-size="76" fill="url(#g)" letter-spacing="-2">LinkHo</text><g class="pb" data-gap="22" fill="#d946ef"><g transform="skewX(-10)">
+    <rect x="0" y="58" width="21" height="64" rx="8"/>
+    <ellipse cx="34" cy="80" rx="27" ry="23"/>
+    <ellipse cx="26" cy="42" rx="7.5" ry="22" transform="rotate(-12 26 42)"/>
+    <ellipse cx="45" cy="42" rx="7.5" ry="22" transform="rotate(14 45 42)"/>
+    <circle cx="30" cy="78" r="3.6" fill="#fff"/><circle cx="46" cy="78" r="3.6" fill="#fff"/></g></g><circle cx="458" cy="70" r="4" fill="#fff"/>
+</svg></div>
+
+<!-- 4 · P bunny + fast-forward arrows inside the head (#12) -->
+<div class="c dark"><span class="n">4 · P kelinci + panah ⏩ di wajah, versi gelap</span>
+<svg width="520" height="130" viewBox="0 0 520 130">
+  <text x="10" y="100" font-size="76" fill="#fff" letter-spacing="-2">LinkHo</text><g class="pb" data-gap="22" fill="url(#gv)"><g transform="skewX(-10)">
+    <rect x="0" y="58" width="21" height="64" rx="8"/>
+    <ellipse cx="34" cy="80" rx="27" ry="23"/>
+    <ellipse cx="26" cy="42" rx="7.5" ry="22" transform="rotate(-12 26 42)"/>
+    <ellipse cx="45" cy="42" rx="7.5" ry="22" transform="rotate(14 45 42)"/>
+    <path d="M28 70 39 79 28 88zM39 70 50 79 39 88z" fill="#0e1018"/></g></g>
+</svg></div>
+
+<!-- 5 · hop line (#9): dotted arc hops over the word and lands as bunny ears on the p -->
+<div class="c"><span class="n">5 · garis lompat (ide no.9), mendarat jadi telinga</span>
+<svg width="520" height="150" viewBox="0 0 520 150">
+  <path d="M30 70 C 120 -10 330 -10 430 48" fill="none" stroke="url(#g)" stroke-width="7" stroke-linecap="round" stroke-dasharray="0.1 18"/>
+  <g fill="url(#gv)"><ellipse cx="444" cy="40" rx="8" ry="24" transform="rotate(-14 444 40)"/><ellipse cx="468" cy="40" rx="8" ry="24" transform="rotate(14 468 40)"/></g>
+  <text x="14" y="128" font-size="74" fill="#0e1018" letter-spacing="-2">LinkHop</text>
+</svg></div>
+
+<!-- 6 · hop line gradient + P bunny combo -->
+<div class="c"><span class="n">6 · gabungan: garis lompat + P kelinci</span>
+<svg width="520" height="150" viewBox="0 0 520 150">
+  <path id="arc6" d="M28 76 C 110 0 330 -6 418 52" fill="none" stroke="url(#g)" stroke-width="7" stroke-linecap="round" stroke-dasharray="0.1 18"/>
+  <path id="tip6" d="M0 -10 22 6 -6 12z" fill="#d946ef"/>
+  <text x="10" y="128" font-size="76" fill="url(#g)" letter-spacing="-2">LinkHo</text><g class="pb" data-dy="28" data-gap="22" fill="#d946ef"><g transform="skewX(-10)">
+    <rect x="0" y="58" width="21" height="64" rx="8"/>
+    <ellipse cx="34" cy="80" rx="27" ry="23"/>
+    <ellipse cx="26" cy="42" rx="7.5" ry="22" transform="rotate(-12 26 42)"/>
+    <ellipse cx="45" cy="42" rx="7.5" ry="22" transform="rotate(14 45 42)"/>
+    <circle cx="30" cy="78" r="3.6" fill="#fff"/><circle cx="46" cy="78" r="3.6" fill="#fff"/></g></g><circle cx="464" cy="98" r="4" fill="#fff"/>
+</svg></div>
+
+<!-- 7 · ribbon (#1): one flowing gradient stroke underlines the word and curls into ears -->
+<div class="c"><span class="n">7 · pita mengalir (no.1) menggulung jadi telinga</span>
+<svg width="520" height="140" viewBox="0 0 520 140">
+  <text x="14" y="92" font-size="74" fill="url(#g)" letter-spacing="-2">LinkHop</text>
+  <text x="14" y="92" font-size="74" fill="url(#shine)" letter-spacing="-2">LinkHop</text>
+  <path d="M20 116 C 160 136 360 128 460 70 C 480 56 486 30 474 16" fill="none" stroke="url(#g)" stroke-width="9" stroke-linecap="round"/>
+  <path d="M474 16 C 470 34 474 52 490 60" fill="none" stroke="url(#g)" stroke-width="9" stroke-linecap="round"/>
+</svg></div>
+
+<!-- 8 · compact app icon + wordmark lockup -->
+<div class="c"><span class="n">8 · ikon kotak (untuk favicon) + teks</span>
+<svg width="520" height="120" viewBox="0 0 520 120">
+  <rect x="6" y="10" width="100" height="100" rx="26" fill="url(#gv)"/><rect x="6" y="10" width="100" height="100" rx="26" fill="url(#shine)"/>
+  <use href="#arrowhead" x="14" y="28" width="86" height="56" fill="#fff"/>
+  <circle cx="83" cy="62" r="3" fill="#6366f1"/>
+  <text x="124" y="86" font-size="66" fill="#0e1018" letter-spacing="-2">Link<tspan fill="url(#g)">Hop</tspan></text>
+</svg></div>
+<script>
+document.fonts.ready.then(() => document.querySelectorAll('.pb').forEach(g => {
+  const t = g.previousElementSibling, b = t.getBBox();
+  const x = b.x + b.width + (+g.dataset.gap || 0), y = +g.dataset.dy || 0;
+  g.setAttribute('transform', `translate(${x} ${y})`);
+  const arc = g.parentNode.querySelector('#arc6');
+  if (arc) { const ex = x + 6, ey = y + 22; arc.setAttribute('d', `M28 76 C 110 0 ${ex - 60} -10 ${ex} ${ey}`);
+    g.parentNode.querySelector('#tip6').setAttribute('transform', `translate(${ex} ${ey}) rotate(40)`); }
+}));
+</script></body></html>

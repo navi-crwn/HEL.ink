@@ -1,0 +1,126 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&family=Inter:wght@600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f4f5f9;font-family:Inter,sans-serif;padding:28px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.c{background:#fff;border-radius:22px;padding:22px 24px;display:flex;flex-direction:column;gap:8px;border:1px solid #e6e8f0}
+.c.dark{background:#0e1018;border-color:#0e1018}
+.n{font:600 14px Inter;color:#6b7185}.c.dark .n{color:#9aa0b4}
+.row{display:flex;align-items:center;gap:26px;justify-content:center;min-height:200px}
+text{font-family:Poppins;font-style:italic;font-weight:800}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="g" gradientUnits="userSpaceOnUse" x1="20" y1="0" x2="520" y2="0"><stop offset="0" stop-color="#0ea5e9"/><stop offset=".5" stop-color="#6366f1"/><stop offset="1" stop-color="#d946ef"/></linearGradient>
+  <linearGradient id="gi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset=".55" stop-color="#6366f1"/><stop offset="1" stop-color="#d946ef"/></linearGradient>
+</defs></svg>
+
+<div class="c"><span class="n">1 · pita gaya Amazon: dari bawah L, melingkar di bawah k, panah ke p</span><div class="row"><svg class="wm" data-mode="o" data-ribbon="loop" data-ink="url(#g)"></svg></div></div>
+<div class="c"><span class="n">2 · sama, teks hitam + kelinci & pita bergradasi</span><div class="row"><svg class="wm" data-mode="o" data-ribbon="loop" data-ink="#0e1018" data-accent="url(#g)"></svg></div></div>
+<div class="c"><span class="n">3 · o + p menyatu jadi ∞ (kelinci di lingkar kiri)</span><div class="row"><svg class="wm" data-mode="inf" data-ribbon="none" data-ink="url(#g)"></svg></div></div>
+<div class="c"><span class="n">4 · ∞ + pita Amazon</span><div class="row"><svg class="wm" data-mode="inf" data-ribbon="loop" data-ink="url(#g)"></svg></div></div>
+<div class="c"><span class="n">5 · o dan p saling mengait seperti mata rantai</span><div class="row"><svg class="wm" data-mode="chain" data-ribbon="none" data-ink="url(#g)"></svg></div></div>
+<div class="c dark"><span class="n">6 · ∞ + pita, versi gelap</span><div class="row"><svg class="wm" data-mode="inf" data-ribbon="loop" data-ink="url(#g)" data-bg="#0e1018"></svg></div></div>
+<div class="c"><span class="n">Logo sederhana · ∞ kelinci</span><div class="row" id="icons"></div></div>
+<div class="c"><span class="n">Logo sederhana · kepala kelinci</span><div class="row" id="icons2"></div></div>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg', T = Math.tan(10 * Math.PI / 180);
+const el = (tag, a, p) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); p && p.appendChild(e); return e; };
+
+// Draw a polyline of points as a ribbon whose width follows w(t): short round-capped segments,
+// so it stays continuous even where it crosses itself.
+function band(parent, pts, w, fill) {
+  const g = el('g', { fill: 'none', stroke: fill, 'stroke-linecap': 'round' }, parent), N = pts.length - 1;
+  for (let i = 0; i < N; i++) el('line', { x1: pts[i][0], y1: pts[i][1], x2: pts[i + 1][0], y2: pts[i + 1][1], 'stroke-width': w(i / N) }, g);
+  const e = pts[N], q = pts[N - 3];
+  return { end: { x: e[0], y: e[1] }, angle: Math.atan2(e[1] - q[1], e[0] - q[0]) };
+}
+function ears(g, cx, top, r, fill) {
+  el('ellipse', { cx: cx - r * .38, cy: top - r * .62, rx: r * .3, ry: r * .82, transform: `rotate(-12 ${cx - r * .38} ${top - r * .62})`, fill }, g);
+  el('ellipse', { cx: cx + r * .38, cy: top - r * .62, rx: r * .3, ry: r * .82, transform: `rotate(12 ${cx + r * .38} ${top - r * .62})`, fill }, g);
+}
+
+function wordmark(svg) {
+  const ink = svg.dataset.ink, accent = svg.dataset.accent || ink, mode = svg.dataset.mode;
+  const size = 96, base = 118, x0 = 30, xh = size * .555, r = xh * .54, w = size * .155, cy = base - xh / 2 + 1;
+  const t1 = el('text', { x: x0, y: base, 'font-size': size, fill: ink }, svg); t1.textContent = 'LinkH';
+  const K = t1.getExtentOfChar(3), Lc = t1.getExtentOfChar(0);
+  const ocx = x0 + t1.getComputedTextLength() + size * .17 + r;
+  let pEnd; // x where the word ends, and where the ribbon's arrow should point
+  const g = el('g', { transform: `skewX(-10) translate(${cy * T} 0)` }, svg); // slant like the font, pivoting on the x-height centre line
+
+  if (mode === 'o') {
+    ears(g, ocx, cy - r, r, accent);
+    el('ellipse', { cx: ocx, cy, rx: r - w / 2, ry: r * .94 - w / 2, fill: 'none', stroke: accent, 'stroke-width': w }, g);
+    const t2 = el('text', { x: ocx + r - size * .01, y: base, 'font-size': size, fill: accent }, svg); t2.textContent = 'p';
+    const P = t2.getExtentOfChar(0); pEnd = { x: P.x - size * .2, y: base + 6, w: P.x + P.width };
+  } else {
+    // ∞ / chain: the o (left loop, with ears) and the p's bowl (right loop + stem) share one stroke.
+    const dx = mode === 'inf' ? r * 1.62 : r * 1.38, pcx = ocx + dx, la = r * 1.9, lc = ocx + la * .78;
+    ears(g, mode === 'inf' ? lc - la * .62 : ocx, cy - r, r, accent);
+    if (mode === 'inf') {
+      // A lemniscate drawn as one stroke: two round lobes crossing in the middle.
+      const pts = [];
+      for (let i = 0; i <= 240; i++) { const t = i / 240 * Math.PI * 2, s = Math.sin(t), c = Math.cos(t), k = 1 + s * s;
+        pts.push(`${lc + la * c / k} ${cy + la * 1.3 * s * c / k}`); }
+      el('path', { d: 'M' + pts.join(' L') + 'Z', fill: 'none', stroke: accent, 'stroke-width': w, 'stroke-linejoin': 'round' }, g);
+      // stem of the p, down from the right lobe's left side
+      el('rect', { x: lc + la * .62 - w / 2, y: cy - 4, width: w, height: base + size * .24 - cy + 4, rx: w * .3, fill: accent }, g);
+    } else {
+      el('ellipse', { cx: ocx, cy, rx: r - w / 2, ry: r * .94 - w / 2, fill: 'none', stroke: accent, 'stroke-width': w }, g);
+      el('ellipse', { cx: pcx, cy, rx: r - w / 2, ry: r * .94 - w / 2, fill: 'none', stroke: accent, 'stroke-width': w }, g);
+      // over-under: redraw the top-right arc of the o over the p
+      const m = el('mask', { id: 'm' + Math.random().toString(36).slice(2) }, svg.querySelector('defs') || el('defs', {}, svg));
+      el('rect', { x: ocx, y: cy - r - 2, width: r + 4, height: r, fill: '#fff' }, m);
+      el('ellipse', { cx: ocx, cy, rx: r - w / 2, ry: r * .94 - w / 2, fill: 'none', stroke: svg.dataset.bg || '#fff', 'stroke-width': w + 8, mask: `url(#${m.id})` }, g);
+      el('ellipse', { cx: ocx, cy, rx: r - w / 2, ry: r * .94 - w / 2, fill: 'none', stroke: accent, 'stroke-width': w, mask: `url(#${m.id})` }, g);
+      el('rect', { x: pcx - r + 1, y: cy - 6, width: w, height: base + size * .24 - cy + 6, rx: w * .3, fill: accent }, g);
+    }
+    pEnd = mode === 'inf' ? { x: lc + la * .62 - size * .3, y: base + 8, w: lc + la + 30 } : { x: pcx - r * .9, y: base + 8, w: pcx + r + 24 };
+  }
+
+  if (svg.dataset.ribbon === 'loop') {
+    // Amazon-style: free-floating, never touching a letter. Starts under the L, loops once under the k,
+    // then sweeps up and ends in an arrow pointing at the p.
+    const y0 = base + 26, sx = Lc.x + 6, ex = pEnd.x, ey = base + 30, kx = K.x + K.width * .5 + 6;
+    const span = ex - sx, uk = (kx - sx) / span, win = .16, pts = [], ws = [];
+    const smooth = v => v <= 0 ? 0 : v >= 1 ? 1 : v * v * (3 - 2 * v);
+    for (let i = 0; i <= 400; i++) {
+      const u = i / 400, ph = smooth((u - (uk - win / 2)) / win);
+      const smile = y0 + 22 * Math.sin(Math.PI * Math.min(1, u * 1.05)) - 18 * Math.pow(u, 3);   // dips, then rises to the arrow
+      pts.push([sx + u * span + 34 * Math.sin(2 * Math.PI * ph), smile + 17 * (1 - Math.cos(2 * Math.PI * ph))]);
+    }
+    const tip = band(svg, pts, t => size * (.03 + .085 * Math.pow(Math.sin(Math.PI * Math.min(1, t * 1.06)), .6) + .04 * Math.pow(t, 3)), accent);
+    const a = tip.angle, L = size * .24, hx = tip.end.x, hy = tip.end.y;
+    const P = (dx, dy) => `${hx + dx * Math.cos(a) - dy * Math.sin(a)} ${hy + dx * Math.sin(a) + dy * Math.cos(a)}`;
+    el('path', { d: `M${P(L * .7, 0)} L${P(-L * .35, -L * .62)} L${P(-L * .1, 0)} L${P(-L * .35, L * .62)} Z`, fill: accent, stroke: accent, 'stroke-width': 4, 'stroke-linejoin': 'round' }, svg);
+  }
+  const W = pEnd.w + 30; svg.setAttribute('viewBox', `0 0 ${W} 210`); svg.setAttribute('width', W); svg.setAttribute('height', 210);
+}
+
+function infIcon(parent, s, tile) {
+  const svg = el('svg', { width: s, height: s, viewBox: '0 0 100 100' }, parent);
+  const ink = tile ? '#fff' : 'url(#gi)';
+  if (tile) el('rect', { width: 100, height: 100, rx: 23, fill: 'url(#gi)' }, svg);
+  const g = el('g', {}, svg), r = 17, w = 8.5, cx = 50, cy = 62, dx = r * 1.62;
+  ears(g, cx - dx / 2, cy - r, r, ink);
+  const pts = []; for (let i = 0; i <= 200; i++) { const t = i / 200 * Math.PI * 2, sn = Math.sin(t), c = Math.cos(t), k = 1 + sn * sn; pts.push(`${cx + dx * c / k} ${cy + dx * 1.9 * sn * c / k}`); }
+  el('path', { d: 'M' + pts.join(' L') + 'Z', fill: 'none', stroke: ink, 'stroke-width': w }, g);
+}
+function headIcon(parent, s, tile) {
+  const svg = el('svg', { width: s, height: s, viewBox: '0 0 100 100' }, parent);
+  const ink = tile ? '#fff' : 'url(#gi)';
+  if (tile) el('rect', { width: 100, height: 100, rx: 23, fill: 'url(#gi)' }, svg);
+  const g = el('g', { transform: 'translate(0 4)' }, svg), r = 26, w = 11;
+  ears(g, 50, 62 - r, r, ink);
+  el('ellipse', { cx: 50, cy: 62, rx: r - w / 2, ry: r * .94 - w / 2, fill: 'none', stroke: ink, 'stroke-width': w }, g);
+}
+document.fonts.ready.then(() => {
+  document.querySelectorAll('svg.wm').forEach(wordmark);
+  [128, 64, 32, 16].forEach(s => infIcon(document.getElementById('icons'), s, true)); infIcon(document.getElementById('icons'), 96, false);
+  [128, 64, 32, 16].forEach(s => headIcon(document.getElementById('icons2'), s, true)); headIcon(document.getElementById('icons2'), 96, false);
+  document.body.dataset.ready = 1;
+});
+</script>
+</body></html>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset=".52" stop-color="#6366f1"/><stop offset="1" stop-color="#d946ef"/></linearGradient>
+<linearGradient id="gl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<filter id="sh" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#1e1b4b" flood-opacity=".3"/></filter></defs><rect width="512" height="512" rx="116" fill="url(#bg)"/><rect width="512" height="512" rx="116" fill="url(#gl)"/><g filter="url(#sh)" fill="#fff" stroke="#fff"><path d="M118 330 A 150 150 0 1 1 330 420" fill="none" stroke-width="30" stroke-linecap="round"/>
+<path d="M300 380 L 352 446 L 270 450 Z" stroke-width="14" stroke-linejoin="round"/>
+<g transform="translate(-10 70) scale(.86)"><g stroke="none">
+  <ellipse cx="250" cy="210" rx="112" ry="64" transform="rotate(-14 250 210)"/>
+  <circle cx="352" cy="156" r="54"/>
+  <ellipse cx="326" cy="78" rx="21" ry="66" transform="rotate(-28 326 78)"/>
+  <ellipse cx="368" cy="74" rx="19" ry="60" transform="rotate(-8 368 74)"/>
+  <rect x="314" y="212" width="110" height="38" rx="19" transform="rotate(22 314 231)"/></g><circle cx="132" cy="232" r="26" stroke="none"/></g></g><circle cx="306" cy="196" r="9" fill="#6366f1"/></svg>

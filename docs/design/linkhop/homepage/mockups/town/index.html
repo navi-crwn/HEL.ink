@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LinkHop town mockup</title>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js"}}</script>
+<style>
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:#f6f7fb;color:#0e1018}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 16px}
+#scene{height:460px;position:relative}
+#scene canvas{display:block;width:100%;height:100%}
+.row{display:flex;align-items:center;justify-content:center;gap:12px;font:13px ui-monospace,Menlo,monospace;margin-top:4px}
+.pill{border-radius:999px;padding:8px 16px;background:#fff;border:1px solid #c7d2fe;color:#4338ca;font-weight:600}
+.dest{border-color:#f5d0fe;color:#475569;font-weight:400;max-width:440px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.arrow{color:#d946ef;font-size:22px}
+.cap{font:600 12px Inter,sans-serif;color:#6b7185;letter-spacing:.2em;text-transform:uppercase;text-align:center}
+</style></head>
+<body><div class="wrap">
+<p class="cap">Mockup · peta lokal 3D</p>
+<div id="scene"></div>
+<div class="row"><span class="pill" id="short">hel.ink/school</span><span class="arrow">→</span><span class="pill dest" id="dest">school.example.com/students/2026/semester-2/assignments/final-project-guidelines.pdf</span></div>
+</div>
+<script type="module">
+import * as THREE from 'three';
+import { RoundedBoxGeometry } from './addons/RoundedBoxGeometry.js';
+
+const el = document.getElementById('scene');
+const r = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+r.setPixelRatio(Math.min(devicePixelRatio, 2)); r.setSize(el.clientWidth, el.clientHeight);
+r.shadowMap.enabled = true; r.shadowMap.type = THREE.PCFSoftShadowMap;
+el.appendChild(r.domElement);
+const scene = new THREE.Scene();
+const cam = new THREE.PerspectiveCamera(28, el.clientWidth / el.clientHeight, .1, 200);
+cam.position.set(0, 16.5, 20.5); cam.lookAt(0, 0, 1.2);
+scene.add(new THREE.HemisphereLight(0xffffff, 0xc7d2fe, 1.5));
+const sun = new THREE.DirectionalLight(0xffffff, 2.2); sun.position.set(-8, 16, 10); sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048); Object.assign(sun.shadow.camera, { left: -14, right: 14, top: 12, bottom: -12 }); scene.add(sun);
+
+const mat = (c, o = {}) => new THREE.MeshStandardMaterial({ color: c, roughness: .55, ...o });
+const box = (w, h, d, c, x, y, z, rad = .12) => { const m = new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 3, rad), mat(c)); m.position.set(x, y, z); m.castShadow = m.receiveShadow = true; scene.add(m); return m; };
+
+// the little neighbourhood: one rounded tile of grass with two streets crossing
+box(18, 1, 12, '#dcfce7', 0, -.5, 0, .5);
+box(18.02, .06, 1.6, '#e2e8f0', 0, .03, 0, .03);
+box(1.6, .06, 12.02, '#e2e8f0', 0, .03, 0, .03);
+for (let i = -8; i <= 8; i += 1.6) if (Math.abs(i) > 1) box(.6, .02, .12, '#fff', i, .07, 0, .01);
+
+// buildings, one per kind of link; each has a sign and a bunny waiting at its door
+const SPOTS = [
+  { name: 'school', at: [-5.6, -3.4], size: [3.4, 1.8, 2.2], color: '#fde68a', roof: '#f59e0b' },
+  { name: 'shop',   at: [5.4, -3.4],  size: [3, 1.4, 2.2],   color: '#fbcfe8', roof: '#ec4899' },
+  { name: 'cafe',   at: [-5.8, 3.4],  size: [2.6, 1.2, 2],   color: '#fed7aa', roof: '#f97316' },
+  { name: 'jobs',   at: [5.6, 3.3],   size: [2.2, 3.2, 2],   color: '#bfdbfe', roof: '#3b82f6' },
+  { name: 'event',  at: [-2.6, -4.2], size: [1.6, 1, 1.4],   color: '#ddd6fe', roof: '#8b5cf6' },
+];
+function sign(text, color) {
+  const c = document.createElement('canvas'); c.width = 256; c.height = 80; const g = c.getContext('2d');
+  g.fillStyle = '#fff'; g.beginPath(); g.roundRect(4, 4, 248, 72, 36); g.fill();
+  g.fillStyle = color; g.font = '600 38px ui-monospace, Menlo, monospace'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(text, 128, 42);
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), depthTest: false })); s.scale.set(2.2, .69, 1); scene.add(s); return s;
+}
+SPOTS.forEach(s => {
+  const [w, h, d] = s.size, [x, z] = s.at;
+  box(w, h, d, s.color, x, h / 2, z);
+  box(w + .3, .3, d + .3, s.roof, x, h + .1, z, .1);
+  for (let i = 0; i < Math.floor(w / .8); i++) box(.4, .4, .05, '#ffffff', x - w / 2 + .6 + i * .8, h * .6, z + d / 2 + .01, .04); // windows
+  sign(s.name, s.roof).position.set(x, h + 1, z);
+});
+// a few trees
+[[-1.8, 4.3], [2.4, 4.6], [-8, -1.2], [8.2, 1.4], [2.4, -4.6]].forEach(([x, z]) => {
+  box(.25, .6, .25, '#a16207', x, .3, z, .05);
+  const t = new THREE.Mesh(new THREE.SphereGeometry(.6, 24, 16), mat('#86efac')); t.position.set(x, 1, z); t.castShadow = true; scene.add(t);
+});
+
+// hel.ink in the middle of the crossing: a round pad that glows when a bunny lands
+const pad = new THREE.Mesh(new THREE.CylinderGeometry(1.25, 1.35, .3, 48), mat('#ffffff', { emissive: '#6366f1', emissiveIntensity: .0 }));
+pad.position.set(0, .15, 0); pad.receiveShadow = true; scene.add(pad);
+const ring = new THREE.Mesh(new THREE.TorusGeometry(1.3, .06, 12, 64), mat('#818cf8', { emissive: '#818cf8', emissiveIntensity: .6 }));
+ring.rotation.x = Math.PI / 2; ring.position.y = .32; scene.add(ring);
+sign('hel.ink', '#4f46e5').position.set(0, 1.0, 1.5);
+
+// the bunny: the logo's head in soft 3D (ring head, two ears)
+const SKY = new THREE.Color('#0ea5e9'), IND = new THREE.Color('#6366f1'), FUC = new THREE.Color('#d946ef');
+const tint = t => t < .5 ? SKY.clone().lerp(IND, t * 2) : IND.clone().lerp(FUC, (t - .5) * 2);
+function bunny(t) {
+  const g = new THREE.Group(), m = new THREE.MeshPhysicalMaterial({ color: tint(t), roughness: .3, clearcoat: 1 });
+  const head = new THREE.Mesh(new THREE.TorusGeometry(.32, .14, 20, 40), m); head.castShadow = true; g.add(head);
+  [-1, 1].forEach(s => { const e = new THREE.Mesh(new THREE.CapsuleGeometry(.11, .5, 8, 16), m); e.position.set(s * .14, .68, 0); e.rotation.z = -s * .22; e.castShadow = true; g.add(e); });
+  g.rotation.z = -.15; scene.add(g); return g;
+}
+const bunnies = SPOTS.map((s, i) => { const b = bunny(i / (SPOTS.length - 1)); const home = new THREE.Vector3(s.at[0] + (s.at[0] < 0 ? 1.6 : -1.6) * .9, .5, s.at[1] + (s.at[1] < 0 ? 1.6 : -1.6)); b.position.copy(home); b.userData.home = home; return b; });
+
+// the arrow that leaves hel.ink for the destination (towards the viewer, off the tile)
+const curve = new THREE.QuadraticBezierCurve3(new THREE.Vector3(0, .5, 1.2), new THREE.Vector3(1.5, 2.6, 4.5), new THREE.Vector3(3.2, .9, 7.4));
+const tube = new THREE.Mesh(new THREE.TubeGeometry(curve, 48, .09, 10), mat('#d946ef', { emissive: '#d946ef', emissiveIntensity: .35 })); scene.add(tube);
+const cone = new THREE.Mesh(new THREE.ConeGeometry(.26, .6, 20), mat('#d946ef', { emissive: '#d946ef', emissiveIntensity: .35 }));
+cone.position.copy(curve.getPoint(1)); cone.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), curve.getTangent(1)); scene.add(cone);
+
+const LINKS = { school: 'school.example.com/students/2026/semester-2/assignments/final-project-guidelines.pdf', shop: 'shop.example.com/collections/summer-sale/products/linen-shirt?color=sand', cafe: 'cafe.example.com/menu/today/lunch-specials-and-cold-drinks', jobs: 'careers.example.com/jobs/frontend-engineer-remote-asia-2026', event: 'events.example.com/2026/jakarta-tech-meetup/registration' };
+// ?t=0.4 freezes one moment (for screenshots); otherwise it plays
+const fixed = new URLSearchParams(location.search).get('t'), who = +(new URLSearchParams(location.search).get('who') || 0);
+const PERIOD = 3200;
+function frame(time) {
+  const cyc = Math.floor(time / PERIOD), p = fixed !== null ? +fixed : (time % PERIOD) / PERIOD, i = fixed !== null ? who : cyc % bunnies.length;
+  bunnies.forEach((b, k) => { if (k !== i) { b.position.copy(b.userData.home); b.position.y = .5 + Math.abs(Math.sin(time / 400 + k)) * .08; } });
+  const b = bunnies[i], h = b.userData.home, f = Math.min(1, Math.max(0, (p - .1) / .45)), e = f < .5 ? 2 * f * f : 1 - (-2 * f + 2) ** 2 / 2;
+  b.position.set(h.x * (1 - e), .5 + Math.sin(e * Math.PI) * 3.2 + (e === 1 ? -.05 : 0), h.z * (1 - e));
+  b.rotation.y = Math.atan2(-h.x, -h.z) * .3;
+  const arrived = p > .55;
+  pad.material.emissiveIntensity = arrived ? .35 : 0;
+  const grow = Math.min(1, Math.max(0, (p - .58) / .25));
+  tube.visible = cone.visible = grow > 0; tube.geometry.setDrawRange(0, Math.floor(grow * tube.geometry.index.count / 3) * 3);
+  document.getElementById('short').textContent = 'hel.ink/' + SPOTS[i].name;
+  document.getElementById('dest').textContent = LINKS[SPOTS[i].name];
+  document.getElementById('dest').style.opacity = grow > .9 ? 1 : .35;
+  r.render(scene, cam);
+}
+if (fixed !== null) { frame(0); document.body.dataset.ready = 1; }
+else (function loop(t) { frame(t); requestAnimationFrame(loop); })(0);
+</script>
+</body></html>

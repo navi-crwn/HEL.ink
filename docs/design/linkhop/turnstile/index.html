@@ -1,0 +1,48 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,sans-serif;background:linear-gradient(135deg,#eef2ff,#fff 50%,#fdf4ff);color:#0f172a}
+section{width:720px;padding:24px;position:relative}
+.tag{font:600 11px ui-monospace,monospace;letter-spacing:.2em;color:#6366f1;text-transform:uppercase;margin:0 0 12px}
+.card{background:rgba(255,255,255,.9);border-radius:28px;padding:8px;box-shadow:0 20px 40px -12px rgba(99,102,241,.2),0 0 0 1px rgba(99,102,241,.12)}
+.row{display:flex;gap:8px}.inp{flex:1;min-width:0;background:#f1f5f9;border-radius:16px;padding:14px 16px;color:#94a3b8;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.btn{border-radius:16px;padding:14px 24px;color:#fff;font-weight:600;background:linear-gradient(90deg,#6366f1,#0ea5e9,#d946ef);white-space:nowrap}
+.sub{display:flex;justify-content:space-between;align-items:center;padding:10px 8px 4px;font-size:12px}
+.slug{color:#64748b}.join{color:#4f46e5;font-weight:500}
+.note{font-size:11px;color:#64748b;padding:6px 8px 4px;margin:0}
+.cf{width:300px;height:65px;border:1px solid #e0e0e0;background:#fafafa;border-radius:4px;display:flex;align-items:center;padding:0 14px;gap:12px;font-size:14px;color:#222;flex:none}
+.cf .box{width:24px;height:24px;border:2px solid #555;border-radius:3px;flex:none}
+.cf .logo{margin-left:auto;text-align:right;font:700 9px/1.25 system-ui;letter-spacing:.06em}
+.cf .logo i{display:block;width:34px;height:14px;margin:0 0 2px auto;border-radius:10px 10px 2px 2px;background:linear-gradient(90deg,#f38020,#faae40)}
+.cf .logo u{font:400 8px system-ui;color:#444}
+.pop{background:#fff;border-radius:18px;padding:12px;box-shadow:0 25px 50px -12px rgba(15,23,42,.25),0 0 0 1px rgba(99,102,241,.15)}
+.pop p{margin:0 0 8px;font-size:12px;font-weight:600;color:#334155}
+</style></head><body>
+<template id="cfw"><div class="cf"><span class="box"></span>Verify you are human<span class="logo"><i></i>CLOUDFLARE<br><u>Privacy · Help</u></span></div></template>
+
+<section id="A"><p class="tag">A · Sejajar dengan link di baris kedua</p>
+<div class="card"><div class="row"><div class="inp">https://shop.example.com/collections/summer-sale/products/linen-shirt</div><div class="btn">Shorten</div></div>
+<div class="sub" style="padding-top:10px"><div data-cf></div><div style="text-align:right;line-height:26px"><div class="slug">+ Custom slug</div><div class="join">Join LinkHop for more features →</div></div></div>
+<p class="note">No account needed. Guest links are deleted after 14 days without a click, 30 days at most.</p></div></section>
+
+<section id="B" style="padding-bottom:110px"><p class="tag">B · Gelembung kecil di bawah tombol Shorten</p>
+<div class="card" style="position:relative"><div class="row"><div class="inp">https://shop.example.com/collections/summer-sale/products/linen-shirt</div><div class="btn" style="opacity:.75">Verifying…</div></div>
+<div class="sub"><span class="slug">+ Custom slug</span><span class="join">Join LinkHop for more features →</span></div>
+<p class="note">No account needed. Guest links are deleted after 14 days without a click, 30 days at most.</p>
+<div class="pop" style="position:absolute;right:4px;top:66px"><p>One quick check, then your link is ready</p><div data-cf></div></div></div></section>
+
+<section id="C" style="height:300px"><p class="tag">C · Pop-up kecil di tengah (hanya saat Cloudflare minta)</p>
+<div class="card" style="opacity:.35;filter:blur(1px)"><div class="row"><div class="inp">https://shop.example.com/collections/summer-sale/products/linen-shirt</div><div class="btn">Shorten</div></div>
+<div class="sub"><span class="slug">+ Custom slug</span><span class="join">Join LinkHop for more features →</span></div>
+<p class="note">No account needed. Guest links are deleted after 14 days without a click, 30 days at most.</p></div>
+<div style="position:absolute;left:0;right:0;top:56px;display:flex;justify-content:center"><div class="pop" style="padding:20px;text-align:center;border-radius:24px">
+<div style="font-weight:700;font-size:16px;color:#0f172a">Almost there</div><div style="font-size:12px;color:#64748b;margin:4px 0 12px">Tick the box so we know you're human.</div><div data-cf></div>
+<div style="font-size:12px;color:#94a3b8;margin-top:12px">Cancel</div></div></div></section>
+
+<section id="D"><p class="tag">D · Ukuran normal, rata tengah, dengan label</p>
+<div class="card"><div class="row"><div class="inp">https://shop.example.com/collections/summer-sale/products/linen-shirt</div><div class="btn">Shorten</div></div>
+<div class="sub"><span class="slug">+ Custom slug</span><span class="join">Join LinkHop for more features →</span></div>
+<div style="margin:8px 8px 0;display:flex;align-items:center;justify-content:center;gap:18px;border-radius:16px;background:rgba(238,242,255,.8);padding:12px">
+<div style="font-size:12px;color:#475569"><b style="display:block;color:#1e293b">Quick security check</b>Keeps spam links off hel.ink</div><div data-cf></div></div>
+<p class="note" style="padding-top:8px">No account needed. Guest links are deleted after 14 days without a click, 30 days at most.</p></div></section>
+
+<script>document.querySelectorAll('[data-cf]').forEach(e=>e.replaceWith(document.getElementById('cfw').content.cloneNode(true)))</script>
+</body></html>

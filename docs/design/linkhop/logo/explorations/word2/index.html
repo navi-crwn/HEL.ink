@@ -1,0 +1,107 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,800&family=Inter:wght@600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f4f5f9;font-family:Inter,sans-serif;padding:28px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.c{background:#fff;border-radius:22px;padding:24px 26px;display:flex;flex-direction:column;gap:10px;border:1px solid #e6e8f0}
+.c.dark{background:#0e1018;border-color:#0e1018}.c.wide{grid-column:1/-1}
+.n{font:600 14px Inter;color:#6b7185}.c.dark .n{color:#9aa0b4}
+.row{display:flex;align-items:center;gap:26px;justify-content:center}
+text{font-family:Poppins;font-style:italic;font-weight:800}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="g" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="560" y2="0"><stop offset="0" stop-color="#0ea5e9"/><stop offset=".5" stop-color="#6366f1"/><stop offset="1" stop-color="#d946ef"/></linearGradient>
+  <linearGradient id="gi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset=".55" stop-color="#6366f1"/><stop offset="1" stop-color="#d946ef"/></linearGradient>
+  <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs></svg>
+
+<!-- Wordmarks are laid out by script: "LinkH" + bunny o + "p", and the ribbon is drawn from the L's foot to the p's tail. -->
+<div class="c wide"><span class="n">A · LinkHop, o = kepala kelinci, pita dari kaki L ke ekor p</span>
+  <div class="row"><svg class="wm" data-ink="url(#g)" data-face="#fff" width="640" height="200" viewBox="0 0 640 200"></svg></div></div>
+<div class="c dark wide"><span class="n">A · versi gelap</span>
+  <div class="row"><svg class="wm" data-ink="url(#g)" data-face="#0e1018" width="640" height="200" viewBox="0 0 640 200"></svg></div></div>
+<div class="c wide"><span class="n">B · teks hitam, hanya kepala kelinci + pita yang bergradasi</span>
+  <div class="row"><svg class="wm" data-ink="#0e1018" data-accent="url(#g)" data-face="#fff" width="640" height="200" viewBox="0 0 640 200"></svg></div></div>
+
+<div class="c"><span class="n">Logo sederhana · kepala kelinci saja</span>
+  <div class="row" id="icons"></div></div>
+<div class="c dark"><span class="n">Logo sederhana · di latar gelap</span>
+  <div class="row" id="icons-dark"></div></div>
+
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const el = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; };
+const SKEW = Math.tan(10 * Math.PI / 180); // Poppins italic slant, about 10°
+
+// The bunny "o": a ring with the font's stroke weight, two ears, a small face in the counter.
+// (cx, cy) is the centre of the ring; r its outer radius.
+function bunnyO(g, cx, cy, r, w, ink, face, faceInk) {
+  const k = el('g', { transform: `translate(${cx} ${cy}) skewX(-10)` }, g);
+  el('ellipse', { cx: -r * .38, cy: -r * 1.55, rx: r * .3, ry: r * .82, transform: `rotate(-12 ${-r * .38} ${-r * 1.55})`, fill: ink }, k);
+  el('ellipse', { cx: r * .38, cy: -r * 1.55, rx: r * .3, ry: r * .82, transform: `rotate(12 ${r * .38} ${-r * 1.55})`, fill: ink }, k);
+  el('ellipse', { cx: 0, cy: 0, rx: r - w / 2, ry: r * .94 - w / 2, fill: 'none', stroke: ink, 'stroke-width': w }, k);
+  if (face) {
+    el('circle', { cx: -r * .2, cy: -r * .06, r: r * .1, fill: faceInk }, k);
+    el('circle', { cx: r * .2, cy: -r * .06, r: r * .1, fill: faceInk }, k);
+  }
+}
+
+document.fonts.ready.then(() => {
+  // Find a glyph's real ink with a canvas: its bottom row (left, right, y), so the ribbon can start and end inside the letters.
+  function bottomInk(ch, size) {
+    const c = document.createElement('canvas'); c.width = 300; c.height = 300;
+    const x = c.getContext('2d'); x.font = `italic 800 ${size}px Poppins`; x.fillText(ch, 50, 150);
+    const d = x.getImageData(0, 0, 300, 300).data;
+    for (let y = 299; y >= 0; y--) { let l = -1, r = -1;
+      for (let i = 0; i < 300; i++) if (d[(y * 300 + i) * 4 + 3] > 200) { if (l < 0) l = i; r = i; }
+      if (l >= 0) return { l: l - 50, r: r - 50, y: y - 150 }; }
+  }
+  const adv = (ch, size) => { const c = document.createElement('canvas').getContext('2d'); c.font = `italic 800 ${size}px Poppins`; return c.measureText(ch).width; };
+  document.querySelectorAll('svg.wm').forEach(svg => {
+    const ink = svg.dataset.ink, accent = svg.dataset.accent || ink, base = 120, size = 96, x0 = 30;
+    const ribbon = el('g', {}, svg);            // drawn first, so the letters cover its ends
+    const t1 = el('text', { x: x0, y: base, 'font-size': size, fill: ink }, svg);
+    t1.textContent = 'LinkH';
+    const xh = size * .555, r = xh * .54, w = size * .155;
+    const oLeft = x0 + t1.getComputedTextLength() + size * .17;
+    const ocx = oLeft + r, ocy = base - xh / 2 + 1;
+    bunnyO(svg, ocx, ocy, r, w, accent, false);
+    const px = ocx + r - size * .01;
+    const t2 = el('text', { x: px, y: base, 'font-size': size, fill: accent }, svg);
+    t2.textContent = 'p';
+    const L = bottomInk('L', size), P = bottomInk('p', size);
+    const T = SKEW, stem = size * .145;
+    const sx = x0 + L.l + stem / 2 + 4, sy = base + L.y - 2;             // centre of the L stem, at its foot
+    const ex = px + (P.l + P.r) / 2, ey = base + P.y - 2;                // centre of the p tail
+    const low = Math.max(sy, ey) + size * .2, span = ex - sx;
+    // A wavy ribbon: leaves the L along its italic stem, dips, rises a little mid-way, dips again and
+    // runs up into the p along its stem. Width tapers from a full stem at both ends to a thin middle.
+    const guide = el('path', { d: `M${sx} ${sy} C ${sx - 30 * T} ${sy + 30}, ${sx + span * .12} ${low + 8}, ${sx + span * .3} ${low + 4}
+      S ${sx + span * .5} ${low - 14}, ${sx + span * .66} ${low - 6} S ${ex - 40 * T} ${ey + 40}, ${ex} ${ey}`, fill: 'none' }, ribbon);
+    const len = guide.getTotalLength(), N = 160, left = [], right = [];
+    for (let i = 0; i <= N; i++) {
+      const t = i / N, a = guide.getPointAtLength(t * len), b = guide.getPointAtLength(Math.min(len, t * len + .5)), c = guide.getPointAtLength(Math.max(0, t * len - .5));
+      let nx = -(b.y - c.y), ny = b.x - c.x; const m = Math.hypot(nx, ny) || 1; nx /= m; ny /= m;
+      const wdt = (stem * (1 - .62 * Math.sin(Math.PI * t))) / 2;
+      left.push(`${a.x + nx * wdt} ${a.y + ny * wdt}`); right.unshift(`${a.x - nx * wdt} ${a.y - ny * wdt}`);
+    }
+    guide.remove();
+    el('path', { d: 'M' + left.join(' L') + ' L' + right.join(' L') + 'Z', fill: accent }, ribbon);
+    const W = px + adv('p', size) + 30; svg.setAttribute('viewBox', `0 0 ${W} 200`); svg.setAttribute('width', W);
+  });
+
+  // simple logo: just the bunny head
+  const mk = (parent, bg, sizes, ink, face) => sizes.forEach(s => {
+    const svg = el('svg', { width: s, height: s, viewBox: '0 0 100 100' }, parent);
+    if (bg === 'tile') { el('rect', { width: 100, height: 100, rx: 23, fill: 'url(#gi)' }, svg); el('rect', { width: 100, height: 100, rx: 23, fill: 'url(#shine)' }, svg); }
+    bunnyO(svg, 50, 66, 26, 11, ink, false);
+  });
+  mk(document.getElementById('icons'), 'tile', [128, 64, 32, 16], '#fff', '#6366f1');
+  mk(document.getElementById('icons'), 'none', [128, 48], 'url(#gi)', '#6366f1');
+  mk(document.getElementById('icons-dark'), 'tile', [128, 64, 32, 16], '#fff', '#6366f1');
+  mk(document.getElementById('icons-dark'), 'none', [128, 48], 'url(#gi)', '#d946ef');
+  document.body.dataset.ready = 1;
+});
+</script>
+</body></html>

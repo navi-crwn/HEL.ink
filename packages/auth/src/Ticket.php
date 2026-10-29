@@ -9,12 +9,15 @@ namespace Hop\Auth;
  */
 final class Ticket
 {
-    /** @return array<string, mixed> */
-    public static function verify(string $ticket, string $expectedState, ?string $secret = null, ?string $audience = null): array
+    /**
+     * @param  string|list<string>|null  $secret
+     * @return array<string, mixed>
+     */
+    public static function verify(string $ticket, string $expectedState, string|array|null $secret = null, ?string $audience = null): array
     {
-        $secret ??= (string) config('hop-auth.secret');
+        $candidates = self::resolveSecrets($secret);
         $audience ??= (string) config('hop-auth.app');
-        if (strlen($secret) < 32) {
+        if (empty($candidates)) {
             throw new TicketException('not_configured');
         }
         $parts = explode('.', $ticket);
@@ -22,8 +25,15 @@ final class Ticket
             throw new TicketException('malformed');
         }
         [$body, $sig] = $parts;
-        $expected = self::b64(hash_hmac('sha256', $body, $secret, true));
-        if (! hash_equals($expected, $sig)) {
+        $validSignature = false;
+        foreach ($candidates as $candidate) {
+            $expected = self::b64(hash_hmac('sha256', $body, $candidate, true));
+            if (hash_equals($expected, $sig)) {
+                $validSignature = true;
+                break;
+            }
+        }
+        if (! $validSignature) {
             throw new TicketException('bad_signature');
         }
         $payload = json_decode((string) self::unb64($body), true);
@@ -42,6 +52,26 @@ final class Ticket
         }
 
         return $payload;
+    }
+
+    /**
+     * @param  string|list<string>|null  $secret
+     * @return list<string>
+     */
+    public static function resolveSecrets(string|array|null $secret = null): array
+    {
+        if (is_array($secret)) {
+            $raw = $secret;
+        } elseif ($secret !== null && $secret !== '') {
+            $raw = [$secret];
+        } else {
+            $raw = [
+                (string) config('hop-auth.secret'),
+                (string) config('hop-auth.secret_prev'),
+            ];
+        }
+
+        return array_values(array_filter($raw, fn ($s) => is_string($s) && strlen($s) >= 32));
     }
 
     public static function b64(string $bytes): string

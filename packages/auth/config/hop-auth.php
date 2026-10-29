@@ -15,6 +15,9 @@ return [
     // The shared HMAC secret (the same value as HOP_SSO_SECRET at the hub, or this app's own).
     'secret' => env('HOP_SSO_SECRET'),
 
+    // Previous secret accepted during transition/rotation (optional).
+    'secret_prev' => env('HOP_SSO_SECRET_PREV'),
+
     // Seconds of clock skew tolerated when checking a ticket's exp/iat.
     'leeway' => 30,
 

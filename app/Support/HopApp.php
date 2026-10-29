@@ -42,7 +42,7 @@ final class HopApp
             export: $c['export'] ?? null,
             health: (string) ($c['health'] ?? '/up'),
             check: $c['check'] ?? null,
-            secret: ($c['secret'] ?? null) ?: (config('hop.sso_secret') ?: null),
+            secret: ! empty($c['registry']) ? ($c['secret'] ?? null) : (($c['secret'] ?? null) ?: (config('hop.sso_secret') ?: null)),
             icon: (string) ($c['icon'] ?? 'globe'),
             color: (string) ($c['color'] ?? 'indigo'),
             publicPrefix: $c['public_prefix'] ?? null,

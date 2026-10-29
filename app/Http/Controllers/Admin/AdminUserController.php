@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendHopEvent;
 use App\Models\ActivityLog;
 use App\Models\Role;
 use App\Models\User;
@@ -74,6 +75,8 @@ class AdminUserController extends Controller
         } else {
             $user->roles()->where('role', $data['role'])->whereNull('app_slug')->delete();
         }
+        $user->unsetRelation('roles');
+        SendHopEvent::broadcast('profile.updated', $user->hopProfile());
 
         return back()->with('status', 'Roles updated.');
     }

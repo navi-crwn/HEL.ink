@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\SendHopEvent;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -49,13 +50,32 @@ class User extends Authenticatable implements MustVerifyEmail
     /** Columns every HOP app keeps a copy of. */
     public const PROFILE_FIELDS = ['username', 'name', 'email', 'avatar', 'avatar_path', 'bio', 'website', 'location', 'locale', 'show_owner'];
 
+    /** @var array{qr_codes?: list<string>, bio_uploads?: list<string>} */
+    public array $deletedFiles = [];
+
     protected static function booted(): void
     {
-        // Profile changes bump profile_version so apps can tell a stale copy from a fresh one.
+        // Profile changes bump profile_version and reach the apps; status changes
+        // and deletions too. saveQuietly() (last_login_*) skips all of this.
         static::updating(function (User $user) {
             if ($user->isDirty(self::PROFILE_FIELDS)) {
                 $user->profile_version = max(1, (int) $user->profile_version) + 1;
             }
+        });
+        static::updated(function (User $user) {
+            if ($user->wasChanged(self::PROFILE_FIELDS)) {
+                SendHopEvent::broadcast('profile.updated', $user->hopProfile());
+            }
+            if ($user->wasChanged('status')) {
+                SendHopEvent::broadcast('account.status', ['sub' => (string) $user->id, 'hop_id' => (string) $user->id, 'status' => $user->status]);
+            }
+        });
+        static::deleted(function (User $user) {
+            $payload = ['sub' => (string) $user->id, 'hop_id' => (string) $user->id, 'email' => $user->email];
+            if ($user->deletedFiles !== []) {
+                $payload += $user->deletedFiles;
+            }
+            SendHopEvent::broadcast('account.deleted', $payload);
         });
     }
 
@@ -154,12 +174,16 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function hopProfile(bool $requireVerifiedSession = true): array
     {
+        $avatar = $this->avatarUrl() ?? '';
+
         return [
             'sub' => (string) $this->id,
+            'hop_id' => (string) $this->id,
             'username' => $this->username,
             'name' => $this->name,
             'email' => $this->email,
-            'avatar' => $this->avatarUrl() ?? '',
+            'avatar' => $avatar,
+            'avatar_url' => $avatar,
             'bio' => (string) $this->bio,
             'website' => (string) $this->website,
             'location' => (string) $this->location,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendHopEvent;
 use App\Models\HopApp;
 use App\Models\HopAudit;
 use App\Models\HopUserNote;
@@ -224,6 +225,7 @@ class HopAdminController extends Controller
                 break;
             case 'revoke_sessions':
                 $params = ['deleted' => DB::table('sessions')->where('user_id', $user->id)->delete()];
+                SendHopEvent::broadcast('session.revoked', ['sub' => (string) $user->id, 'hop_id' => (string) $user->id]);
                 break;
             case 'revoke_tokens':
                 $params = ['deleted' => $user->apiTokens()->delete()];
@@ -249,6 +251,7 @@ class HopAdminController extends Controller
                     }
                 });
                 $user->unsetRelation('roles');
+                SendHopEvent::broadcast('profile.updated', $user->hopProfile());
                 $params = ['roles' => array_values(array_unique($roles))];
                 break;
             case 'note':
@@ -366,7 +369,7 @@ class HopAdminController extends Controller
         }
 
         return response()->json(['ok' => true, 'data' => [
-            'app' => 'linkhop', 'version' => self::version(), 'db' => $db, 'queue' => $queue,
+            'app' => (string) config('hop.current', 'hub'), 'version' => self::version(), 'db' => $db, 'queue' => $queue,
             'time' => CarbonImmutable::now('UTC')->toIso8601String(),
         ]]);
     }

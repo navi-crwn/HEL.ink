@@ -41,7 +41,9 @@ return [
         'notehop' => 'https://github.com/navi-crwn/NoteHop',
     ],
     'registry_health' => [],   // default /healthz
-    'registry_logout' => [],   // slug => path that signs the visitor out, e.g. '/auth/sso/logout'
+    'registry_logout' => [
+        'notehop' => '/auth/sso/logout',
+    ],   // slug => path that signs the visitor out, e.g. '/auth/sso/logout'
 
     // Seconds a sign-in ticket for an app stays valid.
     'ticket_ttl' => 120,
@@ -88,7 +90,7 @@ return [
             'public_prefix' => null,
             'callback' => env('PIXELHOP_SSO_CALLBACK', '/auth/helink/callback'),
             'start' => env('PIXELHOP_SSO_START', '/auth/helink'),
-            'logout' => env('PIXELHOP_LOGOUT_PATH'),
+            'logout' => env('PIXELHOP_LOGOUT_PATH', '/auth/helink/logout'),
             'export' => null,
             // PixelHop is not Laravel: its health endpoint is /healthz, not /up.
             'health' => env('PIXELHOP_HEALTH_PATH', '/healthz'),
@@ -106,7 +108,7 @@ return [
             // Signs in with its own secret and callback from the HOP ID registry (`apps`).
             'registry' => true,
             'public_prefix' => null,
-            'logout' => env('NOTEHOP_LOGOUT_PATH'),
+            'logout' => env('NOTEHOP_LOGOUT_PATH', '/auth/sso/logout'),
             'export' => null,
             'health' => env('NOTEHOP_HEALTH_PATH', '/healthz'),
             'check' => env('NOTEHOP_CHECK_URL'),

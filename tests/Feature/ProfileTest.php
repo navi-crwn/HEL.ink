@@ -81,7 +81,7 @@ test('profile update rejects external or malformed _back redirect targets', func
         ->patch('/profile', [
             'name' => 'Safe User',
             'email' => $user->email,
-            '_back' => '/settings',
+            '_back' => route('settings', [], false).'#account',
         ])
-        ->assertRedirect('/settings');
+        ->assertRedirect('/settings#account');
 });

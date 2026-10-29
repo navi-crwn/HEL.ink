@@ -4,15 +4,19 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Support\Avatar;
+use App\Support\HopApps;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 
 /**
  * Removes a HOP ID: the hub's own rows (sessions, sign-ins, activity, API
  * tokens, roles), user files (avatars, link QR codes, bio uploads) and the
- * user row. Broadcasts `account.deleted` with the collected file paths so apps
- * with separate storage can clean up their copies too.
+ * user row. Calls each configured sibling app's `/internal/accounts/{id}` purge
+ * endpoint before cascading rows and broadcasts `account.deleted` with the
+ * collected file paths so apps with separate storage clean up their copies too.
  */
 class UserDeletion
 {
@@ -24,6 +28,8 @@ class UserDeletion
             'qr_codes' => $qrFiles,
             'bio_uploads' => $bioFiles,
         ];
+
+        $this->purgeInApps($user->id, $user->deletedFiles);
 
         Avatar::delete($user);
         DB::transaction(function () use ($user) {
@@ -128,6 +134,42 @@ class UserDeletion
             }
             if (! $inUse) {
                 Storage::disk('public')->delete($path);
+            }
+        }
+    }
+
+    /**
+     * Tell configured sibling apps (LinkHop, BioHop) to purge their local files
+     * and rows before the user row is deleted.
+     *
+     * @param  array<string, list<string>>  $files
+     */
+    private function purgeInApps(int $userId, array $files): void
+    {
+        $path = "/internal/accounts/{$userId}";
+        $body = json_encode($files, JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
+        foreach (HopApps::configured() as $app) {
+            if (! in_array($app->slug, ['linkhop', 'biohop'], true)) {
+                continue;
+            }
+            $secret = (string) $app->secret;
+            if (strlen($secret) < 32) {
+                continue;
+            }
+            $ts = time();
+            $sig = hash_hmac('sha256', $ts."\nDELETE\n".$path."\n".hash('sha256', $body), $secret);
+            try {
+                Http::timeout(5)
+                    ->withHeaders([
+                        'Accept' => 'application/json',
+                        'Content-Type' => 'application/json',
+                        'X-Hop-Timestamp' => (string) $ts,
+                        'X-Hop-Signature' => $sig,
+                    ])
+                    ->withBody($body, 'application/json')
+                    ->delete(rtrim($app->url, '/').$path);
+            } catch (\Throwable $e) {
+                Log::warning('App account purge failed', ['app' => $app->slug, 'user_id' => $userId, 'error' => $e->getMessage()]);
             }
         }
     }

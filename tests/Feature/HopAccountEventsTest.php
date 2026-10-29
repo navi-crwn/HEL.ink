@@ -66,6 +66,10 @@ class HopAccountEventsTest extends TestCase
     {
         Storage::fake('public');
         Queue::fake();
+        Http::fake(['*' => Http::response(['ok' => true], 200)]);
+        config()->set('hop.sso_secret', self::SECRET);
+        config()->set('hop.apps.linkhop.url', 'https://link.hel.ink');
+        config()->set('hop.apps.biohop.url', 'https://bio.hel.ink');
 
         if (! Schema::hasTable('links')) {
             Schema::create('links', function (Blueprint $t) {
@@ -130,6 +134,10 @@ class HopAccountEventsTest extends TestCase
         Queue::assertPushed(SendHopEvent::class, fn ($j) => $j->type === 'account.deleted'
             && in_array('qrcodes/link1.svg', $j->data['qr_codes'] ?? [], true)
             && in_array('bio-images/bg1.jpg', $j->data['bio_uploads'] ?? [], true));
+
+        Http::assertSent(fn ($req) => $req->method() === 'DELETE'
+            && $req->url() === "https://link.hel.ink/internal/accounts/{$u->id}"
+            && ! empty($req->header('X-Hop-Signature')[0]));
     }
 
     public function test_health_reports_hub_app_and_live_queue_after_heartbeat(): void

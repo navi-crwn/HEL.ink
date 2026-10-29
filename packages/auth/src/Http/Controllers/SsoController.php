@@ -71,14 +71,21 @@ class SsoController
     /** Only same-site paths may be a "next" target. */
     public static function safePath(string $path): string
     {
-        return $path !== '' && $path[0] === '/' && ! str_starts_with($path, '//') ? $path : '';
+        return $path !== '' && $path[0] === '/' && ! str_starts_with($path, '//') && ! preg_match('/[\x00-\x1f\x7f\\\\]/', $path) ? $path : '';
     }
 
     /** The chained logout only follows https links inside the HOP family (the hub and its apps). */
     public static function isHopUrl(string $url): bool
     {
-        $host = (string) parse_url($url, PHP_URL_HOST);
-        $hub = (string) parse_url(config('hop-auth.hub_url'), PHP_URL_HOST);
+        if (str_contains($url, '\\') || parse_url($url, PHP_URL_USER) !== null || parse_url($url, PHP_URL_PASS) !== null) {
+            return false;
+        }
+        $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
+        if ($scheme !== 'https') {
+            return false;
+        }
+        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
+        $hub = strtolower((string) parse_url(config('hop-auth.hub_url'), PHP_URL_HOST));
         $base = preg_replace('/^[^.]+\./', '', $hub) ?: $hub;
 
         return $host !== '' && ($host === $base || str_ends_with($host, '.'.$base));

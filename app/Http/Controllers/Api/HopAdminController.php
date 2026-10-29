@@ -162,7 +162,7 @@ class HopAdminController extends Controller
         $session = DB::table('sessions')->where('user_id', $user->id)->selectRaw('COUNT(*) as n, MAX(last_activity) as last')->first();
 
         return response()->json(['ok' => true, 'data' => [
-            'profile' => $user->hopProfile() + ['admin' => $user->isAdmin(), 'owner' => $user->isOwner(), 'moderator' => $user->hasRole(Role::MODERATOR)],
+            'profile' => $user->hopProfile(false) + ['admin' => $user->isAdmin(), 'owner' => $user->isOwner(), 'moderator' => $user->hasRole(Role::MODERATOR)],
             'counts' => [
                 'links' => $this->table('links')?->where('user_id', $user->id)->count() ?? 0,
                 'links_live' => $this->liveLinks()?->where('links.user_id', $user->id)->count() ?? 0,

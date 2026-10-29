@@ -64,3 +64,24 @@ test('correct password must be provided to delete account', function () {
         ->assertRedirect('/profile');
     $this->assertNotNull($user->fresh());
 });
+test('profile update rejects external or malformed _back redirect targets', function () {
+    $user = User::factory()->create();
+
+    foreach (['https://evil.example/phish', '//evil.example', '/\\evil.example'] as $badBack) {
+        $this->actingAs($user)
+            ->patch('/profile', [
+                'name' => 'Safe User',
+                'email' => $user->email,
+                '_back' => $badBack,
+            ])
+            ->assertRedirect(route('profile.edit'));
+    }
+
+    $this->actingAs($user)
+        ->patch('/profile', [
+            'name' => 'Safe User',
+            'email' => $user->email,
+            '_back' => '/settings',
+        ])
+        ->assertRedirect('/settings');
+});

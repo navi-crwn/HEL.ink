@@ -83,7 +83,7 @@
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="_profile_form" value="1">
-                                <input type="hidden" name="_back" value="{{ route('settings') }}#account">
+                                <input type="hidden" name="_back" value="{{ route('settings', [], false) }}#account">
                                 <div class="grid gap-4 sm:grid-cols-2">
                                     <div>
                                         <label for="fsettin-1" class="label">Name</label>

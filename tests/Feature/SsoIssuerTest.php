@@ -156,5 +156,42 @@ class SsoIssuerTest extends TestCase
         config()->set('hop.public_url', 'https://hel.example.com');
         $csp = (string) $this->get('/login')->headers->get('Content-Security-Policy');
         $this->assertMatchesRegularExpression('#form-action [^;]*https://hel\\.example\\.com#', $csp);
+        $this->assertMatchesRegularExpression('#connect-src [^;]*data:#', $csp);
+    }
+
+    public function test_two_factor_user_must_complete_totp_before_ticket_or_google_sso(): void
+    {
+        config()->set('services.google.client_id', 'google-client-id');
+        $user = User::factory()->create([
+            'two_factor_secret' => encrypt('JBSWY3DPEHPK3PXP'),
+            'two_factor_confirmed_at' => now(),
+        ]);
+
+        // Defensive mfa claim: false before 2fa_verified in session, true for stateless API callers
+        $this->assertFalse($user->hopProfile()['mfa']);
+        $this->assertTrue($user->hopProfile(false)['mfa']);
+
+        // Direct SSO to all configured apps must redirect to two-factor challenge
+        $this->actingAs($user)->get($this->authorizeUrl(app: 'pixelhop'))
+            ->assertRedirect(route('two-factor.show'));
+        $this->actingAs($user)->get($this->authorizeUrl(app: 'linkhop'))
+            ->assertRedirect(route('two-factor.show'));
+
+        // SSO via Google while signed in without 2fa_verified redirects to sso.ticket -> two-factor.show
+        $googleUrl = '/sso/pixelhop/google?'.http_build_query([
+            'state' => self::STATE,
+            'return_to' => 'https://p.example.com/auth/helink/callback',
+        ]);
+        $res = $this->actingAs($user)->get($googleUrl);
+        $res->assertRedirect();
+        $nextUrl = (string) $res->headers->get('Location');
+        $this->assertStringNotContainsString('ticket=', $nextUrl);
+        $this->actingAs($user)->get($nextUrl)->assertRedirect(route('two-factor.show'));
+
+        // Once 2fa_verified is set in session, ticket is issued and mfa claim is true
+        $location = $this->signedIn($user)->get($this->authorizeUrl(app: 'pixelhop'))
+            ->assertRedirect()->headers->get('Location');
+        $t = $this->ticketFrom($location);
+        $this->assertTrue($t['mfa']);
     }
 }

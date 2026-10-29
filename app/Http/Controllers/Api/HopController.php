@@ -20,7 +20,7 @@ class HopController extends Controller
         /** @var HopApp $app */
         $app = $request->attributes->get('hop_app');
 
-        return response()->json(['ok' => true, 'data' => $user->hopProfile() + ['admin' => $user->isAdminOf($app->slug)]]);
+        return response()->json(['ok' => true, 'data' => $user->hopProfile(false) + ['admin' => $user->isAdminOf($app->slug)]]);
     }
 
     /**
@@ -42,7 +42,7 @@ class HopController extends Controller
             $q->where('id', '>', $cursor);
         }
         $rows = $q->limit(200)->get();
-        $data = $rows->map(fn (User $u) => $u->hopProfile() + ['admin' => $u->isAdminOf($app->slug)])->all();
+        $data = $rows->map(fn (User $u) => $u->hopProfile(false) + ['admin' => $u->isAdminOf($app->slug)])->all();
 
         return response()->json(['ok' => true, 'data' => $data, 'page' => ['next' => $rows->count() === 200 ? (string) $rows->last()->id : null]]);
     }

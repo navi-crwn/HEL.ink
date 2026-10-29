@@ -167,8 +167,9 @@ class SsoIssuerTest extends TestCase
             'two_factor_confirmed_at' => now(),
         ]);
 
-        // Defensive mfa claim: false before 2fa_verified in session
+        // Defensive mfa claim: false before 2fa_verified in session, true for stateless API callers
         $this->assertFalse($user->hopProfile()['mfa']);
+        $this->assertTrue($user->hopProfile(false)['mfa']);
 
         // Direct SSO to all configured apps must redirect to two-factor challenge
         $this->actingAs($user)->get($this->authorizeUrl(app: 'pixelhop'))

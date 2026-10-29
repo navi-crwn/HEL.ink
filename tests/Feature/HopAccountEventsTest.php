@@ -177,4 +177,16 @@ class HopAccountEventsTest extends TestCase
         $this->assertStringContainsString('https://p.hel.ink/auth/helink/logout', $decoded);
         $this->assertStringContainsString('https://note.example.com/auth/sso/logout', $decoded);
     }
+
+    public function test_logout_chain_includes_imperium_when_registered(): void
+    {
+        config()->set('hop.sso_secret', self::SECRET);
+        HopApp::factory()->imperium(self::SECRET)->create();
+
+        $this->assertSame('/logout', config('hop.registry_logout.imperium'));
+
+        $chain = SsoController::logoutChain('https://hel.ink');
+        $decoded = urldecode(urldecode(urldecode(urldecode($chain))));
+        $this->assertStringContainsString('https://imp.example.com/logout', $decoded);
+    }
 }

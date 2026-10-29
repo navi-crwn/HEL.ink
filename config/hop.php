@@ -43,6 +43,7 @@ return [
     'registry_health' => [],   // default /healthz
     'registry_logout' => [
         'notehop' => '/auth/sso/logout',
+        'imperium' => '/logout',
     ],   // slug => path that signs the visitor out, e.g. '/auth/sso/logout'
 
     // Seconds a sign-in ticket for an app stays valid.

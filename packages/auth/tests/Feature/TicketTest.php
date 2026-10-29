@@ -53,3 +53,28 @@ test('safePath only accepts clean relative paths', function () {
     expect(SsoController::safePath('https://evil.com'))->toBe('');
     expect(SsoController::safePath(''))->toBe('');
 });
+
+test('ticket verification supports dual secret rotation with candidate secrets or secret_prev', function () {
+    $currentSecret = 'new-primary-secret-that-is-long-enough-1234';
+    $previousSecret = 'old-previous-secret-that-is-long-enough-5678';
+    $base = ['sub' => '42', 'aud' => 'linkhop', 'state' => 'st-rot', 'iat' => time(), 'exp' => time() + 120];
+
+    // Configure primary and previous secrets
+    config()->set('hop-auth.secret', $currentSecret);
+    config()->set('hop-auth.secret_prev', $previousSecret);
+
+    // Ticket signed with current secret is valid
+    $tCurrent = makeTicket($base, $currentSecret);
+    expect(Ticket::verify($tCurrent, 'st-rot')['sub'])->toBe('42');
+
+    // Ticket signed with previous secret during transition is also valid
+    $tPrev = makeTicket($base, $previousSecret);
+    expect(Ticket::verify($tPrev, 'st-rot')['sub'])->toBe('42');
+
+    // Ticket signed with an unknown secret is refused
+    $tUnknown = makeTicket($base, 'unknown-secret-that-is-long-enough-9999');
+    expect(fn () => Ticket::verify($tUnknown, 'st-rot'))->toThrow(TicketException::class, 'bad_signature');
+
+    // Passing array of candidate secrets explicitly to verify() works
+    expect(Ticket::verify($tPrev, 'st-rot', [$currentSecret, $previousSecret])['sub'])->toBe('42');
+});

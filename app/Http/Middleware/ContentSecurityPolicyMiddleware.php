@@ -22,7 +22,7 @@ class ContentSecurityPolicyMiddleware
             "style-src 'self' 'unsafe-inline' https://fonts.bunny.net",
             "img-src 'self' data: https: blob:",
             "font-src 'self' https://fonts.bunny.net data:",
-            "connect-src 'self' https://challenges.cloudflare.com",
+            "connect-src 'self' data: https://challenges.cloudflare.com",
             "frame-src 'self' https://challenges.cloudflare.com",
             "object-src 'none'",
             "base-uri 'self'",

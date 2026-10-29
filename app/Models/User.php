@@ -168,7 +168,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'roles' => $this->roleNames(),
             'status' => $this->status,
             'verified' => $this->hasVerifiedEmail() || (bool) $this->google_id,
-            'mfa' => (bool) ($this->two_factor_secret && $this->two_factor_confirmed_at),
+            'mfa' => $this->hasTwoFactor() && session('2fa_verified') === true,
             'profile_version' => max(1, (int) $this->profile_version),
             'created_at' => $this->created_at?->toIso8601String(),
         ];

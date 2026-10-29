@@ -7,6 +7,7 @@ use App\Models\ActivityLog;
 use App\Services\UserDeletion;
 use App\Support\Avatar;
 use App\Support\Username;
+use Hop\Auth\Http\Controllers\SsoController as HopSsoController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -55,7 +56,11 @@ class ProfileController extends Controller
             ActivityLog::log('updated', 'Profile', $user->id, 'Updated profile: '.implode(', ', $changes));
         }
 
-        return Redirect::to($request->input('_back', route('profile.edit')))->with('status', 'profile-updated');
+        $rawBack = trim((string) $request->input('_back', ''));
+        $safeBack = $rawBack !== '' ? HopSsoController::safePath($rawBack) : '';
+        $back = ($safeBack !== '' && ($safeBack !== '/' || $rawBack === '/')) ? $safeBack : route('profile.edit');
+
+        return Redirect::to($back)->with('status', 'profile-updated');
     }
 
     /** GET /profile/username-check?u=: live availability for the settings form. */

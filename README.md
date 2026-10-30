@@ -7,7 +7,8 @@
 | **Hub** (this repo) | hel.ink · hub.hel.ink | [navi-crwn/HEL.ink](https://github.com/navi-crwn/HEL.ink) | Home page, HOP ID accounts, SSO issuer, launcher, announcements, status page, watchdog, admin |
 | **LinkHop** | link.hel.ink · public `hel.ink/l/{slug}` | [navi-crwn/LinkHop](https://github.com/navi-crwn/LinkHop) | Short links, QR codes, click analytics, API |
 | **BioHop** | bio.hel.ink · public `hel.ink/b/{slug}` | [navi-crwn/BioHop](https://github.com/navi-crwn/BioHop) | Link-in-bio pages with blocks, themes and stats |
-| **PixelHop** | p.hel.ink | (separate) | Image hosting with albums and direct links; signs in with HOP ID |
+| **PixelHop** | p.hel.ink (soon `pixel.hel.ink`) | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | Image hosting with albums and direct links; signs in with HOP ID |
+| **NoteHop** | note.hel.ink | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | Zero-knowledge client-encrypted live notes & docs |
 
 Imperium / citadel (the owner's admin console over Tailscale) is not part of the public launcher.
 
@@ -17,6 +18,7 @@ Imperium / citadel (the owner's admin console over Tailscale) is not part of the
 - **LinkHop**: pemendek URL dengan slug kustom, QR, kedaluwarsa, password, analitik klik, folder, tag, API. Kelebihan: ringan, redirect cepat, ada deteksi URL berbahaya (`hop/safety`). Kekurangan: analitik dasar, tanpa domain kustom.
 - **BioHop**: halaman link-in-bio dengan blok, tema, statistik, pembuatan short link lewat API LinkHop. Kelebihan: namespace sendiri (`/b/`), tema dan upload terpisah. Kekurangan: masih baru; fitur lanjutan menyusul.
 - **PixelHop**: hosting gambar dengan album. Kelebihan: sudah berjalan dan memakai SSO HOP. Kekurangan: bukan Laravel, jadi tidak memakai paket `hop/*`.
+- **NoteHop**: catatan terenkripsi langsung di browser (zero-knowledge), tautan berhak akses, kolaborasi real-time. Kelebihan: server tidak bisa membaca isi catatan. Kekurangan: jika link hilang, catatan tidak bisa dibuka kembali.
 
 ## Menjalankan hub secara lokal
 

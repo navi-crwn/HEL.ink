@@ -56,6 +56,7 @@
 }
 @media (prefers-reduced-motion: reduce) {
     .hop-tile { animation: none; transform: rotateX(8deg) rotateY(-10deg); }
+}
 
 .hop-float[data-hop-float="section"] { position: absolute; }
 :is(.dark, [data-theme="dark"]) .hop-face { box-shadow: 0 5px 0 0 rgb(0 0 0 / 0.35), 0 18px 40px -14px rgb(var(--hop-shadow) / 0.7), inset 0 1px 0 rgb(255 255 255 / 0.35); }

@@ -66,11 +66,18 @@ def main() -> None:
     if mode == "build":
         OUT.write_text(text)
         print(f"wrote {OUT.relative_to(ROOT)}")
+        bundled = ROOT / "packages" / "ui" / "resources" / "hop-assets" / "apps.json"
+        if bundled.parent.is_dir():
+            bundled.write_text(text)
+            print(f"wrote {bundled.relative_to(ROOT)}")
     elif mode == "check":
         if errors := css_errors():
             raise SystemExit("\n".join(errors))
         if not OUT.is_file() or OUT.read_text() != text:
             raise SystemExit("public/hop-assets/apps.json is stale: run python3 scripts/hop_assets.py build")
+        bundled = ROOT / "packages" / "ui" / "resources" / "hop-assets" / "apps.json"
+        if bundled.is_file() and bundled.read_text() != text:
+            raise SystemExit("packages/ui/resources/hop-assets/apps.json differs: run python3 scripts/hop_assets.py build")
         print("hop-assets manifest OK")
     else:
         raise SystemExit("usage: hop_assets.py build|check")

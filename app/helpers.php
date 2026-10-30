@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 if (! function_exists('public_url')) {
     /** A URL on the public host (hel.ink): public_url('l/abc') → https://hel.ink/l/abc. */
     function public_url(string $path = ''): string
@@ -53,5 +55,13 @@ if (! function_exists('public_host')) {
     function public_host(): string
     {
         return preg_replace('/^www\./', '', (string) parse_url(public_url(), PHP_URL_HOST));
+    }
+}
+
+if (! function_exists('app_page_url')) {
+    /** hel.ink/apps/{app}, or the app's tab on the home page when the hub and hel.ink share one host. */
+    function app_page_url(string $slug): string
+    {
+        return Route::has('apps.show') ? route('apps.show', $slug) : route('home').'#'.$slug;
     }
 }

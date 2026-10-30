@@ -1,6 +1,6 @@
-@props(['title' => null, 'description' => null, 'themed' => false])
+@props(['title' => null, 'description' => null, 'themed' => false, 'back' => true, 'alternates' => false])
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['h-full', 'dark' => ! $themed])>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}" @class(['h-full', 'dark' => ! $themed])>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,6 +33,11 @@
                 })();
             </script>
         @endif
+        @if ($alternates)
+            @foreach (\App\Http\Middleware\SetLocale::LOCALES as $code => $name)
+                <link rel="alternate" hreflang="{{ $code }}" href="{{ url()->current() }}?lang={{ $code }}">
+            @endforeach
+        @endif
         <x-hop::fonts />
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -53,7 +58,14 @@
         </div>
     @endif
         @include('partials.marketing-nav', ['themed' => $themed])
-        <main>
+        <main id="main">
+            @if ($back)
+                <div class="mx-auto max-w-6xl px-4 pt-6 sm:px-6">
+                    <a href="{{ route('home') }}" class="inline-flex items-center gap-1.5 text-sm text-slate-500 transition hover:text-slate-900 dark:text-white/60 dark:hover:text-white">
+                        <span aria-hidden="true" class="inline-block rtl:-scale-x-100">&larr;</span> {{ __('Back to HOP') }}
+                    </a>
+                </div>
+            @endif
             {{ $slot }}
         </main>
         @include('partials.marketing-footer')

@@ -13,6 +13,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SsoController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TwoFactorController;
+use App\Support\FamilyStory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -48,6 +49,11 @@ $marketing = function () {
     Route::get('/help', [MarketingPageController::class, 'help'])->name('help');
     Route::get('/faq', [MarketingPageController::class, 'faq'])->name('faq');
     Route::get('/products', [MarketingPageController::class, 'products'])->name('products');
+    // HOP pages (U-07) and one product page per app.
+    Route::get('/how-it-works', [MarketingPageController::class, 'howItWorks'])->name('how-it-works');
+    Route::get('/security', [MarketingPageController::class, 'security'])->name('security');
+    Route::get('/open-source', [MarketingPageController::class, 'openSource'])->name('open-source');
+    Route::get('/signup', [MarketingPageController::class, 'signup'])->name('signup');
     Route::get('/status', StatusController::class)->name('status');
     Route::get('/status.json', [StatusController::class, 'json'])->name('status.json');
     Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
@@ -115,6 +121,11 @@ Route::domain(config('hop.hub_host'))->group(function () use ($marketing) {
 Route::domain(config('hop.public_host'))->group(function () {
     Route::get('/', HomeController::class)->name('home');
     if (config('hop.public_host') !== config('hop.hub_host')) {
+        // One product page per app (U-07), on the public host only: on the hub host
+        // /apps/{app} opens the app through SSO (apps.open, the launcher). On a single-host
+        // install the pages are skipped and links fall back to the home page tabs (app_page_url).
+        Route::get('/apps', fn () => redirect()->to(route('home').'#apps', 301));
+        Route::get('/apps/{app}', [MarketingPageController::class, 'app'])->whereIn('app', FamilyStory::APPS)->name('apps.show');
         // Accounts live on the hub host.
         Route::get('/login', fn () => redirect()->to(hub_url('login')));
         // Before the split, apps (Imperium, NoteHop, …) started sign-in at hel.ink/sso/{app}; it is the hub's now.

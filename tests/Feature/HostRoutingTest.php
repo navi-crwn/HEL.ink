@@ -45,3 +45,13 @@ test('the hub host serves accounts', function () {
     $user = User::factory()->create();
     $this->withoutVite()->actingAs($user)->withSession(['2fa_verified' => true])->get('https://hub.hel.test/dashboard')->assertOk()->assertSee('LinkHop');
 });
+
+test('hel.ink/apps/{app} is a product page; hub.hel.ink/apps/{app} still opens the app', function () {
+    foreach (['linkhop' => 'LinkHop', 'biohop' => 'BioHop', 'pixelhop' => 'PixelHop', 'notehop' => 'NoteHop'] as $slug => $name) {
+        $this->withoutVite()->get('https://hel.test/apps/'.$slug)->assertOk()->assertSee($name)->assertSee('Back to HOP');
+    }
+    $this->get('https://hel.test/apps/imperium')->assertNotFound();
+    $this->get('https://hel.test/apps')->assertStatus(301);
+    // The launcher's SSO route is untouched: a guest is sent to sign in.
+    expect($this->get('https://hub.hel.test/apps/linkhop')->headers->get('Location'))->toContain('login');
+});

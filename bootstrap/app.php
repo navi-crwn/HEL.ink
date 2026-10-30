@@ -8,6 +8,7 @@ use App\Http\Middleware\EnsureGoogleUserHasPassword;
 use App\Http\Middleware\EnsureTwoFactorAuthenticated;
 use App\Http\Middleware\RemoveWwwPrefix;
 use App\Http\Middleware\RequireHopAdminClient;
+use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\VerifyHopSignature;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -27,11 +28,14 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->prepend(RemoveWwwPrefix::class);
         $middleware->appendToGroup('web', [
+            SetLocale::class,
             AutoLogout::class,
             CheckSuspended::class,
             EnsureGoogleUserHasPassword::class,
             ContentSecurityPolicyMiddleware::class,
         ]);
+        // The language cookie is plain text (en, id, …), read before decryption.
+        $middleware->encryptCookies(except: [SetLocale::COOKIE]);
         $middleware->alias([
             'admin' => AdminMiddleware::class,
             '2fa' => EnsureTwoFactorAuthenticated::class,

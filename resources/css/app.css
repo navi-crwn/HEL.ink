@@ -332,3 +332,8 @@
 
 /* Home hero hop scene (resources/js/hop-hero.js) */
 .hop-pill[aria-pressed="true"] { color: #fff; border-color: transparent; background-image: linear-gradient(90deg, #6366f1, #0ea5e9, #d946ef); }
+
+/* Home page app tabs (resources/js/family-tabs.js). */
+.family-tab[aria-selected="true"] { border-color: transparent; color: #fff; background-image: linear-gradient(90deg, #6366f1, #8b5cf6, #d946ef); }
+.family-tab[aria-selected="true"] img { background: #fff; padding: 2px; }
+.family-tab:focus-visible { outline: 2px solid #6366f1; outline-offset: 2px; }

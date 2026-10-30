@@ -3,6 +3,7 @@
 use App\Mail\ServiceAlert;
 use App\Models\ServiceCheck;
 use App\Services\Watchdog;
+use App\Support\HopApp;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
@@ -51,4 +52,25 @@ test('a functional check url is probed too and a timeout counts as down', functi
     expect(ServiceCheck::where('kind', 'check')->sole()->error)->toContain('timed out');
     $this->withoutVite()->get('/status')->assertOk()->assertSee('timed out');
     $this->getJson('/status.json')->assertOk()->assertJsonPath('apps.linkhop.ok', true);
+});
+
+test('status.json never exposes an app secret or internal endpoint', function () {
+    config()->set('hop.apps.linkhop.secret', str_repeat('s', 40));
+    config()->set('hop.apps.linkhop.url', 'https://link.example.test');
+
+    $json = $this->getJson('/status.json')->assertOk();
+    $body = $json->getContent();
+
+    expect($body)->not->toContain(str_repeat('s', 40))
+        ->not->toContain('"secret"')
+        ->not->toContain('"callback"')
+        ->not->toContain('"logout"');
+    $json->assertJsonPath('apps.linkhop.slug', 'linkhop');
+});
+
+test('an app object never serializes its secret', function () {
+    $app = HopApp::fromConfig('demo', ['url' => 'https://demo.test', 'secret' => str_repeat('k', 40)]);
+
+    expect(json_encode($app))->not->toContain(str_repeat('k', 40))
+        ->and(print_r($app, true))->not->toContain(str_repeat('k', 40));
 });

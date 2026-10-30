@@ -7,7 +7,7 @@ namespace App\Support;
  * from the HOP ID registry table `apps` (Imperium, NoteHop, …). The hub issues
  * SSO tickets for it, lists it in the launcher unless hidden, and watches it.
  */
-final class HopApp
+final class HopApp implements \JsonSerializable
 {
     public function __construct(
         public readonly string $slug,
@@ -28,6 +28,29 @@ final class HopApp
         public readonly bool $hidden = false,
         public readonly array $capabilities = [],
     ) {}
+
+    /**
+     * The public face of the app. The SSO secret and the internal endpoints never
+     * leave the hub, whatever serializes this object (JSON responses, @js, logs).
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'slug' => $this->slug,
+            'name' => $this->name,
+            'tagline' => $this->tagline,
+            'url' => $this->url,
+            'icon' => $this->icon,
+            'color' => $this->color,
+            'publicPrefix' => $this->publicPrefix,
+            'repo' => $this->repo,
+        ];
+    }
+
+    public function __debugInfo(): array
+    {
+        return $this->jsonSerialize() + ['secret' => $this->secret === null ? null : '[hidden]'];
+    }
 
     public static function fromConfig(string $slug, array $c): self
     {

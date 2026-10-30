@@ -12,6 +12,7 @@ editing v1 in place (browsers and Cloudflare cache v1 for a year).
 import base64
 import hashlib
 import json
+import re
 import pathlib
 import sys
 
@@ -45,6 +46,20 @@ def build() -> str:
     return json.dumps(out, indent=2, ensure_ascii=False) + "\n"
 
 
+def css_errors() -> list[str]:
+    """An unclosed block silently swallows every rule after it, so check the nesting."""
+    errors = []
+    for css in sorted((ROOT / "public" / "hop-assets").rglob("*.css")):
+        depth = 0
+        for ch in re.sub(r"/\*.*?\*/", "", css.read_text(), flags=re.S):
+            depth += {"{": 1, "}": -1}.get(ch, 0)
+            if depth < 0:
+                break
+        if depth != 0:
+            errors.append(f"{css.relative_to(ROOT)}: unbalanced braces")
+    return errors
+
+
 def main() -> None:
     mode = sys.argv[1] if len(sys.argv) > 1 else "check"
     text = build()
@@ -52,6 +67,8 @@ def main() -> None:
         OUT.write_text(text)
         print(f"wrote {OUT.relative_to(ROOT)}")
     elif mode == "check":
+        if errors := css_errors():
+            raise SystemExit("\n".join(errors))
         if not OUT.is_file() or OUT.read_text() != text:
             raise SystemExit("public/hop-assets/apps.json is stale: run python3 scripts/hop_assets.py build")
         print("hop-assets manifest OK")

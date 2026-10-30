@@ -1,5 +1,8 @@
 name: tests
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: [main]
@@ -25,3 +28,14 @@ jobs:
       - run: vendor/bin/pint --test
       - run: php artisan test
       - run: composer audit
+
+  nginx-u05:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Require nginx
+        run: |
+          command -v nginx
+          nginx -v
+      - name: Test U-05 root redirects
+        run: python3 -I deploy/nginx/tests/test_root_redirects.py

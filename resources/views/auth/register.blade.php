@@ -30,7 +30,7 @@
     <div x-data="{ tosAccepted: false, showTosError: false }">
         <!-- Google Sign In Button -->
         <div class="mb-6">
-            <a href="{{ route('auth.google', ['from_register' => 1]) }}" 
+            <a href="{{ $termsVersion ? route('auth.google.consent') : route('auth.google', ['from_register' => 1]) }}"
                @click.prevent="if (!tosAccepted) { showTosError = true; setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }), 100); } else { window.location.href = $el.href; }"
                class="w-full inline-flex items-center justify-center gap-3 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all shadow-xs">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -56,6 +56,9 @@
               x-on:submit="handleSubmit($event)"
               @endif>
         @csrf
+        @if($termsVersion)
+            <input type="hidden" name="terms_version" value="{{ $termsVersion }}">
+        @endif
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
@@ -117,8 +120,8 @@
                 >
                 <span class="text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200">
                     I agree to the 
-                    <a href="{{ route('terms') }}" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">
-                        Terms of Service
+                    <a href="{{ $termsArtifact ? $termsArtifact['url'] : route('terms') }}" target="_blank" rel="noopener" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">
+                        Terms of Service{{ $termsArtifact ? ' (version '.$termsVersion.')' : '' }}
                     </a>
                     and understand the acceptable use policy, prohibited activities, and my rights and obligations.
                 </span>

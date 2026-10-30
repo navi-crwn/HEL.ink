@@ -28,6 +28,14 @@ Route::middleware('guest')->group(function () {
         ->name('auth.google');
     Route::get('auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback'])
         ->name('auth.google.callback');
+    // Terms step before "Continue with Google" while a terms version is
+    // required: GET shows the form, POST records the one-shot server-side
+    // consent, then the flow continues as a plain Google redirect.
+    Route::get('auth/google/consent', [GoogleAuthController::class, 'showConsent'])
+        ->name('auth.google.consent');
+    Route::post('auth/google/consent', [GoogleAuthController::class, 'storeConsent'])
+        ->middleware('throttle:10,1,google-consent')
+        ->name('auth.google.consent.store');
     Route::get('suspended', function () {
         return view('auth.suspended');
     })->name('suspended');

@@ -103,6 +103,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(LoginHistory::class);
     }
 
+    /** Legal policy versions this account accepted (terms), see App\Support\Legal. */
+    public function legalAcceptances(): HasMany
+    {
+        return $this->hasMany(LegalAcceptance::class);
+    }
+
     public function activityLogs(): HasMany
     {
         return $this->hasMany(ActivityLog::class);

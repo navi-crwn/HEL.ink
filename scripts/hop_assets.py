@@ -4,6 +4,10 @@
     python3 scripts/hop_assets.py build   # write public/hop-assets/apps.json
     python3 scripts/hop_assets.py check   # exit 1 if it is missing, stale or points at a missing file
 
+build also writes docs/hop-family.md, the canonical HOP family table that every repo's
+README carries between <!-- hop-family:start --> and <!-- hop-family:end --> (each repo's
+CI compares its copy with this file on main).
+
 The source is resources/hop-assets/apps.source.json. Every referenced file must exist
 under public/hop-assets/<version>/; each gets an absolute URL and a sha384 SRI hash.
 A version folder is immutable once deployed: change files by adding v2, never by
@@ -19,6 +23,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC = ROOT / "resources" / "hop-assets" / "apps.source.json"
 OUT = ROOT / "public" / "hop-assets" / "apps.json"
+FAMILY = ROOT / "docs" / "hop-family.md"
 
 
 def sri(path: pathlib.Path) -> str:
@@ -46,6 +51,32 @@ def build() -> str:
     return json.dumps(out, indent=2, ensure_ascii=False) + "\n"
 
 
+def family_table() -> str:
+    """The canonical README table, from the same source as the manifest."""
+    src = json.loads(SRC.read_text())
+    rows = [
+        "<!-- hop-family:start -->",
+        "<!-- Generated from HEL.ink resources/hop-assets/apps.source.json; edit there, then run scripts/hop_assets.py build. -->",
+        "| App | Address | Repository | What it does |",
+        "| --- | --- | --- | --- |",
+    ]
+    for app in src["apps"]:
+        host = lambda u: u.split("://", 1)[-1].rstrip("/")
+        if app.get("public"):
+            addr = [f"[{host(app['url'])}]({app['url']})"]
+            if app.get("account_url"):
+                addr.append(f"accounts at `{host(app['account_url'])}`")
+            prefix = app.get("public_prefix", "")
+            if prefix and not prefix.startswith(app["url"]):
+                addr.append(f"`{host(prefix)}/…`")
+            repo = f"[{app['repo'].split('github.com/', 1)[-1]}]({app['repo']})"
+        else:
+            addr, repo = ["private (owner only)"], "private"
+        rows.append(f"| **{app['name']}** | {' · '.join(addr)} | {repo} | {app['tagline']} |")
+    rows.append("<!-- hop-family:end -->")
+    return "\n".join(rows) + "\n"
+
+
 def css_errors() -> list[str]:
     """An unclosed block silently swallows every rule after it, so check the nesting."""
     errors = []
@@ -66,6 +97,8 @@ def main() -> None:
     if mode == "build":
         OUT.write_text(text)
         print(f"wrote {OUT.relative_to(ROOT)}")
+        FAMILY.write_text(family_table())
+        print(f"wrote {FAMILY.relative_to(ROOT)}")
         bundled = ROOT / "packages" / "ui" / "resources" / "hop-assets" / "apps.json"
         if bundled.parent.is_dir():
             bundled.write_text(text)
@@ -73,6 +106,8 @@ def main() -> None:
     elif mode == "check":
         if errors := css_errors():
             raise SystemExit("\n".join(errors))
+        if not FAMILY.is_file() or FAMILY.read_text() != family_table():
+            raise SystemExit("docs/hop-family.md is stale: run python3 scripts/hop_assets.py build")
         if not OUT.is_file() or OUT.read_text() != text:
             raise SystemExit("public/hop-assets/apps.json is stale: run python3 scripts/hop_assets.py build")
         bundled = ROOT / "packages" / "ui" / "resources" / "hop-assets" / "apps.json"

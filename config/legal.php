@@ -17,7 +17,7 @@ return [
         'published' => [
             '2026-10-31' => [
                 'file' => 'terms-2026-10-31.md',
-                'sha256' => 'a838dc17fb1d00b904c97b9c5b07bad26eb87fa3c72d45a87c5b2f768f6d11a5',
+                'sha256' => '4ca047cb41f0b32310fee38f8834d70a83ef5cecfe98fa3bf138481fbd56a7e3',
                 'published_at' => '2026-10-31T00:00:00Z',
             ],
         ],

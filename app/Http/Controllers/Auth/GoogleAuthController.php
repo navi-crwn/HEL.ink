@@ -111,14 +111,10 @@ class GoogleAuthController extends Controller
             $user = User::where('email', $googleUser->email)
                 ->orWhere('google_id', $googleUser->id)
                 ->first();
-            if ($fromPage === 'login' && ! $user) {
-                return redirect()->route('login')
-                    ->with('error', 'Account not found. Please register first to continue.')
-                    ->with('google_email', $googleUser->email);
-            }
-            if ($fromPage === 'register' && $user) {
-                return redirect()->route('login')->with('error', 'Account already exists. Please login instead.');
-            }
+            // "Continue with Google" is one step on both pages: an existing account
+            // signs in, a new address signs up (behind the terms gate when it is on).
+            // Refusing one or the other sent people in a loop between the two pages,
+            // and a repeated callback after sign-up showed "already exists".
             if ($user) {
                 // Existing account (sign-in or linking): unchanged. No new
                 // consent is recorded for a pre-gate account at sign-in.

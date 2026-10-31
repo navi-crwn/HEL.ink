@@ -15,13 +15,14 @@ class ContentSecurityPolicyMiddleware
         // Per-request nonce: added to every <script> tag (Vite::cspNonce()) and @vite output.
         $nonce = Vite::useCspNonce();
         $response = $next($request);
+        // https://hel.ink serves the shared HOP assets (fonts, floating tiles), also to hub.hel.ink.
         $csp = [
             "default-src 'self'",
             // 'unsafe-eval': Alpine.js evaluates x-data/x-on expressions with new Function().
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://fonts.bunny.net https://static.cloudflareinsights.com",
-            "style-src 'self' 'unsafe-inline' https://fonts.bunny.net",
+            "script-src 'self' https://hel.ink 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com https://static.cloudflareinsights.com",
+            "style-src 'self' https://hel.ink 'unsafe-inline'",
             "img-src 'self' data: https: blob:",
-            "font-src 'self' https://fonts.bunny.net data:",
+            "font-src 'self' https://hel.ink data:",
             "connect-src 'self' data: https://challenges.cloudflare.com",
             "frame-src 'self' https://challenges.cloudflare.com",
             "object-src 'none'",

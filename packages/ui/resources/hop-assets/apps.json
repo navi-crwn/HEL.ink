@@ -1,0 +1,191 @@
+{
+  "version": "v1",
+  "base": "https://hel.ink/hop-assets/v1/",
+  "assets": {
+    "fonts_css": {
+      "url": "https://hel.ink/hop-assets/v1/fonts.css",
+      "integrity": "sha384-T1Y2aaMQ8CSfi7J2t9d1ZAbVcQ1FcO27Jwn3WtNWB+UVK137YCl3hIPvz0G4K22L"
+    },
+    "float_css": {
+      "url": "https://hel.ink/hop-assets/v1/hop-float.css",
+      "integrity": "sha384-sl7D409xEmIT5gkArlQLoQQ4rOkqF7tOGf1VhI/iMb7c2/s9w9NtDEjLbJMU/MQ/"
+    },
+    "float_js": {
+      "url": "https://hel.ink/hop-assets/v1/hop-float.js",
+      "integrity": "sha384-kNviPsMEO9lt9+b4n2S5lX6zHRVnePzGuj9VdgCETTsQwzt/5YJRnv842Xg0gRC+"
+    }
+  },
+  "apps": [
+    {
+      "slug": "hub",
+      "name": "HOP ID",
+      "tagline": "One account for every HOP app.",
+      "url": "https://hel.ink",
+      "account_url": "https://hub.hel.ink",
+      "color": "#6366f1",
+      "public": true,
+      "repo": "https://github.com/navi-crwn/HEL.ink",
+      "icons": {
+        "mark": {
+          "url": "https://hel.ink/hop-assets/v1/apps/hub/favicon.png",
+          "integrity": "sha384-ziIcAamx6+KssiXN6RFQK77M8xVHu35HUdVQm6XImrBR/qjDFgR8+OYP6mPvVnn/"
+        },
+        "wordmark": {
+          "url": "https://hel.ink/hop-assets/v1/apps/hub/wordmark.svg",
+          "integrity": "sha384-OJbCP0hX+oVrkORdegBAbdULdLzrpmiVjnHes1Q/Ejl1v/JP4/0wqo9pGBbscxBV"
+        },
+        "favicon": {
+          "url": "https://hel.ink/hop-assets/v1/apps/hub/favicon.png",
+          "integrity": "sha384-ziIcAamx6+KssiXN6RFQK77M8xVHu35HUdVQm6XImrBR/qjDFgR8+OYP6mPvVnn/"
+        },
+        "logo": {
+          "url": "https://hel.ink/hop-assets/v1/apps/hub/logo.png",
+          "integrity": "sha384-5qdfDU7O1veh/gpE6PQyG6dvLED3XxA6+lpTCXoI05+NLi0586lWAtD8I4I7HszZ"
+        },
+        "logo_dark": {
+          "url": "https://hel.ink/hop-assets/v1/apps/hub/logo-dark.png",
+          "integrity": "sha384-49G6iHRGX/HKI2mJDVcbiBXDxSeYida9kmAsei+v6YmlhU332qr40AJhhwRlHyov"
+        }
+      }
+    },
+    {
+      "slug": "linkhop",
+      "name": "LinkHop",
+      "tagline": "Short links, QR codes and click analytics.",
+      "url": "https://link.hel.ink",
+      "public_prefix": "https://hel.ink/l/",
+      "color": "#6366f1",
+      "public": true,
+      "repo": "https://github.com/navi-crwn/LinkHop",
+      "icons": {
+        "mark": {
+          "url": "https://hel.ink/hop-assets/v1/apps/linkhop/mark.svg",
+          "integrity": "sha384-RRS/L+9wHOfQD7fZ4HTpb+xgZ6f5bJ3/mQmkdsulQUc4/UPhGPqp2mGrj0PpCwUZ"
+        },
+        "mark_white": {
+          "url": "https://hel.ink/hop-assets/v1/apps/linkhop/mark-white.svg",
+          "integrity": "sha384-sGlEbPCdOPY5kS6Z/YYcKqsdnLDIFul2FHjM5BfdHCrNiJZ0F7SnUpCBNOZsZGTz"
+        },
+        "wordmark": {
+          "url": "https://hel.ink/hop-assets/v1/apps/linkhop/wordmark.svg",
+          "integrity": "sha384-CEv/V9Rv7mxCA31Dbp8fh5S2kR2TE6giQtF5PPPUqrz7K2s7pKv9QP7SOfMzm1OI"
+        },
+        "wordmark_white": {
+          "url": "https://hel.ink/hop-assets/v1/apps/linkhop/wordmark-white.svg",
+          "integrity": "sha384-EnqoAgZ30Rwjgr6h4lTOzBj95/06EsuCyOyVA4Xmso4QWucgvd8VDKKUtf158Tli"
+        },
+        "favicon": {
+          "url": "https://hel.ink/hop-assets/v1/apps/linkhop/favicon.png",
+          "integrity": "sha384-ziIcAamx6+KssiXN6RFQK77M8xVHu35HUdVQm6XImrBR/qjDFgR8+OYP6mPvVnn/"
+        },
+        "logo": {
+          "url": "https://hel.ink/hop-assets/v1/apps/linkhop/logo.png",
+          "integrity": "sha384-5qdfDU7O1veh/gpE6PQyG6dvLED3XxA6+lpTCXoI05+NLi0586lWAtD8I4I7HszZ"
+        },
+        "logo_dark": {
+          "url": "https://hel.ink/hop-assets/v1/apps/linkhop/logo-dark.png",
+          "integrity": "sha384-49G6iHRGX/HKI2mJDVcbiBXDxSeYida9kmAsei+v6YmlhU332qr40AJhhwRlHyov"
+        }
+      }
+    },
+    {
+      "slug": "biohop",
+      "name": "BioHop",
+      "tagline": "One link-in-bio page for everything you do.",
+      "url": "https://bio.hel.ink",
+      "public_prefix": "https://hel.ink/b/",
+      "color": "#a855f7",
+      "public": true,
+      "repo": "https://github.com/navi-crwn/BioHop",
+      "icons": {
+        "mark": {
+          "url": "https://hel.ink/hop-assets/v1/apps/biohop/mark.svg",
+          "integrity": "sha384-uaqig3ynr/eE6udlu28CJfVaQbXoFdpc4qtSTM/X0gjMoxdM23OfbOxC9j7L3lqZ"
+        },
+        "wordmark": {
+          "url": "https://hel.ink/hop-assets/v1/apps/biohop/wordmark.svg",
+          "integrity": "sha384-JW1izEmvkkp21FnqWXIJvMKK+0ftHs+cbOsCoU4Yba4QHQqXeZI5ZMzTrNTgI4NT"
+        },
+        "favicon": {
+          "url": "https://hel.ink/hop-assets/v1/apps/biohop/mark.svg",
+          "integrity": "sha384-uaqig3ynr/eE6udlu28CJfVaQbXoFdpc4qtSTM/X0gjMoxdM23OfbOxC9j7L3lqZ"
+        }
+      }
+    },
+    {
+      "slug": "pixelhop",
+      "name": "PixelHop",
+      "tagline": "Image hosting with albums and direct links.",
+      "url": "https://p.hel.ink",
+      "public_prefix": "https://p.hel.ink/",
+      "color": "#22d3ee",
+      "public": true,
+      "repo": "https://github.com/navi-crwn/PixelHop",
+      "icons": {
+        "mark": {
+          "url": "https://hel.ink/hop-assets/v1/apps/pixelhop/mark.svg",
+          "integrity": "sha384-04cHVKRaGJKrCFbZ2aXbrKPbDwrHS1/PTVkcx8bhDJq33CCLal2QfE9FBRkgDgWS"
+        },
+        "favicon": {
+          "url": "https://hel.ink/hop-assets/v1/apps/pixelhop/mark.svg",
+          "integrity": "sha384-04cHVKRaGJKrCFbZ2aXbrKPbDwrHS1/PTVkcx8bhDJq33CCLal2QfE9FBRkgDgWS"
+        },
+        "icon_192": {
+          "url": "https://hel.ink/hop-assets/v1/apps/pixelhop/icon-192.png",
+          "integrity": "sha384-Xrjc+OOVuNslYKbCfQYEEXX3/jxBce09Wwyg/D4X0R2gmhb/E4lMfmJpW0kO/TV6"
+        },
+        "icon_512": {
+          "url": "https://hel.ink/hop-assets/v1/apps/pixelhop/icon-512.png",
+          "integrity": "sha384-lT//aoFsEdeEnSizPwGrg0o+5PVUN61+5y66qFmylQsH0kdueYLr5qoXpNh/TXog"
+        },
+        "apple_touch": {
+          "url": "https://hel.ink/hop-assets/v1/apps/pixelhop/apple-touch-icon.png",
+          "integrity": "sha384-rVIRJNm/whiT0E+nd58yi/+VcOTj3qYjfdWdaqEBl6+w2I1T3n8Kf8U0Snb1vm+A"
+        }
+      }
+    },
+    {
+      "slug": "notehop",
+      "name": "NoteHop",
+      "tagline": "Encrypted notes you share with a link.",
+      "url": "https://note.hel.ink",
+      "public_prefix": "https://n.hel.ink/",
+      "color": "#10b981",
+      "public": true,
+      "repo": "https://github.com/navi-crwn/NoteHop",
+      "icons": {
+        "mark": {
+          "url": "https://hel.ink/hop-assets/v1/apps/notehop/mark.svg",
+          "integrity": "sha384-xZz6Osg27E5LOWmgTzvKOMM7PFSeym02BKtKHviE7zYBgEGF8CDO5pxE2Obz/V08"
+        },
+        "favicon": {
+          "url": "https://hel.ink/hop-assets/v1/apps/notehop/mark.svg",
+          "integrity": "sha384-xZz6Osg27E5LOWmgTzvKOMM7PFSeym02BKtKHviE7zYBgEGF8CDO5pxE2Obz/V08"
+        },
+        "icon_192": {
+          "url": "https://hel.ink/hop-assets/v1/apps/notehop/icon-192.png",
+          "integrity": "sha384-gvVXy03lzmfNQqe9ZP675HLoi1W5n6aHjf6NNIF7KVmZj1CUWLRjVQmoUuEv2nje"
+        },
+        "icon_512": {
+          "url": "https://hel.ink/hop-assets/v1/apps/notehop/icon-512.png",
+          "integrity": "sha384-iyhH3LSV2gmPS5ZKdcjFdWPELcFWZEmJBRe3ob830OeQ0wffbFhUqmbpOLklG6kh"
+        }
+      }
+    },
+    {
+      "slug": "imperium",
+      "name": "Imperium",
+      "tagline": "The HOP control panel.",
+      "url": "",
+      "color": "#f472b6",
+      "public": false,
+      "repo": "",
+      "icons": {
+        "mark": {
+          "url": "https://hel.ink/hop-assets/v1/apps/imperium/mark.svg",
+          "integrity": "sha384-pm3mUPVTXsoz5e+PtNaFVH5tDfgdCsYXcjuej0yVKnXBxEp7QAtu7Ut1zbcUmcCs"
+        }
+      }
+    }
+  ]
+}

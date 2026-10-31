@@ -3,13 +3,18 @@
 @php
     $ok = $state['ok'] ?? null;
     $tone = ['indigo' => 'from-indigo-500 to-sky-500', 'fuchsia' => 'from-fuchsia-500 to-rose-500', 'sky' => 'from-sky-500 to-cyan-400'][$app->color] ?? 'from-slate-600 to-slate-400';
+    $familyApp = collect(\Hop\Ui\Assets::family())->firstWhere('slug', $app->slug);
 @endphp
-<div {{ $attributes->merge(['class' => 'glass flex flex-col rounded-2xl p-5']) }}>
+<div {{ $attributes->merge(['class' => 'glass flex min-w-0 flex-col rounded-3xl p-6 transition-shadow hover:shadow-lg hover:shadow-slate-900/5']) }}>
     <div class="flex items-start justify-between gap-3">
         <div class="flex items-center gap-3">
+            @if($familyApp)
+                <img src="{{ $familyApp['icons']['mark']['url'] }}" alt="" width="44" height="44" class="h-11 w-11 shrink-0">
+            @else
             <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-linear-to-br {{ $tone }} text-white shadow-lg shadow-slate-900/10">
                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ \Hop\Ui\Apps::icon($app->icon) }}"/></svg>
             </span>
+            @endif
             <div>
                 <h3 class="text-base font-semibold text-ink">{{ $app->name }}</h3>
                 <p class="text-xs text-muted">{{ parse_url($app->url, PHP_URL_HOST) }}</p>
@@ -27,7 +32,7 @@
     @if ($open)
         <div class="mt-4 flex items-center gap-2">
             @if ($app->isConfigured())
-                <a href="{{ route('apps.open', ['app' => $app->slug]) }}" class="btn-primary btn-sm">Open</a>
+                <a href="{{ route('apps.open', ['app' => $app->slug]) }}" class="btn-primary btn-sm">{{ __('Open') }} <span aria-hidden="true">↗</span></a>
             @else
                 <span class="btn-soft btn-sm cursor-not-allowed opacity-60" title="Not configured (URL or secret missing)">Open</span>
             @endif

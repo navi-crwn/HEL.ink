@@ -268,5 +268,15 @@
     "operational": "operational",
     "the hub, HOP ID and this site (Laravel).": "the hub, HOP ID and this site (Laravel).",
     "the shared packages.": "the shared packages.",
-    "up": "正常"
+    "up": "正常",
+    "Changelog": "更新日志",
+    "Commits, releases and merged pull requests, newest first.": "提交、版本发布和已合并的拉取请求，按时间从新到旧排列。",
+    "Newer": "较新",
+    "Older": "较早",
+    "Source revisions": "源代码版本",
+    "Commit": "提交",
+    "Merged pull request": "已合并的拉取请求",
+    "Release": "版本发布",
+    "All apps": "所有应用",
+    "Pagination": "分页"
 }

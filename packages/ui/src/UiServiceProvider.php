@@ -12,6 +12,12 @@ use Illuminate\Support\ServiceProvider;
  *   <x-hop::pill />      the row of app pills (hub, LinkHop, BioHop, …), current one marked
  *   <x-hop::nav-items /> sidebar items for the apps, for an existing <ul>
  *   <x-hop::badge />     "a HOP app" wordlet with a link to the hub
+ *   <x-hop::fonts />     the family typography from hel.ink (in <head>)
+ *   <x-hop::float />     the floating HOP tiles, identical in every app
+ *   <x-hop::family />    the HOP family section from the hub's manifest
+ *   <x-hop::back />      a back link for inner pages
+ *
+ * Fonts, tiles and marks come from https://hel.ink/hop-assets (see Assets).
  */
 class UiServiceProvider extends ServiceProvider
 {

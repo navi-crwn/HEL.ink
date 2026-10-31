@@ -1,6 +1,10 @@
 <x-marketing-layout title="HEL.ink - Hop Easy Link" :themed="true">
-    <section class="mx-auto max-w-6xl px-4 pb-10 pt-16 sm:px-6 sm:pt-24">
-        <div class="max-w-2xl">
+    <section class="relative mx-auto max-w-6xl px-4 pb-10 pt-16 sm:px-6 sm:pt-24">
+        {{-- The floating HOP tiles keep to the empty right half, clear of the copy. --}}
+        <div class="pointer-events-none absolute inset-y-0 right-0 w-5/12 max-lg:hidden" aria-hidden="true">
+            <x-hop::float mode="section" />
+        </div>
+        <div class="relative z-10 max-w-2xl">
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-300">Hop Easy Link</p>
             <h1 class="mt-3 text-4xl font-bold tracking-tight text-slate-900 sm:text-6xl dark:text-white">One hop to every app.</h1>
             <p class="mt-5 text-lg text-slate-600 dark:text-white/70">hel.ink is home to the HOP family: short links with LinkHop, a link-in-bio page with BioHop, image hosting with PixelHop. One free account, one sign-in, every app.</p>
@@ -18,12 +22,20 @@
         </section>
     @endforeach
     <section id="apps" class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <div class="grid gap-4 md:grid-cols-3">
+        @php
+            // Official app marks from the HOP asset manifest (public/hop-assets).
+            $marks = collect(\Hop\Ui\Assets::family())->mapWithKeys(fn ($a) => [$a['slug'] => $a['icons']['mark']['url']]);
+        @endphp
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             @foreach ($apps as $app)
                 @php $s = $status[$app->slug] ?? null; @endphp
                 <a href="{{ $app->url }}" class="group rounded-3xl border border-slate-200/80 bg-white/70 p-6 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-slate-900/5 dark:border-white/10 dark:bg-white/3">
                     <div class="flex items-center justify-between">
-                        <svg class="h-7 w-7 text-slate-900 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ \Hop\Ui\Apps::icon($app->icon) }}"/></svg>
+                        @if ($marks->has($app->slug))
+                            <img src="{{ $marks[$app->slug] }}" alt="" width="40" height="40" class="h-10 w-10 rounded-xl">
+                        @else
+                            <svg class="h-7 w-7 text-slate-900 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ \Hop\Ui\Apps::icon($app->icon) }}"/></svg>
+                        @endif
                         @if (($s['ok'] ?? null) === false)
                             <span class="rounded-full bg-rose-500/15 px-2 py-0.5 text-[11px] font-semibold text-rose-600 dark:text-rose-300">down</span>
                         @elseif (($s['ok'] ?? null) === true)

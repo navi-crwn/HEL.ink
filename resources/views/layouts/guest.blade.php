@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -26,7 +26,6 @@
             <div class="mb-6 flex w-full max-w-md items-center justify-between">
                 <a href="{{ route('home') }}" class="flex items-center gap-2.5">
                     <x-wordmark class="h-10 w-auto" />
-                    <span class="chip-blue ml-1">HOP ID</span>
                 </a>
                 <button type="button" class="icon-btn" aria-label="Toggle theme"
                     data-toggle-dark>
@@ -34,7 +33,7 @@
                     <svg class="hidden h-[18px] w-[18px] dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
                 </button>
             </div>
-            <div class="auth-card glass-strong w-full max-w-md rounded-3xl p-6 text-ink sm:p-8">
+            <div class="auth-card glass-strong w-full max-w-md rounded-3xl border-t-4 border-t-sky-400/70 p-6 text-ink shadow-xl shadow-sky-900/5 sm:p-8">
                 {{ $slot }}
             </div>
             <p class="mt-6 text-xs text-muted">

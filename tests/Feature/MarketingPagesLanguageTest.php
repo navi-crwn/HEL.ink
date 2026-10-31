@@ -83,3 +83,25 @@ class MarketingPagesLanguageTest extends TestCase
         $response->assertSee('Back to HOP');
     }
 }
+
+test('about page mentions all family apps including notehop and hop id', function () {
+    $response = $this->withoutVite()->get('/about');
+    $response->assertOk();
+    $response->assertSee('LinkHop');
+    $response->assertSee('BioHop');
+    $response->assertSee('PixelHop');
+    $response->assertSee('NoteHop');
+    $response->assertSee('HOP ID');
+});
+
+test('contact terms and privacy pages wrap emails with email_off and do not contain email-protection', function () {
+    foreach (['/contact', '/terms', '/privacy'] as $path) {
+        $response = $this->withoutVite()->get($path);
+        $response->assertOk();
+        $content = $response->getContent();
+        expect($content)->not->toContain('/cdn-cgi/l/email-protection');
+        expect($content)->not->toContain('email-protection');
+        expect($content)->toContain('<!--email_off-->');
+        expect($content)->toContain('<!--/email_off-->');
+    }
+});

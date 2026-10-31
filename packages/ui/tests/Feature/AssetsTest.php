@@ -37,3 +37,17 @@ test('the family section links every app except the current one', function () {
 test('the back link defaults to this app home', function () {
     expect(Blade::render('<x-hop::back label="Back to LinkHop" />'))->toContain('href="'.url('/').'"')->toContain('Back to LinkHop');
 });
+
+test('the uniform footer component renders 4 columns including the HOP family', function () {
+    $html = Blade::render('<x-hop::footer app="linkhop" name="LinkHop" />');
+
+    expect($html)->toContain('LinkHop')
+        ->toContain('Support')
+        ->toContain('Policies')
+        ->toContain('HOP Family')
+        ->toContain('href="https://note.hel.ink"')
+        ->toContain('href="https://bio.hel.ink"')
+        ->toContain('href="https://pixel.hel.ink"')
+        ->toContain('aria-current="page"')
+        ->toContain('Open source under MIT License');
+});

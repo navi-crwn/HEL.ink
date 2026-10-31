@@ -1,22 +1,25 @@
 @php
     $footerBlocks = [
         ['title' => 'HOP', 'items' => [
-            ['label' => 'About', 'route' => route('about')],
-            ['label' => 'Products', 'route' => route('products')],
-            ['label' => 'Status', 'route' => route('status')],
-            ['label' => 'Announcements', 'route' => route('announcements.index')],
+            ['label' => __('About'), 'route' => route('about')],
+            ['label' => __('How it works'), 'route' => route('how-it-works')],
+            ['label' => __('Security'), 'route' => route('security')],
+            ['label' => __('Open source'), 'route' => route('open-source')],
+            ['label' => __('Status'), 'route' => route('status')],
+            ['label' => __('Announcements'), 'route' => route('announcements.index')],
         ]],
-        ['title' => 'Support', 'items' => [
-            ['label' => 'Help center', 'route' => route('help')],
-            ['label' => 'FAQ', 'route' => route('faq')],
-            ['label' => 'Contact', 'route' => route('contact')],
-            ['label' => 'Usage tiers', 'route' => route('plans')],
+        ['title' => __('Support'), 'items' => [
+            ['label' => __('How to sign up'), 'route' => route('signup')],
+            ['label' => __('Help'), 'route' => route('help')],
+            ['label' => __('FAQ'), 'route' => route('faq')],
+            ['label' => __('Contact'), 'route' => route('contact')],
         ]],
-        ['title' => 'Policies', 'items' => [
-            ['label' => 'Privacy policy', 'route' => route('privacy')],
-            ['label' => 'Terms of service', 'route' => route('terms')],
+        ['title' => __('Policies'), 'items' => [
+            ['label' => __('Privacy policy'), 'route' => route('privacy')],
+            ['label' => __('Terms of service'), 'route' => route('terms')],
+            ['label' => __('Usage tiers'), 'route' => route('plans')],
         ]],
-        ['title' => 'Apps', 'items' => array_map(fn ($a) => ['label' => $a->name, 'route' => $a->url, 'external' => true], \App\Support\HopApps::all())],
+        ['title' => __('Apps'), 'items' => array_values(array_map(fn ($a) => ['label' => $a['name'], 'route' => app_page_url($a['slug'])], \App\Support\FamilyStory::all()))],
     ];
 @endphp
 <footer class="mt-16 px-3 pb-6 sm:px-5">
@@ -24,7 +27,7 @@
         <div class="grid grid-cols-2 gap-8 lg:grid-cols-5">
             <div class="col-span-2 lg:col-span-1">
                 <x-wordmark class="h-10 w-auto" />
-                <p class="mt-3 text-[13px] leading-relaxed">Hop Easy Link. One hop to every app. Free and open source.</p>
+                <p class="mt-3 text-[13px] leading-relaxed">Hop Easy Link. {{ __('One hop to every app.') }} {{ __('Free and open source.') }}</p>
                 <p class="mt-3"><a href="https://github.com/navi-crwn/HEL.ink" class="transition hover:text-slate-900 dark:hover:text-white" target="_blank" rel="noopener">github.com/navi-crwn</a></p>
             </div>
             @foreach ($footerBlocks as $block)
@@ -38,6 +41,13 @@
                 </div>
             @endforeach
         </div>
-        <p class="mt-8 border-t border-slate-200 pt-5 text-xs text-slate-500 dark:border-white/10 dark:text-white/60">© {{ date('Y') }} HOP · hel.ink</p>
+        <div class="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-5 text-xs text-slate-500 dark:border-white/10 dark:text-white/60">
+            <p>© {{ date('Y') }} HOP · hel.ink · MIT License</p>
+            <nav aria-label="{{ __('Language') }}" class="flex flex-wrap gap-x-3 gap-y-1">
+                @foreach (\App\Http\Middleware\SetLocale::LOCALES as $code => $name)
+                    <a href="?lang={{ $code }}" lang="{{ $code }}" @class(['hover:text-slate-900 dark:hover:text-white', 'font-semibold text-slate-800 dark:text-white' => app()->getLocale() === $code])>{{ $name }}</a>
+                @endforeach
+            </nav>
+        </div>
     </div>
 </footer>

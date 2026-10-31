@@ -45,7 +45,13 @@
                     </p>
                 </div>
                 <div>
-                    <h3 class="font-bold text-slate-900 dark:text-white">{{ __('1.4 Data Ownership, Export, and Deletion') }}</h3>
+                    <h3 class="font-bold text-slate-900 dark:text-white">{{ __('1.4 Mandatory Content Warning & Classification (18+ & Sensitive Content)') }}</h3>
+                    <p class="mt-1 text-xs leading-relaxed {{ $muted }}">
+                        {{ __('Content creators across all HOP applications (LinkHop, BioHop, PixelHop, NoteHop) have an affirmative obligation to classify any content that contains mature, 18+ adult, sexually suggestive, violent, or sensitive material using the unified 3-level classification system (None, Sensitive, Adult 18+). Flagged content presents an interstitial warning gate with age verification prior to viewing, redirecting, or decrypting, and is strictly excluded from public explore feeds and search indexing. Failure to classify adult content is a violation of these Master Terms and may result in moderation actions or HOP ID suspension.') }}
+                    </p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-900 dark:text-white">{{ __('1.5 Data Ownership, Export, and Deletion') }}</h3>
                     <p class="mt-1 text-xs leading-relaxed {{ $muted }}">
                         {{ __('You retain ownership of the content you publish or store. You may export your complete account data as JSON at any time from your settings. Deleting your HOP ID permanently erases your profile and all associated content across every HOP application.') }}
                     </p>

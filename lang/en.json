@@ -268,5 +268,15 @@
     "operational": "operational",
     "the hub, HOP ID and this site (Laravel).": "the hub, HOP ID and this site (Laravel).",
     "the shared packages.": "the shared packages.",
-    "up": "up"
+    "up": "up",
+    "Changelog": "Changelog",
+    "Commits, releases and merged pull requests, newest first.": "Commits, releases and merged pull requests, newest first.",
+    "Newer": "Newer",
+    "Older": "Older",
+    "Source revisions": "Source revisions",
+    "Commit": "Commit",
+    "Merged pull request": "Merged pull request",
+    "Release": "Release",
+    "All apps": "All apps",
+    "Pagination": "Pagination"
 }

@@ -268,5 +268,15 @@
     "operational": "beroperasi normal",
     "the hub, HOP ID and this site (Laravel).": "hub, HOP ID, dan situs ini (Laravel).",
     "the shared packages.": "paket pustaka bersama.",
-    "up": "aktif"
+    "up": "aktif",
+    "Changelog": "Riwayat perubahan",
+    "Commits, releases and merged pull requests, newest first.": "Commit, rilis, dan pull request yang sudah digabungkan, dari yang terbaru.",
+    "Newer": "Lebih baru",
+    "Older": "Lebih lama",
+    "Source revisions": "Revisi sumber",
+    "Commit": "Commit",
+    "Merged pull request": "Pull request digabungkan",
+    "Release": "Rilis",
+    "All apps": "Semua aplikasi",
+    "Pagination": "Navigasi halaman"
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\BrandAssetController;
+use App\Http\Controllers\ChangelogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LauncherController;
 use App\Http\Controllers\LegalArtifactController;
@@ -41,6 +42,7 @@ $brand = function () use ($brandFile) {
     Route::get('/brand/{file}', [BrandAssetController::class, 'legacy'])->where('file', $brandFile);
 };
 $marketing = function () {
+    Route::get('/changelog', ChangelogController::class)->name('changelog');
     Route::get('/about', [MarketingPageController::class, 'about'])->name('about');
     Route::get('/contact', [MarketingPageController::class, 'contact'])->name('contact');
     Route::get('/privacy', [MarketingPageController::class, 'privacy'])->name('privacy');

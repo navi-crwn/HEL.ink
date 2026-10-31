@@ -34,6 +34,7 @@
                         <li><a href="{{ $featuresUrl }}" class="transition hover:text-slate-900 dark:hover:text-white">{{ __('Features') }}</a></li>
                     @endif
                     <li><a href="{{ $statusUrl }}" class="transition hover:text-slate-900 dark:hover:text-white">{{ __('Status') }}</a></li>
+                    <li><a href="/changelog" class="transition hover:text-slate-900 dark:hover:text-white">{{ __('Changelog') }}</a></li>
                     @if ($repo)
                         <li><a href="{{ $repo }}" target="_blank" rel="noopener noreferrer" class="transition hover:text-slate-900 dark:hover:text-white">GitHub</a></li>
                     @endif

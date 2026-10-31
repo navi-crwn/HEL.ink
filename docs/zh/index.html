@@ -8,8 +8,8 @@
   <link rel="canonical" href="https://navi-crwn.github.io/HEL.ink/zh/">
   <link rel="icon" href="../assets/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/styles.css">
-  <link rel="stylesheet" href="https://hel.ink/hop-assets/v1/fonts.css" integrity="sha384-T1Y2aaMQ8CSfi7J2t9d1ZAbVcQ1FcO27Jwn3WtNWB+UVK137YCl3hIPvz0G4K22L" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://hel.ink/hop-assets/v1/hop-float.css" integrity="sha384-sl7D409xEmIT5gkArlQLoQQ4rOkqF7tOGf1VhI/iMb7c2/s9w9NtDEjLbJMU/MQ/" crossorigin="anonymous">
+  <link rel="stylesheet" href="../assets/product.css">
+  <link rel="stylesheet" href="https://hel.ink/hop-assets/v1/fonts-amnesia.css" integrity="sha384-750KEkFNx2ykcIsUyi1pZ0JC/Z6jfrK7OJtntqOzB8HKfEpjeostGTWJGAxh/5Zi" crossorigin="anonymous">
   <link rel="alternate" hreflang="x-default" href="https://navi-crwn.github.io/HEL.ink/">
   <link rel="alternate" hreflang="en" href="https://navi-crwn.github.io/HEL.ink/en/">
   <link rel="alternate" hreflang="id" href="https://navi-crwn.github.io/HEL.ink/id/">
@@ -30,7 +30,7 @@
   <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
-  <div data-hop-float></div>
+
   <a class="skip" href="#main">跳到主要内容</a>
 
   <header class="site-header">
@@ -60,7 +60,7 @@
   </header>
 
   <main id="main">
-    <div class="hero">
+    <div class="hero product-hero">
       <div>
         <p class="kicker">HOP &middot; 家族中心与账户门户</p>
         <h1>一个 HOP 账户，畅行所有应用。</h1>
@@ -72,44 +72,31 @@
         </div>
         <p class="note">基于 MIT 许可证的免费开源软件。</p>
       </div>
-      <div class="tile-wrap" aria-hidden="true">
-        <img class="tile" src="../assets/tile.svg" alt="" width="220" height="260">
-      </div>
+      <div class="product-art identity-art" aria-hidden="true"><div class="orbit"></div><div class="identity-card"><img src="../assets/mark.svg" alt="" width="70" height="70"><strong>HOP ID</strong></div><span class="satellite sat-one">LinkHop</span><span class="satellite sat-two">BioHop</span><span class="satellite sat-three">PixelHop</span><span class="satellite sat-four">NoteHop</span></div>
     </div>
 
     <section id="features" aria-labelledby="features-h">
-      <h2 id="features-h">功能特性</h2>
+      <span class="section-number" aria-hidden="true">01</span><h2 id="features-h">功能特性</h2>
       <ul class="features">
         <li><strong>单点登录 (HOP ID)</strong><p>一次登录覆盖所有 HOP 应用。签名凭证与链式登出确保会话一致。</p></li>
         <li><strong>统一应用启动器</strong><p>随时随地一键在 LinkHop、BioHop、PixelHop 和 NoteHop 间切换。</p></li>
         <li><strong>共享数据库架构</strong><p>共享单个 MySQL 或 SQLite 数据库存储身份，各应用独立的迁移账本避免冲突。</p></li>
         <li><strong>严格的安全防护</strong><p>Argon2id 哈希、TOTP 双重认证、Cloudflare Turnstile 防护与邮箱验证。</p></li>
         <li><strong>实时看门狗监测</strong><p>自动健康监测与延迟监控，零密钥泄露。</p></li>
-        <li><strong>集中式家族资产</strong><p>官方图标、家族字体（Syne、Plus Jakarta Sans）和 3D 浮动卡片由 hel.ink 提供 SRI 支持。</p></li>
+        <li><strong>集中式家族资产</strong><p>官方图标、家族字体（Inter、Instrument Serif、JetBrains Mono）和 3D 资源由 hel.ink 提供，并附带 SRI 校验。</p></li>
         <li><strong>细粒度 API 令牌</strong><p>生成带权限范围的令牌，用于应用间通信与开发者自动化。</p></li>
         <li><strong>完全开源与自建</strong><p>100% 自由开源。可独立运行 hub，也可在单个 VPS 上部署整个 HOP 生态。</p></li>
       </ul>
     </section>
 
-    <section id="run" aria-labelledby="run-h">
-      <h2 id="run-h">自建您的 Hub</h2>
-      <div class="panel">
-        <p>Hub 运行在标准现代 PHP 基础设施上。</p>
-        <pre><code>git clone https://github.com/navi-crwn/HEL.ink.git
-cd HEL.ink
-composer install
-cp .env.example .env && php artisan key:generate
-php artisan migrate
-npm install && npm run build
-php artisan serve</code></pre>
-        <h3>环境要求</h3>
-        <p>PHP 8.3+、Composer、Node.js 22+，以及 SQLite 或 MySQL/MariaDB。</p>
-        <h3>SSO 配置</h3>
-        <p>在 .env 中配置 HOP_SSO_SECRET（32 位以上字符）以为家族应用签名凭据。</p>
-        <h3>共享数据库配置</h3>
-        <p>设置 DB_MIGRATIONS_TABLE=migrations_hub 以便在与 LinkHop 共享数据库时保持迁移记录独立。</p>
-        <p class="note">查看 .env.example 获取详尽的配置说明。</p>
-      </div>
+    <section id="run" class="source-card" aria-labelledby="run-h">
+      <div><span class="section-number" aria-hidden="true">02 / OPEN SOURCE</span><h2 id="run-h">自建您的 Hub</h2><p>基于 MIT 许可证的免费开源软件。</p></div>
+      <div class="cta-row"><a class="btn" href="https://github.com/navi-crwn/HEL.ink/blob/main/README.md">自建部署 ↗</a><a class="btn" href="https://github.com/navi-crwn/HEL.ink">在 GitHub 查看 ↗</a></div>
+    </section>
+
+    <section class="product-preview" aria-labelledby="preview-h">
+      <div class="preview-caption"><div><span class="section-number" aria-hidden="true">03</span><h2 id="preview-h">HOP ID</h2></div><a class="btn primary" href="https://hel.ink">访问 hel.ink ↗</a></div>
+      <a class="preview-screen" href="https://hel.ink" aria-label="访问 hel.ink"><img class="preview-light" src="../assets/product-light.webp" alt="HOP ID" width="1280" height="900" loading="lazy"><img class="preview-dark" src="../assets/product-dark.webp" alt="HOP ID" width="1280" height="900" loading="lazy"></a>
     </section>
 
     <section id="faq" aria-labelledby="faq-h">
@@ -153,18 +140,17 @@ php artisan serve</code></pre>
 
     <section id="help" aria-labelledby="help-h">
       <h2 id="help-h">帮助与支持</h2>
-      <p>发现问题或需要协助？请在以下地址提交议题： <a href="https://github.com/navi-crwn/HEL.ink/issues">GitHub Issues</a>或提交拉取请求。</p>
+      <p>发现问题或需要协助？请在以下地址提交议题： <a href="https://github.com/navi-crwn/HEL.ink/issues">GitHub Issues</a> 或提交拉取请求。</p>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="inner">
       <p><strong>HEL.ink &middot; HOP ID</strong> &middot; HOP 家族的一员</p>
-      <p>许可证为 <a href="https://github.com/navi-crwn/HEL.ink/blob/main/LICENSE">MIT</a>· 源代码位于<a href="https://github.com/navi-crwn/HEL.ink">GitHub</a>· 线上体验<a href="https://hel.ink">hel.ink</a></p>
+      <p>许可证为 <a href="https://github.com/navi-crwn/HEL.ink/blob/main/LICENSE">MIT</a> · 源代码位于 <a href="https://github.com/navi-crwn/HEL.ink">GitHub</a> · 线上体验 <a href="https://hel.ink">hel.ink</a></p>
     </div>
   </footer>
 
-  <script src="https://hel.ink/hop-assets/v1/hop-float.js" integrity="sha384-kNviPsMEO9lt9+b4n2S5lX6zHRVnePzGuj9VdgCETTsQwzt/5YJRnv842Xg0gRC+" crossorigin="anonymous" defer></script>
   <script src="../assets/theme.js"></script>
 </body>
 </html>

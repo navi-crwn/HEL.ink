@@ -39,6 +39,7 @@ Route::middleware(['hop.signed', 'throttle:600,1,hop'])->prefix('hop')->group(fu
     Route::get('/health', [HopAdminController::class, 'health']);
     // The admin API: only for an app registered with the admin_client capability (Imperium).
     Route::middleware('hop.admin_client')->group(function () {
+        Route::get('/manifest', [HopAdminController::class, 'manifest']);
         Route::get('/stats', [HopAdminController::class, 'stats']);
         Route::get('/users', [HopAdminController::class, 'users']);
         $missing = fn () => response()->json(['ok' => false, 'error' => 'not_found', 'message' => 'No such user.'], 404);

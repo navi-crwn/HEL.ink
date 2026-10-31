@@ -8,8 +8,8 @@
   <link rel="canonical" href="https://navi-crwn.github.io/HEL.ink/id/">
   <link rel="icon" href="../assets/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/styles.css">
-  <link rel="stylesheet" href="https://hel.ink/hop-assets/v1/fonts.css" integrity="sha384-T1Y2aaMQ8CSfi7J2t9d1ZAbVcQ1FcO27Jwn3WtNWB+UVK137YCl3hIPvz0G4K22L" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://hel.ink/hop-assets/v1/hop-float.css" integrity="sha384-sl7D409xEmIT5gkArlQLoQQ4rOkqF7tOGf1VhI/iMb7c2/s9w9NtDEjLbJMU/MQ/" crossorigin="anonymous">
+  <link rel="stylesheet" href="../assets/product.css">
+  <link rel="stylesheet" href="https://hel.ink/hop-assets/v1/fonts-amnesia.css" integrity="sha384-750KEkFNx2ykcIsUyi1pZ0JC/Z6jfrK7OJtntqOzB8HKfEpjeostGTWJGAxh/5Zi" crossorigin="anonymous">
   <link rel="alternate" hreflang="x-default" href="https://navi-crwn.github.io/HEL.ink/">
   <link rel="alternate" hreflang="en" href="https://navi-crwn.github.io/HEL.ink/en/">
   <link rel="alternate" hreflang="id" href="https://navi-crwn.github.io/HEL.ink/id/">
@@ -30,7 +30,7 @@
   <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
-  <div data-hop-float></div>
+
   <a class="skip" href="#main">Langsung ke konten utama</a>
 
   <header class="site-header">
@@ -60,7 +60,7 @@
   </header>
 
   <main id="main">
-    <div class="hero">
+    <div class="hero product-hero">
       <div>
         <p class="kicker">HOP &middot; Pusat Keluarga & Portal Akun</p>
         <h1>Satu akun HOP untuk setiap aplikasi.</h1>
@@ -72,44 +72,31 @@
         </div>
         <p class="note">Perangkat lunak gratis dan sumber terbuka dengan lisensi MIT.</p>
       </div>
-      <div class="tile-wrap" aria-hidden="true">
-        <img class="tile" src="../assets/tile.svg" alt="" width="220" height="260">
-      </div>
+      <div class="product-art identity-art" aria-hidden="true"><div class="orbit"></div><div class="identity-card"><img src="../assets/mark.svg" alt="" width="70" height="70"><strong>HOP ID</strong></div><span class="satellite sat-one">LinkHop</span><span class="satellite sat-two">BioHop</span><span class="satellite sat-three">PixelHop</span><span class="satellite sat-four">NoteHop</span></div>
     </div>
 
     <section id="features" aria-labelledby="features-h">
-      <h2 id="features-h">Fitur Utama</h2>
+      <span class="section-number" aria-hidden="true">01</span><h2 id="features-h">Fitur Utama</h2>
       <ul class="features">
         <li><strong>Single Sign-On (HOP ID)</strong><p>Satu login mencakup seluruh aplikasi HOP. Tiket bertanda tangan dan logout berantai menjaga konsistensi sesi.</p></li>
         <li><strong>Peluncur Aplikasi Terpadu</strong><p>Berpindah antara LinkHop, BioHop, PixelHop, dan NoteHop dalam satu klik dari mana saja.</p></li>
         <li><strong>Arsitektur Basis Data Bersama</strong><p>Satu basis data MySQL atau SQLite menyimpan kredensial dengan tabel migrasi terpisah per aplikasi.</p></li>
         <li><strong>Keamanan Akun Tangguh</strong><p>Hashing Argon2id, autentikasi dua faktor TOTP, proteksi bot Cloudflare Turnstile, dan verifikasi email.</p></li>
         <li><strong>Pengawas Layanan Langsung</strong><p>Pemeriksaan kesehatan otomatis dan pemantauan latensi di semua aplikasi tanpa pembocoran rahasia.</p></li>
-        <li><strong>Aset Keluarga Terpusat</strong><p>Ikon resmi, font keluarga (Syne, Plus Jakarta Sans), dan tile 3D dilayani dari hel.ink dengan hash SRI.</p></li>
+        <li><strong>Aset Keluarga Terpusat</strong><p>Ikon resmi, font Inter, Instrument Serif dan JetBrains Mono, serta aset 3D dilayani dari hel.ink dengan hash SRI.</p></li>
         <li><strong>Token API Berlingkup</strong><p>Buat token layanan berlingkup untuk komunikasi antar-aplikasi dan otomatisasi pengembang.</p></li>
         <li><strong>Sepenuhnya Dapat Dipasang Sendiri</strong><p>100% gratis dan open source. Jalankan hub sendiri atau pasang seluruh keluarga HOP di satu VPS.</p></li>
       </ul>
     </section>
 
-    <section id="run" aria-labelledby="run-h">
-      <h2 id="run-h">Pasang hub Anda sendiri</h2>
-      <div class="panel">
-        <p>Hub berjalan di atas infrastruktur PHP modern standar.</p>
-        <pre><code>git clone https://github.com/navi-crwn/HEL.ink.git
-cd HEL.ink
-composer install
-cp .env.example .env && php artisan key:generate
-php artisan migrate
-npm install && npm run build
-php artisan serve</code></pre>
-        <h3>Prasyarat</h3>
-        <p>PHP 8.3+, Composer, Node.js 22+, serta SQLite atau MySQL/MariaDB.</p>
-        <h3>Konfigurasi SSO</h3>
-        <p>Atur HOP_SSO_SECRET (32+ karakter) di .env untuk menandatangani tiket SSO bagi aplikasi keluarga lainnya.</p>
-        <h3>Pengaturan Basis Data Bersama</h3>
-        <p>Atur DB_MIGRATIONS_TABLE=migrations_hub agar buku besar migrasi hub tetap terpisah saat berbagi basis data.</p>
-        <p class="note">Lihat .env.example untuk panduan konfigurasi lengkap dan penjelasannya.</p>
-      </div>
+    <section id="run" class="source-card" aria-labelledby="run-h">
+      <div><span class="section-number" aria-hidden="true">02 / OPEN SOURCE</span><h2 id="run-h">Pasang hub Anda sendiri</h2><p>Perangkat lunak gratis dan sumber terbuka dengan lisensi MIT.</p></div>
+      <div class="cta-row"><a class="btn" href="https://github.com/navi-crwn/HEL.ink/blob/main/README.md">Pasang sendiri ↗</a><a class="btn" href="https://github.com/navi-crwn/HEL.ink">Lihat di GitHub ↗</a></div>
+    </section>
+
+    <section class="product-preview" aria-labelledby="preview-h">
+      <div class="preview-caption"><div><span class="section-number" aria-hidden="true">03</span><h2 id="preview-h">HOP ID</h2></div><a class="btn primary" href="https://hel.ink">Kunjungi hel.ink ↗</a></div>
+      <a class="preview-screen" href="https://hel.ink" aria-label="Kunjungi hel.ink"><img class="preview-light" src="../assets/product-light.webp" alt="HOP ID" width="1280" height="900" loading="lazy"><img class="preview-dark" src="../assets/product-dark.webp" alt="HOP ID" width="1280" height="900" loading="lazy"></a>
     </section>
 
     <section id="faq" aria-labelledby="faq-h">
@@ -153,18 +140,17 @@ php artisan serve</code></pre>
 
     <section id="help" aria-labelledby="help-h">
       <h2 id="help-h">Bantuan & Dukungan</h2>
-      <p>Menemukan bug atau butuh bantuan? Buka isu di <a href="https://github.com/navi-crwn/HEL.ink/issues">GitHub Issues</a>atau kirimkan pull request.</p>
+      <p>Menemukan bug atau butuh bantuan? Buka isu di <a href="https://github.com/navi-crwn/HEL.ink/issues">GitHub Issues</a> atau kirimkan pull request.</p>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="inner">
       <p><strong>HEL.ink &middot; HOP ID</strong> &middot; bagian dari keluarga HOP</p>
-      <p>Dilisensikan di bawah <a href="https://github.com/navi-crwn/HEL.ink/blob/main/LICENSE">MIT</a>· Kode sumber di<a href="https://github.com/navi-crwn/HEL.ink">GitHub</a>· Langsung di<a href="https://hel.ink">hel.ink</a></p>
+      <p>Dilisensikan di bawah <a href="https://github.com/navi-crwn/HEL.ink/blob/main/LICENSE">MIT</a> · Kode sumber di <a href="https://github.com/navi-crwn/HEL.ink">GitHub</a> · Langsung di <a href="https://hel.ink">hel.ink</a></p>
     </div>
   </footer>
 
-  <script src="https://hel.ink/hop-assets/v1/hop-float.js" integrity="sha384-kNviPsMEO9lt9+b4n2S5lX6zHRVnePzGuj9VdgCETTsQwzt/5YJRnv842Xg0gRC+" crossorigin="anonymous" defer></script>
   <script src="../assets/theme.js"></script>
 </body>
 </html>

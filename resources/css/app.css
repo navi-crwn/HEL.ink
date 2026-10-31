@@ -1,5 +1,11 @@
 @import 'tailwindcss';
 
+@media (max-width: 380px) {
+    .marketing-brand > span > span { display: none; }
+}
+@import './identity-hero.css';
+@import './home-product.css';
+
 @plugin '@tailwindcss/forms';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -324,9 +330,9 @@
 
 /* Home hero: the italic serif accent word, as on the other Hop sites */
 .hop-serif {
-    font-family: var(--font-display);
-    font-style: normal;
-    font-weight: 700;
+    font-family: var(--hop-font-serif, Georgia, serif);
+    font-style: italic;
+    font-weight: 400;
     letter-spacing: -0.01em;
 }
 

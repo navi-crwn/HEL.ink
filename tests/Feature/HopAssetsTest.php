@@ -52,15 +52,15 @@ test('BioHop uses its official purple document mark everywhere', function () {
 });
 
 test('fonts.css only points at fonts that ship with it', function () {
-    $css = file_get_contents(public_path('hop-assets/v1/fonts.css'));
+    $css = file_get_contents(hopAssetPath(hopAssets()['assets']['fonts_css']['url']));
     preg_match_all('/url\(([^)]+)\)/', $css, $m);
 
     expect($m[1])->not->toBeEmpty();
     foreach ($m[1] as $rel) {
         expect(is_file(public_path('hop-assets/v1/'.$rel)))->toBeTrue("missing font {$rel}");
     }
-    expect($css)->toContain("font-family: 'Syne'")
-        ->toContain("font-family: 'Plus Jakarta Sans'")
+    expect($css)->toContain("font-family: 'Inter'")
+        ->toContain("font-family: 'Instrument Serif'")
         ->toContain("font-family: 'JetBrains Mono'")
         ->toContain('--hop-font-body');
 });

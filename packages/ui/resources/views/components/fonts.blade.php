@@ -1,4 +1,4 @@
-{{-- HOP family typography (Syne, Plus Jakarta Sans, JetBrains Mono), self-hosted on hel.ink.
+{{-- HOP family typography (Inter, Instrument Serif, JetBrains Mono), self-hosted on hel.ink.
      Put in <head>; then use var(--hop-font-display|body|mono) or the app's Tailwind tokens. --}}
 @php($css = \Hop\Ui\Assets::asset('fonts_css'))
 @if ($css)

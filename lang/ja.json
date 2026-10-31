@@ -268,5 +268,15 @@
     "operational": "operational",
     "the hub, HOP ID and this site (Laravel).": "the hub, HOP ID and this site (Laravel).",
     "the shared packages.": "the shared packages.",
-    "up": "稼働中"
+    "up": "稼働中",
+    "Changelog": "変更履歴",
+    "Commits, releases and merged pull requests, newest first.": "コミット、リリース、マージ済みプルリクエストを新しい順に表示します。",
+    "Newer": "新しい履歴",
+    "Older": "古い履歴",
+    "Source revisions": "ソースのリビジョン",
+    "Commit": "コミット",
+    "Merged pull request": "マージ済みプルリクエスト",
+    "Release": "リリース",
+    "All apps": "すべてのアプリ",
+    "Pagination": "ページ切り替え"
 }

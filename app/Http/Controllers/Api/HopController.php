@@ -62,6 +62,23 @@ class HopController extends Controller
             'color' => $a->color, 'capabilities' => $a->capabilities ?? [], 'menu_label' => $a->label(), 'hidden' => (bool) $a->getAttribute('hidden'),
         ] + ($withSecret ? ['secret' => $a->secret] : []));
 
+        // LinkHop uses the shared account registry for caller authentication,
+        // but its content/metrics API belongs to its own configured origin.
+        // Older installations did not need a LinkHop registry row because
+        // Imperium incorrectly treated the account hub as LinkHop.
+        if (config('hop.apps.linkhop.enabled') && config('hop.apps.linkhop.url')) {
+            $linkhop = [
+                'slug' => 'linkhop', 'name' => 'LinkHop', 'url' => config('hop.apps.linkhop.url'),
+                'status' => 'active', 'icon' => 'link', 'color' => 'indigo',
+                'capabilities' => ['admin_api', 'metrics'], 'menu_label' => 'LinkHop', 'hidden' => false,
+            ];
+            $existing = $apps->firstWhere('slug', 'linkhop');
+            if ($existing) {
+                $linkhop['status'] = $existing['status'];
+            }
+            $apps = $apps->reject(fn ($app) => $app['slug'] === 'linkhop')->push($linkhop)->values();
+        }
+
         return response()->json(['ok' => true, 'data' => $apps]);
     }
 }

@@ -33,6 +33,15 @@ class HopAdminController extends Controller
 {
     public const ACTIONS = ['suspend', 'activate', 'revoke_sessions', 'revoke_tokens', 'set_roles', 'note', 'delete'];
 
+    public function manifest(): JsonResponse
+    {
+        return response()->json(['ok' => true, 'data' => [
+            'app' => 'hub', 'name' => 'HOP ID', 'base_url' => config('hop.hub_url'),
+            'capabilities' => ['admin_api', 'account_server', 'metrics'],
+            'content_types' => [], 'extensions' => [],
+        ]]);
+    }
+
     // ---- stats ------------------------------------------------------------
 
     /** GET /api/hop/stats?since=&until=: KPIs and daily series (14 days by default). */
@@ -43,7 +52,7 @@ class HopAdminController extends Controller
         if ($since->gt($until)) {
             return $this->fail('bad_range', 'since must not be after until', 422);
         }
-        $data = Cache::remember('hop:stats:'.$since->toDateString().':'.$until->toDateString(), 60, function () use ($since, $until) {
+        $data = Cache::remember('hop:hub:stats:v2:'.$since->toDateString().':'.$until->toDateString(), 60, function () use ($since, $until) {
             $now = CarbonImmutable::now('UTC');
 
             return [
@@ -51,17 +60,9 @@ class HopAdminController extends Controller
                     'users' => User::count(),
                     'users_new_7d' => User::where('created_at', '>=', $now->subDays(7))->count(),
                     'users_suspended' => User::where('status', User::STATUS_SUSPENDED)->count(),
-                    'links' => $this->table('links')?->count() ?? 0,
-                    'links_live' => $this->liveLinks()?->count() ?? 0,
-                    'bio_pages' => $this->table('bio_pages')?->count() ?? 0,
-                    'clicks_30d' => $this->table('link_clicks')?->where('clicked_at', '>=', $now->subDays(30))->count() ?? 0,
-                    'clicks_today' => $this->table('link_clicks')?->where('clicked_at', '>=', $now->startOfDay())->count() ?? 0,
-                    'open_reports' => $this->table('abuse_reports')?->where('status', 'open')->count() ?? 0,
-                    'open_flags' => $this->table('abuse_flags')?->where('status', 'open')->count() ?? 0,
                 ],
                 'series' => [
                     'signups' => $this->daily('users', 'created_at', $since, $until),
-                    'clicks' => Schema::hasTable('link_clicks') ? $this->daily('link_clicks', 'clicked_at', $since, $until) : [],
                 ],
             ];
         });

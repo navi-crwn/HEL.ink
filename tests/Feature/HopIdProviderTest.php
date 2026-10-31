@@ -112,6 +112,20 @@ class HopIdProviderTest extends TestCase
             ->assertOk()->assertJsonPath('data.db', 'ok');
     }
 
+    public function test_hub_identity_and_linkhop_registry_are_separate(): void
+    {
+        config(['hop.apps.linkhop.url' => 'https://links.example.test', 'hop.apps.linkhop.enabled' => true]);
+        $this->signedGet('imperium', self::IMPERIUM_SECRET, '/api/hop/manifest')
+            ->assertOk()->assertJsonPath('data.app', 'hub')->assertJsonPath('data.name', 'HOP ID')->assertJsonPath('data.content_types', []);
+        $stats = $this->signedGet('imperium', self::IMPERIUM_SECRET, '/api/hop/stats')->assertOk();
+        $this->assertArrayNotHasKey('links', $stats->json('data.kpi'));
+        $registry = $this->signedGet('imperium', self::IMPERIUM_SECRET, '/api/hop/apps')->assertOk();
+        $links = collect($registry->json('data'))->where('slug', 'linkhop');
+        $this->assertCount(1, $links);
+        $this->assertSame('https://links.example.test', $links->first()['url']);
+        $this->assertContains('admin_api', $links->first()['capabilities']);
+    }
+
     public function test_imperium_can_suspend_an_account_and_it_is_audited(): void
     {
         $this->admin();

@@ -8,8 +8,8 @@
   <link rel="canonical" href="https://navi-crwn.github.io/HEL.ink/en/">
   <link rel="icon" href="../assets/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/styles.css">
-  <link rel="stylesheet" href="https://hel.ink/hop-assets/v1/fonts.css" integrity="sha384-T1Y2aaMQ8CSfi7J2t9d1ZAbVcQ1FcO27Jwn3WtNWB+UVK137YCl3hIPvz0G4K22L" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://hel.ink/hop-assets/v1/hop-float.css" integrity="sha384-sl7D409xEmIT5gkArlQLoQQ4rOkqF7tOGf1VhI/iMb7c2/s9w9NtDEjLbJMU/MQ/" crossorigin="anonymous">
+  <link rel="stylesheet" href="../assets/product.css">
+  <link rel="stylesheet" href="https://hel.ink/hop-assets/v1/fonts-amnesia.css" integrity="sha384-750KEkFNx2ykcIsUyi1pZ0JC/Z6jfrK7OJtntqOzB8HKfEpjeostGTWJGAxh/5Zi" crossorigin="anonymous">
   <link rel="alternate" hreflang="x-default" href="https://navi-crwn.github.io/HEL.ink/">
   <link rel="alternate" hreflang="en" href="https://navi-crwn.github.io/HEL.ink/en/">
   <link rel="alternate" hreflang="id" href="https://navi-crwn.github.io/HEL.ink/id/">
@@ -30,7 +30,7 @@
   <meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
-  <div data-hop-float></div>
+
   <a class="skip" href="#main">Skip to main content</a>
 
   <header class="site-header">
@@ -60,7 +60,7 @@
   </header>
 
   <main id="main">
-    <div class="hero">
+    <div class="hero product-hero">
       <div>
         <p class="kicker">HOP &middot; Family Hub & Account Portal</p>
         <h1>One HOP account for every app.</h1>
@@ -72,44 +72,31 @@
         </div>
         <p class="note">Free and open-source software under the MIT license.</p>
       </div>
-      <div class="tile-wrap" aria-hidden="true">
-        <img class="tile" src="../assets/tile.svg" alt="" width="220" height="260">
-      </div>
+      <div class="product-art identity-art" aria-hidden="true"><div class="orbit"></div><div class="identity-card"><img src="../assets/mark.svg" alt="" width="70" height="70"><strong>HOP ID</strong></div><span class="satellite sat-one">LinkHop</span><span class="satellite sat-two">BioHop</span><span class="satellite sat-three">PixelHop</span><span class="satellite sat-four">NoteHop</span></div>
     </div>
 
     <section id="features" aria-labelledby="features-h">
-      <h2 id="features-h">Features</h2>
+      <span class="section-number" aria-hidden="true">01</span><h2 id="features-h">Features</h2>
       <ul class="features">
         <li><strong>Single Sign-On (HOP ID)</strong><p>One login covers all HOP apps. Signed tickets and chained logout keep every session consistent.</p></li>
         <li><strong>Unified App Launcher</strong><p>Switch between LinkHop, BioHop, PixelHop, and NoteHop in one click from anywhere.</p></li>
         <li><strong>Shared Database Architecture</strong><p>One MySQL or SQLite database stores all credentials, with dedicated migration tables per application.</p></li>
         <li><strong>Robust Account Security</strong><p>Argon2id hashing, TOTP two-factor authentication, Cloudflare Turnstile bot protection, and email verification.</p></li>
         <li><strong>Live Service Watchdog</strong><p>Automated health checks and latency monitoring across all member applications without secret exposure.</p></li>
-        <li><strong>Central Family Assets</strong><p>Official brand marks, fonts (Syne, Plus Jakarta Sans), and 3D floating tiles served from hel.ink with SRI hashes.</p></li>
+        <li><strong>Central Family Assets</strong><p>Official brand marks, Inter, Instrument Serif and JetBrains Mono fonts, and 3D assets served from hel.ink with SRI hashes.</p></li>
         <li><strong>Fine-Grained API Tokens</strong><p>Generate scoped service tokens for seamless cross-app communication and developer automation.</p></li>
         <li><strong>Completely Self-Hostable</strong><p>100% free and open source. Run the hub alone or host the entire HOP ecosystem on a single VPS.</p></li>
       </ul>
     </section>
 
-    <section id="run" aria-labelledby="run-h">
-      <h2 id="run-h">Run your own hub</h2>
-      <div class="panel">
-        <p>The hub runs on standard modern PHP infrastructure.</p>
-        <pre><code>git clone https://github.com/navi-crwn/HEL.ink.git
-cd HEL.ink
-composer install
-cp .env.example .env && php artisan key:generate
-php artisan migrate
-npm install && npm run build
-php artisan serve</code></pre>
-        <h3>Prerequisites</h3>
-        <p>PHP 8.3+, Composer, Node.js 22+, and SQLite or MySQL/MariaDB.</p>
-        <h3>SSO Configuration</h3>
-        <p>Configure HOP_SSO_SECRET (32+ chars) in your .env to securely sign SSO tickets for downstream family apps.</p>
-        <h3>Shared Database Setup</h3>
-        <p>Set DB_MIGRATIONS_TABLE=migrations_hub to keep the hub migration ledger neatly isolated when sharing a database with LinkHop.</p>
-        <p class="note">See .env.example for comprehensive configuration options and explanations.</p>
-      </div>
+    <section id="run" class="source-card" aria-labelledby="run-h">
+      <div><span class="section-number" aria-hidden="true">02 / OPEN SOURCE</span><h2 id="run-h">Run your own hub</h2><p>Free and open-source software under the MIT license.</p></div>
+      <div class="cta-row"><a class="btn" href="https://github.com/navi-crwn/HEL.ink/blob/main/README.md">Run your own ↗</a><a class="btn" href="https://github.com/navi-crwn/HEL.ink">View on GitHub ↗</a></div>
+    </section>
+
+    <section class="product-preview" aria-labelledby="preview-h">
+      <div class="preview-caption"><div><span class="section-number" aria-hidden="true">03</span><h2 id="preview-h">HOP ID</h2></div><a class="btn primary" href="https://hel.ink">Visit hel.ink ↗</a></div>
+      <a class="preview-screen" href="https://hel.ink" aria-label="Visit hel.ink"><img class="preview-light" src="../assets/product-light.webp" alt="HOP ID" width="1280" height="900" loading="lazy"><img class="preview-dark" src="../assets/product-dark.webp" alt="HOP ID" width="1280" height="900" loading="lazy"></a>
     </section>
 
     <section id="faq" aria-labelledby="faq-h">
@@ -153,18 +140,17 @@ php artisan serve</code></pre>
 
     <section id="help" aria-labelledby="help-h">
       <h2 id="help-h">Help & Support</h2>
-      <p>Found a bug or need assistance? Open an issue on <a href="https://github.com/navi-crwn/HEL.ink/issues">GitHub Issues</a>or submit a pull request.</p>
+      <p>Found a bug or need assistance? Open an issue on <a href="https://github.com/navi-crwn/HEL.ink/issues">GitHub Issues</a> or submit a pull request.</p>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="inner">
       <p><strong>HEL.ink &middot; HOP ID</strong> &middot; part of the HOP family</p>
-      <p>Released under <a href="https://github.com/navi-crwn/HEL.ink/blob/main/LICENSE">MIT</a>· Source code on<a href="https://github.com/navi-crwn/HEL.ink">GitHub</a>· Live at<a href="https://hel.ink">hel.ink</a></p>
+      <p>Released under <a href="https://github.com/navi-crwn/HEL.ink/blob/main/LICENSE">MIT</a> · Source code on <a href="https://github.com/navi-crwn/HEL.ink">GitHub</a> · Live at <a href="https://hel.ink">hel.ink</a></p>
     </div>
   </footer>
 
-  <script src="https://hel.ink/hop-assets/v1/hop-float.js" integrity="sha384-kNviPsMEO9lt9+b4n2S5lX6zHRVnePzGuj9VdgCETTsQwzt/5YJRnv842Xg0gRC+" crossorigin="anonymous" defer></script>
   <script src="../assets/theme.js"></script>
 </body>
 </html>

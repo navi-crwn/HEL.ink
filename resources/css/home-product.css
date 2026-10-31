@@ -1,0 +1,7 @@
+.home-product-hero { isolation: isolate; }
+.home-product-hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 80% 35%, #6366f118, transparent 55%); }
+.home-product-hero h1 { font-size: clamp(2.8rem, 5.8vw, 5.25rem); line-height: 1.02; letter-spacing: -.045em; }
+.home-product-hero .identity-hero { transform-style: preserve-3d; }
+.identity-core strong { font-family: var(--hop-font-display, Inter, sans-serif); }
+.home-product-hero + section { scroll-margin-top: 6rem; }
+@media (prefers-reduced-motion: reduce) { .home-product-hero *, .home-product-hero *::before, .home-product-hero *::after { animation: none !important; } }

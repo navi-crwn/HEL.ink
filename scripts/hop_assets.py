@@ -48,6 +48,12 @@ def build() -> str:
         app = dict(app)
         app["icons"] = {k: entry(folder, base, v) for k, v in app["icons"].items()}
         out["apps"].append(app)
+    marks = [app["icons"]["mark"]["url"] for app in out["apps"]]
+    if len(set(marks)) != len(marks):
+        raise SystemExit("every app must have a distinct mark URL")
+    hashes = [app["icons"]["mark"]["integrity"] for app in out["apps"]]
+    if len(set(hashes)) != len(hashes):
+        raise SystemExit("every app must have distinct mark artwork")
     return json.dumps(out, indent=2, ensure_ascii=False) + "\n"
 
 

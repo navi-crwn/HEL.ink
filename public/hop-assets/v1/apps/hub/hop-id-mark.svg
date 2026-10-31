@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <title>HOP ID</title>
+  <path d="M7 28 32 7l25 21v24a5 5 0 0 1-5 5H12a5 5 0 0 1-5-5V28Z" fill="#6366f1"/>
+  <path d="m7 28 25-21 25 21" stroke="#a5b4fc" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16 32v15m8-15v15m-8-8h8m7-7h4a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-4a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3Zm13 15V32h4a4 4 0 0 1 0 8h-4" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

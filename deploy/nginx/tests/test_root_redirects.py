@@ -22,6 +22,7 @@ HUB_SINGLE_SEGMENT_PAGES = (
     "about",
     "announcements",
     "apps",
+    "changelog",
     "contact",
     "dashboard",
     "faq",
@@ -104,6 +105,11 @@ class SourceContract(unittest.TestCase):
         for page in HUB_SINGLE_SEGMENT_PAGES:
             with self.subTest(page=page):
                 self.assertIn(page, items, f"Hub page '{page}' is missing from map $uri $hop_hub_page")
+
+    def test_account_manifest_is_not_routed_to_linkhop(self):
+        hub = self.source.split('server_name hub.hel.ink;', 1)[1].split('server {', 1)[0]
+        self.assertNotRegex(hub, r'location[^\n]*manifest')
+        self.assertIn('/var/www/helink/hub/public', hub)
 
 
 @unittest.skipUnless(shutil.which("nginx"), "nginx is unavailable; source checks are not HTTP proof")

@@ -21,18 +21,15 @@
     </svg>
 
     {{-- Hero Section (Amnesia style bold typography & 3D tiles) --}}
-    <section class="relative mx-auto max-w-6xl px-4 pb-12 pt-16 sm:px-6 sm:pt-24">
-        <div class="pointer-events-none absolute inset-y-0 end-0 w-5/12 max-lg:hidden" aria-hidden="true">
-            <x-hop::float mode="section" />
-        </div>
-        <div class="relative z-10 max-w-2xl">
+    <section class="home-product-hero relative mx-auto grid max-w-6xl items-center gap-8 px-4 pb-12 pt-12 sm:px-6 sm:pt-20 lg:grid-cols-[1.15fr_1fr]">
+        <div class="relative z-10 min-w-0">
             <div class="flex flex-wrap items-center gap-2">
                 <a href="https://github.com/navi-crwn/HEL.ink" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-xs text-slate-700 shadow-sm transition hover:bg-white dark:border-white/10 dark:bg-white/5 dark:text-white/80">
                     <span class="rounded-full bg-gradient-to-r from-indigo-500 to-fuchsia-500 px-2 py-0.5 font-mono text-[10px] font-bold text-white">MIT</span>
                     <span>{{ __('Open source on GitHub') }} &rarr;</span>
                 </a>
             </div>
-            <h1 class="mt-5 font-syne text-[clamp(2.5rem,8vw,4.5rem)] font-extrabold leading-[1.05] tracking-tight text-slate-900 dark:text-white">
+            <h1 class="mt-5 font-display text-[clamp(2.5rem,8vw,4.5rem)] font-extrabold leading-[1.05] tracking-tight text-slate-900 dark:text-white">
                 {{ __('One hop to every app.') }}
             </h1>
             <p class="mt-5 text-lg leading-relaxed {{ $muted }}">
@@ -53,6 +50,7 @@
                 {{ __('Free · No ads · No trackers · MIT licensed') }}
             </p>
         </div>
+        <x-identity-hero />
     </section>
 
     {{-- Announcements Banner --}}
@@ -68,7 +66,7 @@
     <section id="apps" class="mx-auto max-w-6xl scroll-mt-24 px-4 py-14 sm:px-6">
         <div class="space-y-2">
             <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">{{ __('The Ecosystem') }}</span>
-            <h2 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl dark:text-white">{{ __('Four apps, one account') }}</h2>
+            <h2 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl dark:text-white"><span class="hop-serif">{{ __('Four apps, one account') }}</span></h2>
         </div>
         
         <div class="mt-6 flex gap-2 overflow-x-auto pb-1" role="tablist" aria-label="{{ __('HOP apps') }}" data-family-tabs>

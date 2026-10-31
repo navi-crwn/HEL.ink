@@ -3,8 +3,8 @@
   "base": "https://hel.ink/hop-assets/v1/",
   "assets": {
     "fonts_css": {
-      "url": "https://hel.ink/hop-assets/v1/fonts.css",
-      "integrity": "sha384-T1Y2aaMQ8CSfi7J2t9d1ZAbVcQ1FcO27Jwn3WtNWB+UVK137YCl3hIPvz0G4K22L"
+      "url": "https://hel.ink/hop-assets/v1/fonts-amnesia.css",
+      "integrity": "sha384-750KEkFNx2ykcIsUyi1pZ0JC/Z6jfrK7OJtntqOzB8HKfEpjeostGTWJGAxh/5Zi"
     },
     "float_css": {
       "url": "https://hel.ink/hop-assets/v1/hop-float.css",
@@ -27,8 +27,8 @@
       "repo": "https://github.com/navi-crwn/HEL.ink",
       "icons": {
         "mark": {
-          "url": "https://hel.ink/hop-assets/v1/apps/hub/favicon.png",
-          "integrity": "sha384-ziIcAamx6+KssiXN6RFQK77M8xVHu35HUdVQm6XImrBR/qjDFgR8+OYP6mPvVnn/"
+          "url": "https://hel.ink/hop-assets/v1/apps/hub/hop-id-mark.svg",
+          "integrity": "sha384-kUC/5uuZLVQTWyp7Le88lWbJjtvncJUjS6hmHHVO96PcLIlqhIQJkvbvxj0N7i+Z"
         },
         "wordmark": {
           "url": "https://hel.ink/hop-assets/v1/apps/hub/wordmark.svg",

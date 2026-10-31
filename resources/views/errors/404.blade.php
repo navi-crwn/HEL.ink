@@ -14,7 +14,7 @@
     <body class="min-h-full bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 text-white">
         <div class="flex min-h-screen flex-col items-center justify-center px-6 text-center">
             <div class="flex flex-col items-center">
-                <img src="{{ route('brand.logo') }}" alt="LinkHop logo" class="h-16 w-16 rounded-full shadow-lg">
+                <img src="{{ route('brand.logo') }}" alt="HEL.ink logo" class="h-16 w-16 rounded-full shadow-lg">
                 <p class="mt-4 text-sm uppercase tracking-[0.4em] text-white/60">LinkHop</p>
             </div>
             <h1 class="mt-4 text-4xl font-semibold">Link not found</h1>

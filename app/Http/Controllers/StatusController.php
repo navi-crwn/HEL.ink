@@ -14,8 +14,19 @@ class StatusController extends Controller
         return view('status', ['status' => $watchdog->summary(), 'history' => $watchdog->history()]);
     }
 
+    /** Public: an explicit allowlist, so no app secret or internal endpoint can reach it. */
     public function json(Watchdog $watchdog): JsonResponse
     {
-        return response()->json(['apps' => $watchdog->summary()])->header('Cache-Control', 'no-store');
+        $apps = collect($watchdog->summary())->map(fn (array $s) => [
+            'slug' => $s['app']->slug,
+            'name' => $s['app']->name,
+            'url' => $s['app']->url,
+            'ok' => $s['ok'],
+            'checked_at' => $s['checked_at']?->toIso8601String(),
+            'latency_ms' => $s['latency_ms'],
+            'uptime' => $s['uptime'],
+        ]);
+
+        return response()->json(['apps' => $apps])->header('Cache-Control', 'no-store');
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AppAccountController;
 use App\Http\Controllers\Api\HopAdminController;
 use App\Http\Controllers\Api\HopController;
+use App\Http\Controllers\LegalArtifactController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 | secret). Content moderation (/api/hop/manifest, content, reports, x/*,
 | settings) is LinkHop's: nginx sends those paths on hub.hel.ink to LinkHop.
 */
+
+// Public, no-store discovery for staged app clients. No signing or user data.
+Route::get('/legal/terms', [LegalArtifactController::class, 'metadata'])
+    ->name('legal.terms.metadata');
 
 // The apps' own sign-in and sign-up forms use HOP ID accounts.
 Route::middleware('throttle:300,1,app-account')->group(function () {

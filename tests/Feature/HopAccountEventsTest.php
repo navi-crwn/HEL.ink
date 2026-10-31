@@ -174,7 +174,7 @@ class HopAccountEventsTest extends TestCase
 
         $chain = SsoController::logoutChain('https://hel.ink');
         $decoded = urldecode(urldecode(urldecode($chain)));
-        $this->assertStringContainsString('https://p.hel.ink/auth/helink/logout', $decoded);
+        $this->assertStringContainsString('https://pixel.hel.ink/auth/helink/logout', $decoded);
         $this->assertStringContainsString('https://note.example.com/auth/sso/logout', $decoded);
     }
 }

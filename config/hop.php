@@ -86,7 +86,7 @@ return [
         'pixelhop' => [
             'name' => 'PixelHop',
             'tagline' => 'Image hosting with albums and direct links.',
-            'url' => env('PIXELHOP_URL', 'https://p.hel.ink'),
+            'url' => env('PIXELHOP_URL', 'https://pixel.hel.ink'),
             'public_prefix' => null,
             'callback' => env('PIXELHOP_SSO_CALLBACK', '/auth/helink/callback'),
             'start' => env('PIXELHOP_SSO_START', '/auth/helink'),

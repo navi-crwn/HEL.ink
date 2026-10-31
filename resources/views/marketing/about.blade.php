@@ -7,7 +7,7 @@
             <ul class="list-disc space-y-1 pl-5">
                 <li><strong>LinkHop</strong> (link.hel.ink): short links at hel.ink/l/…, QR codes, click analytics.</li>
                 <li><strong>BioHop</strong> (bio.hel.ink): a link-in-bio page at hel.ink/b/… with blocks, themes and stats.</li>
-                <li><strong>PixelHop</strong> (p.hel.ink): image hosting with albums and direct links.</li>
+                <li><strong>PixelHop</strong> (pixel.hel.ink, shared links at p.hel.ink): image hosting with albums and direct links.</li>
             </ul>
             <p>Everything is open source and runs on one small server. There is no paid tier and no tracking beyond what the <a class="underline" href="{{ route('privacy') }}">privacy policy</a> describes.</p>
             <p>Made by one person. Questions and bug reports: <a class="underline" href="{{ route('contact') }}">contact</a>.</p>

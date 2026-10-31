@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://navi-crwn.github.io/HEL.ink/sitemap.xml

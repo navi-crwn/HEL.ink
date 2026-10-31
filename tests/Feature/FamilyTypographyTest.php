@@ -20,7 +20,7 @@ test('the home page shows each app with its official mark and the identity orbit
     expect($html)->toContain('https://hel.ink/hop-assets/v1/apps/biohop/mark.svg')
         ->toContain('https://hel.ink/hop-assets/v1/apps/linkhop/mark.svg')
         ->toContain('identity-orbit')
-        ->toContain('apps/hub/hop-id-mark.svg');
+        ->toContain('apps/hub/rabbit-mark.png');
 });
 
 test('the CSP allows the shared assets and drops the font CDN', function () {

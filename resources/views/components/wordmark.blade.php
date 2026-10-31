@@ -1,2 +1,2 @@
-{{-- HOP ID has its own mark; original family artwork remains available. --}}
+{{-- HOP ID uses the official HEL.ink jumping rabbit from the family registry. --}}
 <span {{ $attributes->merge(['class' => 'inline-flex h-9 items-center gap-2.5']) }}><img src="{{ collect(\Hop\Ui\Assets::family('hub'))->firstWhere('slug', 'hub')['icons']['mark']['url'] }}" alt="" width="36" height="36" class="h-full w-auto"><span class="font-display text-lg font-bold tracking-tight text-ink">HOP ID</span></span>

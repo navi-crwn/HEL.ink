@@ -303,10 +303,13 @@ test('oauth consent cannot be replayed after it is consumed', function () {
 
     $this->get('/auth/google/callback')->assertRedirect(route('onboarding'));
     $this->app['auth']->logout();
+    // A second callback signs in the account made the first time; it never makes another one.
     $this->withSession(['google_oauth_from' => 'register'])
-        ->get('/auth/google/callback')->assertRedirect(route('login'));
+        ->get('/auth/google/callback')->assertRedirect();
+    $this->assertAuthenticated();
 
     expect(User::where('email', 'replay@example.com')->count())->toBe(1);
+    expect(LegalAcceptance::query()->count())->toBe(1);
 });
 
 test('oauth consent is rejected when the required version changes', function () {
@@ -534,4 +537,25 @@ test('acceptances cascade away with the user', function () {
     LegalAcceptance::record($user, 'terms', LEGAL_VERSION, 'web', legalDigest());
     $user->delete();
     expect(LegalAcceptance::count())->toBe(0);
+});
+
+test('google from the login page creates the account when none exists (gate off)', function () {
+    Socialite::shouldReceive('driver')->with('google')->andReturnSelf();
+    Socialite::shouldReceive('user')->andReturn(fakeGoogleUser('newfromlogin@example.com'));
+
+    $this->withSession(['google_oauth_from' => 'login'])->get('/auth/google/callback')->assertRedirect(route('onboarding'));
+
+    expect(User::where('email', 'newfromlogin@example.com')->exists())->toBeTrue();
+    $this->assertAuthenticated();
+});
+
+test('google from the register page signs in an account that already exists', function () {
+    $existing = User::create(['name' => 'Eva', 'email' => 'eva@example.com', 'password' => Hash::make('password'), 'email_verified_at' => now()]);
+    Socialite::shouldReceive('driver')->with('google')->andReturnSelf();
+    Socialite::shouldReceive('user')->andReturn(fakeGoogleUser('eva@example.com'));
+
+    $this->withSession(['google_oauth_from' => 'register'])->get('/auth/google/callback')->assertRedirect();
+
+    $this->assertAuthenticatedAs($existing->fresh());
+    expect(User::where('email', 'eva@example.com')->count())->toBe(1);
 });

@@ -8,7 +8,7 @@
   },
   "apps": [
     {"slug": "hub", "name": "HOP ID", "tagline": "One account for every HOP app.", "url": "https://hel.ink", "account_url": "https://hub.hel.ink", "color": "#6366f1", "public": true, "repo": "https://github.com/navi-crwn/HEL.ink",
-     "icons": {"mark": "apps/hub/hop-id-mark.svg", "wordmark": "apps/hub/wordmark.svg", "favicon": "apps/hub/favicon.png", "logo": "apps/hub/logo.png", "logo_dark": "apps/hub/logo-dark.png"}},
+      "icons": {"mark": "apps/hub/rabbit-mark.png", "wordmark": "apps/hub/rabbit-wordmark.svg", "favicon": "apps/hub/rabbit-favicon.png", "logo": "apps/hub/rabbit-mark.png", "logo_dark": "apps/hub/rabbit-mark.png"}},
     {"slug": "linkhop", "name": "LinkHop", "tagline": "Short links, QR codes and click analytics.", "url": "https://link.hel.ink", "public_prefix": "https://hel.ink/l/", "color": "#6366f1", "public": true, "repo": "https://github.com/navi-crwn/LinkHop",
      "icons": {"mark": "apps/linkhop/mark.svg", "mark_white": "apps/linkhop/mark-white.svg", "wordmark": "apps/linkhop/wordmark.svg", "wordmark_white": "apps/linkhop/wordmark-white.svg", "favicon": "apps/linkhop/favicon.png", "logo": "apps/linkhop/logo.png", "logo_dark": "apps/linkhop/logo-dark.png"}},
     {"slug": "biohop", "name": "BioHop", "tagline": "One link-in-bio page for everything you do.", "url": "https://bio.hel.ink", "public_prefix": "https://hel.ink/b/", "color": "#a855f7", "public": true, "repo": "https://github.com/navi-crwn/BioHop",

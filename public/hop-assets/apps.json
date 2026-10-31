@@ -27,24 +27,24 @@
       "repo": "https://github.com/navi-crwn/HEL.ink",
       "icons": {
         "mark": {
-          "url": "https://hel.ink/hop-assets/v1/apps/hub/hop-id-mark.svg",
-          "integrity": "sha384-kUC/5uuZLVQTWyp7Le88lWbJjtvncJUjS6hmHHVO96PcLIlqhIQJkvbvxj0N7i+Z"
+          "url": "https://hel.ink/hop-assets/v1/apps/hub/rabbit-mark.png",
+          "integrity": "sha384-9OvX+M4VRqeDqTTYN8mKl08cRv9Q4uCOwaH7SY19xhrfnpQMDHta/khUph51rpPT"
         },
         "wordmark": {
-          "url": "https://hel.ink/hop-assets/v1/apps/hub/wordmark.svg",
-          "integrity": "sha384-OJbCP0hX+oVrkORdegBAbdULdLzrpmiVjnHes1Q/Ejl1v/JP4/0wqo9pGBbscxBV"
+          "url": "https://hel.ink/hop-assets/v1/apps/hub/rabbit-wordmark.svg",
+          "integrity": "sha384-ocrxNTJwkM5Gn44L+6nDCE9sGq7TQ/hjix5EnXEepx/SuyyPpCTqy0moQJNbg1D4"
         },
         "favicon": {
-          "url": "https://hel.ink/hop-assets/v1/apps/hub/favicon.png",
-          "integrity": "sha384-ziIcAamx6+KssiXN6RFQK77M8xVHu35HUdVQm6XImrBR/qjDFgR8+OYP6mPvVnn/"
+          "url": "https://hel.ink/hop-assets/v1/apps/hub/rabbit-favicon.png",
+          "integrity": "sha384-9OvX+M4VRqeDqTTYN8mKl08cRv9Q4uCOwaH7SY19xhrfnpQMDHta/khUph51rpPT"
         },
         "logo": {
-          "url": "https://hel.ink/hop-assets/v1/apps/hub/logo.png",
-          "integrity": "sha384-5qdfDU7O1veh/gpE6PQyG6dvLED3XxA6+lpTCXoI05+NLi0586lWAtD8I4I7HszZ"
+          "url": "https://hel.ink/hop-assets/v1/apps/hub/rabbit-mark.png",
+          "integrity": "sha384-9OvX+M4VRqeDqTTYN8mKl08cRv9Q4uCOwaH7SY19xhrfnpQMDHta/khUph51rpPT"
         },
         "logo_dark": {
-          "url": "https://hel.ink/hop-assets/v1/apps/hub/logo-dark.png",
-          "integrity": "sha384-49G6iHRGX/HKI2mJDVcbiBXDxSeYida9kmAsei+v6YmlhU332qr40AJhhwRlHyov"
+          "url": "https://hel.ink/hop-assets/v1/apps/hub/rabbit-mark.png",
+          "integrity": "sha384-9OvX+M4VRqeDqTTYN8mKl08cRv9Q4uCOwaH7SY19xhrfnpQMDHta/khUph51rpPT"
         }
       }
     },

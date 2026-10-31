@@ -15,11 +15,11 @@ return [
         'required_version' => env('LEGAL_TERMS_REQUIRED_VERSION'),
 
         'published' => [
-            // 'VERSION' => [
-            //     'file' => 'terms-VERSION.md',
-            //     'sha256' => '64-lowercase-hex-characters',
-            //     'published_at' => 'YYYY-MM-DDTHH:MM:SSZ',
-            // ],
+            '2026-10-31' => [
+                'file' => 'terms-2026-10-31.md',
+                'sha256' => '4ca047cb41f0b32310fee38f8834d70a83ef5cecfe98fa3bf138481fbd56a7e3',
+                'published_at' => '2026-10-31T00:00:00Z',
+            ],
         ],
     ],
 ];

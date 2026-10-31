@@ -59,6 +59,27 @@ class SourceContract(unittest.TestCase):
             2,
         )
 
+    def test_single_segment_hub_pages_have_exact_locations(self):
+        for path in (
+            "/how-it-works",
+            "/security",
+            "/open-source",
+            "/signup",
+            "/apps",
+            "/about",
+            "/contact",
+            "/privacy",
+            "/terms",
+            "/plans",
+            "/help",
+            "/faq",
+            "/products",
+            "/status",
+            "/announcements",
+        ):
+            with self.subTest(path=path):
+                self.assertIn(f"location = {path}", self.source)
+
 
 @unittest.skipUnless(shutil.which("nginx"), "nginx is unavailable; source checks are not HTTP proof")
 class LoopbackContract(unittest.TestCase):

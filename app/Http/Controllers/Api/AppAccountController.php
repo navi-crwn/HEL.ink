@@ -8,6 +8,7 @@ use App\Models\HopApp;
 use App\Models\LoginHistory;
 use App\Models\User;
 use App\Support\HopSignature;
+use App\Support\Legal;
 use App\Support\Username;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
@@ -99,36 +100,60 @@ class AppAccountController extends Controller
             return $denied;
         }
         $hopApp = $request->attributes->get('hop_app');
+        $requiredVersion = Legal::requiredVersion();
+        if (! Legal::isUsable($requiredVersion)) {
+            return response()->json(['error' => 'not_configured', 'message' => 'Account registration is temporarily unavailable.'], 503);
+        }
         $data = [
             'name' => trim((string) $request->json('name', '')),
             'email' => strtolower(trim((string) $request->json('email', ''))),
             'password' => (string) $request->json('password', ''),
             'tos_accepted' => (bool) $request->json('tos_accepted', false),
+            // Sent by the app inside the signed body, so it is authentic. While
+            // the gate is inactive it must be absent (backwards compatible with
+            // PixelHop 3.x); when active it must name exactly the version
+            // required right now — the app cannot pick an arbitrary version.
+            'terms_version' => (string) $request->json('terms_version', ''),
         ];
         $v = Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'indisposable', 'unique:'.User::class],
             'password' => ['required', Rules\Password::defaults()],
             'tos_accepted' => ['accepted'],
+            'terms_version' => $requiredVersion === null ? ['prohibited'] : ['required', 'in:'.$requiredVersion],
         ], [
             'email.indisposable' => 'Disposable email addresses are not allowed.',
             'email.unique' => 'An account with this email already exists. Sign in instead.',
             'tos_accepted.accepted' => 'Please accept the terms.',
+            'terms_version.required' => 'Please accept the current terms.',
+            'terms_version.in' => 'Please accept the current terms.',
         ]);
         if ($v->fails()) {
-            return response()->json(['error' => 'invalid', 'message' => $v->errors()->first()], 422);
+            $response = ['error' => 'invalid', 'message' => $v->errors()->first()];
+            if ($requiredVersion !== null && $v->errors()->has('terms_version')) {
+                $response['legal'] = Legal::consumerMetadata();
+            }
+
+            return response()->json($response, 422);
         }
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'role' => User::ROLE_USER,
-        ]);
-        $user->forceFill(['username' => Username::suggest($user->name, $user)])->saveQuietly();
-        // LinkHop's default folder, as the web sign-up made it before the split.
-        if (Schema::hasTable('folders')) {
-            DB::table('folders')->insert(['name' => 'Default', 'user_id' => $user->id, 'is_default' => true, 'created_at' => now(), 'updated_at' => now()]);
-        }
+        $user = DB::transaction(function () use ($data, $requiredVersion): User {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'role' => User::ROLE_USER,
+            ]);
+            $user->forceFill(['username' => Username::suggest($user->name, $user)])->saveQuietly();
+            if ($requiredVersion !== null) {
+                Legal::record($user, Legal::SOURCE_APP, $requiredVersion);
+            }
+            // LinkHop's default folder, as the web sign-up made it before the split.
+            if (Schema::hasTable('folders')) {
+                DB::table('folders')->insert(['name' => 'Default', 'user_id' => $user->id, 'is_default' => true, 'created_at' => now(), 'updated_at' => now()]);
+            }
+
+            return $user;
+        });
         // SMTP can take seconds per message: send both after the response.
         defer(function () use ($user) {
             event(new Registered($user)); // sends the "confirm your email" message
@@ -139,7 +164,35 @@ class AppAccountController extends Controller
             }
         });
 
-        return response()->json(['user' => $this->payload($user, $hopApp)], 201);
+        $response = ['user' => $this->payload($user, $hopApp)];
+        if ($terms = $this->termsPayload($user)) {
+            $response['terms'] = $terms;
+        }
+
+        return response()->json($response, 201);
+    }
+
+    /**
+     * The acceptance recorded for this new account, or null while the legal
+     * gate is inactive (key omitted entirely — existing consumers see the
+     * exact response shape they saw before).
+     *
+     * @return array<string, string>|null
+     */
+    private function termsPayload(User $user): ?array
+    {
+        $acceptance = $user->legalAcceptances()->where('policy', Legal::POLICY_TERMS)->first();
+        if (! $acceptance) {
+            return null;
+        }
+
+        return [
+            'policy' => $acceptance->policy,
+            'version' => $acceptance->version,
+            'sha256' => $acceptance->sha256,
+            'source' => $acceptance->source,
+            'accepted_at' => $acceptance->accepted_at->toIso8601String(),
+        ];
     }
 
     /** The same facts the SSO ticket carries (v2 profile), plus `admin` for this app. */

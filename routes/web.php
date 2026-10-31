@@ -7,6 +7,7 @@ use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\BrandAssetController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LauncherController;
+use App\Http\Controllers\LegalArtifactController;
 use App\Http\Controllers\MarketingPageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
@@ -59,6 +60,10 @@ $marketing = function () {
 // so they are registered once, without a domain (route:cache refuses duplicate names).
 $brand();
 $marketing();
+
+// Exact local bytes for a registered version; there is no remote URL fetch.
+Route::get('/legal/terms/{version}', [LegalArtifactController::class, 'show'])
+    ->where('version', '[A-Za-z0-9][A-Za-z0-9._-]{0,63}')->name('legal.terms.artifact');
 
 Route::domain(config('hop.hub_host'))->group(function () use ($marketing) {
     Route::get('/', fn () => auth()->check() ? redirect()->route('dashboard') : redirect()->route('login'))->name('hub.home');

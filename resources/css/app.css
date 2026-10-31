@@ -1,4 +1,8 @@
 @import 'tailwindcss';
+
+@media (max-width: 380px) {
+    .marketing-brand > span > span { display: none; }
+}
 @import './identity-hero.css';
 @import './home-product.css';
 

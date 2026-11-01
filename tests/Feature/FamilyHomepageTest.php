@@ -22,7 +22,8 @@ test('the home page has one interactive section per public product in the manife
         expect($xpath->query('.//ul[@class="h-feats"]/li', $section->item(0))->length)->toBe(3);
         expect($html)->toContain($app['url'])->toContain($app['icons']['mark']['url']);
     }
-    expect(substr_count($html, 'aria-selected="true"'))->toBe(1);
+    // the old connect tabs are gone: "One account" is a scene now
+    expect($html)->not->toContain('data-home-tabs')->toContain('data-hx-acct');
 });
 
 test('the home page has the HOP sections and no back link', function () {
@@ -33,7 +34,7 @@ test('the home page has the HOP sections and no back link', function () {
     }
     expect($html)->not->toContain('Back to HOP');
     expect($html)->not->toContain('id="status"');
-    expect(substr_count($html, '<section '))->toBe(8);
+    expect(substr_count($html, '<section '))->toBe(9);
 });
 
 test('the home page is English by default and speaks eight languages', function () {
@@ -72,3 +73,17 @@ test('HOP pages and app pages are served with a back link', function (string $pa
     ['/signup', 'two-factor'],
     ['/about', 'About HOP'],
 ]);
+
+test('the new home scenes are complete as plain HTML: one account, numbers, question cards and the closing call', function () {
+    $html = $this->get('/')->assertOk()->getContent();
+
+    // "One account": the hub, four apps, all signed in, the code and the note are in the markup
+    expect(substr_count($html, 'data-hx-node'))->toBe(4)
+        ->and($html)->toContain('data-hx-code')->toContain('data-hx-st')->toContain('data-signed-out=');
+    // the running line, the four numbers and six question cards
+    expect($html)->toContain('data-hx-marq')->toContain('data-hx-nums')->and(substr_count($html, 'class="hx-cell hx-q"'))->toBe(6);
+    // our own bundle, never a CDN
+    expect($html)->not->toContain('cdnjs')->not->toContain('unpkg.com');
+    $js = file_get_contents(base_path('resources/js/home.js'));
+    expect($js)->toContain("from 'gsap'")->toContain("from 'lenis'")->not->toContain('cdn');
+});

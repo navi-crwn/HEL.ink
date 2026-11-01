@@ -51,7 +51,7 @@
                                 @if ($u->avatarUrl())
                                     <img src="{{ $u->avatarUrl() }}" alt="" class="h-16 w-16 rounded-full object-cover ring-1 ring-slate-500/20">
                                 @else
-                                    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-slate-500/15 text-xl font-semibold text-ink">{{ strtoupper(substr($u->name, 0, 1)) }}</div>
+                                    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-slate-500/15 text-xl font-semibold text-ink">{{ mb_strtoupper(mb_substr($u->name, 0, 1)) }}</div>
                                 @endif
                                 <form method="POST" action="{{ route('profile.avatar') }}" enctype="multipart/form-data" class="flex flex-wrap items-center gap-2">
                                     @csrf

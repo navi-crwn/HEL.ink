@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -25,6 +26,7 @@ class PasswordController extends Controller
         $user->update([
             'password' => Hash::make($validated['password']),
         ]);
+        ActivityLog::log('created', 'Password', $user->id, 'Created password');
 
         return back()->with('status', 'password-created');
     }
@@ -47,6 +49,7 @@ class PasswordController extends Controller
         $request->user()->update([
             'password' => Hash::make($validated['password']),
         ]);
+        ActivityLog::log('updated', 'Password', $request->user()->id, 'Changed password');
 
         return back()->with('status', 'password-updated');
     }

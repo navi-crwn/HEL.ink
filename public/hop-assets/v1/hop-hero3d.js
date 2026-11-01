@@ -7,7 +7,8 @@
 // canvas hands over to the HTML phone behind it (data-morph="done").
 // data-morph="cycle" (BioHop) never stops: logo -> the word BIO -> the phone -> the canvas fades and the page
 // inside the phone is shown (a live iframe next to the canvas) -> the blocks come back, scatter and start over.
-// While the pointer or focus is inside [data-cycle-hold] the cycle waits on the page, so it is never taken away mid-read.
+// Once the page is shown the cycle stops there, so it can be read, scrolled and clicked; it plays again from the start
+// when the stage has left the screen and comes back.
 (function () {
   'use strict';
   var scenes = [], scheduled = 0, instances = new WeakMap();
@@ -221,8 +222,8 @@
   // cycle clock: [time ms, stage] keyframes; the stage is where the blocks are at that moment.
   var KEYS = [[0, 'home'], [1600, 'home'], [3000, 'word'], [5200, 'word'], [6800, 'phone'], [7200, 'phone'], [16200, 'phone'], [17600, 'scatter'], [19000, 'home']];
   var REVEAL = [7200, 7700, 15700, 16200]; // canvas out, in the page, canvas back
-  var cycleT = 0, lastNow = null, holdEl = cycle ? cv.closest('[data-cycle-hold]') : null;
-  function holding() { return !!holdEl && (holdEl.matches(':hover') || holdEl.contains(document.activeElement)); }
+  var cycleT = 0, lastNow = null;
+  function restartCycle() { cycleT = 0; lastNow = null; }
 
   // ---------- drawing ----------
   var eye = [0, 0, 22 * extent / 8], eyeHome = eye[2], VP, dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.25 : 2);
@@ -270,8 +271,8 @@
     var wts = null, phoneW = 0;
     if (cycle) {
       var dtms = lastNow === null ? 0 : Math.min(80, now - lastNow); lastNow = now;
-      var reveal = cycleT > REVEAL[1] && cycleT < REVEAL[2];
-      if (settled && !drag && !(reveal && holding())) cycleT = (cycleT + dtms) % 19000;
+      var shownNow = cycleT >= REVEAL[1] && cycleT < REVEAL[2];
+      if (settled && !drag && !shownNow) cycleT = (cycleT + dtms) % 19000;
       var i = 0; while (i < KEYS.length - 2 && cycleT >= KEYS[i + 1][0]) i++;
       var a = KEYS[i], bk = KEYS[i + 1], e = Math.min(1, Math.max(0, (cycleT - a[0]) / (bk[0] - a[0]))); e = e * e * (3 - 2 * e);
       wts = { home: 0, word: 0, phone: 0, scatter: 0 };
@@ -355,6 +356,7 @@
   var scene = { canvas: cv, draw: frame, visible: false, ratio: 0, dead: false };
   scenes.push(scene);
   var observer = new IntersectionObserver(function (es) {
+    if (scene.visible && !es[0].isIntersecting && cycle) restartCycle();
     scene.visible = es[0].isIntersecting;
     scene.ratio = es[0].intersectionRatio;
     schedule();

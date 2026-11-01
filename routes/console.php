@@ -9,3 +9,5 @@ Schedule::job(new QueueHeartbeat)->everyTwoMinutes();
 // Laravel housekeeping on the shared tables the hub owns.
 Schedule::command('auth:clear-resets')->daily();
 Schedule::command('disposable:update')->weeklyOn(1, '03:00');
+// Repo numbers for the home page, fetched on the server (ETag: unchanged answers cost no quota).
+Schedule::command('hop:github-stats')->hourly()->withoutOverlapping()->runInBackground();

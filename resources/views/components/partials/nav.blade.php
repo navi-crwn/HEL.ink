@@ -29,8 +29,6 @@
             </a>
         </li>
     @endforeach
-    <li class="px-3 pb-1 pt-4 text-[11px] font-semibold uppercase tracking-wider text-muted">Apps</li>
-    <x-hop::nav-items />
     @if ($isAdmin)
         <li class="px-3 pb-1 pt-4 text-[11px] font-semibold uppercase tracking-wider text-muted">Admin</li>
         @if ($control !== '')
@@ -52,3 +50,5 @@
         @endforeach
     @endif
 </ul>
+{{-- The apps: one list in the sidebar, from the shared manifest; the top bar keeps settings-type controls only. --}}
+<x-hop::family-nav app="hub" :label="__('Apps')" />

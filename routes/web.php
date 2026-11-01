@@ -13,6 +13,7 @@ use App\Http\Controllers\MarketingPageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SsoController;
+use App\Http\Controllers\StatsController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TwoFactorController;
 use App\Support\FamilyStory;
@@ -59,6 +60,8 @@ $marketing = function () {
     Route::get('/signup', [MarketingPageController::class, 'signup'])->name('signup');
     Route::get('/status', StatusController::class)->name('status');
     Route::get('/status.json', [StatusController::class, 'json'])->name('status.json');
+    Route::get('/stats/github.json', [StatsController::class, 'github'])->name('stats.github');
+    Route::get('/stats/uptime.json', [StatsController::class, 'uptime'])->name('stats.uptime');
     Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
     Route::get('/announcements/{announcement}', [AnnouncementController::class, 'show'])->name('announcements.show');
 };

@@ -1,0 +1,75 @@
+/* Home: "Built in the open" (resources/views/partials/home-open.blade.php).
+   Uses the tokens of hop-home.css (--home-*, --h-*), so light and dark follow the page. */
+.hop-home .ho { --ho-c0:#0891b2; --ho-c1:#6366f1; --ho-c2:#c026d3; --ho-c3:#f59e0b; --ho-c4:#10b981; --ho-cx:#94a3b8; --ho-up:#10b981; --ho-down:#ef4444; --ho-none:color-mix(in srgb, var(--home-text) 14%, transparent); }
+.dark .hop-home .ho, [data-theme=dark] .hop-home .ho { --ho-c0:#22d3ee; --ho-c1:#818cf8; --ho-c2:#e879f9; --ho-c3:#fbbf24; --ho-c4:#34d399; --ho-up:#34d399; --ho-down:#f87171; }
+.hop-home .ho-box { border:1px solid var(--home-line); background:var(--home-panel); border-radius:22px; padding:clamp(16px,3vw,28px); min-width:0; margin-top:18px; }
+.hop-home .ho-box h3 { margin:0 0 14px; font:600 12px/1.4 var(--h-mono); letter-spacing:.04em; color:var(--home-muted); }
+.hop-home .ho-box .ho-repo { margin:0 0 18px; font:700 clamp(17px,2.4vw,22px)/1.2 var(--h-sans); letter-spacing:-.02em; color:var(--home-text); overflow-wrap:anywhere; }
+.hop-home .ho-repo a { color:inherit; text-decoration:none; }
+.hop-home .ho-repo a:hover { text-decoration:underline; }
+.hop-home .ho-tabs { margin-top:0; }
+.hop-home .ho-tabs[hidden] { display:none; }
+.hop-home .ho-panel + .ho-panel { margin-top:34px; padding-top:28px; border-top:1px solid var(--home-line); }
+.hop-home .ho-js .ho-panel + .ho-panel { margin-top:0; padding-top:0; border-top:0; }
+.hop-home .ho-panel[hidden] { display:none; }
+.hop-home .ho-empty-line, .hop-home .ho-empty p { margin:0; color:var(--home-muted); font-size:15px; line-height:1.6; }
+.hop-home .ho-links { display:flex; flex-wrap:wrap; gap:8px; list-style:none; padding:0; margin:16px 0 0; }
+.hop-home .ho-links .h-badge { margin:0; }
+/* language bar and legend */
+.hop-home .ho-bar { display:flex; gap:2px; height:10px; border-radius:999px; overflow:hidden; direction:ltr; }
+.hop-home .ho-bar span { flex:var(--w) 1 0%; min-width:3px; }
+.hop-home .ho-legend { display:flex; flex-wrap:wrap; gap:6px 18px; list-style:none; padding:0; margin:12px 0 22px; font:12px/1.5 var(--h-mono); color:var(--home-muted); }
+.hop-home .ho-legend li { display:inline-flex; align-items:center; gap:7px; }
+.hop-home .ho-legend b { color:var(--home-text); font-weight:600; }
+.hop-home .ho-legend i { width:9px; height:9px; border-radius:50%; flex:none; }
+.hop-home :is(.ho-bar span, .ho-legend i).l0 { background:var(--ho-c0); }
+.hop-home :is(.ho-bar span, .ho-legend i).l1 { background:var(--ho-c1); }
+.hop-home :is(.ho-bar span, .ho-legend i).l2 { background:var(--ho-c2); }
+.hop-home :is(.ho-bar span, .ho-legend i).l3 { background:var(--ho-c3); }
+.hop-home :is(.ho-bar span, .ho-legend i).l4 { background:var(--ho-c4); }
+.hop-home :is(.ho-bar span, .ho-legend i).lx { background:var(--ho-cx); }
+/* the numbers */
+.hop-home .ho-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:18px 20px; margin:0 0 26px; }
+.hop-home .ho-stats > div { min-width:0; }
+.hop-home .ho-stats dt { font:500 11px/1.4 var(--h-mono); letter-spacing:.04em; text-transform:uppercase; color:var(--home-muted); margin:0 0 6px; }
+.hop-home .ho-stats dd { margin:0; font:700 clamp(18px,2.2vw,24px)/1.15 var(--h-mono); letter-spacing:-.02em; color:var(--home-text); overflow-wrap:anywhere; }
+.hop-home .ho-stats dd small { display:block; margin-top:4px; font:400 11px/1.4 var(--h-mono); letter-spacing:0; color:var(--home-muted); }
+.hop-home .ho-stats dd time { font-size:clamp(15px,1.8vw,18px); }
+/* 52 weeks of commits */
+.hop-home .ho-weeks-fig { margin:0; }
+.hop-home .ho-weeks { display:grid; grid-template-columns:repeat(52,minmax(0,1fr)); align-items:end; gap:3px; height:88px; border-bottom:1px solid var(--home-line); }
+.hop-home .ho-weeks i { display:block; height:var(--h); border-radius:3px 3px 0 0; background:var(--h-ink); transform-origin:bottom; }
+.hop-home .ho-weeks i.z { background:var(--ho-none); }
+.hop-home .ho-weeks-fig figcaption { margin-top:10px; font:12px/1.5 var(--h-mono); color:var(--home-muted); }
+.hop-home .ho-weeks-fig figcaption b { color:var(--home-text); font-weight:600; }
+.hop-home .ho-updated { margin:22px 0 0; }
+/* bar grow: only when the script says motion is fine */
+.hop-home .ho[data-motion] .ho-panel:not(.ho-pop) .ho-weeks i { transform:scaleY(0); }
+.hop-home .ho[data-motion] .ho-panel.ho-pop .ho-weeks i { animation:ho-grow .7s cubic-bezier(.2,.8,.2,1) both; animation-delay:calc(var(--i) * 9ms); }
+@keyframes ho-grow { from { transform:scaleY(0); } }
+@media (prefers-reduced-motion:reduce) { .hop-home .ho .ho-weeks i { transform:none!important; animation:none!important; } }
+/* uptime */
+.hop-home .ho-up-list { list-style:none; padding:0; margin:0; display:grid; gap:14px; }
+.hop-home .ho-up-list li { display:grid; grid-template-columns:minmax(76px,.16fr) minmax(0,1fr) 68px; align-items:center; gap:6px 16px; }
+.hop-home .ho-up-name { font-weight:650; font-size:15px; }
+.hop-home .ho-up-pct { font:700 15px/1 var(--h-mono); text-align:end; }
+.hop-home .ho-strip { display:grid; grid-template-columns:repeat(30,minmax(0,1fr)); gap:2px; height:26px; }
+.hop-home .ho-strip i { display:block; border-radius:3px; background:var(--ho-none); }
+.hop-home .ho-strip i.up { background:var(--ho-up); }
+.hop-home .ho-strip i.down { background:var(--ho-down); }
+.hop-home .ho-uptime .h-small { margin:18px 0 0; }
+/* three equal cards */
+.hop-home .ho-cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); grid-auto-rows:1fr; gap:18px; margin-top:18px; }
+.hop-home .ho-card { display:flex; flex-direction:column; align-items:flex-start; gap:10px; min-width:0; padding:clamp(18px,2.6vw,26px); border:1px solid var(--home-line); border-radius:22px; background:var(--home-panel); color:var(--home-text); text-decoration:none; transition:border-color .2s, transform .2s; }
+.hop-home .ho-card:hover { border-color:color-mix(in srgb, var(--home-text) 45%, transparent); transform:translateY(-2px); }
+.hop-home .ho-card svg { color:#0891b2; flex:none; }
+.hop-home .ho-card h3 { margin:6px 0 0; font:700 20px/1.2 var(--h-sans); letter-spacing:-.02em; color:var(--home-text); }
+.hop-home .ho-card p { margin:0; color:var(--home-muted); font-size:15px; line-height:1.6; }
+.hop-home .ho-go { margin-top:auto; padding-top:10px; font:600 13px/1.4 var(--h-mono); color:var(--home-text); }
+@media (max-width:800px) {
+  .hop-home .ho-cards { grid-template-columns:minmax(0,1fr); grid-auto-rows:auto; }
+  .hop-home .ho-up-list li { grid-template-columns:minmax(0,1fr) auto; }
+  .hop-home .ho-up-list .ho-strip { grid-column:1 / -1; grid-row:2; }
+  .hop-home .ho-weeks { gap:2px; height:72px; }
+}
+@media (max-width:420px) { .hop-home .ho-weeks { gap:1px; } .hop-home .ho-strip { gap:1px; } }

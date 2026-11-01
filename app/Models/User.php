@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Jobs\SendHopEvent;
 use App\Support\Avatar;
+use Hop\Ui\Locales;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -193,7 +194,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'bio' => (string) $this->bio,
             'website' => (string) $this->website,
             'location' => (string) $this->location,
-            'locale' => (string) $this->locale,
+            'locale' => (string) Locales::resolve($this->locale),
             'show_owner' => (bool) $this->show_owner,
             'roles' => $this->roleNames(),
             'status' => $this->status,

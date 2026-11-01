@@ -323,4 +323,4 @@ test('the section is translated in every language', function (string $locale) {
     view('partials.home-open')->render();
 
     expect($missing)->toBe([]);
-})->with(['id', 'zh', 'es', 'ar', 'pt', 'fr', 'ja']);
+})->with(['id', 'zh-CN', 'de', 'es', 'pt-BR', 'fr', 'ja', 'ru']);

@@ -127,7 +127,7 @@ return [
         'linkhop' => ['auth' => 'hub', 'path' => '/internal/accounts/{id}/summary', 'fields' => ['links' => 'Links', 'clicks_7d' => 'Clicks, 7 days']],
         'biohop' => ['auth' => 'hub', 'path' => '/internal/accounts/{id}/summary', 'fields' => ['pages' => 'Pages', 'published' => 'Published', 'clicks_7d' => 'Clicks, 7 days']],
         'pixelhop' => ['auth' => 'hop', 'path' => '/hop/users/{id}', 'fields' => ['images' => 'Files', 'albums' => 'Albums', 'storage_bytes' => 'Storage:bytes']],
-        'notehop' => ['auth' => 'hop', 'path' => '/hop/users/{id}', 'fields' => ['notes' => 'Notes', 'notes_public' => 'Public notes']],
+        'notehop' => ['auth' => 'hop', 'path' => '/hop/users/{id}', 'fields' => ['notes' => 'Notes', 'notes_public' => 'Basic notes']],
     ],
 
     // Watchdog (hop:watch): alert after this many failures in a row.

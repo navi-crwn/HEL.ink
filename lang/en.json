@@ -139,12 +139,12 @@
     "No apps configured.": "No apps configured.",
     "No. One HOP ID signs you in everywhere. Suspending or deleting it applies to every app.": "No. One HOP ID signs you in everywhere. Suspending or deleting it applies to every app.",
     "No. One HOP ID signs you in to LinkHop, BioHop, PixelHop and NoteHop.": "No. One HOP ID signs you in to LinkHop, BioHop, PixelHop and NoteHop.",
-    "NoteHop encrypts a note in your browser before saving it. The key is in the part of the link after <code>#</code>, which browsers never send to a server. HOP ID only decides who can manage a note, never who can read it.": "NoteHop encrypts a note in your browser before saving it. The key is in the part of the link after <code>#</code>, which browsers never send to a server. HOP ID only decides who can manage a note, never who can read it.",
-    "NoteHop encrypts in your browser. The key stays in the link and never reaches the server.": "NoteHop encrypts in your browser. The key stays in the link and never reaches the server.",
+    "An encrypted NoteHop note is locked in your browser before it is saved. The key is in the part of the link after <code>#</code>, which browsers never send to a server. HOP ID only decides who can manage a note, never who can read it. A basic note is readable instead, and its link can be a name you choose.": "An encrypted NoteHop note is locked in your browser before it is saved. The key is in the part of the link after <code>#</code>, which browsers never send to a server. HOP ID only decides who can manage a note, never who can read it. A basic note is readable instead, and its link can be a name you choose.",
+    "Encrypted notes are locked in your browser. The key stays in the link and never reaches the server.": "Encrypted notes are locked in your browser. The key stays in the link and never reaches the server.",
     "NoteHop is different on purpose": "NoteHop is different on purpose",
-    "NoteHop notes are end-to-end encrypted in the browser.": "NoteHop notes are end-to-end encrypted in the browser.",
+    "NoteHop’s encrypted notes are end-to-end encrypted in the browser.": "NoteHop’s encrypted notes are end-to-end encrypted in the browser.",
     "Notes nobody else can read": "Notes nobody else can read",
-    "Notes only the people you choose can read. The note is locked in your browser before it is saved, so not even the server can read it.": "Notes only the people you choose can read. The note is locked in your browser before it is saved, so not even the server can read it.",
+    "Notes only the people you choose can read. By default a note is locked in your browser before it is saved, so not even the server can read it.": "Notes only the people you choose can read. By default a note is locked in your browser before it is saved, so not even the server can read it.",
     "Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.": "Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.",
     "Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.": "Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.",
     "One HOP ID": "One HOP ID",
@@ -325,7 +325,7 @@
     "Do I need an account?": "Do I need an account?",
     "One HOP ID works across all four apps. Some tools also work without signing in.": "One HOP ID works across all four apps. Some tools also work without signing in.",
     "Can the server read my note?": "Can the server read my note?",
-    "Never. The cryptographic key is in the URL hash fragment, which browsers never send to the server.": "Never. The cryptographic key is in the URL hash fragment, which browsers never send to the server.",
+    "Not an encrypted note, which is the default: its cryptographic key is in the URL hash fragment, which browsers never send to the server. A basic note is readable by the server.": "Not an encrypted note, which is the default: its cryptographic key is in the URL hash fragment, which browsers never send to the server. A basic note is readable by the server.",
     "Yes. Read the installation guide in each repository.": "Yes. Read the installation guide in each repository.",
     "Where can I get help?": "Where can I get help?",
     "Each app has a help page. You can also report issues on GitHub.": "Each app has a help page. You can also report issues on GitHub.",
@@ -501,5 +501,5 @@
     "Albums": "Albums",
     "Storage": "Storage",
     "Notes": "Notes",
-    "Public notes": "Public notes"
+    "Basic notes": "Basic notes"
 }

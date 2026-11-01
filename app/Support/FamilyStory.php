@@ -84,15 +84,15 @@ final class FamilyStory
             ],
         ];
         $out = [];
-        foreach (self::APPS as $slug) {
-            $app = $manifest->get($slug);
-            if (! $app) {
+        foreach ($manifest as $slug => $app) {
+            if (! ($app['public'] ?? false) || ! isset($text[$slug])) {
                 continue;
             }
             $out[$slug] = $text[$slug] + [
                 'slug' => $slug,
                 'name' => $app['name'],
                 'url' => $app['url'],
+                'public_prefix' => $app['public_prefix'] ?? $app['url'],
                 'host' => parse_url($app['url'], PHP_URL_HOST),
                 'mark' => $app['icons']['mark']['url'],
                 'color' => $app['color'] ?? '#6366f1',

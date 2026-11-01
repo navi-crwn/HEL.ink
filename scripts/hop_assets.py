@@ -19,6 +19,7 @@ import json
 import re
 import pathlib
 import sys
+import gzip
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC = ROOT / "resources" / "hop-assets" / "apps.source.json"
@@ -110,6 +111,12 @@ def main() -> None:
             bundled.write_text(text)
             print(f"wrote {bundled.relative_to(ROOT)}")
     elif mode == "check":
+        hero = ROOT / "public/hop-assets/v1/hop-hero3d.js"
+        if hero.exists() and len(gzip.compress(hero.read_bytes(), mtime=0)) > 12 * 1024:
+            raise SystemExit("hop-hero3d.js exceeds 12 KiB gzip")
+        for image in (hero.parent / "home").glob("*.webp"):
+            if image.stat().st_size > 60 * 1024:
+                raise SystemExit(f"{image.name} exceeds 60 KiB")
         if errors := css_errors():
             raise SystemExit("\n".join(errors))
         if not FAMILY.is_file() or FAMILY.read_text() != family_table():

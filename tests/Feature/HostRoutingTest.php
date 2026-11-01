@@ -17,7 +17,7 @@ beforeEach(function () {
 });
 
 test('the public host serves the home page and marketing pages', function () {
-    $this->withoutVite()->get('https://hel.test/')->assertOk()->assertSee('One hop to every app');
+    $this->withoutVite()->get('https://hel.test/')->assertOk()->assertSee('One account. Every HOP app.');
     $this->withoutVite()->get('https://hel.test/about')->assertOk();
     $this->withoutVite()->get('https://hel.test/status')->assertOk();
 });

@@ -6,8 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         @php
             $metaTitle = $title ?? config('app.name');
-            $metaDescription = $description ?? 'HEL.ink is home to the HOP family: LinkHop short links, BioHop link-in-bio pages and PixelHop image hosting. One free HOP ID for every app.';
-            $metaKeywords = 'hop, hel.ink, linkhop, biohop, pixelhop, short links, link in bio, image hosting';
+            $metaDescription = $description ?? __('Short links, a page for your links, images and private notes. One free HOP ID connects them all.');
+            $metaKeywords = 'hop, hel.ink, linkhop, biohop, pixelhop, notehop';
             $ogTitle = $metaTitle;
             $ogDescription = $metaDescription;
             $ogImage = route('brand.logo.dark');
@@ -40,6 +40,7 @@
         @endif
         <x-hop::fonts />
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @stack('head')
     </head>
     @if ($themed)
     <body class="min-h-full bg-slate-50 font-sans text-slate-900 antialiased dark:bg-[#0e1322] dark:text-slate-100">

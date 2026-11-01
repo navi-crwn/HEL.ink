@@ -26,6 +26,6 @@ test('guests are sent to login', function () {
 test('the owner cannot be suspended', function () {
     $admin = User::factory()->admin()->create();
     $owner = User::factory()->owner()->create();
-    $this->actingAs($admin)->withSession(['2fa_verified' => true])->from('/admin/users/'.$owner->id)->post("/admin/users/{$owner->id}/suspend")->assertSessionHasErrors('user');
+    $this->actingAs($admin)->withSession(['2fa_verified' => true])->from('/admin/users/'.$owner->id)->post("/admin/users/{$owner->id}/suspend")->assertForbidden();
     expect($owner->fresh()->isSuspended())->toBeFalse();
 });

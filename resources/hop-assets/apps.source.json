@@ -4,7 +4,21 @@
   "assets": {
     "fonts_css": "fonts-amnesia.css",
     "float_css": "hop-float.css",
-    "float_js": "hop-float.js"
+    "float_js": "hop-float.js",
+    "home_css": "hop-home.css",
+    "hero3d_js": "hop-hero3d.js",
+    "motion_js": "hop-motion.js",
+    "home_js": "hop-home.js",
+    "hero_hub_light": "home/hub-light.webp",
+    "hero_hub_dark": "home/hub-dark.webp",
+    "hero_linkhop_light": "home/linkhop-light.webp",
+    "hero_linkhop_dark": "home/linkhop-dark.webp",
+    "hero_biohop_light": "home/biohop-light.webp",
+    "hero_biohop_dark": "home/biohop-dark.webp",
+    "hero_pixelhop_light": "home/pixelhop-light.webp",
+    "hero_pixelhop_dark": "home/pixelhop-dark.webp",
+    "hero_notehop_light": "home/notehop-light.webp",
+    "hero_notehop_dark": "home/notehop-dark.webp"
   },
   "apps": [
     {"slug": "hub", "name": "HOP ID", "tagline": "One account for every HOP app.", "url": "https://hel.ink", "account_url": "https://hub.hel.ink", "color": "#6366f1", "public": true, "repo": "https://github.com/navi-crwn/HEL.ink",

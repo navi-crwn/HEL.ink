@@ -210,8 +210,8 @@ class HopAdminController extends Controller
         if (! in_array($action, self::ACTIONS, true)) {
             return $this->fail('unknown_action', 'action must be one of '.implode(', ', self::ACTIONS), 422);
         }
-        if (in_array($action, ['suspend', 'delete'], true) && $user->isOwner()) {
-            return $this->fail('owner_protected', 'The owner account cannot be suspended or deleted.', 403);
+        if ($user->isSuperAdmin()) {
+            return $this->fail('owner_protected', 'Superadmin accounts are permanent and read-only, including for the account itself.', 403);
         }
         $actor = (string) $request->header('X-HOP-Actor', 'system');
         $audit = ['actor' => $actor, 'app_slug' => $app->slug, 'action' => $action, 'target_type' => 'user',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
@@ -70,6 +71,16 @@ class NewPasswordController extends Controller
                     'password' => Hash::make($request->password),
                     'remember_token' => Str::random(60),
                 ])->save();
+                // The person is not signed in here, so the row is written directly (ActivityLog::log needs a session).
+                ActivityLog::create([
+                    'user_id' => $user->id,
+                    'action' => 'updated',
+                    'model' => 'Password',
+                    'model_id' => $user->id,
+                    'description' => 'Reset password by email',
+                    'ip_address' => $request->ip(),
+                    'user_agent' => $request->userAgent(),
+                ]);
                 event(new PasswordReset($user));
                 // Clear rate limiter on successful reset
                 RateLimiter::clear($key);

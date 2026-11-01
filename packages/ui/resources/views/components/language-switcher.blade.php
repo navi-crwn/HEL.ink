@@ -6,3 +6,4 @@
         @endforeach
     </nav>
 </details>
+<x-hop::switcher-assets />

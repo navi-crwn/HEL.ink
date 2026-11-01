@@ -49,7 +49,17 @@
         <h2 id="apps-title" class="section-title">{{ __('My apps') }}</h2>
         <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
             @foreach ($apps as $app)
-                <x-app-card :app="$app" :state="$status[$app->slug] ?? null" />
+                <x-app-card :app="$app" :state="$status[$app->slug] ?? null">
+                    @if (! empty($appNumbers[$app->slug]))
+                        <x-slot:stats>
+                            <dl class="flex flex-wrap gap-x-4 gap-y-1">
+                                @foreach ($appNumbers[$app->slug] as $row)
+                                    <div class="min-w-0"><dt class="text-[11px] text-muted">{{ __($row['label']) }}</dt><dd class="font-mono text-sm font-semibold tabular-nums text-ink">{{ $row['value'] }}</dd></div>
+                                @endforeach
+                            </dl>
+                        </x-slot:stats>
+                    @endif
+                </x-app-card>
             @endforeach
         </div>
     </section>

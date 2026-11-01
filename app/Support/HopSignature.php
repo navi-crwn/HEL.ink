@@ -35,9 +35,15 @@ class HopSignature
     /** Headers for a message HOP ID sends to the app (signed with the app's secret). */
     public static function headers(HopApp $app, string $method, string $path, string $body, string $actor = 'system'): array
     {
+        return self::headersWithSecret($app->secrets()[0], $method, $path, $body, $actor);
+    }
+
+    /** The same headers for a secret the caller already holds (the hub's view of an app, App\Support\HopApp). */
+    public static function headersWithSecret(string $secret, string $method, string $path, string $body, string $actor = 'system'): array
+    {
         $ts = (string) time();
         $nonce = self::b64(random_bytes(16));
-        $sig = self::b64(hash_hmac('sha256', self::stringToSign('helink', $ts, $nonce, $method, $path, $body), $app->secrets()[0], true));
+        $sig = self::b64(hash_hmac('sha256', self::stringToSign('helink', $ts, $nonce, $method, $path, $body), $secret, true));
 
         return [
             'X-HOP-App' => 'helink',

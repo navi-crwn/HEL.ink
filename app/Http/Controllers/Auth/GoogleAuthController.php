@@ -118,7 +118,7 @@ class GoogleAuthController extends Controller
             if ($user) {
                 // Existing account (sign-in or linking): unchanged. No new
                 // consent is recorded for a pre-gate account at sign-in.
-                if (! $user->google_id) {
+                if (! $user->google_id && ! $user->isSuperAdmin()) {
                     $user->update([
                         'google_id' => $googleUser->id,
                         'avatar' => $googleUser->avatar,
@@ -126,7 +126,7 @@ class GoogleAuthController extends Controller
                 }
                 // Google vouches for this address (checked above), and it is the
                 // account's email: accounts made before the fix below get verified here.
-                if (! $user->hasVerifiedEmail()) {
+                if (! $user->hasVerifiedEmail() && ! $user->isSuperAdmin()) {
                     $user->markEmailAsVerified();
                 }
                 if ($user->isSuspended()) {

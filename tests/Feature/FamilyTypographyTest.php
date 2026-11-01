@@ -14,12 +14,12 @@ test('hub pages load the HOP family fonts from hel.ink, not a font CDN', functio
     }
 });
 
-test('the home page shows each app with its official mark and the identity orbit', function () {
+test('the home page shows each app with its official mark and the interactive identity', function () {
     $html = $this->get('/')->assertOk()->getContent();
 
     expect($html)->toContain('https://hel.ink/hop-assets/v1/apps/biohop/mark.svg')
         ->toContain('https://hel.ink/hop-assets/v1/apps/linkhop/mark.svg')
-        ->toContain('identity-orbit')
+        ->toContain('data-hop-hero="hub"')
         ->toContain('apps/hub/rabbit-mark.png');
 });
 

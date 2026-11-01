@@ -22,6 +22,7 @@ class UserDeletion
 {
     public function delete(User $user): void
     {
+        abort_if($user->fresh()?->isSuperAdmin(), 403, 'Superadmin accounts are permanent and cannot be deleted.');
         $qrFiles = $this->collectQrFiles($user->id);
         $bioFiles = $this->collectBioFiles($user->id);
         $user->deletedFiles = [

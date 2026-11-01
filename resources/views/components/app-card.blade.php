@@ -1,5 +1,5 @@
 {{-- One HOP app, compact: mark, name, watchdog status, "Open" (signed in through SSO) and "Visit site".
-     Optional `stats` slot: per-app numbers from the app itself. Nothing is rendered while it is empty. --}}
+     Optional `stats` slot: per-app numbers from the app itself (AppSummaries). Nothing is rendered while it is empty. --}}
 @props(['app', 'state' => null, 'open' => true])
 @php
     $ok = $state['ok'] ?? null;
@@ -28,7 +28,6 @@
         @endif
     </div>
     @if (isset($stats) && ! $stats->isEmpty())
-        {{-- Per-app numbers (links, pages, images, notes) will be rendered here once the apps send them. --}}
         <div class="glass-inset rounded-xl px-3 py-2 text-xs">{{ $stats }}</div>
     @endif
     @if ($open)

@@ -16,11 +16,11 @@
     },
     "home_css": {
       "url": "https://hel.ink/hop-assets/v1/hop-home.css",
-      "integrity": "sha384-DBHI3FJqMMc99M2AjkIZ3TH9cfgplzLL7E2pNnwSimV+5qHbopHJch4wxZ6BJ52K"
+      "integrity": "sha384-ba89Y0sIyxd6iUZ95IfRGK1sRFiNZJfZkjNQfdAfDXLWa1PgZMtzYf8sM9CMnfDf"
     },
     "hero3d_js": {
       "url": "https://hel.ink/hop-assets/v1/hop-hero3d.js",
-      "integrity": "sha384-KkbkigrJ8OhfssrcS8lgb85oaqcb3DN0a/OmD1Ed5HYAAM3tblezxF59u4Z+7lIO"
+      "integrity": "sha384-KDe0/BARNhjaZhDbeGr4sfEvWMP6bQSXC+YhDLGUKh1dxCA8l1QN5+HI4TLHd69G"
     },
     "motion_js": {
       "url": "https://hel.ink/hop-assets/v1/hop-motion.js",
@@ -28,47 +28,47 @@
     },
     "home_js": {
       "url": "https://hel.ink/hop-assets/v1/hop-home.js",
-      "integrity": "sha384-iJV2msiWJXK50zzT9EMe/JhUl9wwSnYFF3EYT9oBNn5S0hXBu505kxV9u8GVE8fK"
+      "integrity": "sha384-LxJrotenv5OIfCUe3maV6KwUSDFp4H1R1IscAt70nwuoIAWKivqqq5Wm7ve5b1Zq"
     },
     "hero_hub_light": {
       "url": "https://hel.ink/hop-assets/v1/home/hub-light.webp",
-      "integrity": "sha384-f8zFRoPKSSqnHnuDqXEbpz9Jm1kfRHDqaZQzTbOrvyaeZeQgK4s6UTOWVHthBQo6"
+      "integrity": "sha384-QSYgWOu8OfK22JIiofBQuTEj+K8HmtJ7QWZlcVxqgin5VRbj9KXzAztQgbZg9SSz"
     },
     "hero_hub_dark": {
       "url": "https://hel.ink/hop-assets/v1/home/hub-dark.webp",
-      "integrity": "sha384-QEBnsqYs8uMMTqMpqveUmOBLTArXBxBVpxCxXvbz8cLZzMlGgZ3GSGMZFRG5QrhG"
+      "integrity": "sha384-M6xlpB5PkvtLbA0j/5OwoGCgyX1lVAxIdw6d1ejNNv4TekRhHr6ZAVJqbwpUrJe/"
     },
     "hero_linkhop_light": {
       "url": "https://hel.ink/hop-assets/v1/home/linkhop-light.webp",
-      "integrity": "sha384-3BWBARkNOkW3mqXKffWIpXM2tA6DRE7adPhjdUVeVqREIQOUKN2+W9AggfxYrN8V"
+      "integrity": "sha384-D4mVx1bkP4UkYDtt5Fu1KtU9Ss9BzAGDplaAATOLakusOQSwrD4J8NqmKNzCl2FZ"
     },
     "hero_linkhop_dark": {
       "url": "https://hel.ink/hop-assets/v1/home/linkhop-dark.webp",
-      "integrity": "sha384-T9ZB4IkKROrvmfTU+Zk1S7D7gCM/Qqgrn/wCRXi7IgY2Ml2S4P3ztDiYY3SR5sOM"
+      "integrity": "sha384-lrtzWp+fttprX3vnwfVfAOPrldq5rcrDnVIHGjkHiYHQFbYNnGJqpuFqeo6r7FyD"
     },
     "hero_biohop_light": {
       "url": "https://hel.ink/hop-assets/v1/home/biohop-light.webp",
-      "integrity": "sha384-5G1i/n5WbDqgNq8/3z7bxhOIgd1IlQ6pngdAOGphBWSPVSPFVJo7s0mRn2zV9ZST"
+      "integrity": "sha384-A4BzWPBH6eJD8XAOAp1chJlyMHzH8XwAXppdG2nYM/RDp4t6wMdYUXDjUGSFpr8p"
     },
     "hero_biohop_dark": {
       "url": "https://hel.ink/hop-assets/v1/home/biohop-dark.webp",
-      "integrity": "sha384-bBpVcC0qgAiUojCdtdU0mVb5HHbPchuEKT3ZjbYJLDCsX4lxwijc8LZfsy/4SPgU"
+      "integrity": "sha384-Oh0aSW03LEZFf3k4cekuGdk2Skefj498oHQvcJSnSdulVxya6YMUWQjO7OdNiB9i"
     },
     "hero_pixelhop_light": {
       "url": "https://hel.ink/hop-assets/v1/home/pixelhop-light.webp",
-      "integrity": "sha384-yclfKtOIy4My2R4FfU+zSI6HJfj/A33Z29Kis0c1dVjPszWsMmXA+mtvqVIkqENg"
+      "integrity": "sha384-tzhqas5I2aYEO/4pi18ENCaYdQms4/X/uqevPYAga0tYGQlwxTebePhdYVY8EDJp"
     },
     "hero_pixelhop_dark": {
       "url": "https://hel.ink/hop-assets/v1/home/pixelhop-dark.webp",
-      "integrity": "sha384-ySrrkzFhd0NlQ0W4KNz5Vj+nxscUNpFWgE7B0fFlNZWyD/rjonPiFI3hx7hFYbZK"
+      "integrity": "sha384-+eVKnFJP2DCcMK1sB6PcOlhMr9FezsLtvliUSmzgP0zsN9UhT6idy6QUHXtKe9o7"
     },
     "hero_notehop_light": {
       "url": "https://hel.ink/hop-assets/v1/home/notehop-light.webp",
-      "integrity": "sha384-hPnAOJ2E3pwUgvzyD15D/9G9xkkgle5+D3BdqZn6LmO4Vsj2heyRLYoHj1lXCLvc"
+      "integrity": "sha384-cCI0/WGi0NDkPJlVVplwL4fjagJc6KXbfZUxrX7vNG26bvlbDBO7ZeLvJNBuIqPo"
     },
     "hero_notehop_dark": {
       "url": "https://hel.ink/hop-assets/v1/home/notehop-dark.webp",
-      "integrity": "sha384-e9JkRRUwZrPxbnttpwo+z5Dj3vchIzRplEynJyCEmRmuvdXCy080AnWrfAFexmap"
+      "integrity": "sha384-HFxKgTNDlV3xSBnDVzvIOilgwYL2R/5oy7mfZDWzN0t3oDjYRgz3KapLKouolzbG"
     }
   },
   "apps": [

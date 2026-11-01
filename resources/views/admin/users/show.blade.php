@@ -16,6 +16,9 @@
                 <div class="flex justify-between py-1"><dt class="text-muted">API tokens</dt><dd class="text-ink">{{ $tokens->count() }}</dd></div>
             </dl>
             <div class="flex flex-wrap gap-2 pt-2">
+                @if ($user->isSuperAdmin())
+                    <p role="status">{{ __('Superadmin accounts are permanent and read-only, including for the account itself.') }}</p>
+                @else
                 @if ($user->isSuspended())
                     <form method="POST" action="{{ route('admin.users.activate', $user) }}">@csrf<button class="btn-primary btn-sm">Reinstate</button></form>
                 @else
@@ -25,6 +28,7 @@
                     <form method="POST" action="{{ route('admin.users.role', $user) }}">@csrf<input type="hidden" name="role" value="admin"><input type="hidden" name="grant" value="{{ $user->hasRole('admin') ? 0 : 1 }}"><button class="btn-ghost btn-sm">{{ $user->hasRole('admin') ? 'Remove admin' : 'Make admin' }}</button></form>
                 @endif
                 <form method="POST" action="{{ route('admin.users.destroy', $user) }}" data-confirm="Delete this account and everything it owns in every app? This cannot be undone.">@csrf @method('DELETE')<button class="btn-ghost btn-sm text-rose-600 dark:text-rose-400">Delete</button></form>
+                @endif
             </div>
         </div>
         <div class="glass rounded-2xl p-5 lg:col-span-2 space-y-4">

@@ -35,6 +35,10 @@
             <x-flash />
             <div class="glass rounded-2xl">
                 <div x-show="tab === 'account'" class="divide-glass">
+                    @if (auth()->user()->isSuperAdmin())
+                        <p class="p-5" role="status">{{ __('Superadmin accounts are permanent and read-only, including for the account itself.') }}</p>
+                        <dl class="p-5"><dt>{{ __('Name') }}</dt><dd>{{ auth()->user()->name }}</dd><dt>Email</dt><dd>{{ auth()->user()->email }}</dd></dl>
+                    @else
                     {{-- Each setting is a row: what it is on the left, the fields on the right. --}}
                     <section class="grid gap-4 p-5 md:grid-cols-3 md:gap-8">
                         <div>
@@ -212,8 +216,12 @@
                             </div>
                         </section>
                     @endunless
+                    @endif
                 </div>
                 <div x-show="tab === '2fa'" x-cloak class="space-y-4 p-5">
+                    @if (auth()->user()->isSuperAdmin())
+                        <p role="status">{{ __('Superadmin accounts are permanent and read-only, including for the account itself.') }}</p>
+                    @else
                     <div>
                         <h3 class="text-base font-semibold text-ink">Two-Factor Authentication</h3>
                         <p class="text-sm text-muted">Add an extra layer of security to your account</p>
@@ -317,6 +325,7 @@
                                 </form>
                             </div>
                         @endif
+                    @endif
                     @endif
                 </div>
                 <div x-show="tab === 'backup'" x-cloak class="space-y-4 p-5">
@@ -466,6 +475,9 @@
                 </div>
                 <!-- API & Integrations Tab -->
                 <div x-show="tab === 'api'" x-cloak x-data="apiSettings()" class="space-y-4 p-5">
+                    @if (auth()->user()->isSuperAdmin())
+                        <p role="status">{{ __('Superadmin accounts are permanent and read-only, including for the account itself.') }}</p>
+                    @else
                     <div>
                         <h3 class="text-base font-semibold text-ink">API Tokens</h3>
                         <p class="text-sm text-muted">Tokens work at every HOP API (LinkHop, BioHop) and are limited to the scopes you pick</p>
@@ -561,6 +573,7 @@
                             View API Docs →
                         </a>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

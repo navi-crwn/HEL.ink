@@ -123,10 +123,36 @@ return [
     'watch' => [
         'failures_before_alert' => 3,
         'timeout' => 8,
-        'keep_days' => 7,
+        // The 30-day uptime strip on the home page needs a month of probes.
+        'keep_days' => 31,
         'alert_email' => env('WATCH_ALERT_EMAIL', env('ADMIN_EMAIL')),
         'telegram_token' => env('TELEGRAM_BOT_TOKEN'),
         'telegram_chat_id' => env('TELEGRAM_CHAT_ID'),
+    ],
+
+    // Repo statistics for the home page, fetched on the server by `hop:github-stats`
+    // (the browser never calls GitHub). The token is optional and read-only; without it
+    // the 60 requests an hour are enough, because unchanged answers (304) cost nothing.
+    'github' => [
+        'api' => 'https://api.github.com',
+        'org_url' => 'https://github.com/navi-crwn',
+        'repos' => [
+            'navi-crwn/HEL.ink',
+            'navi-crwn/LinkHop',
+            'navi-crwn/BioHop',
+            'navi-crwn/PixelHop',
+            'navi-crwn/NoteHop',
+        ],
+        'token' => env('GITHUB_TOKEN'),
+        'timeout' => 10,
+    ],
+
+    // Home page uptime strip (from the watchdog's service_checks): a day counts as
+    // "down" when less than this share of its probes answered.
+    'uptime' => [
+        'days' => 30,
+        'down_below' => 99.0,
+        'cache_seconds' => 300,
     ],
 
     // Days a released username stays unavailable to other people.

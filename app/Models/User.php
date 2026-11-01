@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use App\Jobs\SendHopEvent;
+use App\Support\Avatar;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Storage;
 
 /**
  * A HOP ID. The hub is the only app that writes to `users`; the other apps
@@ -163,14 +163,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->isOwner();
     }
 
-    /** The picture to show: uploaded here first, else the Google/external one. */
+    /**
+     * The picture to show: uploaded here first, else the Google/external one.
+     * Always absolute (see Avatar::url): the same value goes to the hub's own pages
+     * and, in the SSO ticket and the profile API, to apps on other hosts.
+     */
     public function avatarUrl(): ?string
     {
-        if ($this->avatar_path) {
-            return Storage::disk('public')->url($this->avatar_path);
-        }
-
-        return $this->avatar ?: null;
+        return Avatar::url($this->avatar_path ?: $this->avatar);
     }
 
     /**

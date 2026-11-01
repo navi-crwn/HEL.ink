@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 
-const source = fs.readFileSync(new URL('../public/hop-assets/v1/hop-hero3d.js', import.meta.url), 'utf8');
+const source = fs.readFileSync(new URL('../public/hop-assets/v2/hop-hero3d.js', import.meta.url), 'utf8');
 function fixture({reduce = false, webgl = true, mobile = false, instanced = false} = {}) {
     const frames = new Map(), observers = [], canvases = [], calls = [];
     let sequence = 0;
@@ -37,16 +37,17 @@ function fixture({reduce = false, webgl = true, mobile = false, instanced = fals
     return {api: context.window.HopHero3D, canvas, calls, frames, observers, visible, frame, preference, document};
 }
 
-test('one visible scene animates; hidden documents and reduced motion stop the loop', () => {
+test('the four most visible scenes animate together, a fifth waits; hidden documents and reduced motion stop the loop', () => {
     const f = fixture(), a = f.canvas(), b = f.canvas();
     const first = f.api.mount(a), second = f.api.mount(b);
     assert.equal(f.api.mount(a), first);
     assert.equal(a.width, 800); assert.equal(a.height, 600);
     f.visible(a, 1); f.visible(b, .5); f.frame();
-    assert.equal(a.dataset.animating, 'true'); assert.equal(b.dataset.animating, 'false');
+    assert.equal(a.dataset.animating, 'true'); assert.equal(b.dataset.animating, 'true');
     assert.equal(f.frames.size, 1);
     f.visible(a, 0); f.frame();
-    assert.equal(b.dataset.animating, 'true');
+    assert.equal(a.dataset.animating, 'false'); assert.equal(b.dataset.animating, 'true');
+    f.visible(a, 1); f.frame();
     f.document.hidden = true; f.document.dispatchEvent(new Event('visibilitychange'));
     assert.equal(f.frames.size, 0);
     f.document.hidden = false; f.document.dispatchEvent(new Event('visibilitychange')); f.frame();
@@ -55,6 +56,15 @@ test('one visible scene animates; hidden documents and reduced motion stop the l
     f.preference.matches = false; f.preference.dispatchEvent(new Event('change')); f.frame();
     assert.equal(b.classList.contains('on'), true);
     first.destroy(); second.destroy(); f.frame(); assert.equal(f.frames.size, 0);
+});
+
+test('with more than four scenes on screen only the four most visible animate', () => {
+    const f = fixture(), cs = [1, .9, .8, .7, .6].map(() => f.canvas());
+    const apis = cs.map(c => f.api.mount(c));
+    cs.forEach((c, i) => f.visible(c, 1 - i * .1)); f.frame();
+    assert.deepEqual(cs.map(c => c.dataset.animating), ['true', 'true', 'true', 'true', 'false']);
+    assert.equal(f.frames.size, 1);
+    apis.forEach(api => api.destroy());
 });
 
 test('destroy and context loss release resources, listeners and observers', () => {

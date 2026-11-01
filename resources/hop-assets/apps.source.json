@@ -1,6 +1,6 @@
 {
-  "version": "v1",
-  "base": "https://hel.ink/hop-assets/v1/",
+  "version": "v2",
+  "base": "https://hel.ink/hop-assets/v2/",
   "assets": {
     "fonts_css": "fonts-amnesia.css",
     "float_css": "hop-float.css",

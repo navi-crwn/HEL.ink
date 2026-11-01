@@ -41,7 +41,7 @@ This repository serves as the **ecosystem hub**:
 - **🛡️ Comprehensive Account Security**: Argon2id password hashing, TOTP two-factor authentication, Cloudflare Turnstile anti-bot verification, and secure email verification.
 - **🗄️ Shared Identity Database**: Single MySQL or SQLite identity backend with isolated per-app migration tables (`migrations_hub`, `migrations_bio`, etc.) to prevent schema pollution.
 - **📡 Live Service Watchdog**: Scheduled background health checks and latency monitoring for all member apps with zero credential exposure in public status JSON.
-- **🎨 Central Asset Delivery**: Official marks, Syne/Plus Jakarta Sans/JetBrains Mono fonts, and floating 3D canvas tiles served with SRI hashes from `hel.ink/hop-assets/v1/`.
+- **🎨 Central Asset Delivery**: Official marks, Syne/Plus Jakarta Sans/JetBrains Mono fonts, and floating 3D canvas tiles served with SRI hashes from `hel.ink/hop-assets/v2/`.
 - **🔑 Fine-Grained API Tokens**: Scoped tokens (OAuth-style) enabling secure inter-app automation and developer access.
 - **🌐 100% Free & Open Source**: MIT licensed, no telemetry, no paywalls, completely self-hostable.
 

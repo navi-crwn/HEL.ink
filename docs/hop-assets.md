@@ -42,3 +42,13 @@ the live config, before `location /`, then `sudo nginx -t && sudo systemctl relo
 Take the `integrity` values from `apps.json`. CSP needs `https://hel.ink` in
 `style-src`, `font-src`, `img-src` and, for the tiles, `script-src`. Laravel apps get
 this through the `hop/ui` components; PixelHop and NoteHop read the manifest at start-up.
+
+## Profile photos
+
+Avatars are uploaded at the hub and stored on its public disk (`storage/app/public/avatars`),
+served by `hub.hel.ink/storage/avatars/…` (`php artisan storage:link` must have run, and
+`deploy/nginx/hel.ink.conf` has a `/storage/` location for the hub). Every URL the hub sends
+(`hop_profile.avatar` and `avatar_url` in the SSO ticket, `/api/hop/profile`,
+`/api/hop/profiles`, the `profile.updated` event) is absolute, built by `App\Support\Avatar::url()`.
+An app must use that URL as it is: never put a path in front of it and never resolve it against
+its own host, because the apps run on other hosts (`link.`, `bio.`, `pixel.`, `note.`).

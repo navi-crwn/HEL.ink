@@ -43,7 +43,39 @@ class Avatar
     public static function delete(User $user): void
     {
         if ($user->avatar_path) {
-            Storage::disk('public')->delete($user->avatar_path);
+            Storage::disk('public')->delete(self::diskPath($user->avatar_path));
         }
+    }
+
+    /**
+     * The picture as every consumer needs it: an absolute URL on the hub host
+     * (hub.hel.ink), where the public disk is served. The apps run on other hosts
+     * (link., bio., pixel., note.), so a bare "/storage/avatars/x.jpg" would be asked
+     * of the wrong host and answer 404. Accepts what the columns have held over time:
+     * "avatars/x.jpg", "/storage/avatars/x.jpg", "storage/avatars/x.jpg", a
+     * protocol-relative "//host/x" or a full URL (Google pictures), which is kept.
+     */
+    public static function url(?string $value): ?string
+    {
+        $value = trim((string) $value);
+        if ($value === '') {
+            return null;
+        }
+        if (preg_match('#^https?://#i', $value)) {
+            return $value;
+        }
+        if (str_starts_with($value, '//')) {
+            return 'https:'.$value;
+        }
+
+        return hub_url('storage/'.self::diskPath($value));
+    }
+
+    /** The path on the public disk for a stored value: "/storage/avatars/x.jpg" and "avatars/x.jpg" both give "avatars/x.jpg". */
+    public static function diskPath(string $value): string
+    {
+        $path = ltrim(trim($value), '/');
+
+        return preg_replace('#^(?:public/)?(?:storage/)?#', '', $path) ?? $path;
     }
 }

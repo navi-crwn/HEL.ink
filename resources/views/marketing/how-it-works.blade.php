@@ -17,7 +17,7 @@
             <h2 class="pt-4 text-xl font-semibold text-slate-900 dark:text-white">{{ __('Apps talking to each other') }}</h2>
             <p>{{ __('When one app asks another for something (for example, BioHop asking LinkHop for a short link, or the hub telling every app that you deleted your account), the request is signed with a shared secret, carries a timestamp and a one-time nonce, and is refused if it is old or replayed.') }}</p>
             <h2 class="pt-4 text-xl font-semibold text-slate-900 dark:text-white">{{ __('NoteHop is different on purpose') }}</h2>
-            <p>{!! __('NoteHop encrypts a note in your browser before saving it. The key is in the part of the link after <code>#</code>, which browsers never send to a server. HOP ID only decides who can manage a note, never who can read it.') !!}</p>
+            <p>{!! __('An encrypted NoteHop note is locked in your browser before it is saved. The key is in the part of the link after <code>#</code>, which browsers never send to a server. HOP ID only decides who can manage a note, never who can read it. A basic note is readable instead, and its link can be a name you choose.') !!}</p>
             <p>{!! __('More: <a class="underline" href=":security">:sec</a> · <a class="underline" href=":signup">:sign</a>', ['security' => route('security'), 'sec' => __('Security'), 'signup' => route('signup'), 'sign' => __('How to sign up')]) !!}</p>
         </div>
     </section>

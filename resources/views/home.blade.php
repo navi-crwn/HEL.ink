@@ -24,7 +24,7 @@
     <div class="hx-marq" data-hx-marq aria-label="{{ __('What you get') }}"><div>@foreach (['One free account', 'Four apps', 'Short links', 'Link in bio', 'Image hosting', 'Private notes', 'No ads', 'No trackers', 'Open source', 'Self-host if you like'] as $t)<span>{{ __($t) }}</span>@endforeach</div></div>
     <div class="hx-nums" data-hx-nums>
         <div><b data-count="{{ count($stories) }}">{{ count($stories) }}</b><span>{{ __('apps') }}</span></div>
-        <div><b data-count="{{ count(\App\Http\Middleware\SetLocale::LOCALES) }}">{{ count(\App\Http\Middleware\SetLocale::LOCALES) }}</b><span>{{ __('languages') }}</span></div>
+        <div><b data-count="{{ count(\Hop\Ui\Locales::codes()) }}">{{ count(\Hop\Ui\Locales::codes()) }}</b><span>{{ __('languages') }}</span></div>
         <div><b data-count="0">0</b><span>{{ __('ads and trackers') }}</span></div>
         @if ($commits > 0)
             <div><b data-count="{{ $commits }}">{{ number_format($commits) }}</b><span>{{ __('commits in the open') }}</span></div>

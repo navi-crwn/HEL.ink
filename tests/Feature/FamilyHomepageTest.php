@@ -37,16 +37,16 @@ test('the home page has the HOP sections and no back link', function () {
     expect(substr_count($html, '<section '))->toBe(9);
 });
 
-test('the home page is English by default and speaks eight languages', function () {
+test('the home page is English by default and speaks nine languages', function () {
     $this->withHeader('Accept-Language', 'fr-FR')->get('/')->assertOk()->assertSee('One account. Every HOP app.');
     $this->get('/?lang=id')->assertOk()->assertSee('Satu akun. Semua aplikasi HOP.')->assertCookie('hop_lang', 'id', false);
-    $this->get('/?lang=ar')->assertOk()->assertSee('dir="rtl"', false);
-    $this->get('/')->assertSee('hreflang="ja"', false);
+    $this->get('/?lang=ar')->assertOk()->assertSee('dir="ltr"', false)->assertCookieMissing('hop_lang');
+    $this->get('/')->assertSee('hreflang="ja"', false)->assertSee('hreflang="zh-CN"', false)->assertSee('hreflang="pt-BR"', false)->assertDontSee('hreflang="ar"', false);
 });
 
 test('every language file has every string, with placeholders kept', function () {
     $base = json_decode(file_get_contents(lang_path('id.json')), true);
-    foreach (['zh', 'es', 'ar', 'pt', 'fr', 'ja'] as $locale) {
+    foreach (['zh-CN', 'de', 'es', 'pt-BR', 'fr', 'ja', 'ru'] as $locale) {
         $other = json_decode(file_get_contents(lang_path($locale.'.json')), true);
         expect(array_keys($other))->toEqual(array_keys($base));
         expect($other['More about :app'])->toContain(':app');
@@ -62,7 +62,7 @@ test('home page copy never falls back to English', function (string $locale) {
     });
     $this->get('/?lang='.$locale)->assertOk();
     expect(array_values(array_unique($missing)))->toBe([]);
-})->with(['en', 'id', 'zh', 'es', 'ar', 'pt', 'fr', 'ja']);
+})->with(['en', 'id', 'zh-CN', 'de', 'es', 'pt-BR', 'fr', 'ja', 'ru']);
 
 test('HOP pages and app pages are served with a back link', function (string $path, string $text) {
     $this->get($path)->assertOk()->assertSee($text)->assertSee('Back to HOP');

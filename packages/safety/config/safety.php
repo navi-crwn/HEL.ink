@@ -87,6 +87,9 @@ return [
         'cache_hours' => 12,
     ],
 
+    // Largest threat feed (abuse:feeds) accepted, in bytes. A bigger download is dropped and the previous feed kept.
+    'feed_max_bytes' => (int) env('THREAT_FEED_MAX_BYTES', 64 * 1024 * 1024),
+
     // Registrations allowed per IP per hour.
     'register_per_ip_per_hour' => (int) env('ABUSE_REGISTER_PER_HOUR', 3),
 ];

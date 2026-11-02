@@ -74,20 +74,54 @@ class SsoController
         return $path !== '' && $path[0] === '/' && ! str_starts_with($path, '//') && ! preg_match('/[\x00-\x1f\x7f\\\\]/', $path) ? $path : '';
     }
 
-    /** The chained logout only follows https links inside the HOP family (the hub and its apps). */
+    /** The chained logout only follows https links to a trusted HOP host (see `trusted_hosts` in the config). */
     public static function isHopUrl(string $url): bool
     {
-        if (str_contains($url, '\\') || parse_url($url, PHP_URL_USER) !== null || parse_url($url, PHP_URL_PASS) !== null) {
+        if ($url === '' || preg_match('/[\x00-\x20\x7f\\\\]/', $url)) {
             return false;
         }
-        $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
-        if ($scheme !== 'https') {
+        $parts = parse_url($url);
+        if ($parts === false || isset($parts['user']) || isset($parts['pass'])) {
             return false;
         }
-        $host = strtolower((string) parse_url($url, PHP_URL_HOST));
-        $hub = strtolower((string) parse_url(config('hop-auth.hub_url'), PHP_URL_HOST));
-        $base = preg_replace('/^[^.]+\./', '', $hub) ?: $hub;
+        $host = strtolower((string) ($parts['host'] ?? ''));
+        if ($host === '' || ! in_array($host, self::trustedHosts(), true)) {
+            return false;
+        }
+        $scheme = strtolower((string) ($parts['scheme'] ?? ''));
 
-        return $host !== '' && ($host === $base || str_ends_with($host, '.'.$base));
+        return $scheme === 'https' || ($scheme === 'http' && self::isLocalHost($host));
+    }
+
+    /**
+     * Every host the chained logout may go to: the configured list, the hub, this app,
+     * and the app URLs of the shared config/hop.php, so installs on their own domain keep working.
+     *
+     * @return array<int, string>
+     */
+    public static function trustedHosts(): array
+    {
+        $entries = array_merge(
+            (array) config('hop-auth.trusted_hosts', []),
+            [config('hop-auth.hub_url'), config('app.url'), config('hop.public_url'), config('hop.hub_url')],
+            array_column((array) config('hop.apps', []), 'url'),
+        );
+        $hosts = [];
+        foreach ($entries as $entry) {
+            if (! is_string($entry) || ($entry = strtolower(trim($entry))) === '') {
+                continue;
+            }
+            $host = (string) parse_url(str_contains($entry, '://') ? $entry : '//'.$entry, PHP_URL_HOST);
+            if ($host !== '') {
+                $hosts[] = $host;
+            }
+        }
+
+        return array_values(array_unique($hosts));
+    }
+
+    private static function isLocalHost(string $host): bool
+    {
+        return in_array($host, ['localhost', '127.0.0.1', '[::1]'], true);
     }
 }

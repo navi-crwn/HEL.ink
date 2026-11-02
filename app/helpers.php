@@ -31,7 +31,8 @@ if (! function_exists('country_flag')) {
         $code = strtolower($countryCode);
         $countryName = country_name(strtoupper($countryCode));
 
-        return '<img src="https://flagcdn.com/w20/'.$code.'.png" srcset="https://flagcdn.com/w40/'.$code.'.png 2x" width="20" alt="'.$countryName.'" title="'.$countryName.'" class="inline-block rounded-sm">';
+        // The country code, never a picture from another host (the visitor's address would go there).
+        return '<span class="inline-block rounded-sm bg-slate-200 px-1 text-[10px] font-semibold leading-4 text-slate-600 dark:bg-slate-700 dark:text-slate-200" title="'.e($countryName).'">'.e(strtoupper($code)).'</span>';
     }
 }
 if (! function_exists('country_name')) {

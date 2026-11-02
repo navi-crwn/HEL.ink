@@ -232,7 +232,8 @@ for a in "${APPLIST[@]}"; do
   hdr "$N/$(( ${#APPLIST[@]} + 1 )): $REPO"
   clone "$REPO" "$a"
   P="$(pick_port "$P0")"
-  step "Installing $REPO" bash "$BASE/$a/install.sh" --yes --no-star --dir "$BASE/$a" --url "http://localhost:$P" --port "$P" --hub new --hub-dir "$BASE/hub" ${ADMIN:+--admin "$ADMIN"}
+  OWNER=''; case "$a" in linkhop|biohop) [ -n "$ADMIN" ] && OWNER="$ADMIN" ;; esac   # the Go apps get their owner through the hub
+  step "Installing $REPO" bash "$BASE/$a/install.sh" --yes --no-star --dir "$BASE/$a" --url "http://localhost:$P" --port "$P" --hub new --hub-dir "$BASE/hub" ${OWNER:+--admin "$OWNER"}
   STARTS="$STARTS $a:$P"; URLS="$URLS
 $REPO  http://localhost:$P"
 done

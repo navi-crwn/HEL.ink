@@ -31,6 +31,12 @@ curl -fsSL https://raw.githubusercontent.com/navi-crwn/HEL.ink/main/install.sh |
 
 From a clone: `./install.sh` · update: `./update.sh` · remove: `./uninstall.sh`. Add `--yes` to take every default; `--help` lists the options.
 
+Everything at once (the hub plus any of LinkHop, BioHop, NoteHop and PixelHop, already connected):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/navi-crwn/HEL.ink/main/install-family.sh | bash
+```
+
 ## What is HEL.ink?
 
 **HEL.ink** (Hop Easy Link) is the home and account portal of the **HOP** family of privacy-respecting, self-hostable web applications.

@@ -2,8 +2,8 @@
 
 use App\Jobs\PurgeAppAccount;
 use App\Models\User;
-use App\Services\ProxyDetectionService;
 use App\Services\ProxyDetection\ProxyDetectorInterface;
+use App\Services\ProxyDetectionService;
 use App\Services\UserDeletion;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;

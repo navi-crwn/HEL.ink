@@ -19,6 +19,14 @@ warn() { printf ' %s!%s %s\n' "$Y" "$Z" "$*" >&2; }
 bad()  { printf ' %s✗%s %s\n' "$R" "$Z" "$*" >&2; }
 die()  { bad "$*"; exit 1; }
 have() { command -v "$1" >/dev/null 2>&1; }
+# PHP_BIN: the interpreter for php, artisan and composer. Set it in the environment to override;
+# otherwise php8.3 when it is installed (the version production runs), else php.
+if [ -z "${PHP_BIN:-}" ]; then if have php8.3; then PHP_BIN=php8.3; else PHP_BIN=php; fi; fi
+# composer_run ARGS...: composer under PHP_BIN (a phar or a script with a php shebang); other launchers run as they are.
+composer_run() {
+  local c; c="$(command -v composer)" || return 127
+  if head -n 1 "$c" 2>/dev/null | grep -q php; then "$PHP_BIN" "$c" "$@"; else "$c" "$@"; fi
+}
 
 YES=0; DRY=0; STAR=ask; INTERACTIVE=0
 [ -t 0 ] && INTERACTIVE=1
@@ -75,19 +83,28 @@ confirm() {
 proceed() { [ "$YES" = 1 ] && return 0; confirm "$1" n; }
 rand_hex() { if have openssl; then openssl rand -hex "$1"; else LC_ALL=C tr -dc 'a-f0-9' </dev/urandom | head -c $(( $1 * 2 )); fi; }
 
-# set_env FILE KEY VALUE: replace "KEY=" or "#KEY=" in place, or append.
+# set_env FILE KEY VALUE: replace "KEY=" or "#KEY=", or append. The new content is written to a
+# temporary file next to FILE (same owner and mode, never wider than FILE) and renamed over it, so
+# a full disk or an interrupted run cannot leave a cut-off .env behind.
 set_env() {
   local f="$1" k="$2" v="$3" tmp
   case "$v" in *[[:space:]\#\"\$\\]*|'') v="\"$(printf '%s' "$v" | sed 's/[\\"$]/\\&/g')\"" ;; esac
-  tmp="$(mktemp)"
+  tmp="$(umask 077; mktemp "$f.XXXXXX")" || return 1
+  trap 'rm -f "$tmp"; trap - RETURN' RETURN
+  [ ! -e "$f" ] || cp -p "$f" "$tmp" || return 1
   if grep -qE "^#?[[:space:]]*${k}=" "$f" 2>/dev/null; then
-    awk -v k="$k" -v v="$v" 'BEGIN{d=0} { if (!d && $0 ~ "^#?[ \t]*" k "=") { print k "=" v; d=1 } else print }' "$f" >"$tmp"
+    K="$k" V="$v" awk 'BEGIN{d=0; k=ENVIRON["K"]; v=ENVIRON["V"]} { if (!d && $0 ~ "^#?[ \t]*" k "=") { print k "=" v; d=1 } else print }' "$f" >"$tmp" || return 1
   else
-    cat "$f" >"$tmp" 2>/dev/null || true; printf '%s=%s\n' "$k" "$v" >>"$tmp"
+    { cat "$f" 2>/dev/null || true; printf '%s=%s\n' "$k" "$v"; } >"$tmp" || return 1
   fi
-  cat "$tmp" >"$f"; rm -f "$tmp"
+  mv -f "$tmp" "$f"
 }
-get_env() { sed -n "s/^$2=//p" "$1" 2>/dev/null | head -1 | sed 's/^"//; s/"$//'; }
+# get_env FILE KEY: the value, without the quotes and escapes set_env adds.
+get_env() {
+  local raw; raw="$(sed -n "s/^$2=//p" "$1" 2>/dev/null | head -1)"
+  case "$raw" in \"*\") raw="${raw#\"}"; raw="${raw%\"}"; raw="$(printf '%s' "$raw" | sed 's/\\\([\\"$]\)/\1/g')" ;; esac
+  printf '%s\n' "$raw"
+}
 
 port_free() {
   if have lsof; then ! lsof -nP -iTCP:"$1" -sTCP:LISTEN >/dev/null 2>&1
@@ -170,7 +187,7 @@ if [ "$PURGE" = 1 ] && [ "$YES" = 0 ]; then
 fi
 
 rm_() { for p in "$@"; do if [ -e "$p" ] || [ -L "$p" ]; then if [ "$DRY" = 1 ]; then say "   (dry run) rm -rf $p"; else rm -rf "$p" && ok "Removed $p"; fi; fi; done; }
-[ "$DRY" = 1 ] || php artisan queue:restart >/dev/null 2>&1 || true
+[ "$DRY" = 1 ] || "$PHP_BIN" artisan queue:restart >/dev/null 2>&1 || true
 rm_ vendor node_modules public/build public/hot public/storage start.sh bootstrap/cache/*.php
 if [ "$PURGE" = 1 ]; then
   [ "$DBC" = sqlite ] && [ "$IS_HUB" = 1 ] && [ -n "$DBF" ] && rm_ "$DBF"

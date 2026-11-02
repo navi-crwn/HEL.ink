@@ -22,7 +22,7 @@
                 <li>&check; {{ __('HOP does not sell your data, does not use data brokers, and does not share your personal data with advertisers. The one exception is a tracking pixel that a bio page owner chooses to add (see BioHop below).') }}</li>
                 <li>&check; {{ __('Automatic cryptographic hashing of IP addresses in analytics.') }}</li>
                 <li>&check; {{ __('Automatic data purging on strict 30-day and 90-day retention schedules.') }}</li>
-                <li>&check; {{ __('Destination links and reported content are checked for malware, phishing and illegal material, and blocked when confirmed. HOP does this for safety only.') }}</li>
+                <li>&check; {{ __('HOP checks for malware, phishing and illegal material, for safety only: destination links in LinkHop, uploaded files in PixelHop, and content that someone reports, such as bio pages and basic notes. Confirmed harmful or illegal content is blocked. Encrypted notes cannot be inspected, because the server cannot read them.') }}</li>
             </ul>
         </div>
 
@@ -71,7 +71,7 @@
                 <div class="{{ $card }}">
                     <h3 class="font-bold text-slate-900 dark:text-white">NoteHop</h3>
                     <p class="mt-2 text-xs leading-relaxed {{ $muted }}">
-                        {{ __('Encrypted notes (the default) and their attachments are encrypted in your browser with AES-GCM before anything is sent over the network. The server only receives ciphertext; the key stays in the URL fragment (#k=...) and is never sent to the server. A basic note is not encrypted this way: the server can read it.') }}
+                        {{ __('Encrypted notes (the default) and their attachments are encrypted in your browser with AES-GCM before anything is sent over the network. The server only receives ciphertext; the key stays in the URL fragment (#k=...) and is never sent to the server. A basic note is not encrypted this way: the server can read it. An encrypted note can be read only by people who have the full link, including the part after #. Share the link only with the people you want to read it.') }}
                     </p>
                 </div>
             </div>

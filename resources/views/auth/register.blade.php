@@ -119,16 +119,14 @@
                     required
                 >
                 <span class="text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-gray-200">
-                    I agree to the 
-                    <a href="{{ $termsArtifact ? $termsArtifact['url'] : route('terms') }}" target="_blank" rel="noopener" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">
-                        Terms of Service{{ $termsArtifact ? ' (version '.$termsVersion.')' : '' }}
-                    </a>
-                    and understand the acceptable use policy, prohibited activities, and my rights and obligations.
+                    {!! __('I agree to the :terms and understand the acceptable use policy, prohibited activities, and my rights and obligations.', [
+                        'terms' => '<a href="'.e($termsArtifact ? $termsArtifact['url'] : route('terms')).'" target="_blank" rel="noopener" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">'.e($termsArtifact ? __('Terms of Service (version :version)', ['version' => $termsVersion]) : __('Terms of Service')).'</a>',
+                    ]) !!}
                 </span>
             </label>
             <x-input-error :messages="$errors->get('tos_accepted')" class="mt-2" />
             <p x-show="showTosError" x-cloak class="mt-2 text-sm text-red-600 dark:text-red-400">
-                ⚠️ Please agree to the Terms of Service below to continue.
+                {{ __('⚠️ Please agree to the Terms of Service below to continue.') }}
             </p>
         </div>
         <x-turnstile class="mt-5" size="flexible" />

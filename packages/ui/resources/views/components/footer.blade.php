@@ -10,17 +10,8 @@
 ])
 @php
     $family = \Hop\Ui\Assets::family($app);
-    $locales = [
-        'en' => 'English',
-        'id' => 'Bahasa Indonesia',
-        'zh' => '中文',
-        'es' => 'Español',
-        'ar' => 'العربية',
-        'pt' => 'Português',
-        'fr' => 'Français',
-        'ja' => '日本語',
-    ];
-    $currentLocale = app()->getLocale();
+    $locales = \Hop\Ui\Locales::names();
+    $currentLocale = \Hop\Ui\Locales::normalize(app()->getLocale());
 @endphp
 <footer {{ $attributes->merge(['class' => 'hop-footer border-t border-slate-200/80 bg-slate-50/50 py-12 text-sm dark:border-white/10 dark:bg-slate-950/40']) }}>
     <div class="mx-auto max-w-6xl px-4 sm:px-6">

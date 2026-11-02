@@ -1,6 +1,6 @@
 @props(['title' => null, 'description' => null, 'themed' => false, 'back' => true, 'alternates' => false])
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}" @class(['h-full', 'dark' => ! $themed])>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="ltr" @class(['h-full', 'dark' => ! $themed])>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,7 +34,7 @@
             </script>
         @endif
         @if ($alternates)
-            @foreach (\App\Http\Middleware\SetLocale::LOCALES as $code => $name)
+            @foreach (\Hop\Ui\Locales::names() as $code => $name)
                 <link rel="alternate" hreflang="{{ $code }}" href="{{ url()->current() }}?lang={{ $code }}">
             @endforeach
         @endif

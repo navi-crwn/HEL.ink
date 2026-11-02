@@ -68,7 +68,7 @@ final class FamilyStory
             ],
             'notehop' => [
                 'kicker' => __('Encrypted notes'),
-                'story' => __('Notes only the people you choose can read. The note is locked in your browser before it is saved, so not even the server can read it.'),
+                'story' => __('Notes only the people you choose can read. By default a note is locked in your browser before it is saved, so not even the server can read it.'),
                 'features' => [__('End-to-end encrypted in the browser'), __('Read-only, edit or reply links'), __('Burn after reading and timed notes'), __('Nine languages')],
                 'cta' => __('Write a note'),
                 'steps' => [
@@ -77,7 +77,7 @@ final class FamilyStory
                     [__('Share securely'), __('Send the link (n.hel.ink/slug#k=...); set it to burn after reading or expire on a timer.')],
                 ],
                 'faqs' => [
-                    [__('Can the server read my note?'), __('Never. The cryptographic key is in the URL hash fragment, which browsers never send to the server.')],
+                    [__('Can the server read my note?'), __('Not an encrypted note, which is the default: its cryptographic key is in the URL hash fragment, which browsers never send to the server. A basic note is readable by the server.')],
                     [__('What happens if I lose the link?'), __('Because of zero-knowledge architecture, lost keys cannot be recovered by anyone.')],
                     [__('What is burn-after-reading?'), __('The note is permanently deleted from server storage the instant it is viewed.')],
                 ],

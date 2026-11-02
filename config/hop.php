@@ -119,6 +119,17 @@ return [
         ],
     ],
 
+    // What each app tells the hub about one account, for the numbers on the dashboard cards.
+    // `auth` is how the hub signs the call: "hub" (Laravel apps: /internal/accounts/{id}/summary,
+    // shared SSO secret) or "hop" (Go apps: the HOP App Protocol, GET /hop/users/{id}).
+    // Counts only, never content. `fields` maps the app's answer to a label (English key, translated on render).
+    'summaries' => [
+        'linkhop' => ['auth' => 'hub', 'path' => '/internal/accounts/{id}/summary', 'fields' => ['links' => 'Links', 'clicks_7d' => 'Clicks, 7 days']],
+        'biohop' => ['auth' => 'hub', 'path' => '/internal/accounts/{id}/summary', 'fields' => ['pages' => 'Pages', 'published' => 'Published', 'clicks_7d' => 'Clicks, 7 days']],
+        'pixelhop' => ['auth' => 'hop', 'path' => '/hop/users/{id}', 'fields' => ['images' => 'Files', 'albums' => 'Albums', 'storage_bytes' => 'Storage:bytes']],
+        'notehop' => ['auth' => 'hop', 'path' => '/hop/users/{id}', 'fields' => ['notes' => 'Notes', 'notes_public' => 'Public notes']],
+    ],
+
     // Watchdog (hop:watch): alert after this many failures in a row.
     'watch' => [
         'failures_before_alert' => 3,

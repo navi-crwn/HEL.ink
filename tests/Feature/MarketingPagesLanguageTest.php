@@ -144,3 +144,22 @@ test('contact terms and privacy pages wrap emails with email_off and do not cont
         expect($content)->toContain('<!--/email_off-->');
     }
 });
+
+test('privacy page shows its commitments in every one of the nine languages', function () {
+    $keys = [
+        'HOP does not sell your data, does not use data brokers, and does not share your personal data with advertisers. The one exception is a tracking pixel that a bio page owner chooses to add (see BioHop below).',
+        'Destination links and reported content are checked for malware, phishing and illegal material, and blocked when confirmed. HOP does this for safety only.',
+    ];
+    foreach (Locales::codes() as $code) {
+        $catalog = json_decode(file_get_contents(base_path("lang/{$code}.json")), true);
+        $content = $this->withoutVite()->get('/privacy?lang='.$code)->assertOk()->getContent();
+        foreach ($keys as $key) {
+            expect($catalog)->toHaveKey($key);
+            expect($content)->toContain(e($catalog[$key]));
+            if ($code !== 'en') {
+                expect($catalog[$key])->not->toBe($key);
+                expect($content)->not->toContain(e($key));
+            }
+        }
+    }
+});

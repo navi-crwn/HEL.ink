@@ -121,6 +121,18 @@
             </div>
         </div>
 
+        {{-- Your content and our role --}}
+        <div class="{{ $card }}">
+            <h2 class="text-base font-bold text-slate-900 dark:text-white">{{ __('Your content and our role') }}</h2>
+            <div class="mt-2 space-y-3 text-sm leading-relaxed {{ $muted }}">
+                <p>{{ __('HOP provides the platform. The links, notes, pages, files and other content you create, upload or share through HOP are yours, and you are solely responsible for them, including for your right to publish them and for what they contain. HOP is not the author or publisher of your content and does not review it before it is published.') }}</p>
+                <!--email_off-->
+                <p>{{ __('If content is reported or found to be harmful or illegal, HOP may remove or block it and may limit or suspend the account that published it. Report content to support@hel.ink.') }}</p>
+                <!--/email_off-->
+                <p>{{ __('Encrypted notes cannot be read by HOP, so HOP cannot review them. The person who created an encrypted note remains responsible for it.') }}</p>
+            </div>
+        </div>
+
         {{-- Section 3: Disclaimers & Law --}}
         <div class="space-y-4">
             <h2 class="text-xl font-bold text-slate-900 dark:text-white">{{ __('3. Disclaimers & Limitation of Liability') }}</h2>

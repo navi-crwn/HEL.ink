@@ -144,3 +144,67 @@ test('contact terms and privacy pages wrap emails with email_off and do not cont
         expect($content)->toContain('<!--/email_off-->');
     }
 });
+
+test('privacy page shows its commitments in every one of the nine languages', function () {
+    $keys = [
+        'HOP does not sell your data, does not use data brokers, and does not share your personal data with advertisers. The one exception is a tracking pixel that a bio page owner chooses to add (see BioHop below).',
+        'HOP checks for malware, phishing and illegal material, for safety only: destination links in LinkHop, uploaded files in PixelHop, and content that someone reports, such as bio pages and basic notes. Confirmed harmful or illegal content is blocked. Encrypted notes cannot be inspected, because the server cannot read them.',
+    ];
+    foreach (Locales::codes() as $code) {
+        $catalog = json_decode(file_get_contents(base_path("lang/{$code}.json")), true);
+        $content = $this->withoutVite()->get('/privacy?lang='.$code)->assertOk()->getContent();
+        foreach ($keys as $key) {
+            expect($catalog)->toHaveKey($key);
+            expect($content)->toContain(e($catalog[$key]));
+            if ($code !== 'en') {
+                expect($catalog[$key])->not->toBe($key);
+                expect($content)->not->toContain(e($key));
+            }
+        }
+    }
+});
+
+test('terms page shows its text and the content-responsibility clause in every one of the nine languages', function () {
+    $keys = [
+        'Your content and our role',
+        'HOP provides the platform. The links, notes, pages, files and other content you create, upload or share through HOP are yours, and you are solely responsible for them, including for your right to publish them and for what they contain. HOP is not the author or publisher of your content and does not review it before it is published.',
+        'If content is reported or found to be harmful or illegal, HOP may remove or block it and may limit or suspend the account that published it. Report content to support@hel.ink.',
+        'Encrypted notes cannot be read by HOP, so HOP cannot review them. The person who created an encrypted note remains responsible for it.',
+        'Short links live under hel.ink/l/{slug}. Legacy links created prior to namespace isolation redirect under published transition policies.',
+        'To the maximum extent permitted by applicable law, in no event shall navi-crwn or infrastructure providers be held liable for any indirect, incidental, or consequential damages resulting from your use or inability to use the services.',
+    ];
+    foreach (Locales::codes() as $code) {
+        $catalog = json_decode(file_get_contents(base_path("lang/{$code}.json")), true);
+        $content = $this->withoutVite()->get('/terms?lang='.$code)->assertOk()->getContent();
+        foreach ($keys as $key) {
+            expect($catalog)->toHaveKey($key);
+            expect($content)->toContain(e($catalog[$key]));
+            if ($code !== 'en' && str_word_count($key) > 3) {
+                expect($catalog[$key])->not->toBe($key);
+                expect($content)->not->toContain(e($key));
+            }
+        }
+    }
+});
+
+test('every term and privacy translation keeps its placeholders', function () {
+    $en = json_decode(file_get_contents(base_path('lang/en.json')), true);
+    foreach (Locales::codes() as $code) {
+        $catalog = json_decode(file_get_contents(base_path("lang/{$code}.json")), true);
+        foreach ($en as $key => $value) {
+            preg_match_all('/:version|:terms|\{slug\}|#k=\.\.\./', $key, $found);
+            foreach ($found[0] as $token) {
+                expect($catalog[$key])->toContain($token);
+            }
+        }
+    }
+});
+
+test('consent and sign-up pages show the terms line in the chosen language', function () {
+    $key = 'I agree to the :terms and understand the acceptable use policy, prohibited activities, and my rights and obligations.';
+    foreach (['id', 'ja'] as $code) {
+        $catalog = json_decode(file_get_contents(base_path("lang/{$code}.json")), true);
+        $line = explode(':terms', e($catalog[$key]))[0];
+        $this->withoutVite()->get('/register?lang='.$code)->assertOk()->assertSee(trim($line), false);
+    }
+});

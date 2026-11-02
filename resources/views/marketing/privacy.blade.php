@@ -18,10 +18,11 @@
         <div class="{{ $card }} border-emerald-300/60 bg-emerald-50/30 dark:border-emerald-500/20 dark:bg-emerald-950/20">
             <h2 class="text-base font-bold text-slate-900 dark:text-white">{{ __('Our Privacy Commitments') }}</h2>
             <ul class="mt-3 grid gap-2 sm:grid-cols-2 text-xs text-slate-700 dark:text-slate-300">
-                <li>&check; {{ __('No third-party advertising networks or tracking cookies.') }}</li>
-                <li>&check; {{ __('No data brokers, selling, or sharing of personal data.') }}</li>
+                <li>&check; {{ __('HOP uses no advertising networks and no tracking cookies of its own.') }}</li>
+                <li>&check; {{ __('HOP does not sell your data, does not use data brokers, and does not share your personal data with advertisers. The one exception is a tracking pixel that a bio page owner chooses to add (see BioHop below).') }}</li>
                 <li>&check; {{ __('Automatic cryptographic hashing of IP addresses in analytics.') }}</li>
                 <li>&check; {{ __('Automatic data purging on strict 30-day and 90-day retention schedules.') }}</li>
+                <li>&check; {{ __('HOP checks for malware, phishing and illegal material, for safety only: destination links in LinkHop, uploaded files in PixelHop, and content that someone reports, such as bio pages and basic notes. Confirmed harmful or illegal content is blocked. Encrypted notes cannot be inspected, because the server cannot read them.') }}</li>
             </ul>
         </div>
 
@@ -46,7 +47,7 @@
                 <div class="{{ $card }}">
                     <h3 class="font-bold text-slate-900 dark:text-white">LinkHop</h3>
                     <p class="mt-2 text-xs leading-relaxed {{ $muted }}">
-                        {{ __('We store short-link slugs, destination URLs, and optional link protection passwords. Click analytics record total clicks, referrer domains, device types, and country totals. Visitor IP addresses are hashed with a daily rotated salt and are never visible to link creators or stored permanently.') }}
+                        {{ __('We store short-link slugs, destination URLs, and optional link protection passwords. Click analytics record the time, country and city, network provider, device and browser type, and the referring site. We keep a keyed hash of each visitor\'s IP address, never the address itself, plus a daily visitor hash that changes every day at 00:00 UTC, so a visitor cannot be followed from one day to the next. Link creators never see visitor IP addresses.') }}
                     </p>
                 </div>
 
@@ -54,7 +55,7 @@
                 <div class="{{ $card }}">
                     <h3 class="font-bold text-slate-900 dark:text-white">BioHop</h3>
                     <p class="mt-2 text-xs leading-relaxed {{ $muted }}">
-                        {{ __('We store bio page layout blocks, links, text, and user-uploaded media (avatars, banners). If you choose to configure a tracking pixel (Google Analytics, Meta, TikTok), it executes solely upon explicit visitor cookie consent. HOP does not receive or process that external pixel data.') }}
+                        {{ __('We store bio page layout blocks, links, text, and user-uploaded media (avatars, banners). A bio page owner can add a tracking pixel (Google Analytics, Meta or TikTok). The page owner chooses to add it and is responsible for it; HOP only provides the platform. The pixel loads only after the visitor agrees. When it loads, the visitor\'s browser sends data to that service under its own privacy policy. HOP does not receive or process that data.') }}
                     </p>
                 </div>
 
@@ -62,7 +63,7 @@
                 <div class="{{ $card }}">
                     <h3 class="font-bold text-slate-900 dark:text-white">PixelHop</h3>
                     <p class="mt-2 text-xs leading-relaxed {{ $muted }}">
-                        {{ __('Uploaded images, documents, and video files are stored securely. Before public serving, PixelHop automatically strips sensitive EXIF metadata—including GPS geographic coordinates, camera serial numbers, and device information—to safeguard uploader anonymity.') }}
+                        {{ __('PixelHop stores the files you upload. When you upload them, photos (JPEG, PNG and WebP) and videos lose their embedded metadata, including GPS location, camera make, model and serial number, and device details. PDFs are compressed, but their document properties are kept, so remove personal details from a PDF before you upload it.') }}
                     </p>
                 </div>
 
@@ -70,7 +71,7 @@
                 <div class="{{ $card }}">
                     <h3 class="font-bold text-slate-900 dark:text-white">NoteHop</h3>
                     <p class="mt-2 text-xs leading-relaxed {{ $muted }}">
-                        {{ __('Zero-Knowledge Storage: NoteHop encrypts all note text and attachments client-side in your browser using AES-GCM before sending anything over the network. The server only receives encrypted ciphertext; decryption keys reside exclusively in the URL fragment (#k=...) and are never sent to the server.') }}
+                        {{ __('Encrypted notes (the default) and their attachments are encrypted in your browser with AES-GCM before anything is sent over the network. The server only receives ciphertext; the key stays in the URL fragment (#k=...) and is never sent to the server. A basic note is not encrypted this way: the server can read it. An encrypted note can be read only by people who have the full link, including the part after #. Share the link only with the people you want to read it.') }}
                     </p>
                 </div>
             </div>
@@ -95,7 +96,7 @@
                     {{ __('You hold full control over your data. In your HOP ID Settings under "Backup & Export", you can download a complete JSON archive of your account records across all member apps.') }}
                 </p>
                 <p>
-                    {{ __('You may delete your account at any time. Account deletion triggers an immediate cascade that wipes your profile, credentials, short links, bio pages, uploaded media, and notes across every HOP service with zero recovery delay.') }}
+                    {{ __('You may delete your account at any time. Deleting it immediately removes your profile, credentials, short links, bio pages, uploaded media and notes from every HOP service. Backup copies are not edited: they are kept for a limited time, up to about six months, and are deleted automatically when they expire.') }}
                 </p>
             </div>
         </div>

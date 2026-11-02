@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
+use App\Jobs\PurgeAppAccount;
 use App\Models\User;
 use App\Support\Avatar;
 use App\Support\HopApps;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
@@ -141,36 +141,25 @@ class UserDeletion
 
     /**
      * Tell configured sibling apps (LinkHop, BioHop) to purge their local files
-     * and rows before the user row is deleted.
+     * and rows before the user row is deleted. An app that is down or refuses
+     * does not block the deletion, but its purge is queued again with backoff
+     * (the endpoint works by user id, so a repeat is safe).
      *
      * @param  array<string, list<string>>  $files
      */
     private function purgeInApps(int $userId, array $files): void
     {
-        $path = "/internal/accounts/{$userId}";
-        $body = json_encode($files, JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
         foreach (HopApps::configured() as $app) {
             if (! in_array($app->slug, ['linkhop', 'biohop'], true)) {
                 continue;
             }
-            $secret = (string) $app->secret;
-            if (strlen($secret) < 32) {
+            if (PurgeAppAccount::send($app, $userId, $files)) {
                 continue;
             }
-            $ts = time();
-            $sig = hash_hmac('sha256', $ts."\nDELETE\n".$path."\n".hash('sha256', $body), $secret);
             try {
-                Http::timeout(5)
-                    ->withHeaders([
-                        'Accept' => 'application/json',
-                        'Content-Type' => 'application/json',
-                        'X-Hop-Timestamp' => (string) $ts,
-                        'X-Hop-Signature' => $sig,
-                    ])
-                    ->withBody($body, 'application/json')
-                    ->delete(rtrim($app->url, '/').$path);
-            } catch (\Throwable $e) {
-                Log::warning('App account purge failed', ['app' => $app->slug, 'user_id' => $userId, 'error' => $e->getMessage()]);
+                PurgeAppAccount::dispatch($app->slug, $userId, $files)->delay(now()->addMinute());
+            } catch (\Throwable) {
+                Log::error('App account purge could not be queued', ['app' => $app->slug]);
             }
         }
     }

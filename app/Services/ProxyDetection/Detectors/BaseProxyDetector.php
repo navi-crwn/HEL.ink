@@ -17,16 +17,17 @@ abstract class BaseProxyDetector implements ProxyDetectorInterface
             if ($response->successful()) {
                 return $response->json();
             }
+            // Host only: the URL contains the visitor's IP (and, for some providers, the API key).
             Log::debug("{$this->getName()} request failed", [
-                'url' => $url,
+                'host' => parse_url($url, PHP_URL_HOST),
                 'status' => $response->status(),
             ]);
 
             return null;
         } catch (\Throwable $e) {
             Log::debug("{$this->getName()} request error", [
-                'url' => $url,
-                'error' => $e->getMessage(),
+                'host' => parse_url($url, PHP_URL_HOST),
+                'error' => str_replace($url, '[url]', $e->getMessage()),
             ]);
 
             return null;

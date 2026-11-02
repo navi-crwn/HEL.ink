@@ -58,7 +58,7 @@ class IpHubDetector extends BaseProxyDetector
                 ],
             ];
         } catch (\Throwable $e) {
-            Log::debug('IPHub detection error', ['error' => $e->getMessage()]);
+            Log::debug('IPHub detection error', ['error' => $e::class]);
 
             return null;
         }

@@ -30,6 +30,12 @@ class ProxyDetectionService
         usort($this->detectors, fn ($a, $b) => $a->getPriority() <=> $b->getPriority());
     }
 
+    /** Keyed digest for log lines: lets one lookup be followed across detectors without writing the address. */
+    protected function ipHash(string $ip): string
+    {
+        return substr(hash_hmac('sha256', $ip, (string) config('app.key')), 0, 16);
+    }
+
     public function detect(string $ip): array
     {
         $cacheKey = "proxy:detection:{$ip}";
@@ -77,7 +83,7 @@ class ProxyDetectionService
             $totalConfidence += $result['confidence'];
             $allDetails[$detectorName] = $result['details'] ?? [];
             Log::info('Proxy detection result', [
-                'ip' => $ip,
+                'ip_hash' => $this->ipHash($ip),
                 'detector' => $detectorName,
                 'is_proxy' => $result['is_proxy'],
                 'type' => $result['type'],

@@ -4,8 +4,9 @@ namespace Hop\Auth\Http\Middleware;
 
 use Closure;
 use Hop\Auth\Models\ApiToken;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\RateLimiter;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -15,6 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AuthenticateApiToken
 {
+    /** Length of the rate limit window, in seconds. */
+    private const WINDOW = 3600;
+
     public function handle(Request $request, Closure $next, ?string $scope = null): Response
     {
         $header = (string) $request->header('Authorization', '');
@@ -35,12 +39,15 @@ class AuthenticateApiToken
         if ($scope && ! $token->can($scope)) {
             return $this->fail(403, 'Forbidden', "This token does not have the {$scope} scope");
         }
-        $key = 'api_rate_limit:'.$token->id;
-        $count = (int) Cache::get($key, 0);
-        if ($count >= $token->rate_limit) {
-            return $this->fail(429, 'Rate Limit Exceeded', "Rate limit of {$token->rate_limit} requests per hour exceeded", ['retry_after' => 3600]);
+        // Count first, then compare: the hit is atomic, so parallel requests cannot all slip under the limit.
+        $limit = $this->limitFor($token);
+        $key = 'hop:api-rate:'.$token->id;
+        if (RateLimiter::hit($key, self::WINDOW) > $limit) {
+            $retryAfter = max(1, RateLimiter::availableIn($key));
+
+            return $this->fail(429, 'Rate Limit Exceeded', "Rate limit of {$limit} requests per hour exceeded", ['retry_after' => $retryAfter])
+                ->header('Retry-After', (string) $retryAfter);
         }
-        $count === 0 ? Cache::put($key, 1, now()->addHour()) : Cache::increment($key);
         $token->markAsUsed();
         $request->attributes->set('api_user', $user);
         $request->attributes->set('api_token', $token);
@@ -49,7 +56,15 @@ class AuthenticateApiToken
         return $next($request);
     }
 
-    private function fail(int $status, string $error, string $message, array $extra = []): Response
+    /** The token's own hourly limit; a missing or non-positive value falls back to the configured default. */
+    private function limitFor(ApiToken $token): int
+    {
+        $limit = (int) $token->rate_limit;
+
+        return $limit > 0 ? $limit : max(1, (int) config('hop-auth.api_rate_limit', 100));
+    }
+
+    private function fail(int $status, string $error, string $message, array $extra = []): JsonResponse
     {
         return response()->json(['success' => false, 'error' => $error, 'message' => $message] + $extra, $status);
     }

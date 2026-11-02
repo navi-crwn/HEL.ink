@@ -2,6 +2,7 @@
 .DS_Store
 .env
 .env.backup
+.env.bak*
 .env.production
 .phpactor.json
 .phpunit.result.cache
@@ -38,3 +39,7 @@ docs/AI_BRIEFING.md
 /start.sh
 /backups/
 /.env.backup-*
+
+# Any other .env variant or backup copy (secrets); only the example is tracked
+.env.*
+!.env.example

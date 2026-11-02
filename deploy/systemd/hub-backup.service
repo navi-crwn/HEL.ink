@@ -1,0 +1,21 @@
+# Example unit: daily database copy of the hub. Not installed by any script.
+# Adjust User=, WorkingDirectory= and the paths to your server, then:
+#   sudo cp deploy/systemd/hub-backup.{service,timer} /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now hub-backup.timer
+# Test once:  sudo systemctl start hub-backup.service && journalctl -u hub-backup.service -n 20
+[Unit]
+Description=HEL.ink hub database backup
+
+[Service]
+Type=oneshot
+User=helink
+WorkingDirectory=/var/www/helink/hub
+ExecStart=/var/www/helink/hub/scripts/backup.sh
+Environment=HOP_BACKUP_KEEP_DAYS=14
+UMask=0077
+Nice=10
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/www/helink/hub/backups /var/www/helink/hub/database

@@ -46,16 +46,6 @@ class NewPasswordController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
         $user = User::where('email', $request->email)->first();
-        if ($user && filled($user->pin)) {
-            $request->validate([
-                'pin' => ['required', 'string', 'size:6'],
-            ]);
-            if ($user->pin !== $request->pin) {
-                RateLimiter::hit($key, 3600);
-
-                return back()->withErrors(['pin' => 'Invalid PIN provided.']);
-            }
-        }
         // Check if new password is same as old password
         if ($user && Hash::check($request->password, $user->password)) {
             RateLimiter::hit($key, 3600);

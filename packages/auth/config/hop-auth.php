@@ -27,6 +27,17 @@ return [
     // Where to land after a successful sign-in when the app did not say.
     'home' => '/dashboard',
 
+    // Requests per hour for an API token that has no limit of its own.
+    'api_rate_limit' => 100,
+
+    // Hosts the chained logout may send the browser on to (`next`), besides the hub,
+    // this app and the app URLs in config/hop.php. Exact hostnames only: no wildcards.
+    // Self-hosted family on your own domain: set HOP_TRUSTED_HOSTS to a comma-separated list.
+    'trusted_hosts' => array_values(array_filter(array_map('trim', explode(',', (string) env(
+        'HOP_TRUSTED_HOSTS',
+        'hel.ink,www.hel.ink,hub.hel.ink,link.hel.ink,bio.hel.ink,note.hel.ink,pixel.hel.ink'
+    ))))),
+
     // Paths this package registers (set to null to register your own).
     'routes' => [
         'start' => '/auth/sso',

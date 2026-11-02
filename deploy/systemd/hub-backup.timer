@@ -1,0 +1,11 @@
+# Example timer for hub-backup.service (see the notes there).
+[Unit]
+Description=Daily HEL.ink hub database backup
+
+[Timer]
+OnCalendar=*-*-* 03:20:00
+RandomizedDelaySec=15min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -198,7 +198,6 @@
         </p>
         <div class="footer">
             <p>This email was sent to {{ $user->email }}</p>
-            <p>{{ config('app.name') }} - Modern URL Shortening Service</p>
             <p style="font-size: 12px; color: #9CA3AF; margin-top: 10px;">
                 &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
             </p>

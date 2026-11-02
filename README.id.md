@@ -1,4 +1,4 @@
-<p align="center">🌐 <a href="README.md">English</a> · <a href="README.zh.md">简体中文</a> · <a href="README.es.md">Español</a> · <a href="README.ar.md">العربية</a> · <a href="README.pt.md">Português</a> · <a href="README.fr.md">Français</a> · <a href="README.ja.md">日本語</a> · <b>Bahasa Indonesia</b></p>
+<p align="center">🌐 <a href="README.md">English</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.de.md">Deutsch</a> · <b>Bahasa Indonesia</b> · <a href="README.ja.md">日本語</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.es.md">Español</a> · <a href="README.fr.md">Français</a> · <a href="README.ru.md">Русский</a></p>
 
 # HEL.ink — Pusat Keluarga HOP & HOP ID
 
@@ -22,6 +22,14 @@
 </p>
 
 ---
+
+Pasang dengan satu perintah (memeriksa komputer Anda dulu, hanya bertanya beberapa hal, dan bisa memasang hub HOP ID sekalian):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/navi-crwn/HEL.ink/main/install.sh | bash
+```
+
+Dari hasil clone: `./install.sh` · perbarui: `./update.sh` · hapus: `./uninstall.sh`. Tambahkan `--yes` untuk memakai semua nilai bawaan; `--help` menampilkan opsinya.
 
 ## Apa itu HEL.ink?
 

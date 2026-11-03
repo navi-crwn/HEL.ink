@@ -62,7 +62,7 @@
                                         <input type="file" name="avatar" accept="image/png,image/jpeg,image/webp,image/gif" class="sr-only" @change="$el.form.requestSubmit()">
                                         Change photo
                                     </label>
-                                    <span class="text-xs text-muted">JPG, PNG or WebP, up to 6 MB. Shown as a 400×400 square.</span>
+                                    <span class="text-xs text-muted">JPG, PNG or WebP, up to {{ \App\Support\Avatar::maxLabel() }}. Shown as a 400×400 square.</span>
                                 </form>
                                 @if ($u->avatar_path)
                                     <form method="POST" action="{{ route('profile.avatar.destroy') }}">

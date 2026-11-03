@@ -15,6 +15,22 @@ class Avatar
 {
     public const SIZE = 400;
 
+    /** What the form promises, in KB. */
+    public const MAX_KB = 6144;
+
+    /** The limit that really applies: ours, or PHP's upload_max_filesize / post_max_size if either is smaller. */
+    public static function maxKb(): int
+    {
+        return min(self::MAX_KB, intdiv(UploadedFile::getMaxFilesize(), 1024));
+    }
+
+    public static function maxLabel(): string
+    {
+        $kb = self::maxKb();
+
+        return $kb >= 1024 ? round($kb / 1024, 1).' MB' : $kb.' KB';
+    }
+
     public static function store(User $user, UploadedFile $file): string
     {
         $src = @imagecreatefromstring((string) file_get_contents($file->getRealPath()));

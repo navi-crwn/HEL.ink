@@ -85,3 +85,13 @@ test('profile update rejects external or malformed _back redirect targets', func
         ])
         ->assertRedirect('/settings#account');
 });
+
+test('the avatar limit shown on the settings page and enforced by the form is what PHP will accept', function () {
+    $kb = min(6144, intdiv(\Illuminate\Http\UploadedFile::getMaxFilesize(), 1024));
+
+    expect(\App\Support\Avatar::maxKb())->toBe($kb);
+    $this->withoutVite()->actingAs(User::factory()->create())->withSession(['2fa_verified' => true])
+        ->get('/settings')->assertOk()
+        ->assertSee('up to '.($kb >= 1024 ? round($kb / 1024, 1).' MB' : $kb.' KB'), false)
+        ->assertDontSee('up to 6 MB', $kb < 6144);
+});

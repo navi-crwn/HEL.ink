@@ -40,6 +40,27 @@ return [
     'registry_repos' => [
         'notehop' => 'https://github.com/navi-crwn/NoteHop',
     ],
+    // Apps that must have a row in `apps` with the `events` capability, or the hub's account
+    // events (suspend, delete, sign-out) never reach them. `php artisan db:seed
+    // --class='Database\Seeders\HopAppsSeeder'` adds a missing row; it never changes an existing one.
+    // The secret of a new row comes from the environment (HOP_SSO_SECRET_PIXELHOP, HOP_SSO_SECRET_NOTEHOP).
+    'event_apps' => [
+        'pixelhop' => [
+            'menu_label' => 'Images',
+            'pages' => ['default' => '/dashboard', 'upload' => '/'],
+            'continue_page' => 'upload',
+            'sort_order' => 10,
+        ],
+        'notehop' => [
+            'callback_path' => env('NOTEHOP_SSO_CALLBACK', '/auth/sso/callback'),
+            'start_path' => env('NOTEHOP_SSO_START', '/auth/sso'),
+            'secret' => env('HOP_SSO_SECRET_NOTEHOP'),
+            'menu_label' => 'Notes',
+            'pages' => ['default' => '/dashboard', 'new' => '/'],
+            'continue_page' => 'default',
+            'sort_order' => 20,
+        ],
+    ],
     'registry_health' => [],   // default /healthz
     'registry_logout' => [
         'notehop' => '/auth/sso/logout',

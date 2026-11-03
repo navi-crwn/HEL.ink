@@ -15,14 +15,17 @@
 
     <div class="grid gap-4 lg:grid-cols-[13rem_minmax(0,1fr)]" x-data="{
         tab: '{{ session('active_tab', 'account') }}',
-        init() {
+        fromHash() {
             const hashTab = window.location.hash.substring(1);
             if (@js(array_keys($settingsTabs)).includes(hashTab)) {
                 this.tab = hashTab;
             }
+        },
+        init() {
+            this.fromHash();
             this.$watch('tab', value => history.replaceState(null, '', '#' + value));
         }
-    }" @tab-changed.window="tab = $event.detail">
+    }" @tab-changed.window="tab = $event.detail" @hashchange.window="fromHash()">
         <nav class="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1 lg:sticky lg:top-24 lg:mx-0 lg:flex-col lg:self-start lg:overflow-visible lg:px-0" aria-label="Settings sections">
             @foreach ($settingsTabs as $key => [$label, $icon])
                 <button type="button" @click="tab = '{{ $key }}'" class="nav-item shrink-0 whitespace-nowrap" :class="tab === '{{ $key }}' && 'nav-item-active'">

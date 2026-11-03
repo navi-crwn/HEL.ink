@@ -163,3 +163,8 @@ test('env() is only called from config files, so config:cache cannot silently dr
 
     expect($hits)->toBe([]);
 });
+
+test('the settings page follows a hash change on the open page', function () {
+    $this->withoutVite()->actingAs(User::factory()->create())->withSession(['2fa_verified' => true])
+        ->get('/settings')->assertOk()->assertSee('@hashchange.window', false);
+});

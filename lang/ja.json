@@ -529,7 +529,7 @@
     "Notes configured with self-destruct timers or read-burn limits are permanently deleted immediately upon expiration.": "自動消滅タイマーまたは閲覧後消去の回数制限を設定したノートは、期限が切れた時点で直ちに完全に削除されます。",
     "4. Your Rights: Export & Deletion": "4. お客様の権利：エクスポートと削除",
     "You hold full control over your data. In your HOP ID Settings under \"Backup & Export\", you can download a complete JSON archive of your account records across all member apps.": "お客様はご自身のデータを完全に管理できます。HOP ID の設定の「Backup & Export」から、すべてのメンバーアプリにわたるアカウント記録の完全な JSON アーカイブをダウンロードできます。",
-    "You may delete your account at any time. Deleting it immediately removes your profile, credentials, short links, bio pages, uploaded media and notes from every HOP service. Backup copies are not edited: they are kept for a limited time, up to about six months, and are deleted automatically when they expire.": "アカウントはいつでも削除できます。削除すると、プロフィール、認証情報、短縮リンク、プロフィールページ、アップロードしたメディア、ノートが、すべての HOP サービスから直ちに削除されます。バックアップコピーは編集されません。バックアップは限られた期間（最長でおよそ 6 か月）保持され、期限が切れると自動的に削除されます。",
+    "You may delete your account at any time. Deleting it immediately removes your profile, credentials, short links, bio pages, uploaded media and notes from every HOP service. Backup copies are not edited: copies kept on our own server are deleted automatically after 14 days.": "アカウントはいつでも削除できます。削除すると、プロフィール、認証情報、短縮リンク、プロフィールページ、アップロードしたメディア、ノートが、すべての HOP サービスから直ちに削除されます。バックアップコピーは編集されません。当社のサーバー自体に保存されているコピーは、14 日後に自動的に削除されます。",
     "5. Privacy Inquiries": "5. プライバシーに関するお問い合わせ",
     "For privacy questions, data requests, or compliance inquiries:": "プライバシーに関するご質問、データのご請求、コンプライアンスに関するお問い合わせ：",
     "GitHub Issues": "GitHub Issues",

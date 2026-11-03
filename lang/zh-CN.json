@@ -529,7 +529,7 @@
     "Notes configured with self-destruct timers or read-burn limits are permanently deleted immediately upon expiration.": "设置了自毁计时器或阅后即焚次数限制的笔记，会在到期后立即被永久删除。",
     "4. Your Rights: Export & Deletion": "4. 你的权利：导出与删除",
     "You hold full control over your data. In your HOP ID Settings under \"Backup & Export\", you can download a complete JSON archive of your account records across all member apps.": "你完全掌控自己的数据。在 HOP ID 设置的“Backup & Export”中，你可以下载一份包含你在所有成员应用中账户记录的完整 JSON 存档。",
-    "You may delete your account at any time. Deleting it immediately removes your profile, credentials, short links, bio pages, uploaded media and notes from every HOP service. Backup copies are not edited: they are kept for a limited time, up to about six months, and are deleted automatically when they expire.": "你可以随时删除账户。删除后，你的个人资料、凭据、短链接、个人主页、上传的媒体和笔记会立即从所有 HOP 服务中移除。备份副本不会被编辑：它们会保留一段有限的时间，最长约六个月，到期后自动删除。",
+    "You may delete your account at any time. Deleting it immediately removes your profile, credentials, short links, bio pages, uploaded media and notes from every HOP service. Backup copies are not edited: copies kept on our own server are deleted automatically after 14 days.": "你可以随时删除账户。删除后，你的个人资料、凭据、短链接、个人主页、上传的媒体和笔记会立即从所有 HOP 服务中移除。备份副本不会被编辑：保存在我们自己服务器上的副本会在 14 天后自动删除。",
     "5. Privacy Inquiries": "5. 隐私咨询",
     "For privacy questions, data requests, or compliance inquiries:": "如有隐私问题、数据请求或合规咨询：",
     "GitHub Issues": "GitHub Issues",

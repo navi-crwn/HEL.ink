@@ -116,14 +116,14 @@
                 <span class="text-xs font-bold uppercase tracking-wider" style="color: {{ $app['color'] }}">{{ __('Questions & Answers') }}</span>
                 <h2 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl dark:text-white">{{ __('Frequently Asked Questions') }}</h2>
             </div>
-            <dl class="mt-6 space-y-3">
+            <div class="mt-6 space-y-3">
                 @foreach ($app['faqs'] as $faq)
                     <details class="{{ $card }}">
                         <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ $faq[0] }}</summary>
                         <p class="mt-3 text-xs leading-relaxed {{ $muted }}">{{ $faq[1] }}</p>
                     </details>
                 @endforeach
-            </dl>
+            </div>
         </section>
     @endif
 

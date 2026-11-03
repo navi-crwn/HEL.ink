@@ -10,12 +10,9 @@
             <x-input-error :messages="$errors->get('code')" class="mt-2" />
         </div>
         <div class="flex items-center justify-between mt-4">
-            <form method="POST" action="{{ route('logout') }}" class="inline">
-                @csrf
-                <button type="submit" class="underline text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 rounded-md focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-slate-800">
-                    {{ __('Use a different account') }}
-                </button>
-            </form>
+            <button type="submit" form="two-factor-logout" class="underline text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 rounded-md focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-slate-800">
+                {{ __('Use a different account') }}
+            </button>
             <x-primary-button class="ml-3">
                 {{ __('Verify') }}
             </x-primary-button>
@@ -25,5 +22,8 @@
                 <strong>Lost your device?</strong> You can use one of your recovery codes to access your account.
             </p>
         </div>
+    </form>
+    <form id="two-factor-logout" method="POST" action="{{ route('logout') }}" class="hidden">
+        @csrf
     </form>
 </x-guest-layout>

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="pageTitle">HOP - Settings</x-slot>
+    <x-slot name="pageTitle">Settings · HOP</x-slot>
     @php
         $settingsTabs = [
             'account' => ['Account', 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'],
@@ -62,6 +62,7 @@
                                         <input type="file" name="avatar" accept="image/png,image/jpeg,image/webp,image/gif" class="sr-only" @change="$el.form.requestSubmit()">
                                         Change photo
                                     </label>
+                                    <button type="submit" class="sr-only">{{ __('Save') }}</button>
                                     <span class="text-xs text-muted">JPG, PNG or WebP, up to {{ \App\Support\Avatar::maxLabel() }}. Shown as a 400×400 square.</span>
                                 </form>
                                 @if ($u->avatar_path)

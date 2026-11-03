@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="pageTitle">HOP - {{ $user->email }}</x-slot>
+    <x-slot name="pageTitle">{{ $user->email }} · HOP</x-slot>
     <x-page-header :title="$user->name" :subtitle="$user->email.($user->username ? ' · @'.$user->username : '')" />
     <x-flash />
     @if ($errors->any())<div class="glass rounded-2xl border-rose-400/40 px-4 py-3 text-sm text-rose-600 dark:text-rose-300">{{ $errors->first() }}</div>@endif

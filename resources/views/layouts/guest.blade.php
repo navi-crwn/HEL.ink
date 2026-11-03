@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ $title ?? config('app.name', 'HOP') }}</title>
+        <meta property="og:title" content="{{ $title ?? config('app.name', 'HOP') }}">
         <link rel="icon" href="{{ route('brand.favicon') }}" type="image/png" sizes="32x32">
         <link rel="apple-touch-icon" href="{{ route('brand.favicon') }}">
         <script nonce="{{ Vite::cspNonce() }}">

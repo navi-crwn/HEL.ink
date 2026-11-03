@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="pageTitle">HOP - Accounts</x-slot>
+    <x-slot name="pageTitle">Accounts · HOP</x-slot>
     <x-page-header title="Accounts" subtitle="Every HOP ID. Suspending here signs the account out of every app." />
     <x-flash />
     @if ($registryWarnings !== [])

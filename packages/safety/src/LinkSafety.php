@@ -27,6 +27,14 @@ class LinkSafety
     /** @var array<string, array<string, int>>|null */
     private ?array $feeds = null;
 
+    private ?EncryptedNoteLink $notes = null;
+
+    /** Knows the address of an encrypted NoteHop note (its key is in the #fragment). Override to add hosts. */
+    protected function notes(): EncryptedNoteLink
+    {
+        return $this->notes ??= new EncryptedNoteLink;
+    }
+
     /**
      * Validation helper: returns a user-facing error, or null when allowed.
      *
@@ -34,6 +42,10 @@ class LinkSafety
      */
     public function rejectionReason(?string $url, string $text = '', array $schemes = self::WEB_SCHEMES): ?string
     {
+        // An encrypted NoteHop address (or free text holding one) keeps its key in the fragment: never stored here.
+        if ($this->holdsNoteKey($url, $text)) {
+            return $this->notes()->message();
+        }
         $url = trim((string) $url);
         if ($url === '') {
             return null;
@@ -68,7 +80,12 @@ class LinkSafety
                 $signals[] = $category;
             }
         }
+        if ($this->holdsNoteKey($url, $text)) {
+            $signals[] = 'encrypted_note_key';
+        }
         $url = trim((string) $url);
+        // A fragment never reaches the destination server, so it is not sent to outside lookups either.
+        $remoteUrl = explode('#', $url, 2)[0];
         if ($url !== '') {
             $scheme = $this->scheme($url);
             if ($scheme !== null && in_array($scheme, self::DANGEROUS_SCHEMES, true)) {
@@ -99,7 +116,7 @@ class LinkSafety
                         $signals[] = $category;
                     }
                 }
-                if ($remote && in_array($scheme, self::WEB_SCHEMES, true) && $this->isKnownMalicious($url, $host)) {
+                if ($remote && in_array($scheme, self::WEB_SCHEMES, true) && $this->isKnownMalicious($remoteUrl, $host)) {
                     $signals[] = 'malware';
                 }
             }
@@ -115,6 +132,11 @@ class LinkSafety
         $score = array_sum(array_map(fn ($s) => (int) ($weights[$s] ?? 0), $signals));
 
         return ['score' => $score, 'signals' => $signals];
+    }
+
+    private function holdsNoteKey(?string $url, string $text): bool
+    {
+        return $this->notes()->matches($url) || $this->notes()->containsKey($url) || $this->notes()->containsKey($text);
     }
 
     /**

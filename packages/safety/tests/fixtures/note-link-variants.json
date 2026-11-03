@@ -1,0 +1,322 @@
+[
+ {
+  "label": "baseline",
+  "url": "https://note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "short host n.hel.ink",
+  "url": "https://n.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "upper-case host",
+  "url": "https://NOTE.HEL.INK/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "upper-case scheme",
+  "url": "HTTPS://note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "trailing dot",
+  "url": "https://note.hel.ink./Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "user@host",
+  "url": "https://user@note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "user:pw@host",
+  "url": "https://user:pw@note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "port 443",
+  "url": "https://note.hel.ink:443/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "port 8443",
+  "url": "https://note.hel.ink:8443/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "empty port",
+  "url": "https://note.hel.ink:/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "trailing dot + port",
+  "url": "https://note.hel.ink.:443/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "http",
+  "url": "http://note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "//host (no scheme)",
+  "url": "//note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "host only (no scheme)",
+  "url": "note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "backslashes",
+  "url": "https:\\\\note.hel.ink\\Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "host\\.evil (backslash ends host)",
+  "url": "https://note.hel.ink\\.example.com/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "four slashes",
+  "url": "https:////note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "no slashes https:host",
+  "url": "https:note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "one slash https:/host",
+  "url": "https:/note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "three slashes",
+  "url": "https:///note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "tab inside scheme",
+  "url": "ht\ttps://note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "tab inside host",
+  "url": "https://no\tte.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "newline inside host",
+  "url": "https://note.hel\n.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "tab inside key",
+  "url": "https://note.hel.ink/Ab3dEf#k=FAKE\tKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "newline before k",
+  "url": "https://note.hel.ink/Ab3dEf#\nk=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "leading space",
+  "url": " https://note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "leading C0 (\\x01)",
+  "url": "\u0001https://note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "leading C0 (\\x1f)",
+  "url": "\u001fhttps://note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "www prefix",
+  "url": "https://www.note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "fullwidth n (UTS46)",
+  "url": "https://ｎote.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "fullwidth whole host",
+  "url": "https://ｎｏｔｅ．ｈｅｌ．ｉｎｋ/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "circled n (UTS46)",
+  "url": "https://ⓝote.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "double-struck N (UTS46)",
+  "url": "https://ℕote.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "ideographic dot U+3002",
+  "url": "https://note。hel。ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "fullwidth dot U+FF0E",
+  "url": "https://note．hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "soft hyphen U+00AD",
+  "url": "https://no­te.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "zero-width space U+200B",
+  "url": "https://no​te.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "zero-width joiner U+200D",
+  "url": "https://no‍te.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": false
+ },
+ {
+  "label": "percent-encoded dot %2e",
+  "url": "https://note%2ehel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "percent-encoded letter %74",
+  "url": "https://no%74e.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "percent-encoded dot, upper %2E",
+  "url": "https://note.hel%2Eink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "punycode label of a plain-ASCII host",
+  "url": "https://xn--note-.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": false
+ },
+ {
+  "label": "fragment %6B= (encoded name)",
+  "url": "https://note.hel.ink/Ab3dEf#%6B=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "fragment a= only (owner)",
+  "url": "https://note.hel.ink/Ab3dEf#a=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "fragment a=x&k=y",
+  "url": "https://note.hel.ink/Ab3dEf#a=x&k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "fragment new=1&k=",
+  "url": "https://note.hel.ink/Ab3dEf#new=1&k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "fragment k=&k=KEY (empty then real)",
+  "url": "https://note.hel.ink/Ab3dEf#k=&k=FAKEKEYzzz999",
+  "opens_note": false
+ },
+ {
+  "label": "fragment k=KEY&k= ",
+  "url": "https://note.hel.ink/Ab3dEf#k=FAKEKEYzzz999&k=",
+  "opens_note": true
+ },
+ {
+  "label": "fragment +k= (plus)",
+  "url": "https://note.hel.ink/Ab3dEf#+k=FAKEKEYzzz999",
+  "opens_note": false
+ },
+ {
+  "label": "fragment K= (upper, not read)",
+  "url": "https://note.hel.ink/Ab3dEf#K=FAKEKEYzzz999",
+  "opens_note": false
+ },
+ {
+  "label": "fragment !k= (not read)",
+  "url": "https://note.hel.ink/Ab3dEf#!k=FAKEKEYzzz999",
+  "opens_note": false
+ },
+ {
+  "label": "fragment ?k= (not read)",
+  "url": "https://note.hel.ink/Ab3dEf#?k=FAKEKEYzzz999",
+  "opens_note": true
+ },
+ {
+  "label": "fragment k= empty",
+  "url": "https://note.hel.ink/Ab3dEf#k=",
+  "opens_note": false
+ },
+ {
+  "label": "query ?k= (server would see)",
+  "url": "https://note.hel.ink/Ab3dEf?k=FAKEKEYzzz999",
+  "opens_note": false
+ },
+ {
+  "label": "%23k= in path",
+  "url": "https://note.hel.ink/Ab3dEf%23k=FAKEKEYzzz999",
+  "opens_note": false
+ },
+ {
+  "label": "second # hides k",
+  "url": "https://note.hel.ink/Ab3dEf#x#k=FAKEKEYzzz999",
+  "opens_note": false
+ },
+ {
+  "label": "other host same fragment",
+  "url": "https://example.com/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": false
+ },
+ {
+  "label": "subdomain of note host",
+  "url": "https://evil.note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": false
+ },
+ {
+  "label": "note host only in userinfo",
+  "url": "https://note.hel.ink@example.com/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": false
+ },
+ {
+  "label": "note host after a backslash",
+  "url": "https://example.com\\@note.hel.ink/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": false
+ },
+ {
+  "label": "note host only in query",
+  "url": "https://example.com/?u=https://note.hel.ink/x#k=FAKEKEYzzz999",
+  "opens_note": false
+ },
+ {
+  "label": "IPv4 literal",
+  "url": "https://93.184.216.34/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": false
+ },
+ {
+  "label": "localhost",
+  "url": "https://localhost/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": false
+ },
+ {
+  "label": "IPv6 literal",
+  "url": "https://[::1]/Ab3dEf#k=FAKEKEYzzz999",
+  "opens_note": false
+ }
+]

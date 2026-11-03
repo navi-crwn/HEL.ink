@@ -76,20 +76,23 @@ class UrlGuard
     }
 
     /**
-     * The CURLOPT_RESOLVE entries ("host:port:address") that pin a connection
-     * to the addresses resolve() validated.
+     * The CURLOPT_RESOLVE entries that pin a connection to the addresses
+     * resolve() validated: one "host:port:address1,address2" entry. All the
+     * addresses go into a single entry because libcurl keeps only the last
+     * entry for a host and port, which would drop the other addresses and
+     * leave a v4-only machine with an IPv6-only pin.
      *
      * @param  array{host: string, port: int, ips: array<int, string>}  $target
      * @return array<int, string>
      */
     public function curlResolve(array $target): array
     {
-        $entries = [];
-        foreach ($target['ips'] as $ip) {
-            $entries[] = $target['host'].':'.$target['port'].':'.(str_contains($ip, ':') ? '['.$ip.']' : $ip);
-        }
+        $addresses = array_map(
+            fn (string $ip): string => str_contains($ip, ':') ? '['.$ip.']' : $ip,
+            $target['ips'],
+        );
 
-        return $entries;
+        return [$target['host'].':'.$target['port'].':'.implode(',', $addresses)];
     }
 
     /**

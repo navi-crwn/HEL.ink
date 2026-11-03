@@ -70,13 +70,12 @@ test('isSafe keeps its answers for ip literals', function () {
     expect($guard->resolve('http://[2606:2800:220:1::1]/')['host'])->toBe('2606:2800:220:1::1');
 });
 
-test('curlResolve builds CURLOPT_RESOLVE entries for every validated address', function () {
+test('curlResolve puts every validated address into one entry, so no address is dropped', function () {
     $guard = fakeGuard(['example.com' => ['93.184.216.34', '2606:2800:220:1::1']]);
     $target = $guard->resolve('https://example.com:8443/x');
 
     expect($guard->curlResolve($target))->toBe([
-        'example.com:8443:93.184.216.34',
-        'example.com:8443:[2606:2800:220:1::1]',
+        'example.com:8443:93.184.216.34,[2606:2800:220:1::1]',
     ]);
 });
 

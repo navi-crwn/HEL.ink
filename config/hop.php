@@ -43,7 +43,9 @@ return [
     // Apps that must have a row in `apps` with the `events` capability, or the hub's account
     // events (suspend, delete, sign-out) never reach them. `php artisan db:seed
     // --class='Database\Seeders\HopAppsSeeder'` adds a missing row; it never changes an existing one.
-    // The secret of a new row comes from the environment (HOP_SSO_SECRET_PIXELHOP, HOP_SSO_SECRET_NOTEHOP).
+    // The secret of a new row comes from the environment (HOP_SSO_SECRET_PIXELHOP, HOP_SSO_SECRET_NOTEHOP,
+    // HOP_SSO_SECRET_LINKHOP, HOP_SSO_SECRET_BIOHOP, or the shared HOP_SSO_SECRET for the Laravel apps).
+    // LinkHop and BioHop end their sessions on session.revoked through hop/auth's event receiver.
     'event_apps' => [
         'pixelhop' => [
             'menu_label' => 'Images',
@@ -60,6 +62,8 @@ return [
             'continue_page' => 'default',
             'sort_order' => 20,
         ],
+        'linkhop' => ['sort_order' => 30],
+        'biohop' => ['sort_order' => 40],
     ],
     'registry_health' => [],   // default /healthz
     'registry_logout' => [

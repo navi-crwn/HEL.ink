@@ -6,9 +6,10 @@ use App\Support\EventRegistry;
 use Illuminate\Database\Seeder;
 
 /**
- * Makes sure PixelHop and NoteHop have a row in `apps` with the `events` capability, so the hub's
- * account events reach them. Safe to run again and in production: a row that exists is left alone.
- * Secrets come from the environment (HOP_SSO_SECRET_PIXELHOP, HOP_SSO_SECRET_NOTEHOP), never from here.
+ * Makes sure PixelHop, NoteHop, LinkHop and BioHop have a row in `apps` with the `events` capability, so the
+ * hub's account events reach them. Safe to run again and in production: a row that exists is left alone.
+ * Secrets come from the environment (HOP_SSO_SECRET_<APP>, or the shared HOP_SSO_SECRET for LinkHop and
+ * BioHop), never from here. Run it after LinkHop and BioHop run hop/auth's event receiver.
  */
 class HopAppsSeeder extends Seeder
 {

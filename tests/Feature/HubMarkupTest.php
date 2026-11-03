@@ -66,3 +66,10 @@ test('signed-in page titles read "Section · HOP" like the public pages', functi
         expect(hubPage($this, $uri, $user))->toContain("<title>{$name} · HOP</title>");
     }
 });
+
+test('the auth pages and the 404 page have a main landmark', function () {
+    foreach (['/login', '/register', '/forgot-password'] as $uri) {
+        expect(hubPage($this, $uri))->toContain('<main');
+    }
+    expect($this->get('/no-such-page')->assertNotFound()->getContent())->toContain('<main');
+});

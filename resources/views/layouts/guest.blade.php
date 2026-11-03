@@ -34,9 +34,11 @@
                     <svg class="hidden h-[18px] w-[18px] dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
                 </button>
             </div>
-            <div class="auth-card glass-strong w-full max-w-md rounded-3xl border-t-4 border-t-sky-400/70 p-6 text-ink shadow-xl shadow-sky-900/5 sm:p-8">
-                {{ $slot }}
-            </div>
+            <main class="w-full max-w-md">
+                <div class="auth-card glass-strong w-full max-w-md rounded-3xl border-t-4 border-t-sky-400/70 p-6 text-ink shadow-xl shadow-sky-900/5 sm:p-8">
+                    {{ $slot }}
+                </div>
+            </main>
             <p class="mt-6 text-xs text-muted">
                 <a href="{{ route('terms') }}" class="hover:underline">Terms</a> · <a href="{{ route('privacy') }}" class="hover:underline">Privacy</a> · <a href="{{ route('help') }}" class="hover:underline">Help</a>
             </p>

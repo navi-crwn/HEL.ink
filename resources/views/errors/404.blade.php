@@ -12,7 +12,7 @@
         </style>
     </head>
     <body class="min-h-full bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 text-white">
-        <div class="flex min-h-screen flex-col items-center justify-center px-6 text-center">
+        <main class="flex min-h-screen flex-col items-center justify-center px-6 text-center">
             <div class="flex flex-col items-center">
                 <img src="{{ route('brand.logo') }}" alt="" class="h-16 w-16 rounded-full shadow-lg">
                 <p class="mt-4 text-sm uppercase tracking-[0.4em] text-white/60">HOP</p>
@@ -22,6 +22,6 @@
             <div class="mt-6 flex flex-wrap items-center gap-4">
                 <a href="{{ url('/') }}" class="rounded-2xl bg-blue-600 px-6 py-3 font-semibold text-white shadow-lg shadow-blue-500/40">{{ __('Back to the home page') }}</a>
             </div>
-        </div>
+        </main>
     </body>
 </html>

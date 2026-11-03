@@ -6,6 +6,7 @@ use App\Http\Middleware\CheckSuspended;
 use App\Http\Middleware\ContentSecurityPolicyMiddleware;
 use App\Http\Middleware\EnsureGoogleUserHasPassword;
 use App\Http\Middleware\EnsureTwoFactorAuthenticated;
+use App\Http\Middleware\NoStoreWhenSignedIn;
 use App\Http\Middleware\ProtectPermanentSuperadmin;
 use App\Http\Middleware\RemoveWwwPrefix;
 use App\Http\Middleware\RequireHopAdminClient;
@@ -34,6 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
             CheckSuspended::class,
             EnsureGoogleUserHasPassword::class,
             ContentSecurityPolicyMiddleware::class,
+            NoStoreWhenSignedIn::class,
             ProtectPermanentSuperadmin::class,
         ]);
         // The language cookie is plain text (en, id, …), read before decryption.

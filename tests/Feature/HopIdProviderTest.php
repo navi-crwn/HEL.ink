@@ -139,6 +139,24 @@ class HopIdProviderTest extends TestCase
         $this->assertDatabaseHas('hop_audit', ['action' => 'suspend', 'target_id' => (string) $target->id, 'app_slug' => 'imperium']);
     }
 
+    public function test_revoke_sessions_also_rotates_the_remember_token(): void
+    {
+        // LinkHop and BioHop sign people in with remember:true on the shared users table: a deleted
+        // session row alone is not a revocation, the remember cookie would sign the person back in.
+        $this->admin();
+        $target = User::factory()->create(['remember_token' => 'old-remember-token-'.str_repeat('x', 42)]);
+        $before = $target->remember_token;
+        $path = '/api/hop/users/'.$target->id.'/actions';
+        $body = json_encode(['action' => 'revoke_sessions', 'reason' => 'stolen laptop']);
+
+        $server = $this->transformHeadersToServerVars($this->signedHeaders('imperium', self::IMPERIUM_SECRET, 'POST', $path, $body) + ['Content-Type' => 'application/json']);
+        $this->call('POST', $path, [], [], [], $server, $body)->assertOk();
+
+        $after = $target->fresh()->remember_token;
+        $this->assertNotNull($after);
+        $this->assertNotSame($before, $after);
+    }
+
     public function test_an_app_sign_in_form_checks_hop_id_credentials(): void
     {
         $user = User::factory()->create(['email' => 'reader@example.com', 'password' => Hash::make('correct horse')]);

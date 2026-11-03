@@ -112,7 +112,6 @@
                 </main>
             </div>
         @endauth
-        <x-cookie-consent />
         <script nonce="{{ Vite::cspNonce() }}">
             window.toggleTheme = function () {
                 const isDark = document.documentElement.classList.toggle('dark');

@@ -168,3 +168,8 @@ test('the settings page follows a hash change on the open page', function () {
     $this->withoutVite()->actingAs(User::factory()->create())->withSession(['2fa_verified' => true])
         ->get('/settings')->assertOk()->assertSee('@hashchange.window', false);
 });
+
+test('signed-in pages carry no cookie banner (only essential cookies exist)', function () {
+    $this->withoutVite()->actingAs(User::factory()->create())->withSession(['2fa_verified' => true])
+        ->get('/settings')->assertOk()->assertDontSee('cookie_consent', false);
+});

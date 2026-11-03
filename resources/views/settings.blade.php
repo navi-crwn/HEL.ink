@@ -149,17 +149,17 @@
                                 </ul>
                             @endif
                             <div>
-                                <label for="fsettin-3" class="label">Current password</label>
-                                <input id="fsettin-3" type="password" name="current_password" class="input sm:max-w-[calc(50%-0.5rem)]" required autocomplete="current-password">
+                                <label for="fsettin-pw-3" class="label">Current password</label>
+                                <input id="fsettin-pw-3" type="password" name="current_password" class="input sm:max-w-[calc(50%-0.5rem)]" required autocomplete="current-password">
                             </div>
                             <div class="grid gap-4 sm:grid-cols-2">
                                 <div>
-                                    <label for="fsettin-4" class="label">New password</label>
-                                    <input id="fsettin-4" type="password" name="password" class="input" required autocomplete="new-password">
+                                    <label for="fsettin-pw-4" class="label">New password</label>
+                                    <input id="fsettin-pw-4" type="password" name="password" class="input" required autocomplete="new-password">
                                 </div>
                                 <div>
-                                    <label for="fsettin-5" class="label">Confirm new password</label>
-                                    <input id="fsettin-5" type="password" name="password_confirmation" class="input" required autocomplete="new-password">
+                                    <label for="fsettin-pw-5" class="label">Confirm new password</label>
+                                    <input id="fsettin-pw-5" type="password" name="password_confirmation" class="input" required autocomplete="new-password">
                                 </div>
                             </div>
                             <div class="flex justify-end">
@@ -200,8 +200,8 @@
                                         @csrf
                                         @method('DELETE')
                                         <div>
-                                            <label for="fsettin-6" class="label">Confirm your password</label>
-                                            <input id="fsettin-6" type="password" name="password" x-model="password" class="input" required autocomplete="current-password">
+                                            <label for="fsettin-pw-6" class="label">Confirm your password</label>
+                                            <input id="fsettin-pw-6" type="password" name="password" x-model="password" class="input" required autocomplete="current-password">
                                         </div>
                                         <p class="text-center text-xs text-muted">
                                             <span x-show="!canDelete">You can confirm in <span x-text="countdown" class="font-semibold text-ink"></span> s</span>
@@ -471,7 +471,6 @@
                     @empty
                         <p class="text-sm text-muted">No login history available yet.</p>
                     @endforelse
-                </div>
                 </div>
                 <!-- API & Integrations Tab -->
                 <div x-show="tab === 'api'" x-cloak x-data="apiSettings()" class="space-y-4 p-5">

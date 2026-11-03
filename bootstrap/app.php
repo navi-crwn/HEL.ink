@@ -57,11 +57,11 @@ return Application::configure(basePath: dirname(__DIR__))
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
 
-                return redirect()->route('login')->with('status', 'You have been signed out.');
+                return redirect()->route('login')->with('status', __('You have been signed out.'));
             }
 
             return redirect()->back()
                 ->withInput($request->except(['_token', 'password', 'password_confirmation', 'current_password', 'token', 'code', 'recovery_code']))
-                ->with('session_expired', 'Sesi habis, silakan coba lagi.');
+                ->with('session_expired', __('Your session expired. Try again.'));
         });
     })->create();

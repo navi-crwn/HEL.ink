@@ -103,7 +103,7 @@ class TwoFactorController extends Controller
         $valid = $google2fa->verifyKey($secret, $request->code);
         if (! $valid) {
             $recoveryCodes = json_decode(decrypt($user->two_factor_recovery_codes), true);
-            $valid = in_array(strtoupper($request->code), $recoveryCodes);
+            $valid = in_array(strtoupper($request->code), $recoveryCodes, true);
             if ($valid) {
                 $recoveryCodes = array_values(array_diff($recoveryCodes, [strtoupper($request->code)]));
                 $user->update([

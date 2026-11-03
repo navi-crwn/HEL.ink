@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Hop\Ui\Locales;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -25,7 +26,9 @@ class SetLocale
         app()->setLocale($locale);
         $response = $next($request);
         if ($requested !== null) {
-            $response->headers->setCookie(cookie()->forever(self::COOKIE, $requested, null, null, $request->isSecure(), false, false, 'lax'));
+            // Host-only on purpose: cookie()->forever() would add config('session.domain') (the hub host),
+            // and a browser drops that cookie when the response comes from the public host (hel.ink).
+            $response->headers->setCookie(new Cookie(self::COOKIE, $requested, time() + 5 * 365 * 86400, '/', null, $request->isSecure(), false, false, 'lax'));
         }
 
         return $response;

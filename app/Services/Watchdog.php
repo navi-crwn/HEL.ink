@@ -113,6 +113,16 @@ class Watchdog
      *
      * @return array<string, array{app: HopApp, ok: ?bool, checked_at: ?Carbon, latency_ms: ?int, error: ?string, uptime: ?float}>
      */
+    public function emptySummary(): array
+    {
+        $out = [];
+        foreach (HopApps::all() as $app) {
+            $out[$app->slug] = ['app' => $app, 'ok' => null, 'checked_at' => null, 'latency_ms' => null, 'error' => null, 'uptime' => null];
+        }
+
+        return $out;
+    }
+
     public function summary(): array
     {
         $out = [];

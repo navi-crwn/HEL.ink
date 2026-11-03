@@ -149,3 +149,6 @@ Route::domain(config('hop.public_host'))->group(function () {
         Route::get('/dashboard', fn () => redirect()->to(hub_url('dashboard')));
     }
 });
+
+// Unmatched URLs go through the web middleware group too, so the 404 page knows the visitor's language (SetLocale).
+Route::fallback(fn () => abort(404));

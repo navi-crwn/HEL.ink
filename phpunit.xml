@@ -42,5 +42,13 @@
         <env name="MAIL_MAILER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
+        <env name="LINKHOP_URL" value="https://link.hel.ink" force="true"/>
+        <server name="LINKHOP_URL" value="https://link.hel.ink" force="true"/>
+        <env name="BIOHOP_URL" value="https://bio.hel.ink" force="true"/>
+        <server name="BIOHOP_URL" value="https://bio.hel.ink" force="true"/>
+        <env name="PIXELHOP_URL" value="https://pixel.hel.ink" force="true"/>
+        <server name="PIXELHOP_URL" value="https://pixel.hel.ink" force="true"/>
+        <env name="NOTEHOP_URL" value="https://note.hel.ink" force="true"/>
+        <server name="NOTEHOP_URL" value="https://note.hel.ink" force="true"/>
                                     </php>
 </phpunit>

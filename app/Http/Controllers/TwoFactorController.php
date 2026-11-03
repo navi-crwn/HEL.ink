@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Support\AfterLogin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use PragmaRX\Google2FA\Google2FA;
 
@@ -101,6 +102,10 @@ class TwoFactorController extends Controller
         $google2fa = new Google2FA;
         $secret = decrypt($user->two_factor_secret);
         $valid = $google2fa->verifyKey($secret, $request->code);
+        // A TOTP code is good for 3 time steps (90 s with the default window): remember it so it cannot open a second session.
+        if ($valid && ! Cache::add("2fa-used:{$user->id}:{$request->code}", true, 120)) {
+            return back()->withErrors(['code' => 'The provided code is invalid.']);
+        }
         if (! $valid) {
             $recoveryCodes = json_decode(decrypt($user->two_factor_recovery_codes), true);
             $valid = in_array(strtoupper($request->code), $recoveryCodes, true);

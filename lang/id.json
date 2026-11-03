@@ -581,5 +581,20 @@
     "Terms of Service (version :version)": "Ketentuan Layanan (versi :version)",
     "Agree and continue with Google": "Setuju dan lanjutkan dengan Google",
     "Cancel and go back": "Batal dan kembali",
-    "⚠️ Please agree to the Terms of Service below to continue.": "⚠️ Setujui Ketentuan Layanan di bawah ini untuk melanjutkan."
+    "⚠️ Please agree to the Terms of Service below to continue.": "⚠️ Setujui Ketentuan Layanan di bawah ini untuk melanjutkan.",
+    "Page not found": "Halaman tidak ditemukan",
+    "This page does not exist or has moved. Check the address or go back to the home page.": "Halaman ini tidak ada atau sudah dipindahkan. Periksa alamatnya atau kembali ke beranda.",
+    "Back to the home page": "Kembali ke beranda",
+    "Something went wrong": "Terjadi kesalahan",
+    "We ran into an unexpected error on our side.": "Terjadi kesalahan tak terduga di sisi kami.",
+    "Please try again in a moment.": "Coba lagi sebentar lagi.",
+    "Go back": "Kembali",
+    "Too many requests": "Terlalu banyak permintaan",
+    "Too many requests or attempts came from your connection in a short time. Please wait a moment, then try again.": "Terlalu banyak permintaan atau percobaan dari koneksi Anda dalam waktu singkat. Tunggu sebentar, lalu coba lagi.",
+    "You can try again in :seconds seconds.": "Anda bisa mencoba lagi dalam :seconds detik.",
+    "Try again": "Coba lagi",
+    "Reloading…": "Memuat ulang…",
+    "You can try again now.": "Anda bisa mencoba lagi sekarang.",
+    "Your session expired. Try again.": "Sesi Anda berakhir. Coba lagi.",
+    "You have been signed out.": "Anda telah keluar."
 }

@@ -581,5 +581,20 @@
     "Terms of Service (version :version)": "Terms of Service (version :version)",
     "Agree and continue with Google": "Agree and continue with Google",
     "Cancel and go back": "Cancel and go back",
-    "⚠️ Please agree to the Terms of Service below to continue.": "⚠️ Please agree to the Terms of Service below to continue."
+    "⚠️ Please agree to the Terms of Service below to continue.": "⚠️ Please agree to the Terms of Service below to continue.",
+    "Page not found": "Page not found",
+    "This page does not exist or has moved. Check the address or go back to the home page.": "This page does not exist or has moved. Check the address or go back to the home page.",
+    "Back to the home page": "Back to the home page",
+    "Something went wrong": "Something went wrong",
+    "We ran into an unexpected error on our side.": "We ran into an unexpected error on our side.",
+    "Please try again in a moment.": "Please try again in a moment.",
+    "Go back": "Go back",
+    "Too many requests": "Too many requests",
+    "Too many requests or attempts came from your connection in a short time. Please wait a moment, then try again.": "Too many requests or attempts came from your connection in a short time. Please wait a moment, then try again.",
+    "You can try again in :seconds seconds.": "You can try again in :seconds seconds.",
+    "Try again": "Try again",
+    "Reloading…": "Reloading…",
+    "You can try again now.": "You can try again now.",
+    "Your session expired. Try again.": "Your session expired. Try again.",
+    "You have been signed out.": "You have been signed out."
 }

@@ -581,5 +581,20 @@
     "Terms of Service (version :version)": "Termos de Serviço (versão :version)",
     "Agree and continue with Google": "Concordar e continuar com o Google",
     "Cancel and go back": "Cancelar e voltar",
-    "⚠️ Please agree to the Terms of Service below to continue.": "⚠️ Aceite os Termos de Serviço abaixo para continuar."
+    "⚠️ Please agree to the Terms of Service below to continue.": "⚠️ Aceite os Termos de Serviço abaixo para continuar.",
+    "Page not found": "Página não encontrada",
+    "This page does not exist or has moved. Check the address or go back to the home page.": "Esta página não existe ou foi movida. Confira o endereço ou volte para a página inicial.",
+    "Back to the home page": "Voltar à página inicial",
+    "Something went wrong": "Algo deu errado",
+    "We ran into an unexpected error on our side.": "Encontramos um erro inesperado do nosso lado.",
+    "Please try again in a moment.": "Tente novamente em instantes.",
+    "Go back": "Voltar",
+    "Too many requests": "Muitas solicitações",
+    "Too many requests or attempts came from your connection in a short time. Please wait a moment, then try again.": "Sua conexão fez muitas solicitações ou tentativas em pouco tempo. Aguarde um instante e tente de novo.",
+    "You can try again in :seconds seconds.": "Você pode tentar de novo em :seconds segundos.",
+    "Try again": "Tentar de novo",
+    "Reloading…": "Recarregando…",
+    "You can try again now.": "Você já pode tentar de novo.",
+    "Your session expired. Try again.": "Sua sessão expirou. Tente de novo.",
+    "You have been signed out.": "Você saiu da conta."
 }

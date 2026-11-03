@@ -581,5 +581,20 @@
     "Terms of Service (version :version)": "利用規約（バージョン :version）",
     "Agree and continue with Google": "同意して Google で続行",
     "Cancel and go back": "キャンセルして戻る",
-    "⚠️ Please agree to the Terms of Service below to continue.": "⚠️ 続行するには、下の利用規約に同意してください。"
+    "⚠️ Please agree to the Terms of Service below to continue.": "⚠️ 続行するには、下の利用規約に同意してください。",
+    "Page not found": "ページが見つかりません",
+    "This page does not exist or has moved. Check the address or go back to the home page.": "このページは存在しないか、移動されました。アドレスを確認するか、ホームに戻ってください。",
+    "Back to the home page": "ホームに戻る",
+    "Something went wrong": "問題が発生しました",
+    "We ran into an unexpected error on our side.": "こちら側で予期しないエラーが発生しました。",
+    "Please try again in a moment.": "しばらくしてからもう一度お試しください。",
+    "Go back": "戻る",
+    "Too many requests": "リクエストが多すぎます",
+    "Too many requests or attempts came from your connection in a short time. Please wait a moment, then try again.": "お使いの接続から短時間にリクエストや試行が多すぎました。しばらく待ってからもう一度お試しください。",
+    "You can try again in :seconds seconds.": ":seconds 秒後に再試行できます。",
+    "Try again": "もう一度試す",
+    "Reloading…": "再読み込み中…",
+    "You can try again now.": "今すぐ再試行できます。",
+    "Your session expired. Try again.": "セッションの有効期限が切れました。もう一度お試しください。",
+    "You have been signed out.": "ログアウトしました。"
 }

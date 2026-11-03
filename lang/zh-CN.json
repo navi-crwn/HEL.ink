@@ -581,5 +581,20 @@
     "Terms of Service (version :version)": "服务条款（版本 :version）",
     "Agree and continue with Google": "同意并使用 Google 继续",
     "Cancel and go back": "取消并返回",
-    "⚠️ Please agree to the Terms of Service below to continue.": "⚠️ 请先同意下方的服务条款，然后继续。"
+    "⚠️ Please agree to the Terms of Service below to continue.": "⚠️ 请先同意下方的服务条款，然后继续。",
+    "Page not found": "找不到页面",
+    "This page does not exist or has moved. Check the address or go back to the home page.": "此页面不存在或已移动。请检查地址，或返回首页。",
+    "Back to the home page": "返回首页",
+    "Something went wrong": "出了点问题",
+    "We ran into an unexpected error on our side.": "我们这边遇到了意外错误。",
+    "Please try again in a moment.": "请稍后再试。",
+    "Go back": "返回",
+    "Too many requests": "请求过多",
+    "Too many requests or attempts came from your connection in a short time. Please wait a moment, then try again.": "您的连接在短时间内发出了过多请求或尝试。请稍等片刻再试。",
+    "You can try again in :seconds seconds.": "您可以在 :seconds 秒后重试。",
+    "Try again": "重试",
+    "Reloading…": "正在重新加载…",
+    "You can try again now.": "您现在可以重试了。",
+    "Your session expired. Try again.": "会话已过期，请重试。",
+    "You have been signed out.": "您已退出登录。"
 }

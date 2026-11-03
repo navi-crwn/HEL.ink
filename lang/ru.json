@@ -581,5 +581,20 @@
     "Terms of Service (version :version)": "Условия использования (версия :version)",
     "Agree and continue with Google": "Принять и продолжить через Google",
     "Cancel and go back": "Отмена, вернуться назад",
-    "⚠️ Please agree to the Terms of Service below to continue.": "⚠️ Чтобы продолжить, примите Условия использования ниже."
+    "⚠️ Please agree to the Terms of Service below to continue.": "⚠️ Чтобы продолжить, примите Условия использования ниже.",
+    "Page not found": "Страница не найдена",
+    "This page does not exist or has moved. Check the address or go back to the home page.": "Такой страницы нет или она перемещена. Проверьте адрес или вернитесь на главную.",
+    "Back to the home page": "На главную",
+    "Something went wrong": "Что-то пошло не так",
+    "We ran into an unexpected error on our side.": "На нашей стороне произошла непредвиденная ошибка.",
+    "Please try again in a moment.": "Попробуйте ещё раз чуть позже.",
+    "Go back": "Назад",
+    "Too many requests": "Слишком много запросов",
+    "Too many requests or attempts came from your connection in a short time. Please wait a moment, then try again.": "С вашего подключения за короткое время пришло слишком много запросов или попыток. Подождите немного и повторите.",
+    "You can try again in :seconds seconds.": "Повторить можно через :seconds сек.",
+    "Try again": "Повторить",
+    "Reloading…": "Перезагрузка…",
+    "You can try again now.": "Теперь можно повторить.",
+    "Your session expired. Try again.": "Сессия истекла. Повторите попытку.",
+    "You have been signed out.": "Вы вышли из аккаунта."
 }

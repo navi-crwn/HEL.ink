@@ -581,5 +581,20 @@
     "Terms of Service (version :version)": "Nutzungsbedingungen (Version :version)",
     "Agree and continue with Google": "Zustimmen und mit Google fortfahren",
     "Cancel and go back": "Abbrechen und zurück",
-    "⚠️ Please agree to the Terms of Service below to continue.": "⚠️ Bitte stimme unten den Nutzungsbedingungen zu, um fortzufahren."
+    "⚠️ Please agree to the Terms of Service below to continue.": "⚠️ Bitte stimme unten den Nutzungsbedingungen zu, um fortzufahren.",
+    "Page not found": "Seite nicht gefunden",
+    "This page does not exist or has moved. Check the address or go back to the home page.": "Diese Seite gibt es nicht oder sie wurde verschoben. Prüfe die Adresse oder gehe zurück zur Startseite.",
+    "Back to the home page": "Zurück zur Startseite",
+    "Something went wrong": "Etwas ist schiefgelaufen",
+    "We ran into an unexpected error on our side.": "Bei uns ist ein unerwarteter Fehler aufgetreten.",
+    "Please try again in a moment.": "Bitte versuche es gleich noch einmal.",
+    "Go back": "Zurück",
+    "Too many requests": "Zu viele Anfragen",
+    "Too many requests or attempts came from your connection in a short time. Please wait a moment, then try again.": "Von deiner Verbindung kamen in kurzer Zeit zu viele Anfragen oder Versuche. Warte einen Moment und versuche es dann erneut.",
+    "You can try again in :seconds seconds.": "Du kannst es in :seconds Sekunden erneut versuchen.",
+    "Try again": "Erneut versuchen",
+    "Reloading…": "Wird neu geladen…",
+    "You can try again now.": "Du kannst es jetzt erneut versuchen.",
+    "Your session expired. Try again.": "Deine Sitzung ist abgelaufen. Versuche es erneut.",
+    "You have been signed out.": "Du wurdest abgemeldet."
 }

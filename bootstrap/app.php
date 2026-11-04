@@ -29,8 +29,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->prepend(RemoveWwwPrefix::class);
+        // First in the group: CSRF, throttle and route-binding failures must render in the visitor's language.
+        $middleware->prependToGroup('web', SetLocale::class);
         $middleware->appendToGroup('web', [
-            SetLocale::class,
             AutoLogout::class,
             CheckSuspended::class,
             EnsureGoogleUserHasPassword::class,

@@ -22,7 +22,7 @@ class SsoController
     public function start(Request $request): RedirectResponse
     {
         $state = Str::random(40);
-        $next = (string) $request->query('next', '');
+        $next = self::queryString($request, 'next');
         $request->session()->put('hop_sso', ['state' => $state, 'next' => self::safePath($next)]);
         $query = http_build_query(['state' => $state, 'return_to' => url(config('hop-auth.routes.callback', '/auth/sso/callback'))]);
 
@@ -32,7 +32,7 @@ class SsoController
     public function callback(Request $request): RedirectResponse
     {
         $pending = (array) $request->session()->pull('hop_sso', []);
-        $ticket = (string) $request->query('ticket', '');
+        $ticket = self::queryString($request, 'ticket');
         if ($ticket === '' || empty($pending['state'])) {
             abort(400, 'Sign-in did not start here. Try again.');
         }
@@ -63,9 +63,17 @@ class SsoController
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        $next = (string) $request->query('next', '');
+        $next = self::queryString($request, 'next');
 
         return $next !== '' && self::isHopUrl($next) ? redirect()->away($next) : redirect()->to('/');
+    }
+
+    /** A query value as a string; ?x[]=1 is not a string and counts as absent (it would otherwise be a 500). */
+    private static function queryString(Request $request, string $key): string
+    {
+        $value = $request->query($key);
+
+        return is_string($value) ? $value : '';
     }
 
     /** Only same-site paths may be a "next" target. */

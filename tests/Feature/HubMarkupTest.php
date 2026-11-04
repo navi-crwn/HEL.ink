@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\HopApp;
 use App\Models\User;
 
 /*
@@ -72,4 +73,26 @@ test('the auth pages and the 404 page have a main landmark', function () {
         expect(hubPage($this, $uri))->toContain('<main');
     }
     expect($this->get('/no-such-page')->assertNotFound()->getContent())->toContain('<main');
+});
+
+test('the API page links only documentation that exists, at the real API address of each app', function () {
+    config([
+        'hop.apps.linkhop.url' => 'https://link.example.test',
+        'hop.apps.biohop.url' => 'https://bio.example.test',
+        'hop.apps.pixelhop.url' => 'https://pixel.example.test',
+    ]);
+    HopApp::create(['slug' => 'notehop', 'name' => 'NoteHop', 'url' => 'https://note.example.test',
+        'callback_path' => '/auth/sso/callback', 'start_path' => '/auth/sso', 'status' => 'active',
+        'secret' => 'local-test-notehop-secret-long-enough', 'capabilities' => ['events']]);
+
+    $html = $this->withoutVite()->actingAs(User::factory()->create())->withSession(['2fa_verified' => true])
+        ->get('/api-docs')->assertOk()->getContent();
+
+    expect($html)->toContain('href="https://link.example.test/api-docs"')
+        ->and($html)->toContain('<code>https://link.example.test/api</code>')
+        ->and($html)->toContain('href="https://pixel.example.test/docs"')
+        ->and($html)->toContain('<code>https://pixel.example.test/api/v1</code>')
+        ->and($html)->not->toContain('https://pixel.example.test/api-docs')
+        ->and($html)->not->toContain('https://bio.example.test/api')
+        ->and($html)->not->toContain('https://note.example.test/api');
 });

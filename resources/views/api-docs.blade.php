@@ -7,7 +7,12 @@
         <h3 class="section-title">Where the APIs live</h3>
         <ul class="list-disc space-y-1 pl-5">
             @foreach (\App\Support\HopApps::all() as $app)
-                <li><strong>{{ $app->name }}</strong>: <code>{{ $app->url }}/api/v1</code>, documented at <a href="{{ $app->url }}/api-docs" class="underline">{{ parse_url($app->url, PHP_URL_HOST) }}/api-docs</a></li>
+                @php($api = config('hop.api_docs.'.$app->slug))
+                @if ($api)
+                    <li><strong>{{ $app->name }}</strong>: <code>{{ $app->url.$api['base'] }}</code>, documented at <a href="{{ $app->url.$api['docs'] }}" class="underline">{{ parse_url($app->url, PHP_URL_HOST).$api['docs'] }}</a></li>
+                @else
+                    <li><strong>{{ $app->name }}</strong>: no public token API.</li>
+                @endif
             @endforeach
         </ul>
         <h3 class="section-title">Scopes</h3>

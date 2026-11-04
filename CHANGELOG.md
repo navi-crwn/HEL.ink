@@ -6,6 +6,7 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ### Fixed
 
+- The API page names the real API address and documentation of LinkHop and PixelHop, and no longer links pages that do not exist on BioHop and NoteHop.
 - `/status` and `/status.json` answer while the database is down, with no numbers, as the home page already did.
 - The `/goodbye` page follows the visitor's language and speaks of HOP, not LinkHop.
 - The language is set first in the web middleware group, so the 419 notice, the real 429 page and the 404 of a missing record follow `?lang=` and the language cookie.

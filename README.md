@@ -126,6 +126,10 @@ HEL.ink is part of the **HOP** family of self-hostable open-source apps behind [
 | **Imperium** | private (owner only) | private | The HOP control panel. |
 <!-- hop-family:end -->
 
+## Changelog
+
+Changes are listed in [CHANGELOG.md](CHANGELOG.md). The `/changelog` page of the site shows the merged pull requests and commits of every public HOP app.
+
 <a id="security"></a>
 
 ## Security

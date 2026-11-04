@@ -18,6 +18,10 @@ curl -fsSL https://raw.githubusercontent.com/navi-crwn/HEL.ink/main/install.sh |
 
 Aus einem Klon: `./install.sh` · aktualisieren: `./update.sh` · entfernen: `./uninstall.sh`. Mit `--yes` gelten alle Standardwerte; `--help` zeigt die Optionen.
 
+## Changelog
+
+Änderungen stehen in [CHANGELOG.md](CHANGELOG.md).
+
 ## Mehr erfahren
 
 Die vollständige Dokumentation (Funktionen, Einstellungen, Sicherheit) steht auf Englisch in der [README](README.md).

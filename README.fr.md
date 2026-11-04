@@ -93,6 +93,10 @@ HEL.ink est le hub d'une famille d'outils web ouverts qui respectent votre vie p
 | **PixelHop** | `pixel.hel.ink` · `p.hel.ink/…` | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | Hébergement d'images et médias |
 | **NoteHop** | `note.hel.ink` · `n.hel.ink/…` | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | Notes privées chiffrées côté client |
 
+## Journal des modifications
+
+Les modifications sont listées dans [CHANGELOG.md](CHANGELOG.md).
+
 <a id="security"></a>
 
 ## Aide et support

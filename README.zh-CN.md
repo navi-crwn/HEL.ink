@@ -93,6 +93,10 @@ HEL.ink 是注重隐私的开源应用家族中心。
 | **PixelHop** | `pixel.hel.ink` · `p.hel.ink/…` | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | 图片与媒体存储托管 |
 | **NoteHop** | `note.hel.ink` · `n.hel.ink/…` | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | 客户端加密的私密便签 |
 
+## 更新日志
+
+变更记录在 [CHANGELOG.md](CHANGELOG.md) 中。
+
 <a id="security"></a>
 
 ## 帮助与支持

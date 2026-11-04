@@ -7,7 +7,7 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 ### Fixed
 
 - The API page names the real API address and documentation of LinkHop and PixelHop, and no longer links pages that do not exist on BioHop and NoteHop.
-- `/status` and `/status.json` answer while the database is down, with no numbers, as the home page already did.
+- `/status` and `/status.json` answer while the database is down, with no numbers, as the home page already did. This holds when sessions are not stored in the database: with `SESSION_DRIVER=database` every web page still fails while the database is down.
 - The `/goodbye` page follows the visitor's language and speaks of HOP, not LinkHop.
 - The language is set first in the web middleware group, so the 419 notice, the real 429 page and the 404 of a missing record follow `?lang=` and the language cookie.
 - A request value sent as an array (`?lang[]=de`, `?app[]=x`, `?state[]=x`, a form field `email[]=x`, a JSON object in the signed APIs) now counts as absent or fails validation, where it used to be a 500. This covers the language cookie, the changelog filter, the password reset page, single sign-on, the settings and admin pages, and the signed admin and account APIs.

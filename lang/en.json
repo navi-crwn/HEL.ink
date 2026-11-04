@@ -596,5 +596,16 @@
     "Reloading…": "Reloading…",
     "You can try again now.": "You can try again now.",
     "Your session expired. Try again.": "Your session expired. Try again.",
-    "You have been signed out.": "You have been signed out."
+    "You have been signed out.": "You have been signed out.",
+    "Account deleted": "Account deleted",
+    "Your account has been deleted": "Your account has been deleted",
+    "We're sad to see you go, but we respect your decision.": "We're sad to see you go, but we respect your decision.",
+    "Important: What happens next": "Important: What happens next",
+    "Your HOP ID and everything it owned in every app have been deleted": "Your HOP ID and everything it owned in every app have been deleted",
+    "Short links, bio pages and images that belonged to it are gone": "Short links, bio pages and images that belonged to it are gone",
+    "Your account data, analytics, and settings are gone": "Your account data, analytics, and settings are gone",
+    "This action cannot be undone": "This action cannot be undone",
+    "If you deleted your account by mistake or changed your mind, you can create a new account anytime.": "If you deleted your account by mistake or changed your mind, you can create a new account anytime.",
+    "However, your previous data cannot be recovered.": "However, your previous data cannot be recovered.",
+    "Thank you for using HOP. We hope to see you again someday.": "Thank you for using HOP. We hope to see you again someday."
 }

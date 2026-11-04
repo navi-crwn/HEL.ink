@@ -173,3 +173,18 @@ test('signed-in pages carry no cookie banner (only essential cookies exist)', fu
     $this->withoutVite()->actingAs(User::factory()->create())->withSession(['2fa_verified' => true])
         ->get('/settings')->assertOk()->assertDontSee('cookie_consent', false);
 });
+
+test('the goodbye page is in the language of the visitor and does not talk about LinkHop', function (string $locale) {
+    $html = $this->withoutVite()->get('/goodbye?lang='.$locale)->assertOk()->getContent();
+
+    expect($html)->toContain('<html lang="'.$locale.'"')
+        ->and($html)->not->toContain('LinkHop')
+        ->and($html)->toContain(e(__('Your account has been deleted', [], $locale)))
+        ->and($html)->toContain(e(__('Thank you for using HOP. We hope to see you again someday.', [], $locale)))
+        ->and($html)->toContain(e(__('Back to the home page', [], $locale)))
+        ->and($html)->toContain(e(__('Create your HOP ID', [], $locale)));
+    if ($locale !== 'en') {
+        expect(__('Your account has been deleted', [], $locale))->not->toBe('Your account has been deleted')
+            ->and($html)->not->toContain('This action cannot be undone');
+    }
+})->with(Locales::codes());

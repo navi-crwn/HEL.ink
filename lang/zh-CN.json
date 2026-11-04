@@ -596,5 +596,16 @@
     "Reloading…": "正在重新加载…",
     "You can try again now.": "您现在可以重试了。",
     "Your session expired. Try again.": "会话已过期，请重试。",
-    "You have been signed out.": "您已退出登录。"
+    "You have been signed out.": "您已退出登录。",
+    "Account deleted": "账户已删除",
+    "Your account has been deleted": "您的账户已删除",
+    "We're sad to see you go, but we respect your decision.": "很遗憾您要离开，但我们尊重您的决定。",
+    "Important: What happens next": "重要提示：接下来会发生什么",
+    "Your HOP ID and everything it owned in every app have been deleted": "您的 HOP ID 及其在每个应用中拥有的全部内容均已删除",
+    "Short links, bio pages and images that belonged to it are gone": "属于它的短链接、简介页面和图片均已不复存在",
+    "Your account data, analytics, and settings are gone": "您的账户数据、统计信息和设置均已不复存在",
+    "This action cannot be undone": "此操作无法撤销",
+    "If you deleted your account by mistake or changed your mind, you can create a new account anytime.": "如果您误删了账户或改变了主意，可以随时创建新账户。",
+    "However, your previous data cannot be recovered.": "但您之前的数据无法恢复。",
+    "Thank you for using HOP. We hope to see you again someday.": "感谢您使用 HOP，期待有一天再次与您相见。"
 }

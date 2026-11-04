@@ -596,5 +596,16 @@
     "Reloading…": "再読み込み中…",
     "You can try again now.": "今すぐ再試行できます。",
     "Your session expired. Try again.": "セッションの有効期限が切れました。もう一度お試しください。",
-    "You have been signed out.": "ログアウトしました。"
+    "You have been signed out.": "ログアウトしました。",
+    "Account deleted": "アカウントを削除しました",
+    "Your account has been deleted": "アカウントは削除されました",
+    "We're sad to see you go, but we respect your decision.": "お別れは残念ですが、ご判断を尊重します。",
+    "Important: What happens next": "重要: 今後について",
+    "Your HOP ID and everything it owned in every app have been deleted": "HOP ID と、各アプリでそれに属していたものはすべて削除されました",
+    "Short links, bio pages and images that belonged to it are gone": "それに属していた短縮リンク、プロフィールページ、画像はなくなりました",
+    "Your account data, analytics, and settings are gone": "アカウントデータ、アナリティクス、設定はなくなりました",
+    "This action cannot be undone": "この操作は取り消せません",
+    "If you deleted your account by mistake or changed your mind, you can create a new account anytime.": "誤って削除した場合や気が変わった場合は、いつでも新しいアカウントを作成できます。",
+    "However, your previous data cannot be recovered.": "ただし、以前のデータは復元できません。",
+    "Thank you for using HOP. We hope to see you again someday.": "HOP をご利用いただきありがとうございました。またお会いできることを願っています。"
 }

@@ -596,5 +596,16 @@
     "Reloading…": "Memuat ulang…",
     "You can try again now.": "Anda bisa mencoba lagi sekarang.",
     "Your session expired. Try again.": "Sesi Anda berakhir. Coba lagi.",
-    "You have been signed out.": "Anda telah keluar."
+    "You have been signed out.": "Anda telah keluar.",
+    "Account deleted": "Akun dihapus",
+    "Your account has been deleted": "Akun Anda telah dihapus",
+    "We're sad to see you go, but we respect your decision.": "Kami sedih melihat Anda pergi, tetapi kami menghormati keputusan Anda.",
+    "Important: What happens next": "Penting: apa yang terjadi selanjutnya",
+    "Your HOP ID and everything it owned in every app have been deleted": "HOP ID Anda dan semua miliknya di setiap aplikasi telah dihapus",
+    "Short links, bio pages and images that belonged to it are gone": "Tautan pendek, halaman bio, dan gambar miliknya sudah tidak ada",
+    "Your account data, analytics, and settings are gone": "Data akun, analitik, dan pengaturan Anda sudah tidak ada",
+    "This action cannot be undone": "Tindakan ini tidak dapat dibatalkan",
+    "If you deleted your account by mistake or changed your mind, you can create a new account anytime.": "Jika Anda menghapus akun secara tidak sengaja atau berubah pikiran, Anda dapat membuat akun baru kapan saja.",
+    "However, your previous data cannot be recovered.": "Namun, data Anda sebelumnya tidak dapat dipulihkan.",
+    "Thank you for using HOP. We hope to see you again someday.": "Terima kasih telah menggunakan HOP. Kami berharap dapat bertemu Anda lagi suatu hari nanti."
 }

@@ -30,3 +30,9 @@ test('the CSP allows the shared assets and drops the font CDN', function () {
         ->toMatch('/style-src [^;]*https:\/\/hel\.ink/')
         ->not->toContain('fonts.bunny.net');
 });
+
+test('the app stylesheets name no font the family dropped', function () {
+    foreach (glob(resource_path('css/*.css')) as $file) {
+        expect(file_get_contents($file))->not->toContain('Syne');
+    }
+});

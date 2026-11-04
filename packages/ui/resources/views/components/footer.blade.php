@@ -75,7 +75,7 @@
                 <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-slate-500 dark:text-slate-400">
                     <span class="font-semibold text-slate-700 dark:text-slate-300">{{ __('Language') }}:</span>
                     @foreach ($locales as $code => $label)
-                        <a href="?lang={{ $code }}" @class(['transition hover:text-slate-900 dark:hover:text-white', 'font-bold text-slate-900 underline underline-offset-2 dark:text-white' => $currentLocale === $code]) hreflang="{{ $code }}">{{ $label }}</a>
+                        <a href="{{ request()->fullUrlWithQuery(['lang' => $code]) }}" @class(['transition hover:text-slate-900 dark:hover:text-white', 'font-bold text-slate-900 underline underline-offset-2 dark:text-white' => $currentLocale === $code]) hreflang="{{ $code }}">{{ $label }}</a>
                         @if (! $loop->last) <span class="opacity-40" aria-hidden="true">·</span> @endif
                     @endforeach
                 </div>

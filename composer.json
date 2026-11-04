@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "ext-intl": "*",
         "hop/auth": "@dev",
         "hop/safety": "@dev",
         "hop/ui": "@dev",

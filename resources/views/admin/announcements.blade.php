@@ -1,11 +1,11 @@
 <x-app-layout>
-    <x-slot name="pageTitle">HOP - Manage announcements</x-slot>
+    <x-slot name="pageTitle">Manage announcements · HOP</x-slot>
     <x-page-header title="Announcements" subtitle="Published notices show on hel.ink, the launcher and /announcements." />
     <x-flash />
     @if ($errors->any())<div class="glass rounded-2xl border-rose-400/40 px-4 py-3 text-sm text-rose-600 dark:text-rose-300">{{ $errors->first() }}</div>@endif
     <form method="POST" action="{{ route('admin.announcements.store') }}" class="glass grid gap-3 rounded-2xl p-5 md:grid-cols-2">
         @csrf
-        <div class="md:col-span-2"><label class="label" for="a-title">Title</label><input id="a-title" name="title" class="input" required maxlength="160" value="{{ old('title') }}"></div>
+        <div class="md:col-span-2"><label class="label" for="a-title">Title</label><input id="a-title" name="title" type="text" class="input" required maxlength="160" value="{{ old('title') }}"></div>
         <div class="md:col-span-2"><label class="label" for="a-body">Body</label><textarea id="a-body" name="body" rows="5" class="input" required>{{ old('body') }}</textarea></div>
         <div><label class="label" for="a-level">Level</label><select id="a-level" name="level" class="input">@foreach (\App\Models\Announcement::LEVELS as $l)<option value="{{ $l }}">{{ ucfirst($l) }}</option>@endforeach</select></div>
         <div><label class="label" for="a-app">App</label><select id="a-app" name="app_slug" class="input"><option value="">HOP (all apps)</option>@foreach ($apps as $app)<option value="{{ $app->slug }}">{{ $app->name }}</option>@endforeach</select></div>

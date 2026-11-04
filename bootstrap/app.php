@@ -6,6 +6,7 @@ use App\Http\Middleware\CheckSuspended;
 use App\Http\Middleware\ContentSecurityPolicyMiddleware;
 use App\Http\Middleware\EnsureGoogleUserHasPassword;
 use App\Http\Middleware\EnsureTwoFactorAuthenticated;
+use App\Http\Middleware\NoStoreWhenSignedIn;
 use App\Http\Middleware\ProtectPermanentSuperadmin;
 use App\Http\Middleware\RemoveWwwPrefix;
 use App\Http\Middleware\RequireHopAdminClient;
@@ -34,6 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
             CheckSuspended::class,
             EnsureGoogleUserHasPassword::class,
             ContentSecurityPolicyMiddleware::class,
+            NoStoreWhenSignedIn::class,
             ProtectPermanentSuperadmin::class,
         ]);
         // The language cookie is plain text (en, id, …), read before decryption.
@@ -57,11 +59,11 @@ return Application::configure(basePath: dirname(__DIR__))
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
 
-                return redirect()->route('login')->with('status', 'You have been signed out.');
+                return redirect()->route('login')->with('status', __('You have been signed out.'));
             }
 
             return redirect()->back()
                 ->withInput($request->except(['_token', 'password', 'password_confirmation', 'current_password', 'token', 'code', 'recovery_code']))
-                ->with('session_expired', 'Sesi habis, silakan coba lagi.');
+                ->with('session_expired', __('Your session expired. Try again.'));
         });
     })->create();

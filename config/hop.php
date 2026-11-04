@@ -40,6 +40,31 @@ return [
     'registry_repos' => [
         'notehop' => 'https://github.com/navi-crwn/NoteHop',
     ],
+    // Apps that must have a row in `apps` with the `events` capability, or the hub's account
+    // events (suspend, delete, sign-out) never reach them. `php artisan db:seed
+    // --class='Database\Seeders\HopAppsSeeder'` adds a missing row; it never changes an existing one.
+    // The secret of a new row comes from the environment (HOP_SSO_SECRET_PIXELHOP, HOP_SSO_SECRET_NOTEHOP,
+    // HOP_SSO_SECRET_LINKHOP, HOP_SSO_SECRET_BIOHOP, or the shared HOP_SSO_SECRET for the Laravel apps).
+    // LinkHop and BioHop end their sessions on session.revoked through hop/auth's event receiver.
+    'event_apps' => [
+        'pixelhop' => [
+            'menu_label' => 'Images',
+            'pages' => ['default' => '/dashboard', 'upload' => '/'],
+            'continue_page' => 'upload',
+            'sort_order' => 10,
+        ],
+        'notehop' => [
+            'callback_path' => env('NOTEHOP_SSO_CALLBACK', '/auth/sso/callback'),
+            'start_path' => env('NOTEHOP_SSO_START', '/auth/sso'),
+            'secret' => env('HOP_SSO_SECRET_NOTEHOP'),
+            'menu_label' => 'Notes',
+            'pages' => ['default' => '/dashboard', 'new' => '/'],
+            'continue_page' => 'default',
+            'sort_order' => 20,
+        ],
+        'linkhop' => ['sort_order' => 30],
+        'biohop' => ['sort_order' => 40],
+    ],
     'registry_health' => [],   // default /healthz
     'registry_logout' => [
         'notehop' => '/auth/sso/logout',

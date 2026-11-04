@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="pageTitle">HOP - Launcher</x-slot>
+    <x-slot name="pageTitle">Launcher · HOP</x-slot>
     @php
         $user = auth()->user();
         // The first name sits in an italic serif span; "@@NAME@@" keeps it out of the translated sentence.

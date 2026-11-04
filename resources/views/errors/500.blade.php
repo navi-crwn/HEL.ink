@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ route('brand.favicon') }}" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="{{ route('brand.favicon') }}">
-    <title>Something Went Wrong - {{ config('app.name') }}</title>
+    <title>{{ __('Something went wrong') }} · {{ config('app.name') }}</title>
     {{-- Our own build, not a CDN script (the CSP blocks it, and a 500 page must not depend on a third party). --}}
     @if (is_file(public_path('build/manifest.json')))
         @vite(['resources/css/app.css'])
@@ -30,13 +30,13 @@
                 </div>
                 <div class="text-center mb-8">
                     <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-3">
-                        Oops! Something Went Wrong
+                        {{ __('Something went wrong') }}
                     </h1>
                     <p class="text-lg text-gray-600 dark:text-gray-400 mb-2">
-                        We're sorry, but we encountered an unexpected error.
+                        {{ __('We ran into an unexpected error on our side.') }}
                     </p>
                     <p class="text-sm text-gray-500 dark:text-gray-500">
-                        Our team has been notified and we're working on fixing this issue.
+                        {{ __('Please try again in a moment.') }}
                     </p>
                 </div>
                 @if(config('app.debug'))
@@ -54,13 +54,13 @@
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                         </svg>
-                        Go to Homepage
+                        {{ __('Back to the home page') }}
                     </a>
                     <button type="button" id="go-back" class="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-6 py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                         </svg>
-                        Go Back
+                        {{ __('Go back') }}
                     </button>
                 </div>
                 <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 text-center">

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="pageTitle">HOP - API</x-slot>
+    <x-slot name="pageTitle">API · HOP</x-slot>
     <x-page-header title="API tokens" subtitle="One token, every HOP API." />
     <div class="glass space-y-4 rounded-2xl p-5 text-sm text-ink">
         <p>Tokens are created in <a href="{{ route('settings') }}#api" class="underline">Settings → API tokens</a> and sent as a bearer token. Each app checks the token against the same table and refuses calls outside the token's scopes.</p>

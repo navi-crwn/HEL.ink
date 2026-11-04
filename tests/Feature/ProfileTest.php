@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\User;
+use App\Support\Avatar;
+use Illuminate\Http\UploadedFile;
 
 test('profile page is displayed', function () {
     $user = User::factory()->create();
@@ -84,4 +86,14 @@ test('profile update rejects external or malformed _back redirect targets', func
             '_back' => route('settings', [], false).'#account',
         ])
         ->assertRedirect('/settings#account');
+});
+
+test('the avatar limit shown on the settings page and enforced by the form is what PHP will accept', function () {
+    $kb = min(6144, intdiv(UploadedFile::getMaxFilesize(), 1024));
+
+    expect(Avatar::maxKb())->toBe($kb);
+    $this->withoutVite()->actingAs(User::factory()->create())->withSession(['2fa_verified' => true])
+        ->get('/settings')->assertOk()
+        ->assertSee('up to '.($kb >= 1024 ? round($kb / 1024, 1).' MB' : $kb.' KB'), false)
+        ->assertDontSee('up to 6 MB', $kb < 6144);
 });

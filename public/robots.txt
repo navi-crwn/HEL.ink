@@ -28,6 +28,3 @@ Disallow: /two-factor
 Disallow: /health/
 Disallow: /sanctum/
 Disallow: /_debugbar/
-
-# Sitemap
-Sitemap: https://hel.ink/sitemap.xml

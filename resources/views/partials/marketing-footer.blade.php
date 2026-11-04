@@ -3,7 +3,7 @@
     name="HEL.ink"
     tagline="One hop to every app."
     repo="https://github.com/navi-crwn/HEL.ink"
-    featuresUrl="/apps"
+    featuresUrl="{{ route('home') }}#apps"
     statusUrl="{{ route('status') }}"
     abuseUrl="https://link.hel.ink/report-abuse"
     :languages="true"

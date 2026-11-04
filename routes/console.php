@@ -8,6 +8,8 @@ Schedule::command('hop:watch')->everyMinute()->withoutOverlapping()->runInBackgr
 Schedule::job(new QueueHeartbeat)->everyTwoMinutes();
 // Laravel housekeeping on the shared tables the hub owns.
 Schedule::command('auth:clear-resets')->daily();
+// Activity and sign-in records are deleted after 90 days (the privacy page says so).
+Schedule::command('hop:prune-logs')->daily()->withoutOverlapping();
 Schedule::command('disposable:update')->weeklyOn(1, '03:00');
 // Repo numbers for the home page, fetched on the server (ETag: unchanged answers cost no quota).
 Schedule::command('hop:github-stats')->hourly()->withoutOverlapping()->runInBackground();

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Services\Watchdog;
+use App\Support\EventRegistry;
 use Illuminate\Console\Command;
 
 class HopWatch extends Command
@@ -19,6 +20,11 @@ class HopWatch extends Command
                 $this->line(sprintf('%-10s %-7s %s', $slug, $kind, $ok ? '<info>ok</info>' : '<error>FAIL</error>'));
                 $down += $ok ? 0 : 1;
             }
+        }
+
+        // A setup problem, not an outage: shown, but it does not change the exit code.
+        foreach (EventRegistry::warnings() as $warning) {
+            $this->warn($warning);
         }
 
         return $down ? self::FAILURE : self::SUCCESS;

@@ -24,7 +24,11 @@ return [
     ],
 
     // Rejected at creation time and auto-actioned by abuse:scan.
-    'block_categories' => ['csam', 'gambling', 'phishing', 'scam', 'malware', 'blacklisted', 'dangerous_scheme'],
+    'block_categories' => ['csam', 'gambling', 'phishing', 'scam', 'malware', 'blacklisted', 'dangerous_scheme', 'encrypted_note_key'],
+
+    // Hosts of NoteHop, whose links carry the note key in the #fragment (see EncryptedNoteLink). Add a self-hosted
+    // install's domains with HOP_NOTE_HOSTS=note.example.com,n.example.com.
+    'note_hosts' => array_values(array_filter(array_map('trim', explode(',', (string) env('HOP_NOTE_HOSTS', 'note.hel.ink,n.hel.ink'))))),
 
     // Score contributed by each signal.
     'weights' => [
@@ -32,6 +36,8 @@ return [
         'malware' => 100,
         'blacklisted' => 100,
         'dangerous_scheme' => 100,
+        // Refused when saved; weight 0 so abuse:scan never disables a page or a person over it.
+        'encrypted_note_key' => 0,
         'phishing' => 80,
         'gambling' => 60,
         'scam' => 60,

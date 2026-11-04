@@ -9,6 +9,7 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Middleware\TrustProxies;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -23,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
         if (config('app.env') === 'production') {
             URL::forceScheme('https');
         }
+        // The framework's @csrf adds autocomplete="off" to the hidden input, which is not valid HTML.
+        Blade::directive('csrf', fn () => '<?php echo \'<input type="hidden" name="_token" value="\'.csrf_token().\'">\'; ?>');
         // The password-reset mail speaks HOP ID: one password for every HOP app.
         ResetPassword::toMailUsing(function (object $notifiable, string $token) {
             $url = hub_url(route('password.reset', ['token' => $token, 'email' => $notifiable->getEmailForPasswordReset()], false));

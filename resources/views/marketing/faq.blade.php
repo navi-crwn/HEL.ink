@@ -29,7 +29,7 @@
                 <span class="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-600 text-white font-bold text-xs">ID</span>
                 <h2 class="text-xl font-bold text-slate-900 dark:text-white">{{ __('1. General & HOP ID') }}</h2>
             </div>
-            <dl class="space-y-3">
+            <div class="space-y-3">
                 <details class="{{ $card }}">
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('What is HOP and what apps belong to the family?') }}</summary>
                     <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('HOP stands for Hop Easy Link. It is a family of four independent, open-source web services: LinkHop (short links & QR codes), BioHop (link-in-bio pages), PixelHop (image and document hosting), and NoteHop (zero-knowledge encrypted notes). They are tied together by one account system: your HOP ID.') }}</p>
@@ -69,7 +69,7 @@
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('Can I self-host HOP on my own server?') }}</summary>
                     <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('Yes! Every app is open-source under the MIT license. You can clone the repositories and run the hub and applications behind nginx with a shared database. Documentation is available in our GitHub repositories.') }}</p>
                 </details>
-            </dl>
+            </div>
         </section>
 
         {{-- Section 2: LinkHop --}}
@@ -81,7 +81,7 @@
                 </div>
                 <a href="https://link.hel.ink/faq" class="text-xs font-semibold text-indigo-600 underline underline-offset-2 dark:text-indigo-400">{{ __('Full LinkHop FAQ') }} &rarr;</a>
             </div>
-            <dl class="space-y-3">
+            <div class="space-y-3">
                 <details class="{{ $card }}">
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('Why do short links live at hel.ink/l/{slug}?') }}</summary>
                     <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('LinkHop uses the /l/ prefix to cleanly isolate short links from bio pages (/b/) and hub marketing pages. Legacy short links without /l/ automatically redirect during the transition period.') }}</p>
@@ -102,7 +102,7 @@
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('Can I use LinkHop via API or ShareX?') }}</summary>
                     <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('Yes. Scoped API tokens generated in your HOP ID settings can be used with our REST API (link.hel.ink/api/v1) and with popular automation tools like ShareX.') }}</p>
                 </details>
-            </dl>
+            </div>
         </section>
 
         {{-- Section 3: BioHop --}}
@@ -114,7 +114,7 @@
                 </div>
                 <a href="https://bio.hel.ink/faq" class="text-xs font-semibold text-purple-600 underline underline-offset-2 dark:text-purple-400">{{ __('Full BioHop FAQ') }} &rarr;</a>
             </div>
-            <dl class="space-y-3">
+            <div class="space-y-3">
                 <details class="{{ $card }}">
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('How do bio pages work at hel.ink/b/{slug}?') }}</summary>
                     <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('BioHop lets you build a personalized profile page under hel.ink/b/yourname to aggregate your links, social media handles, portfolio, media embeds, and contact details.') }}</p>
@@ -135,7 +135,7 @@
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('Are bio page usernames separate from LinkHop link slugs?') }}</summary>
                     <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('Yes! LinkHop short links (/l/name) and BioHop profiles (/b/name) exist in separate namespaces. Both can share the same slug without collision.') }}</p>
                 </details>
-            </dl>
+            </div>
         </section>
 
         {{-- Section 4: PixelHop --}}
@@ -147,7 +147,7 @@
                 </div>
                 <a href="https://pixel.hel.ink/faq" class="text-xs font-semibold text-cyan-600 underline underline-offset-2 dark:text-cyan-400">{{ __('Full PixelHop FAQ') }} &rarr;</a>
             </div>
-            <dl class="space-y-3">
+            <div class="space-y-3">
                 <details class="{{ $card }}">
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('What media files can I host on PixelHop?') }}</summary>
                     <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('PixelHop supports photos (PNG, JPG, WebP, GIF, SVG), short video clips (MP4, WebM), audio recordings, and documents (PDF) with fast delivery and responsive previews.') }}</p>
@@ -168,7 +168,7 @@
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('How do I configure ShareX or upload via the API?') }}</summary>
                     <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('PixelHop provides a downloadable .sxcu configuration file directly from your user dashboard. You can upload screenshots with one click straight from your desktop.') }}</p>
                 </details>
-            </dl>
+            </div>
         </section>
 
         {{-- Section 5: NoteHop --}}
@@ -180,7 +180,7 @@
                 </div>
                 <a href="https://note.hel.ink/faq" class="text-xs font-semibold text-emerald-600 underline underline-offset-2 dark:text-emerald-400">{{ __('Full NoteHop FAQ') }} &rarr;</a>
             </div>
-            <dl class="space-y-3">
+            <div class="space-y-3">
                 <details class="{{ $card }}">
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('How does client-side end-to-end encryption work in NoteHop?') }}</summary>
                     <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('Note text and file attachments are encrypted client-side in your web browser using Web Crypto AES-GCM before transmission. The decryption key is generated locally and stored exclusively in the URL hash fragment (#k=...).') }}</p>
@@ -201,7 +201,7 @@
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('What is the difference between note.hel.ink and n.hel.ink?') }}</summary>
                     <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('note.hel.ink is the web application where you write, view, and collaborate on notes. n.hel.ink is the lightweight short redirect domain that keeps URLs compact while preserving the cryptographic fragment (n.hel.ink/slug#k=...).') }}</p>
                 </details>
-            </dl>
+            </div>
         </section>
 
         {{-- Footer Help Link --}}

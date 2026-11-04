@@ -8,6 +8,7 @@ use App\Models\ActivityLog;
 use App\Models\Role;
 use App\Models\User;
 use App\Services\UserDeletion;
+use App\Support\EventRegistry;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -30,7 +31,7 @@ class AdminUserController extends Controller
             ->orderByDesc('created_at')
             ->paginate(25)->withQueryString();
 
-        return view('admin.users.index', ['users' => $users, 'q' => $q]);
+        return view('admin.users.index', ['users' => $users, 'q' => $q, 'registryWarnings' => EventRegistry::warnings()]);
     }
 
     public function show(User $user): View

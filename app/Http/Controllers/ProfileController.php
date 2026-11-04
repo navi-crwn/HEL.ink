@@ -75,7 +75,7 @@ class ProfileController extends Controller
     /** POST /profile/avatar: a new profile photo (shared with every HOP app). */
     public function storeAvatar(Request $request): RedirectResponse
     {
-        $request->validate(['avatar' => ['required', 'file', 'image', 'mimes:jpg,jpeg,png,webp,gif', 'max:6144']]);
+        $request->validate(['avatar' => ['required', 'file', 'image', 'mimes:jpg,jpeg,png,webp,gif', 'max:'.Avatar::maxKb()]]);
         $user = $request->user();
         try {
             $path = Avatar::store($user, $request->file('avatar'));

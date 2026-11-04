@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="pageTitle">HOP - Settings</x-slot>
+    <x-slot name="pageTitle">Settings · HOP</x-slot>
     @php
         $settingsTabs = [
             'account' => ['Account', 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'],
@@ -15,14 +15,17 @@
 
     <div class="grid gap-4 lg:grid-cols-[13rem_minmax(0,1fr)]" x-data="{
         tab: '{{ session('active_tab', 'account') }}',
-        init() {
+        fromHash() {
             const hashTab = window.location.hash.substring(1);
             if (@js(array_keys($settingsTabs)).includes(hashTab)) {
                 this.tab = hashTab;
             }
+        },
+        init() {
+            this.fromHash();
             this.$watch('tab', value => history.replaceState(null, '', '#' + value));
         }
-    }" @tab-changed.window="tab = $event.detail">
+    }" @tab-changed.window="tab = $event.detail" @hashchange.window="fromHash()">
         <nav class="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1 lg:sticky lg:top-24 lg:mx-0 lg:flex-col lg:self-start lg:overflow-visible lg:px-0" aria-label="Settings sections">
             @foreach ($settingsTabs as $key => [$label, $icon])
                 <button type="button" @click="tab = '{{ $key }}'" class="nav-item shrink-0 whitespace-nowrap" :class="tab === '{{ $key }}' && 'nav-item-active'">
@@ -59,7 +62,8 @@
                                         <input type="file" name="avatar" accept="image/png,image/jpeg,image/webp,image/gif" class="sr-only" @change="$el.form.requestSubmit()">
                                         Change photo
                                     </label>
-                                    <span class="text-xs text-muted">JPG, PNG or WebP, up to 6 MB. Shown as a 400×400 square.</span>
+                                    <button type="submit" class="sr-only">{{ __('Save') }}</button>
+                                    <span class="text-xs text-muted">JPG, PNG or WebP, up to {{ \App\Support\Avatar::maxLabel() }}. Shown as a 400×400 square.</span>
                                 </form>
                                 @if ($u->avatar_path)
                                     <form method="POST" action="{{ route('profile.avatar.destroy') }}">
@@ -149,17 +153,17 @@
                                 </ul>
                             @endif
                             <div>
-                                <label for="fsettin-3" class="label">Current password</label>
-                                <input id="fsettin-3" type="password" name="current_password" class="input sm:max-w-[calc(50%-0.5rem)]" required autocomplete="current-password">
+                                <label for="fsettin-pw-3" class="label">Current password</label>
+                                <input id="fsettin-pw-3" type="password" name="current_password" class="input sm:max-w-[calc(50%-0.5rem)]" required autocomplete="current-password">
                             </div>
                             <div class="grid gap-4 sm:grid-cols-2">
                                 <div>
-                                    <label for="fsettin-4" class="label">New password</label>
-                                    <input id="fsettin-4" type="password" name="password" class="input" required autocomplete="new-password">
+                                    <label for="fsettin-pw-4" class="label">New password</label>
+                                    <input id="fsettin-pw-4" type="password" name="password" class="input" required autocomplete="new-password">
                                 </div>
                                 <div>
-                                    <label for="fsettin-5" class="label">Confirm new password</label>
-                                    <input id="fsettin-5" type="password" name="password_confirmation" class="input" required autocomplete="new-password">
+                                    <label for="fsettin-pw-5" class="label">Confirm new password</label>
+                                    <input id="fsettin-pw-5" type="password" name="password_confirmation" class="input" required autocomplete="new-password">
                                 </div>
                             </div>
                             <div class="flex justify-end">
@@ -200,8 +204,8 @@
                                         @csrf
                                         @method('DELETE')
                                         <div>
-                                            <label for="fsettin-6" class="label">Confirm your password</label>
-                                            <input id="fsettin-6" type="password" name="password" x-model="password" class="input" required autocomplete="current-password">
+                                            <label for="fsettin-pw-6" class="label">Confirm your password</label>
+                                            <input id="fsettin-pw-6" type="password" name="password" x-model="password" class="input" required autocomplete="current-password">
                                         </div>
                                         <p class="text-center text-xs text-muted">
                                             <span x-show="!canDelete">You can confirm in <span x-text="countdown" class="font-semibold text-ink"></span> s</span>
@@ -471,7 +475,6 @@
                     @empty
                         <p class="text-sm text-muted">No login history available yet.</p>
                     @endforelse
-                </div>
                 </div>
                 <!-- API & Integrations Tab -->
                 <div x-show="tab === 'api'" x-cloak x-data="apiSettings()" class="space-y-4 p-5">

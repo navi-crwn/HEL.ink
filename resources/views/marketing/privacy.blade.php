@@ -96,7 +96,7 @@
                     {{ __('You hold full control over your data. In your HOP ID Settings under "Backup & Export", you can download a complete JSON archive of your account records across all member apps.') }}
                 </p>
                 <p>
-                    {{ __('You may delete your account at any time. Deleting it immediately removes your profile, credentials, short links, bio pages, uploaded media and notes from every HOP service. Backup copies are not edited: they are kept for a limited time, up to about six months, and are deleted automatically when they expire.') }}
+                    {{ __('You may delete your account at any time. Deleting it immediately removes your profile, credentials, short links, bio pages, uploaded media and notes from every HOP service. Backup copies are not edited: copies kept on our own server are deleted automatically after 14 days.') }}
                 </p>
             </div>
         </div>

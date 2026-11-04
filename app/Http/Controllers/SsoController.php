@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendHopEvent;
 use App\Models\User;
 use App\Services\LoginRecorder;
 use App\Services\SsoTicket;
@@ -69,18 +70,39 @@ class SsoController extends Controller
     }
 
     /**
-     * POST /logout: sign out of the hub, then of each app that has a logout
+     * POST /logout: sign out of the hub, tell every app that listens for events
+     * to end this person's sessions, then sign out of each app that has a logout
      * endpoint, one redirect after another (each app sends the browser on to
      * the next with ?next=). Apps without one just see their session end on
      * its own.
      */
     public function logout(Request $request): RedirectResponse
     {
+        // The id is gone once the guard has logged out, and the event needs it.
+        $userId = Auth::guard('web')->id();
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+        if ($userId !== null) {
+            self::revokeAppSessions((string) $userId);
+        }
 
         return redirect()->to(self::logoutChain(route('home')));
+    }
+
+    /**
+     * The redirect chain below only signs out the apps the browser reaches: it stops at the
+     * first app that is down and leaves every app after it signed in. A queued session.revoked
+     * event does not depend on the browser; the queue retries it when the app comes back.
+     */
+    private static function revokeAppSessions(string $userId): void
+    {
+        try {
+            SendHopEvent::broadcast('session.revoked', ['sub' => $userId, 'hop_id' => $userId]);
+        } catch (\Throwable $e) {
+            // A queue that cannot take the job must not break signing out.
+            report($e);
+        }
     }
 
     /** The first URL of the chained logout, ending at $finally. */

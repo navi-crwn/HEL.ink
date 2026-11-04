@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 /**
  * The HOP admin API for Imperium (HOP App Protocol): stats, accounts, admin
@@ -226,6 +227,9 @@ class HopAdminController extends Controller
                 break;
             case 'revoke_sessions':
                 $params = ['deleted' => DB::table('sessions')->where('user_id', $user->id)->delete()];
+                // LinkHop and BioHop sign in with remember:true on this users table: without a new token the
+                // remember cookie would bring the person straight back in after their sessions are deleted.
+                $user->forceFill(['remember_token' => Str::random(60)])->saveQuietly();
                 SendHopEvent::broadcast('session.revoked', ['sub' => (string) $user->id, 'hop_id' => (string) $user->id]);
                 break;
             case 'revoke_tokens':

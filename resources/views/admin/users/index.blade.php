@@ -1,7 +1,17 @@
 <x-app-layout>
-    <x-slot name="pageTitle">HOP - Accounts</x-slot>
+    <x-slot name="pageTitle">Accounts · HOP</x-slot>
     <x-page-header title="Accounts" subtitle="Every HOP ID. Suspending here signs the account out of every app." />
     <x-flash />
+    @if ($registryWarnings !== [])
+        <div class="rounded-2xl border border-amber-500/40 bg-amber-500/10 p-4 text-sm" role="alert">
+            <p class="font-semibold text-ink">Some apps will not hear about account changes</p>
+            <ul class="mt-1 list-disc space-y-1 pl-5 text-muted">
+                @foreach ($registryWarnings as $warning)
+                    <li>{{ $warning }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <form method="GET" class="glass flex flex-wrap items-center gap-2 rounded-2xl p-3">
         <input type="search" name="q" value="{{ $q }}" placeholder="Email, name or @username" class="input flex-1">
         <label class="flex items-center gap-2 text-sm text-muted"><input type="checkbox" name="status" value="suspended" @checked(request('status') === 'suspended')> Suspended only</label>

@@ -29,7 +29,7 @@
             @php
                 $user = auth()->user();
                 $isAdmin = $user->isAdmin();
-                $sectionTitle = trim(\Illuminate\Support\Str::after($pageTitle ?? '', ' - ')) ?: 'HOP';
+                $sectionTitle = trim(\Illuminate\Support\Str::beforeLast($pageTitle ?? '', ' · ')) ?: 'HOP';
             @endphp
             <div x-data="{ nav: false }" @keydown.escape.window="nav = false" class="lg:pl-68">
                 <div x-show="nav" x-cloak x-transition.opacity @click="nav = false" class="fixed inset-0 z-40 bg-slate-950/40 backdrop-blur-xs lg:hidden"></div>
@@ -112,7 +112,6 @@
                 </main>
             </div>
         @endauth
-        <x-cookie-consent />
         <script nonce="{{ Vite::cspNonce() }}">
             window.toggleTheme = function () {
                 const isDark = document.documentElement.classList.toggle('dark');

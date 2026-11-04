@@ -78,10 +78,13 @@ Route::get('/legal/terms/{version}', [LegalArtifactController::class, 'show'])
 
 Route::domain(config('hop.hub_host'))->group(function () use ($marketing) {
     Route::get('/', fn () => auth()->check() ? redirect()->route('dashboard') : redirect()->route('login'))->name('hub.home');
-    Route::get('/onboarding', fn () => view('auth.onboarding'))->name('onboarding');
-    Route::post('/onboarding/skip', fn () => redirect()->route('dashboard'))->name('onboarding.skip');
-    Route::post('/onboarding/set-password', [ProfileController::class, 'createPasswordFromOnboarding'])->name('onboarding.set-password');
     Route::get('/goodbye', fn () => view('goodbye'))->name('goodbye');
+    // Onboarding needs a signed-in user: the page reads the account and the POSTs change it.
+    Route::middleware('auth')->group(function () {
+        Route::get('/onboarding', fn () => view('auth.onboarding'))->name('onboarding');
+        Route::post('/onboarding/skip', fn () => redirect()->route('dashboard'))->name('onboarding.skip');
+        Route::post('/onboarding/set-password', [ProfileController::class, 'createPasswordFromOnboarding'])->name('onboarding.set-password');
+    });
     // "Continue with Google" in the apps: works for guests too (see SsoController::viaGoogle).
     Route::get('/sso/{app}/google', [SsoController::class, 'viaGoogle'])->where('app', '[a-z0-9-]{1,32}')->middleware('throttle:30,1,sso-google')->name('sso.google');
     Route::get('/csrf-token', fn () => response()->json(['token' => csrf_token()])->header('Cache-Control', 'no-store, private'))
@@ -146,3 +149,6 @@ Route::domain(config('hop.public_host'))->group(function () {
         Route::get('/dashboard', fn () => redirect()->to(hub_url('dashboard')));
     }
 });
+
+// Unmatched URLs go through the web middleware group too, so the 404 page knows the visitor's language (SetLocale).
+Route::fallback(fn () => abort(404));

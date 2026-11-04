@@ -210,6 +210,14 @@ test('oauth new account records the acceptance after explicit server-side consen
     expect(session('legal_oauth_consent'))->toBeNull();
 });
 
+test('the consent page goes straight to google while the gate is inactive', function () {
+    config()->set('services.google', ['client_id' => 'fake-id', 'client_secret' => 'fake-secret', 'redirect' => 'https://hub.example.test/auth/google/callback']);
+
+    $this->get('/auth/google/consent')
+        ->assertRedirectContains('accounts.google.com');
+    expect(session('google_oauth_from'))->toBe('login');
+});
+
 test('oauth consent post with a wrong or missing version does not grant consent', function () {
     activateLegalGate();
     $this->post('/auth/google/consent', [])->assertSessionHasErrors(['accept', 'terms_version']);

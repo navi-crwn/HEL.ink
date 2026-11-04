@@ -6,6 +6,7 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ### Fixed
 
+- `GET /auth/google/consent` answers with the Google redirect while no terms version is required; it was a 500.
 - The API page names the real API address and documentation of LinkHop and PixelHop, and no longer links pages that do not exist on BioHop and NoteHop.
 - `/status` and `/status.json` answer while the database is down, with no numbers, as the home page already did. This holds when sessions are not stored in the database: with `SESSION_DRIVER=database` every web page still fails while the database is down.
 - The `/goodbye` page follows the visitor's language and speaks of HOP, not LinkHop.

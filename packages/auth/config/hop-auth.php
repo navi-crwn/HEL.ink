@@ -38,10 +38,23 @@ return [
         'hel.ink,www.hel.ink,hub.hel.ink,link.hel.ink,bio.hel.ink,note.hel.ink,pixel.hel.ink'
     ))))),
 
+    // Account events from the hub (POST /hop/events: session.revoked, account.status, account.deleted, profile.updated).
+    'events' => [
+        // The app slug the hub signs its messages with (X-HOP-App).
+        'hub_app' => 'helink',
+        // Seconds of clock difference tolerated on a signed message; each nonce works once within twice this.
+        'max_age' => 120,
+        // How long an event id is remembered so a retry is not handled twice (needs a cache that survives requests).
+        'seen_ttl' => 172800,
+    ],
+
     // Paths this package registers (set to null to register your own).
     'routes' => [
         'start' => '/auth/sso',
         'callback' => '/auth/sso/callback',
         'logout' => '/auth/sso/logout',
+        // Off by default. Set it ('/hop/events') to let the package answer the hub's account events, or leave it
+        // null and send the request to Hop\Auth\Http\Controllers\EventController from your own route.
+        'events' => null,
     ],
 ];

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Support\HopApps;
+use App\Support\Input;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,11 +20,11 @@ class SettingsController extends Controller
         $activityQuery = DB::table('activity_logs')
             ->where('user_id', $user->id)
             ->orderBy('created_at', 'desc');
-        if ($request->filled('activity_from')) {
-            $activityQuery->whereDate('created_at', '>=', $request->activity_from);
+        if ($from = Input::text($request->query('activity_from'))) {
+            $activityQuery->whereDate('created_at', '>=', $from);
         }
-        if ($request->filled('activity_to')) {
-            $activityQuery->whereDate('created_at', '<=', $request->activity_to);
+        if ($to = Input::text($request->query('activity_to'))) {
+            $activityQuery->whereDate('created_at', '<=', $to);
         }
 
         return view('settings', [

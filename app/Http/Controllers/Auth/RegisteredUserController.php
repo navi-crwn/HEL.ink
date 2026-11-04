@@ -40,7 +40,7 @@ class RegisteredUserController extends Controller
         Legal::assertUsable($requiredVersion);
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'indisposable', 'unique:'.User::class],
+            'email' => ['bail', 'required', 'string', 'lowercase', 'email', 'max:255', 'indisposable', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'tos_accepted' => ['required', 'accepted'],
             // While the gate is inactive no version is asked for; when active,

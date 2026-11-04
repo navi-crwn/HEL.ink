@@ -4,6 +4,10 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ## [Unreleased]
 
+### Fixed
+
+- A request value sent as an array (`?lang[]=de`, `?app[]=x`, `?state[]=x`, a form field `email[]=x`, a JSON object in the signed APIs) now counts as absent or fails validation, where it used to be a 500. This covers the language cookie, the changelog filter, the password reset page, single sign-on, the settings and admin pages, and the signed admin and account APIs.
+
 ## [1.0.0] - 2026-11-04
 
 The first stable release. HEL.ink's first pull request was merged on 2026-10-28; 1.0.0 is the point where the hub and the contracts it keeps with the HOP apps are treated as the baseline that later releases build on. The history behind it is on the `/changelog` page and in the merged pull requests.

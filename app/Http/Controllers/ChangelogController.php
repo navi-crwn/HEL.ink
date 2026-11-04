@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\Input;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -12,7 +13,7 @@ class ChangelogController extends Controller
         $history = json_decode(file_get_contents(resource_path('changelog.json')), true, flags: JSON_THROW_ON_ERROR);
         $entries = collect($history['entries']);
         $apps = $entries->pluck('app')->unique()->values();
-        $selected = (string) $request->query('app', '');
+        $selected = Input::text($request->query('app'));
         if ($selected !== '') {
             $entries = $entries->where('app', $selected)->values();
         }

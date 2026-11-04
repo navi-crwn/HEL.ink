@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
 use App\Models\User;
+use App\Support\Input;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -33,7 +34,7 @@ class NewPasswordController extends Controller
     public function store(Request $request): RedirectResponse
     {
         // Rate limiting: 5 attempts per hour per email
-        $key = 'password-reset:'.strtolower($request->email);
+        $key = 'password-reset:'.strtolower(Input::text($request->email));
         if (RateLimiter::tooManyAttempts($key, 5)) {
             $seconds = RateLimiter::availableIn($key);
             throw ValidationException::withMessages([
@@ -41,7 +42,7 @@ class NewPasswordController extends Controller
             ]);
         }
         $request->validate([
-            'token' => ['required'],
+            'token' => ['required', 'string'],
             'email' => ['required', 'email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);

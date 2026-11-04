@@ -8,6 +8,7 @@ use App\Models\HopApp;
 use App\Models\LoginHistory;
 use App\Models\User;
 use App\Support\HopSignature;
+use App\Support\Input;
 use App\Support\Legal;
 use App\Support\Username;
 use Illuminate\Auth\Events\Registered;
@@ -55,8 +56,8 @@ class AppAccountController extends Controller
             return $denied;
         }
         $hopApp = $request->attributes->get('hop_app');
-        $email = strtolower(trim((string) $request->json('email', '')));
-        $password = (string) $request->json('password', '');
+        $email = strtolower(trim(Input::text($request->json('email'))));
+        $password = Input::text($request->json('password'));
         $ip = $this->visitorIp($request);
         $emailKey = 'app-login:'.sha1($email);
         $ipKey = 'app-login-ip:'.$ip;
@@ -105,15 +106,15 @@ class AppAccountController extends Controller
             return response()->json(['error' => 'not_configured', 'message' => 'Account registration is temporarily unavailable.'], 503);
         }
         $data = [
-            'name' => trim((string) $request->json('name', '')),
-            'email' => strtolower(trim((string) $request->json('email', ''))),
-            'password' => (string) $request->json('password', ''),
+            'name' => trim(Input::text($request->json('name'))),
+            'email' => strtolower(trim(Input::text($request->json('email')))),
+            'password' => Input::text($request->json('password')),
             'tos_accepted' => (bool) $request->json('tos_accepted', false),
             // Sent by the app inside the signed body, so it is authentic. While
             // the gate is inactive it must be absent (backwards compatible with
             // PixelHop 3.x); when active it must name exactly the version
             // required right now — the app cannot pick an arbitrary version.
-            'terms_version' => (string) $request->json('terms_version', ''),
+            'terms_version' => Input::text($request->json('terms_version')),
         ];
         $v = Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
@@ -204,7 +205,7 @@ class AppAccountController extends Controller
     /** The visitor's IP as PixelHop saw it (signed with the body), or ''. */
     private function visitorIp(Request $request): string
     {
-        $ip = (string) $request->json('ip', '');
+        $ip = Input::text($request->json('ip'));
 
         return filter_var($ip, FILTER_VALIDATE_IP) ? $ip : '';
     }

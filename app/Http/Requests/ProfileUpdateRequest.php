@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use App\Support\Input;
 use App\Support\Username;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -12,10 +13,10 @@ class ProfileUpdateRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         if ($this->has('username')) {
-            $this->merge(['username' => Username::normalize($this->input('username'))]);
+            $this->merge(['username' => Username::normalize(Input::text($this->input('username')))]);
         }
         if ($this->has('website')) {
-            $w = trim((string) $this->input('website'));
+            $w = trim(Input::text($this->input('website')));
             if ($w !== '' && ! preg_match('#^https?://#i', $w)) {
                 $w = 'https://'.$w;
             }
@@ -31,6 +32,7 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => [
+                'bail',
                 'required',
                 'string',
                 'lowercase',

@@ -10,6 +10,7 @@ use App\Models\HopUserNote;
 use App\Models\Role;
 use App\Models\User;
 use App\Services\UserDeletion;
+use App\Support\Input;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -106,11 +107,11 @@ class HopAdminController extends Controller
     {
         $limit = max(1, min(200, (int) $request->query('limit', 50)));
         $q = User::query()->with('roles');
-        $this->matchUsers($q, trim((string) $request->query('q', '')));
-        if (in_array($status = (string) $request->query('status', ''), [User::STATUS_ACTIVE, User::STATUS_SUSPENDED], true)) {
+        $this->matchUsers($q, trim(Input::text($request->query('q'))));
+        if (in_array($status = Input::text($request->query('status')), [User::STATUS_ACTIVE, User::STATUS_SUSPENDED], true)) {
             $q->where('status', $status);
         }
-        if ($role = (string) $request->query('role', '')) {
+        if ($role = Input::text($request->query('role'))) {
             [$name, $app] = array_pad(explode(':', $role, 2), 2, null);
             $q->whereHas('roles', fn (Builder $r) => $r->where('role', $name)->where('app_slug', $app));
         }
@@ -205,7 +206,7 @@ class HopAdminController extends Controller
     {
         /** @var HopApp $app */
         $app = $request->attributes->get('hop_app');
-        $action = (string) $request->input('action', '');
+        $action = Input::text($request->input('action'));
         $reason = $request->input('reason');
         $params = (array) $request->input('params', []);
         if (! in_array($action, self::ACTIONS, true)) {
@@ -308,7 +309,7 @@ class HopAdminController extends Controller
     {
         $limit = max(1, min(200, (int) $request->query('limit', 50)));
         $q = HopAudit::query();
-        if ($target = (string) $request->query('target', '')) {
+        if ($target = Input::text($request->query('target'))) {
             $q->where('target_id', $target);
         }
         $total = (clone $q)->count();
@@ -327,7 +328,7 @@ class HopAdminController extends Controller
     /** GET /api/hop/search?q=: up to 20 users, links and bio pages. */
     public function search(Request $request): JsonResponse
     {
-        $term = trim((string) $request->query('q', ''));
+        $term = trim(Input::text($request->query('q')));
         if ($term === '') {
             return response()->json(['ok' => true, 'data' => []]);
         }

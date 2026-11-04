@@ -19,7 +19,7 @@ test('a real 429 is in the language of the query', function () {
     app()->setLocale('en'); // The earlier requests in this process set it; a real request starts fresh.
     $html = $this->get('/csrf-token?lang=de')->assertStatus(429)->getContent();
 
-    expect($html)->toContain('<html lang="de"')->and($html)->toContain(__('Too many requests', [], 'de'));
+    expect($html)->toContain('<html lang="de"')->and($html)->toContain('<title>'.__('Too many requests', [], 'de'));
 });
 
 test('a real 429 is in the language of the cookie', function () {

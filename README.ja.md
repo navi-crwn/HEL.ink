@@ -93,6 +93,10 @@ HEL.ink はプライバシーを重視したオープンソース Web アプリ�
 | **PixelHop** | `pixel.hel.ink` · `p.hel.ink/…` | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | 画像およびメディア配信 |
 | **NoteHop** | `note.hel.ink` · `n.hel.ink/…` | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | クライアント暗号化プライベートノート |
 
+## 変更履歴
+
+変更は [CHANGELOG.md](CHANGELOG.md) に記載しています。
+
 <a id="security"></a>
 
 ## ヘルプとサポート

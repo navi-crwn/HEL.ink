@@ -96,6 +96,10 @@ HEL.ink adalah bagian dari keluarga aplikasi web **HOP** open-source di balik [h
 | **PixelHop** | [pixel.hel.ink](https://pixel.hel.ink) · `p.hel.ink/…` | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | Hosting gambar dengan album dan tautan langsung. |
 | **NoteHop** | [note.hel.ink](https://note.hel.ink) · `n.hel.ink/…` | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | Catatan privat terenkripsi yang dibagikan lewat tautan. |
 
+## Changelog
+
+Perubahan dicatat di [CHANGELOG.md](CHANGELOG.md).
+
 <a id="keamanan"></a>
 
 ## Keamanan

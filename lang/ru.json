@@ -201,7 +201,7 @@
     "Short links from the LinkHop home page, without an account": "Короткие ссылки с главной страницы LinkHop — без аккаунта",
     "Shorten a link": "Сократить ссылку",
     "Sign out everywhere": "Выйти везде",
-    "Sign up": "Зарегистрироваться",
+    "Sign up": "Регистрация",
     "Sign up once at the hub, with a password or Google, and turn on two-factor sign-in.": "Зарегистрируйтесь один раз в хабе — с паролем или через Google — и включите двухфакторный вход.",
     "Sign up with your email and a password, or continue with Google.": "Зарегистрируйтесь по электронной почте и паролю или продолжите через Google.",
     "Sign-in history and the activity log are deleted after 90 days.": "История входов и журнал действий удаляются через 90 дней.",
@@ -607,5 +607,6 @@
     "This action cannot be undone": "Это действие нельзя отменить",
     "If you deleted your account by mistake or changed your mind, you can create a new account anytime.": "Если вы удалили аккаунт по ошибке или передумали, вы можете создать новый в любое время.",
     "However, your previous data cannot be recovered.": "Однако прежние данные восстановить нельзя.",
-    "Thank you for using HOP. We hope to see you again someday.": "Спасибо, что пользовались HOP. Надеемся когда-нибудь увидеть вас снова."
+    "Thank you for using HOP. We hope to see you again someday.": "Спасибо, что пользовались HOP. Надеемся когда-нибудь увидеть вас снова.",
+    "Close menu": "Закрыть меню"
 }

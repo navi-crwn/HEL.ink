@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-@media (max-width: 380px) {
+@media (max-width: 419px) {
     .marketing-brand > span > span { display: none; }
 }
 @import './identity-hero.css';
@@ -226,6 +226,61 @@
 .app-shell select:not([multiple]) { padding-right: 2.25rem; }
 
 [x-cloak] { display: none !important; }
+
+@layer components {
+    /*
+    | Marketing header and drawer (partials/marketing-nav). The controls are 40 px, 44 px on touch
+    | screens; below xl the page links, sign-in, the HOP family and the footer links open in a drawer.
+    */
+    .marketing-icon-btn {
+        display: inline-flex; width: 2.5rem; height: 2.5rem; flex: none; align-items: center; justify-content: center;
+        border-radius: 0.75rem; color: rgb(71 85 105); transition: background-color 0.15s;
+    }
+    .marketing-icon-btn:hover { background-color: rgb(15 23 42 / 0.05); color: rgb(15 23 42); }
+    .dark .marketing-icon-btn { color: rgb(255 255 255 / 0.8); }
+    .dark .marketing-icon-btn:hover { background-color: rgb(255 255 255 / 0.1); color: #fff; }
+    .marketing-primary {
+        display: inline-flex; min-height: 2.5rem; max-width: 9rem; align-items: center; border-radius: 0.75rem;
+        padding: 0 0.75rem; font-size: 0.8125rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        background-color: rgb(15 23 42); color: #fff; transition: background-color 0.15s;
+    }
+    .marketing-primary:hover { background-color: rgb(30 41 59); }
+    .dark .marketing-primary { background-color: #fff; color: rgb(15 23 42); }
+    .dark .marketing-primary:hover { background-color: rgb(255 255 255 / 0.9); }
+    @media (min-width: 640px) { .marketing-primary { max-width: none; padding: 0 0.875rem; font-size: 0.875rem; } }
+    .marketing-drawer {
+        position: absolute; inset-block: 0; inset-inline-end: 0; display: flex; width: min(88vw, 22rem); flex-direction: column;
+        overflow-y: auto; overscroll-behavior: contain; padding: 1rem; padding-bottom: max(1rem, env(safe-area-inset-bottom));
+        background: #fff; color: rgb(15 23 42); box-shadow: -24px 0 60px rgb(15 23 42 / 0.2);
+    }
+    .dark .marketing-drawer { background: rgb(15 19 34); color: rgb(241 245 249); }
+    .marketing-drawer-link {
+        display: flex; min-height: 3rem; align-items: center; gap: 0.75rem; border-radius: 0.75rem; padding: 0.5rem 0.75rem;
+        font-size: 1rem; color: rgb(51 65 85); transition: background-color 0.15s;
+    }
+    .marketing-drawer-link:hover, .marketing-drawer-link[aria-current] { background-color: rgb(15 23 42 / 0.05); color: rgb(15 23 42); }
+    .marketing-drawer-link.small { min-height: 2.75rem; font-size: 0.875rem; }
+    .dark .marketing-drawer-link { color: rgb(255 255 255 / 0.8); }
+    .dark .marketing-drawer-link:hover, .dark .marketing-drawer-link[aria-current] { background-color: rgb(255 255 255 / 0.1); color: #fff; }
+    .marketing-drawer-btn {
+        display: flex; min-height: 3rem; align-items: center; justify-content: center; border-radius: 0.75rem;
+        border: 1px solid rgb(148 163 184 / 0.4); font-weight: 600;
+    }
+    .marketing-drawer-btn.primary { border-color: transparent; background: rgb(15 23 42); color: #fff; }
+    .dark .marketing-drawer-btn.primary { background: #fff; color: rgb(15 23 42); }
+    .marketing-drawer-foot { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 0 0.5rem; border-top: 1px solid rgb(148 163 184 / 0.3); padding-top: 1rem; }
+}
+html.drawer-open { overflow: hidden; }
+/* Touch screens: 44 px controls in the header and the shared language menu, and footer rows a thumb can hit. */
+@media (pointer: coarse) {
+    .marketing-nav .marketing-icon-btn, .marketing-nav .hop-switcher > summary { width: 2.75rem; height: 2.75rem; }
+    .marketing-nav .marketing-primary { min-height: 2.75rem; }
+    .marketing-nav .hop-switcher-panel > a, .marketing-nav .hop-langmenu .hop-switcher-panel > a { padding-block: 0.75rem; }
+    .hop-footer ul > li + li { margin-top: 0; }
+    .hop-footer ul a, .hop-footer ul span[aria-current] { display: block; padding-block: 0.75rem; line-height: 1.25rem; }
+    .hop-footer div.text-xs > a { display: inline-block; padding: 0.5rem 0.25rem; font-size: 0.8125rem; }
+}
+
 
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }

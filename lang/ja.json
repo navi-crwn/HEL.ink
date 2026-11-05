@@ -607,5 +607,6 @@
     "This action cannot be undone": "この操作は取り消せません",
     "If you deleted your account by mistake or changed your mind, you can create a new account anytime.": "誤って削除した場合や気が変わった場合は、いつでも新しいアカウントを作成できます。",
     "However, your previous data cannot be recovered.": "ただし、以前のデータは復元できません。",
-    "Thank you for using HOP. We hope to see you again someday.": "HOP をご利用いただきありがとうございました。またお会いできることを願っています。"
+    "Thank you for using HOP. We hope to see you again someday.": "HOP をご利用いただきありがとうございました。またお会いできることを願っています。",
+    "Close menu": "メニューを閉じる"
 }

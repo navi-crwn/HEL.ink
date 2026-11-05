@@ -95,35 +95,35 @@
                                 <div class="grid gap-4 sm:grid-cols-2">
                                     <div>
                                         <label for="fsettin-1" class="label">Name</label>
-                                        <input id="fsettin-1" type="text" name="name" value="{{ old('name', $u->name) }}" class="input" required autocomplete="name">
+                                        <input id="fsettin-1" type="text" name="name" value="{{ \App\Support\Input::text(old('name', $u->name)) }}" class="input" required autocomplete="name">
                                         @error('name')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                                     </div>
                                     <div>
                                         <label for="fsettin-3" class="label">Username</label>
                                         <div class="relative">
                                             <span class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-muted">@</span>
-                                            <input id="fsettin-3" type="text" name="username" value="{{ old('username', $u->username) }}" class="input pl-7" required autocomplete="username" minlength="3" maxlength="30" x-model="value" @input.debounce.400ms="check()" spellcheck="false">
+                                            <input id="fsettin-3" type="text" name="username" value="{{ \App\Support\Input::text(old('username', $u->username)) }}" class="input pl-7" required autocomplete="username" minlength="3" maxlength="30" x-model="value" @input.debounce.400ms="check()" spellcheck="false">
                                         </div>
                                         <p class="mt-1 text-xs" :class="ok === false ? 'text-rose-600' : 'text-muted'" x-text="message">Your handle in every HOP app: 3 to 30 lowercase letters, numbers, dots, dashes or underscores.</p>
                                         @error('username')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                                     </div>
                                     <div>
                                         <label for="fsettin-2" class="label">Email</label>
-                                        <input id="fsettin-2" type="email" name="email" value="{{ old('email', $u->email) }}" class="input" required autocomplete="email">
+                                        <input id="fsettin-2" type="email" name="email" value="{{ \App\Support\Input::text(old('email', $u->email)) }}" class="input" required autocomplete="email">
                                         @error('email')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                                     </div>
                                     <div>
                                         <label for="fsettin-4" class="label">Location <span class="text-muted">(optional)</span></label>
-                                        <input id="fsettin-4" type="text" name="location" value="{{ old('location', $u->location) }}" class="input" maxlength="100" autocomplete="address-level2">
+                                        <input id="fsettin-4" type="text" name="location" value="{{ \App\Support\Input::text(old('location', $u->location)) }}" class="input" maxlength="100" autocomplete="address-level2">
                                     </div>
                                     <div class="sm:col-span-2">
                                         <label for="fsettin-5" class="label">Website <span class="text-muted">(optional)</span></label>
-                                        <input id="fsettin-5" type="text" name="website" value="{{ old('website', $u->website) }}" class="input" maxlength="200" placeholder="https://" autocomplete="url">
+                                        <input id="fsettin-5" type="text" name="website" value="{{ \App\Support\Input::text(old('website', $u->website)) }}" class="input" maxlength="200" placeholder="https://" autocomplete="url">
                                         @error('website')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                                     </div>
                                     <div class="sm:col-span-2">
                                         <label for="fsettin-6" class="label">Bio <span class="text-muted">(optional)</span></label>
-                                        <textarea id="fsettin-6" name="bio" rows="3" maxlength="300" class="input">{{ old('bio', $u->bio) }}</textarea>
+                                        <textarea id="fsettin-6" name="bio" rows="3" maxlength="300" class="input">{{ \App\Support\Input::text(old('bio', $u->bio)) }}</textarea>
                                         @error('bio')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                                     </div>
                                     <label class="flex items-start gap-3 sm:col-span-2">
@@ -373,11 +373,11 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label for="fsettin-15" class="label">From Date</label>
-                                <input id="fsettin-15" type="date" name="activity_from" value="{{ request('activity_from') }}" class="input mt-1">
+                                <input id="fsettin-15" type="date" name="activity_from" value="{{ \App\Support\Input::text(request('activity_from')) }}" class="input mt-1">
                             </div>
                             <div>
                                 <label for="fsettin-16" class="label">To Date</label>
-                                <input id="fsettin-16" type="date" name="activity_to" value="{{ request('activity_to') }}" class="input mt-1">
+                                <input id="fsettin-16" type="date" name="activity_to" value="{{ \App\Support\Input::text(request('activity_to')) }}" class="input mt-1">
                             </div>
                         </div>
                         <div class="mt-3 flex gap-2">

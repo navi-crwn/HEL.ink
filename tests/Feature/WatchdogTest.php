@@ -74,3 +74,19 @@ test('an app object never serializes its secret', function () {
     expect(json_encode($app))->not->toContain(str_repeat('k', 40))
         ->and(print_r($app, true))->not->toContain(str_repeat('k', 40));
 });
+
+test('the status page and status.json answer while the database cannot be reached', function () {
+    config(['database.connections.unreachable' => ['driver' => 'sqlite', 'database' => '/nonexistent/hub.sqlite'], 'database.default' => 'unreachable']);
+
+    try {
+        $this->withoutVite()->get('/status')->assertOk();
+        $json = $this->getJson('/status.json')->assertOk()->json('apps');
+    } finally {
+        config(['database.default' => 'sqlite']);
+    }
+
+    expect($json)->not->toBeEmpty();
+    foreach ($json as $app) {
+        expect($app['ok'])->toBeNull()->and($app['checked_at'])->toBeNull()->and($app['uptime'])->toBeNull();
+    }
+});

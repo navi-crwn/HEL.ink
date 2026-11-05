@@ -9,6 +9,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Services\UserDeletion;
 use App\Support\EventRegistry;
+use App\Support\Input;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -21,7 +22,7 @@ class AdminUserController extends Controller
 {
     public function index(Request $request): View
     {
-        $q = trim((string) $request->query('q', ''));
+        $q = trim(Input::text($request->query('q')));
         $users = User::query()
             ->when($q !== '', fn ($query) => $query->where(fn ($w) => $w
                 ->where('email', 'like', "%{$q}%")

@@ -3,7 +3,7 @@
         <h1 class="page-title">Set a new password</h1>
         <p class="mt-1 text-sm text-muted">For your HOP ID: the same password then works on {{ config('app.name') }} and every HOP app.</p>
     </div>
-    @php $lockedEmail = (string) $request->query('email', ''); @endphp
+    @php $lockedEmail = \App\Support\Input::text($request->query('email')); @endphp
     <form method="POST" action="{{ route('password.store') }}" class="space-y-4">
         @csrf
         <input type="hidden" name="token" value="{{ $request->route('token') }}">

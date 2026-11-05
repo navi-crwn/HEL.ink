@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('title', __('Too many requests'))
 @php
+    $pageTitle = __('Too many requests').' · HOP';
     // Seconds until the limit resets, from the throttle's Retry-After header (fallback: one minute).
     $retryAfter = (int) (isset($exception) && method_exists($exception, 'getHeaders') ? ($exception->getHeaders()['Retry-After'] ?? 60) : 60);
     $retryAfter = max(1, min($retryAfter, 3600));

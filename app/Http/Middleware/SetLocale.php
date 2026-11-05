@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Support\Input;
 use Closure;
 use Hop\Ui\Locales;
 use Illuminate\Http\Request;
@@ -21,8 +22,8 @@ class SetLocale
 
     public function handle(Request $request, Closure $next): Response
     {
-        $requested = Locales::resolve((string) $request->query('lang', ''));
-        $locale = $requested ?? Locales::normalize((string) $request->cookie(self::COOKIE, Locales::DEFAULT));
+        $requested = Locales::resolve(Input::text($request->query('lang')));
+        $locale = $requested ?? Locales::normalize(Input::text($request->cookie(self::COOKIE, Locales::DEFAULT)));
         app()->setLocale($locale);
         $response = $next($request);
         if ($requested !== null) {

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" x-data="{ darkMode: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) }" x-bind:class="{ 'dark': darkMode }" x-init="$watch('darkMode', val => localStorage.setItem('theme', val ? 'dark' : 'light'))">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ darkMode: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) }" x-bind:class="{ 'dark': darkMode }" x-init="$watch('darkMode', val => localStorage.setItem('theme', val ? 'dark' : 'light'))">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Deleted - LinkHop</title>
+    <title>{{ __('Account deleted') }} · HOP</title>
     <link rel="icon" href="{{ route('brand.favicon') }}" type="image/png">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>[x-cloak]{display:none !important;}</style>
@@ -24,40 +24,40 @@
             <div class="flex flex-col items-center">
                 <img x-show="!darkMode" src="{{ route('brand.logo.dark') }}" alt="HEL.ink" class="h-20 w-20 rounded-full shadow-lg">
                 <img x-show="darkMode" x-cloak src="{{ route('brand.logo') }}" alt="HEL.ink" class="h-20 w-20 rounded-full shadow-lg">
-                <p class="mt-3 text-sm font-semibold text-slate-700 dark:text-slate-300">LinkHop</p>
+                <p class="mt-3 text-sm font-semibold text-slate-700 dark:text-slate-300">HOP</p>
             </div>
             <div class="space-y-4">
-                <h1 class="text-4xl font-bold text-slate-900 dark:text-white">Your account has been deleted</h1>
-                <p class="text-lg text-slate-600 dark:text-slate-300">We're sad to see you go, but we respect your decision.</p>
+                <h1 class="text-4xl font-bold text-slate-900 dark:text-white">{{ __('Your account has been deleted') }}</h1>
+                <p class="text-lg text-slate-600 dark:text-slate-300">{{ __("We're sad to see you go, but we respect your decision.") }}</p>
             </div>
             <div class="mx-auto max-w-xl space-y-4 rounded-2xl border border-rose-200 bg-rose-50 p-6 text-left dark:border-rose-900/30 dark:bg-rose-900/20">
                 <div class="flex items-start gap-3">
                     <span class="text-2xl">⚠️</span>
                     <div class="space-y-2 text-sm text-rose-900 dark:text-rose-200">
-                        <p class="font-semibold">Important: What happens next</p>
+                        <p class="font-semibold">{{ __('Important: What happens next') }}</p>
                         <ul class="list-disc space-y-1 pl-5">
-                            <li>Your HOP ID and everything it owned in every app have been deleted</li>
-                            <li>Short links, bio pages and images that belonged to it are gone</li>
-                            <li>Your account data, analytics, and settings are gone</li>
-                            <li>This action cannot be undone</li>
+                            <li>{{ __('Your HOP ID and everything it owned in every app have been deleted') }}</li>
+                            <li>{{ __('Short links, bio pages and images that belonged to it are gone') }}</li>
+                            <li>{{ __('Your account data, analytics, and settings are gone') }}</li>
+                            <li>{{ __('This action cannot be undone') }}</li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="space-y-3 pt-4 text-sm text-slate-500 dark:text-slate-400">
-                <p>If you deleted your account by mistake or changed your mind, you can create a new account anytime.</p>
-                <p>However, your previous data cannot be recovered.</p>
+                <p>{{ __('If you deleted your account by mistake or changed your mind, you can create a new account anytime.') }}</p>
+                <p>{{ __('However, your previous data cannot be recovered.') }}</p>
             </div>
             <div class="flex flex-col items-center justify-center gap-3 pt-6 sm:flex-row">
                 <a href="{{ route('home') }}" class="rounded-full border border-slate-200 px-6 py-3 font-semibold text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
-                    Back to Home
+                    {{ __('Back to the home page') }}
                 </a>
                 <a href="{{ route('register') }}" class="rounded-full bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-500">
-                    Create New Account
+                    {{ __('Create your HOP ID') }}
                 </a>
             </div>
             <div class="pt-8 text-xs text-slate-400">
-                <p>Thank you for using LinkHop. We hope to see you again someday.</p>
+                <p>{{ __('Thank you for using HOP. We hope to see you again someday.') }}</p>
             </div>
         </div>
     </div>

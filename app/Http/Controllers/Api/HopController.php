@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\HopApp;
 use App\Models\User;
+use App\Support\Input;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -32,10 +33,10 @@ class HopController extends Controller
         /** @var HopApp $app */
         $app = $request->attributes->get('hop_app');
         $q = User::query()->orderBy('id');
-        if ($ids = $request->query('ids')) {
-            $q->whereIn('id', array_slice(array_filter(array_map('intval', explode(',', (string) $ids))), 0, 200));
+        if ($ids = Input::text($request->query('ids'))) {
+            $q->whereIn('id', array_slice(array_filter(array_map('intval', explode(',', $ids))), 0, 200));
         }
-        if ($since = $request->query('since')) {
+        if ($since = Input::text($request->query('since'))) {
             $q->where('updated_at', '>=', $since);
         }
         if ($cursor = (int) $request->query('cursor', 0)) {

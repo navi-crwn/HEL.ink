@@ -6,6 +6,7 @@ use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\ActivityLog;
 use App\Services\UserDeletion;
 use App\Support\Avatar;
+use App\Support\Input;
 use App\Support\Username;
 use Hop\Auth\Http\Controllers\SsoController as HopSsoController;
 use Illuminate\Http\JsonResponse;
@@ -56,7 +57,7 @@ class ProfileController extends Controller
             ActivityLog::log('updated', 'Profile', $user->id, 'Updated profile: '.implode(', ', $changes));
         }
 
-        $rawBack = trim((string) $request->input('_back', ''));
+        $rawBack = trim(Input::text($request->input('_back')));
         $safeBack = $rawBack !== '' ? HopSsoController::safePath($rawBack) : '';
         $back = ($safeBack !== '' && ($safeBack !== '/' || $rawBack === '/')) ? $safeBack : route('profile.edit');
 
@@ -66,7 +67,7 @@ class ProfileController extends Controller
     /** GET /profile/username-check?u=: live availability for the settings form. */
     public function usernameCheck(Request $request): JsonResponse
     {
-        $name = Username::normalize($request->query('u'));
+        $name = Username::normalize(Input::text($request->query('u')));
         $why = Username::problem($name, $request->user());
 
         return response()->json(['username' => $name, 'ok' => $why === null, 'message' => $why ?? 'Available.']);
@@ -107,7 +108,7 @@ class ProfileController extends Controller
         }
         // Always require password for all users
         $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
+            'password' => ['bail', 'required', 'string', 'current_password'],
         ]);
         try {
             // Sign out first: logout() cycles the remember token with save(), which would re-insert a deleted row.

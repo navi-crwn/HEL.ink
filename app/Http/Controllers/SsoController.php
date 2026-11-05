@@ -8,6 +8,7 @@ use App\Services\LoginRecorder;
 use App\Services\SsoTicket;
 use App\Support\HopApp;
 use App\Support\HopApps;
+use App\Support\Input;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -66,7 +67,7 @@ class SsoController extends Controller
         $hopApp = HopApps::find($app);
         abort_if(! $hopApp || ! $hopApp->isConfigured(), 404);
 
-        return redirect()->away($hopApp->startUrl($request->query('to') ? '/'.ltrim((string) $request->query('to'), '/') : null));
+        return redirect()->away($hopApp->startUrl(($to = Input::text($request->query('to'))) ? '/'.ltrim($to, '/') : null));
     }
 
     /**
@@ -127,8 +128,8 @@ class SsoController extends Controller
     {
         $app = HopApps::find($slug);
         abort_if(! $app || ! $app->isConfigured(), 404);
-        $state = (string) $request->query('state', '');
-        $returnTo = (string) $request->query('return_to', '');
+        $state = Input::text($request->query('state'));
+        $returnTo = Input::text($request->query('return_to'));
         abort_unless(preg_match('/^[A-Za-z0-9_-]{16,128}$/', $state) === 1, 400, 'Invalid state.');
         // Only ever send tickets to the app's own callback.
         abort_unless($returnTo === $app->callbackUrl(), 400, 'Invalid return address.');

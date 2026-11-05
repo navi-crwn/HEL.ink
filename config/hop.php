@@ -65,6 +65,12 @@ return [
         'linkhop' => ['sort_order' => 30],
         'biohop' => ['sort_order' => 40],
     ],
+    // Where an app's bearer-token API and its documentation live, for the API page. An app that
+    // is not listed has no such API, so the page links nothing for it.
+    'api_docs' => [
+        'linkhop' => ['base' => '/api', 'docs' => '/api-docs'],
+        'pixelhop' => ['base' => '/api/v1', 'docs' => '/docs'],
+    ],
     'registry_health' => [],   // default /healthz
     'registry_logout' => [
         'notehop' => '/auth/sso/logout',

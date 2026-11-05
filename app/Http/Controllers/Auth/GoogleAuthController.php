@@ -232,6 +232,6 @@ class GoogleAuthController extends Controller
 
     private function startOauth(Request $request)
     {
-        return app()->call([self::class, 'redirectToGoogle']);
+        return $this->redirectToGoogle();
     }
 }

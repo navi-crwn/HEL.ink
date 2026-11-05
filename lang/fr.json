@@ -596,5 +596,16 @@
     "Reloading…": "Rechargement…",
     "You can try again now.": "Vous pouvez réessayer maintenant.",
     "Your session expired. Try again.": "Votre session a expiré. Réessayez.",
-    "You have been signed out.": "Vous avez été déconnecté."
+    "You have been signed out.": "Vous avez été déconnecté.",
+    "Account deleted": "Compte supprimé",
+    "Your account has been deleted": "Votre compte a été supprimé",
+    "We're sad to see you go, but we respect your decision.": "Nous sommes tristes de vous voir partir, mais nous respectons votre décision.",
+    "Important: What happens next": "Important : ce qui se passe ensuite",
+    "Your HOP ID and everything it owned in every app have been deleted": "Votre HOP ID et tout ce qui lui appartenait dans chaque application ont été supprimés",
+    "Short links, bio pages and images that belonged to it are gone": "Les liens courts, les pages bio et les images qui lui appartenaient n'existent plus",
+    "Your account data, analytics, and settings are gone": "Les données de votre compte, vos statistiques et vos paramètres n'existent plus",
+    "This action cannot be undone": "Cette action est irréversible",
+    "If you deleted your account by mistake or changed your mind, you can create a new account anytime.": "Si vous avez supprimé votre compte par erreur ou changé d'avis, vous pouvez créer un nouveau compte à tout moment.",
+    "However, your previous data cannot be recovered.": "Vos données précédentes ne peuvent toutefois pas être récupérées.",
+    "Thank you for using HOP. We hope to see you again someday.": "Merci d'avoir utilisé HOP. Nous espérons vous revoir un jour."
 }

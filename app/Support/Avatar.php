@@ -18,6 +18,9 @@ class Avatar
     /** What the form promises, in KB. */
     public const MAX_KB = 6144;
 
+    /** Decoding takes about 4 bytes per pixel, and a small file can claim a huge image. 50 MP still fits a 48 MP phone photo. */
+    public const MAX_PIXELS = 50_000_000;
+
     /** The limit that really applies: ours, or PHP's upload_max_filesize / post_max_size if either is smaller. */
     public static function maxKb(): int
     {
@@ -33,6 +36,10 @@ class Avatar
 
     public static function store(User $user, UploadedFile $file): string
     {
+        $size = @getimagesize($file->getRealPath());
+        if ($size !== false && $size[0] * $size[1] > self::MAX_PIXELS) {
+            throw new \RuntimeException('That image has too many pixels. Use a smaller one.');
+        }
         $src = @imagecreatefromstring((string) file_get_contents($file->getRealPath()));
         if ($src === false) {
             throw new \RuntimeException('That file is not an image we can read.');

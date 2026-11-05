@@ -596,5 +596,16 @@
     "Reloading…": "Перезагрузка…",
     "You can try again now.": "Теперь можно повторить.",
     "Your session expired. Try again.": "Сессия истекла. Повторите попытку.",
-    "You have been signed out.": "Вы вышли из аккаунта."
+    "You have been signed out.": "Вы вышли из аккаунта.",
+    "Account deleted": "Аккаунт удалён",
+    "Your account has been deleted": "Ваш аккаунт удалён",
+    "We're sad to see you go, but we respect your decision.": "Жаль, что вы уходите, но мы уважаем ваше решение.",
+    "Important: What happens next": "Важно: что будет дальше",
+    "Your HOP ID and everything it owned in every app have been deleted": "Ваш HOP ID и всё, что принадлежало ему в каждом приложении, удалены",
+    "Short links, bio pages and images that belonged to it are gone": "Короткие ссылки, страницы bio и изображения, принадлежавшие ему, больше не существуют",
+    "Your account data, analytics, and settings are gone": "Данные аккаунта, статистика и настройки больше не существуют",
+    "This action cannot be undone": "Это действие нельзя отменить",
+    "If you deleted your account by mistake or changed your mind, you can create a new account anytime.": "Если вы удалили аккаунт по ошибке или передумали, вы можете создать новый в любое время.",
+    "However, your previous data cannot be recovered.": "Однако прежние данные восстановить нельзя.",
+    "Thank you for using HOP. We hope to see you again someday.": "Спасибо, что пользовались HOP. Надеемся когда-нибудь увидеть вас снова."
 }

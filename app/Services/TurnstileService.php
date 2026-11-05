@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 class TurnstileService
 {
-    public function verify(?string $token, ?string $ip = null): bool
+    public function verify(mixed $token, ?string $ip = null): bool
     {
         $secret = config('services.turnstile.secret');
         if (! $secret) {
@@ -21,7 +21,7 @@ class TurnstileService
 
             return true;
         }
-        if (blank($token)) {
+        if (! is_string($token) || blank($token)) {
             return false;
         }
         try {

@@ -94,7 +94,7 @@ test('sso refuses an array state or return address with 400', function (string $
 test('the app launcher ignores an array target page', function () {
     config(['hop.sso_secret' => 'test-secret-that-is-long-enough-1234567890', 'hop.apps.linkhop.url' => 'https://link.example.com', 'hop.apps.linkhop.secret' => 'per-app-secret-that-is-long-enough-0987654321']);
     $this->actingAs(User::factory()->create())->withSession(['2fa_verified' => true])
-        ->get('/apps/linkhop?to[]=x')->assertRedirect('https://link.example.com/auth/sso');
+        ->get('/apps/linkhop?to[]=x')->assertRedirect('https://link.example.com/auth/sso?next=%2Fdashboard');
 });
 
 test('signed-in pages ignore array query values', function (string $uri) {

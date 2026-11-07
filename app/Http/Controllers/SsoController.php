@@ -67,7 +67,12 @@ class SsoController extends Controller
         $hopApp = HopApps::find($app);
         abort_if(! $hopApp || ! $hopApp->isConfigured(), 404);
 
-        return redirect()->away($hopApp->startUrl(($to = Input::text($request->query('to'))) ? '/'.ltrim($to, '/') : null));
+        $to = ltrim(Input::text($request->query('to')), '/');
+        if ($to !== '' && preg_match('#^[A-Za-z0-9/_-]+$#', $to) !== 1) {
+            abort(404);
+        }
+
+        return redirect()->away($hopApp->startUrl($to !== '' ? '/'.$to : $hopApp->defaultNext));
     }
 
     /**

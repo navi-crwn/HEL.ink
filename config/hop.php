@@ -32,6 +32,9 @@ return [
     // (the hub dashboard stays one click away). citadel.hel.ink works from anywhere
     // through Cloudflare Access; imperium.hel.ink only over Tailscale.
     'control_url' => rtrim((string) env('HOP_CONTROL_URL', ''), '/'),
+    // Imperium's own SSO secret (its HOP_SSO_SECRET). With HOP_CONTROL_URL, HopAppsSeeder registers
+    // Imperium as a hidden app that may call the admin API (App\Support\ControlRegistry).
+    'control_secret' => env('HOP_SSO_SECRET_IMPERIUM'),
 
     // Apps from the HOP ID registry table (`apps`), which has no column for these.
     'registry_taglines' => [
@@ -53,6 +56,8 @@ return [
             'menu_label' => 'Images',
             'pages' => ['default' => '/dashboard', 'upload' => '/'],
             'continue_page' => 'upload',
+            // account_api: PixelHop's own sign-in form asks the hub; admin_api: Imperium manages it.
+            'capabilities' => ['account_api', 'admin_api', 'events', 'metrics'],
             'sort_order' => 10,
         ],
         'notehop' => [
@@ -62,10 +67,11 @@ return [
             'menu_label' => 'Notes',
             'pages' => ['default' => '/dashboard', 'new' => '/'],
             'continue_page' => 'default',
+            'capabilities' => ['admin_api', 'events', 'metrics', 'zero_knowledge'],
             'sort_order' => 20,
         ],
-        'linkhop' => ['sort_order' => 30],
-        'biohop' => ['sort_order' => 40],
+        'linkhop' => ['capabilities' => ['admin_api', 'events'], 'sort_order' => 30],
+        'biohop' => ['capabilities' => ['account_api', 'admin_api', 'events', 'reports', 'settings', 'metrics'], 'sort_order' => 40],
         'filehop' => [
             'callback_path' => env('FILEHOP_SSO_CALLBACK', '/auth/sso/callback'),
             'start_path' => env('FILEHOP_SSO_START', '/auth/sso'),

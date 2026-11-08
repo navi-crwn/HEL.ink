@@ -4,6 +4,17 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ## [Unreleased]
 
+### Changed
+
+- hop-assets v4: FileHop gets a pixel mark like NoteHop and PixelHop, the same 8x8 map as its 3D preset, its floating tile and its PWA icons (plus an Apple touch icon); the home page, `/apps/filehop` and the manifest use v4. v3 is unchanged.
+- The HOP ID diagram on the home page shows every app on a ring around HOP ID (FileHop was missing; it showed four). Positions follow the number of apps, and the sign-in code no longer breaks over two lines on phones.
+- Privacy: a FileHop section (what it keeps when you sign in, and that files never reach the server) and a line under retention. Terms: FileHop in the list of member apps and its own section. FAQ: FileHop in the deletion answer, and the languages answer lists the nine languages (it named eight, with Arabic).
+
+### Added
+
+- `docs/adding-an-app.md`: every place to change when an app joins the family.
+- Translations of the FAQ, help, contact, about, app pages and status ticker texts that were shown in English in every language.
+
 ### Fixed
 
 - `GET /auth/google/consent` answers with the Google redirect while no terms version is required; it was a 500.

@@ -58,12 +58,12 @@
 
                 <details class="{{ $card }}">
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('How do I export my data or delete my account?') }}</summary>
-                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('Visit Settings in hub.hel.ink. Under "Backup & Export", you can download a full JSON dump of your account data. Under "Delete Account", you can permanently erase your profile and all associated data across LinkHop, BioHop, PixelHop, and NoteHop with zero recovery delay.') }}</p>
+                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('Visit Settings in hub.hel.ink. Under "Backup & Export", you can download a full JSON dump of your account data. Under "Delete Account", you can permanently erase your profile and all associated data across LinkHop, BioHop, PixelHop, NoteHop, and FileHop with zero recovery delay.') }}</p>
                 </details>
 
                 <details class="{{ $card }}">
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('What languages does HOP support?') }}</summary>
-                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('HOP officially supports 8 languages: English (default), Bahasa Indonesia, Chinese (中文), Spanish (Español), Arabic (العربية with full RTL support), Portuguese (Português), French (Français), and Japanese (日本語). NoteHop additionally supports Russian (Русский).') }}</p>
+                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('hel.ink and HOP ID are available in nine languages: English (default), Chinese (简体中文), German (Deutsch), Bahasa Indonesia, Japanese (日本語), Portuguese (Português do Brasil), Spanish (Español), French (Français), and Russian (Русский). Each app shows the languages it offers in its own language menu.') }}</p>
                 </details>
 
                 <details class="{{ $card }}">

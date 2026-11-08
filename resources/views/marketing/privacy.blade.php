@@ -74,6 +74,14 @@
                         {{ __('Encrypted notes (the default) and their attachments are encrypted in your browser with AES-GCM before anything is sent over the network. The server only receives ciphertext; the key stays in the URL fragment (#k=...) and is never sent to the server. A basic note is not encrypted this way: the server can read it. An encrypted note can be read only by people who have the full link, including the part after #. Share the link only with the people you want to read it.') }}
                     </p>
                 </div>
+
+                {{-- FileHop --}}
+                <div class="{{ $card }}">
+                    <h3 class="font-bold text-slate-900 dark:text-white">FileHop</h3>
+                    <p class="mt-2 text-xs leading-relaxed {{ $muted }}">
+                        {{ __('FileHop converts files inside your browser tab. Your files, their names and the results never reach the server, so there is nothing of yours to store, scan or share. If you sign in with HOP ID, FileHop keeps your HOP ID number, name and email and a session cookie; signing out, or being signed out by the hub, deletes the session.') }}
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -84,6 +92,7 @@
                 <p>&bull; <strong>{{ __('Click logs (LinkHop & BioHop):') }}</strong> {{ __('Detailed click logs are permanently purged after 30 days.') }}</p>
                 <p>&bull; <strong>{{ __('Authentication & Activity logs:') }}</strong> {{ __('Sign-in history and account activity records are deleted after 90 days.') }}</p>
                 <p>&bull; <strong>{{ __('Abuse reports:') }}</strong> {{ __('IP addresses attached to abuse reports are purged after 30 days; closed report records after 180 days.') }}</p>
+                <p>&bull; <strong>{{ __('FileHop:') }}</strong> {{ __('Files are never stored. A FileHop session is deleted when you sign out or when the hub signs you out.') }}</p>
                 <p>&bull; <strong>{{ __('Expired & Ephemeral Notes:') }}</strong> {{ __('Notes configured with self-destruct timers or read-burn limits are permanently deleted immediately upon expiration.') }}</p>
             </div>
         </div>

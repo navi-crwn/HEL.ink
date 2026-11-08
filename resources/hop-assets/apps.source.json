@@ -1,6 +1,6 @@
 {
-  "version": "v3",
-  "base": "https://hel.ink/hop-assets/v3/",
+  "version": "v4",
+  "base": "https://hel.ink/hop-assets/v4/",
   "assets": {
     "fonts_css": "fonts-amnesia.css",
     "float_css": "hop-float.css",
@@ -34,7 +34,7 @@
     {"slug": "notehop", "name": "NoteHop", "tagline": "Encrypted notes you share with a link.", "url": "https://note.hel.ink", "public_prefix": "https://n.hel.ink/", "color": "#10b981", "public": true, "repo": "https://github.com/navi-crwn/NoteHop",
      "icons": {"mark": "apps/notehop/mark.svg", "favicon": "apps/notehop/mark.svg", "icon_192": "apps/notehop/icon-192.png", "icon_512": "apps/notehop/icon-512.png"}},
     {"slug": "filehop", "name": "FileHop", "tagline": "Convert files in your browser; nothing is uploaded.", "url": "https://file.hel.ink", "color": "#f59e0b", "public": true, "repo": "https://github.com/navi-crwn/FileHop",
-     "icons": {"mark": "apps/filehop/mark.svg", "favicon": "apps/filehop/mark.svg", "icon_192": "apps/filehop/icon-192.png", "icon_512": "apps/filehop/icon-512.png"}},
+     "icons": {"mark": "apps/filehop/mark.svg", "favicon": "apps/filehop/mark.svg", "icon_192": "apps/filehop/icon-192.png", "icon_512": "apps/filehop/icon-512.png", "apple_touch": "apps/filehop/apple-touch-icon.png"}},
     {"slug": "imperium", "name": "Imperium", "tagline": "The HOP control panel.", "url": "", "color": "#f472b6", "public": false, "repo": "",
      "icons": {"mark": "apps/imperium/mark.svg"}}
   ]

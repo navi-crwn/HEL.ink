@@ -81,6 +81,24 @@ Sí, HEL.ink y todas las apps públicas de HOP tienen licencia MIT.
 
 <a id="family"></a>
 
+## Autoalojamiento
+
+<!-- self-hosting:start -->
+Todo lo que HEL.ink necesita está en repositorios públicos: ningún repositorio privado, ningún token y ninguna cuenta en hel.ink. Los detalles están en la guía de la familia: [docs/self-hosting.md](https://github.com/navi-crwn/HEL.ink/blob/main/docs/self-hosting.md) (en inglés).
+
+| Pieza | Para HEL.ink | Qué hace |
+| --- | --- | --- |
+| [HEL.ink](https://github.com/navi-crwn/HEL.ink) (hub, HOP ID) | Este repositorio | Cuentas e inicio de sesión para todas las apps |
+| [hop/auth](https://github.com/navi-crwn/hop-auth), [hop/ui](https://github.com/navi-crwn/hop-ui), [hop/safety](https://github.com/navi-crwn/hop-safety) | Incluidos en `packages/` | Código PHP compartido: inicio de sesión, interfaz, seguridad de enlaces |
+| [Imperium](https://github.com/navi-crwn/Imperium) | Opcional | Panel de administración de toda la familia; necesita el hub |
+| Fuentes y mosaicos de la familia | Nada que instalar: se cargan desde `hel.ink/hop-assets` | Sin hel.ink: fuentes del sistema, sin mosaicos flotantes |
+
+- **Orden de instalación**: primero este hub, luego las apps y, si lo quieres, Imperium. Registra las apps con `php artisan db:seed --class='Database\Seeders\HopAppsSeeder' --force`. [`install-family.sh`](install-family.sh) lo hace todo de una vez.
+- **Ajustes mínimos**: `APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `FILEHOP_URL` (uno por app); con Imperium: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`.
+- **Solo o en la familia**: el hub solo ofrece cuentas, inicio de sesión y el lanzador; el README de cada app indica qué más necesita.
+- **Sin Imperium**: el hub conserva sus propias páginas de administración de cuentas (`/admin`); Imperium añade el contenido, los reportes y el estado de las apps.
+<!-- self-hosting:end -->
+
 ## La familia HOP
 
 HEL.ink es el núcleo de una familia de herramientas web abiertas que respetan tu privacidad.

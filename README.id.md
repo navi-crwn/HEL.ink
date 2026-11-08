@@ -84,6 +84,24 @@ Saat Anda keluar dari hub, sesi lokal diakhiri dan sinyal pemutusan dikirimkan k
 
 <a id="keluarga-hop"></a>
 
+## Hosting sendiri
+
+<!-- self-hosting:start -->
+Semua yang dibutuhkan HEL.ink ada di repositori publik: tanpa repositori privat, tanpa token, dan tanpa akun hel.ink. Rinciannya ada di panduan keluarga: [docs/self-hosting.md](https://github.com/navi-crwn/HEL.ink/blob/main/docs/self-hosting.md) (bahasa Inggris).
+
+| Komponen | Untuk HEL.ink | Fungsinya |
+| --- | --- | --- |
+| [HEL.ink](https://github.com/navi-crwn/HEL.ink) (hub, HOP ID) | Repositori ini | Akun dan proses masuk untuk semua aplikasi |
+| [hop/auth](https://github.com/navi-crwn/hop-auth), [hop/ui](https://github.com/navi-crwn/hop-ui), [hop/safety](https://github.com/navi-crwn/hop-safety) | Sudah disertakan di `packages/` | Kode PHP bersama: proses masuk, antarmuka, keamanan tautan |
+| [Imperium](https://github.com/navi-crwn/Imperium) | Opsional | Panel admin untuk seluruh keluarga; butuh hub |
+| Font dan ubin keluarga | Tidak perlu dipasang: dimuat dari `hel.ink/hop-assets` | Tanpa hel.ink: font sistem, tanpa ubin melayang |
+
+- **Urutan pemasangan**: hub ini dulu, lalu aplikasinya, lalu Imperium bila perlu. Daftarkan aplikasi dengan `php artisan db:seed --class='Database\Seeders\HopAppsSeeder' --force`. [`install-family.sh`](install-family.sh) mengerjakan semuanya sekaligus.
+- **Pengaturan minimum**: `APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `FILEHOP_URL` (satu per aplikasi); dengan Imperium: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`.
+- **Sendiri atau dalam keluarga**: hub sendiri sudah memberi akun, proses masuk, dan peluncur; README tiap aplikasi menjelaskan apa lagi yang dibutuhkannya.
+- **Tanpa Imperium**: hub tetap punya halaman admin akunnya sendiri (`/admin`); Imperium menambahkan konten, laporan, dan kesehatan aplikasi.
+<!-- self-hosting:end -->
+
 ## Keluarga HOP
 
 HEL.ink adalah bagian dari keluarga aplikasi web **HOP** open-source di balik [hel.ink](https://hel.ink).

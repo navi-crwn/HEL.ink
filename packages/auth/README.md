@@ -71,7 +71,7 @@ HOP_SSO_SECRET_PREV=previous_secret_key_during_rotation_window
 | **PixelHop** | `p.hel.ink` (soon `pixel.hel.ink`) | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | Image & media hosting, EXIF/GPS scrubbing, studio |
 | **NoteHop** | `note.hel.ink` | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | Zero-knowledge client-encrypted live notes & docs |
 | **FileHop** | `file.hel.ink` | [navi-crwn/FileHop](https://github.com/navi-crwn/FileHop) | File conversion in the browser; files are never uploaded |
-| **Imperium** | Internal / Tailscale | Private | Unified admin & operations console across all apps |
+| **Imperium** | Not public-facing (optional, for admins) | [navi-crwn/Imperium](https://github.com/navi-crwn/Imperium) | Unified admin & operations console across all apps |
 
 ---
 

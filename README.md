@@ -110,6 +110,24 @@ Yes. All HOP applications are designed to share a database and live harmoniously
 
 <a id="family"></a>
 
+## Self-hosting
+
+<!-- self-hosting:start -->
+Everything HEL.ink needs is in public repositories: no private repository, no token and no hel.ink account. The family guide has the details: [docs/self-hosting.md](https://github.com/navi-crwn/HEL.ink/blob/main/docs/self-hosting.md).
+
+| Piece | For HEL.ink | What it does |
+| --- | --- | --- |
+| [HEL.ink](https://github.com/navi-crwn/HEL.ink) (hub, HOP ID) | This repository | Accounts and sign-in for every app |
+| [hop/auth](https://github.com/navi-crwn/hop-auth), [hop/ui](https://github.com/navi-crwn/hop-ui), [hop/safety](https://github.com/navi-crwn/hop-safety) | Bundled in `packages/` | Shared PHP code: sign-in, interface, link safety |
+| [Imperium](https://github.com/navi-crwn/Imperium) | Optional | Admin panel for the whole family; needs the hub |
+| Family fonts and tiles | Nothing to install: loaded from `hel.ink/hop-assets` | Without hel.ink: system fonts, no floating tiles |
+
+- **Install order**: this hub first, then the apps, then Imperium if you want it. Register the apps with `php artisan db:seed --class='Database\Seeders\HopAppsSeeder' --force`. [`install-family.sh`](install-family.sh) does all of it in one go.
+- **Minimum settings**: `APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `FILEHOP_URL` (one per app); with Imperium: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`.
+- **Alone or in the family**: the hub alone gives accounts, sign-in and the launcher; each app's README says what else it needs.
+- **Without Imperium**: the hub keeps its own admin pages for accounts (`/admin`); Imperium adds the apps' content, reports and health.
+<!-- self-hosting:end -->
+
 ## The HOP family
 
 HEL.ink is part of the **HOP** family of self-hostable open-source apps behind [hel.ink](https://hel.ink).
@@ -124,7 +142,7 @@ HEL.ink is part of the **HOP** family of self-hostable open-source apps behind [
 | **PixelHop** | [pixel.hel.ink](https://pixel.hel.ink) · `p.hel.ink/…` | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | Image hosting with albums and direct links. |
 | **NoteHop** | [note.hel.ink](https://note.hel.ink) · `n.hel.ink/…` | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | Encrypted notes you share with a link. |
 | **FileHop** | [file.hel.ink](https://file.hel.ink) | [navi-crwn/FileHop](https://github.com/navi-crwn/FileHop) | Convert files in your browser; nothing is uploaded. |
-| **Imperium** | private (owner only) | private | The HOP control panel. |
+| **Imperium** | not public-facing: optional, for admins | [navi-crwn/Imperium](https://github.com/navi-crwn/Imperium) | The HOP control panel. |
 <!-- hop-family:end -->
 
 ## Changelog

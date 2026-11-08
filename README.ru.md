@@ -22,6 +22,24 @@ curl -fsSL https://raw.githubusercontent.com/navi-crwn/HEL.ink/main/install.sh |
 
 Изменения перечислены в [CHANGELOG.md](CHANGELOG.md).
 
+## Собственный хостинг
+
+<!-- self-hosting:start -->
+Всё, что нужно HEL.ink, лежит в публичных репозиториях: не нужны ни приватный репозиторий, ни токен, ни учётная запись на hel.ink. Подробности — в руководстве по семейству: [docs/self-hosting.md](https://github.com/navi-crwn/HEL.ink/blob/main/docs/self-hosting.md) (на английском).
+
+| Компонент | Для HEL.ink | Зачем |
+| --- | --- | --- |
+| [HEL.ink](https://github.com/navi-crwn/HEL.ink) (хаб, HOP ID) | Этот репозиторий | Учётные записи и вход для всех приложений |
+| [hop/auth](https://github.com/navi-crwn/hop-auth), [hop/ui](https://github.com/navi-crwn/hop-ui), [hop/safety](https://github.com/navi-crwn/hop-safety) | Уже лежат в `packages/` | Общий PHP-код: вход, интерфейс, безопасность ссылок |
+| [Imperium](https://github.com/navi-crwn/Imperium) | Необязательно | Панель администратора для всего семейства; нужен хаб |
+| Шрифты и плитки семейства | Ничего устанавливать не нужно: загружаются с `hel.ink/hop-assets` | Без hel.ink: системные шрифты, без плавающих плиток |
+
+- **Порядок установки**: сначала этот хаб, затем приложения, затем при желании Imperium. Приложения регистрирует `php artisan db:seed --class='Database\Seeders\HopAppsSeeder' --force`. [`install-family.sh`](install-family.sh) делает всё за один раз.
+- **Минимальные настройки**: `APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `FILEHOP_URL` (по одному на приложение); с Imperium: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`.
+- **Отдельно или в семействе**: хаб сам по себе даёт учётные записи, вход и лаунчер; что ещё нужно каждому приложению, написано в его README.
+- **Без Imperium**: у хаба остаются свои страницы администрирования учётных записей (`/admin`); Imperium добавляет контент, жалобы и состояние приложений.
+<!-- self-hosting:end -->
+
 ## Подробнее
 
 Полная документация (возможности, настройки, безопасность) — на английском в [README](README.md).

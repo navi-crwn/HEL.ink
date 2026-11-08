@@ -833,5 +833,8 @@
     "Files are never stored. A FileHop session is deleted when you sign out or when the hub signs you out.": "Os arquivos nunca são guardados. Uma sessão do FileHop é apagada quando você sai ou quando o hub encerra sua sessão.",
     "Files are converted in your browser, on your own device. They are never uploaded, so HOP cannot see, recover or restore a file or a result: keep your originals.": "Os arquivos são convertidos no seu navegador, no seu próprio dispositivo. Eles nunca são enviados, então o HOP não consegue ver, recuperar nem restaurar um arquivo ou um resultado: guarde seus originais.",
     "Use FileHop only on files you have the right to use and convert.": "Use o FileHop apenas com arquivos que você tem o direito de usar e converter.",
-    "Results are provided as they are. Check an important result before you rely on it.": "Os resultados são fornecidos como estão. Confira um resultado importante antes de confiar nele."
+    "Results are provided as they are. Check an important result before you rely on it.": "Os resultados são fornecidos como estão. Confira um resultado importante antes de confiar nele.",
+    "HOP ID dashboard": "Painel do HOP ID",
+    "Admin": "Admin",
+    "opens in a new tab": "abre em uma nova aba"
 }

@@ -833,5 +833,8 @@
     "Files are never stored. A FileHop session is deleted when you sign out or when the hub signs you out.": "ファイルが保存されることはありません。FileHop のセッションは、ログアウトしたとき、またはハブによってログアウトされたときに削除されます。",
     "Files are converted in your browser, on your own device. They are never uploaded, so HOP cannot see, recover or restore a file or a result: keep your originals.": "ファイルはあなた自身の端末上のブラウザーで変換されます。アップロードされることは一切ないため、HOP がファイルや変換結果を見たり、復旧・復元したりすることはできません。元のファイルは手元に残しておいてください。",
     "Use FileHop only on files you have the right to use and convert.": "FileHop は、使用および変換する権利のあるファイルにのみ使ってください。",
-    "Results are provided as they are. Check an important result before you rely on it.": "変換結果は現状のまま提供されます。重要な結果は、頼りにする前に確認してください。"
+    "Results are provided as they are. Check an important result before you rely on it.": "変換結果は現状のまま提供されます。重要な結果は、頼りにする前に確認してください。",
+    "HOP ID dashboard": "HOP ID ダッシュボード",
+    "Admin": "管理者",
+    "opens in a new tab": "新しいタブで開きます"
 }

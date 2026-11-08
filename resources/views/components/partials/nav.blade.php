@@ -51,4 +51,4 @@
     @endif
 </ul>
 {{-- The apps: one list in the sidebar, from the shared manifest; the top bar keeps settings-type controls only. --}}
-<x-hop::family-nav app="hub" :label="__('Apps')" />
+<x-hop::family-nav app="hub" :label="__('HOP family')" />

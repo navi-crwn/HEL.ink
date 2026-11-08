@@ -833,5 +833,8 @@
     "Files are never stored. A FileHop session is deleted when you sign out or when the hub signs you out.": "File tidak pernah disimpan. Sesi FileHop dihapus saat Anda keluar atau saat hub mengeluarkan Anda.",
     "Files are converted in your browser, on your own device. They are never uploaded, so HOP cannot see, recover or restore a file or a result: keep your originals.": "File dikonversi di browser Anda, di perangkat Anda sendiri. File tidak pernah diunggah, sehingga HOP tidak dapat melihat, memulihkan, atau mengembalikan file maupun hasilnya: simpan file asli Anda.",
     "Use FileHop only on files you have the right to use and convert.": "Gunakan FileHop hanya untuk file yang berhak Anda gunakan dan konversi.",
-    "Results are provided as they are. Check an important result before you rely on it.": "Hasil disediakan sebagaimana adanya. Periksa hasil yang penting sebelum Anda mengandalkannya."
+    "Results are provided as they are. Check an important result before you rely on it.": "Hasil disediakan sebagaimana adanya. Periksa hasil yang penting sebelum Anda mengandalkannya.",
+    "HOP ID dashboard": "Dasbor HOP ID",
+    "Admin": "Admin",
+    "opens in a new tab": "terbuka di tab baru"
 }

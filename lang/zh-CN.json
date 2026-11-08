@@ -833,5 +833,8 @@
     "Files are never stored. A FileHop session is deleted when you sign out or when the hub signs you out.": "文件从不存储。当你退出登录或被中心退出登录时，FileHop 会话即被删除。",
     "Files are converted in your browser, on your own device. They are never uploaded, so HOP cannot see, recover or restore a file or a result: keep your originals.": "文件在你的浏览器中、在你自己的设备上转换。文件从不上传，因此 HOP 无法查看、找回或恢复任何文件或转换结果：请保留好你的原始文件。",
     "Use FileHop only on files you have the right to use and convert.": "请仅对你有权使用和转换的文件使用 FileHop。",
-    "Results are provided as they are. Check an important result before you rely on it.": "转换结果按现状提供。在依赖重要结果之前，请先自行检查。"
+    "Results are provided as they are. Check an important result before you rely on it.": "转换结果按现状提供。在依赖重要结果之前，请先自行检查。",
+    "HOP ID dashboard": "HOP ID 仪表盘",
+    "Admin": "管理员",
+    "opens in a new tab": "在新标签页中打开"
 }

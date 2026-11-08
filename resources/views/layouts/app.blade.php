@@ -38,10 +38,11 @@
                        @click="if ($event.target.closest('a')) nav = false">
                     <div class="glass flex h-full flex-col rounded-3xl">
                         <div class="flex h-16 items-center justify-between px-5">
-                            <a href="{{ route('home') }}" class="flex items-center gap-2.5">
+                            {{-- Signed in, the wordmark is the way back to the HOP ID dashboard, not to the public home page. --}}
+                            <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5" title="{{ __('HOP ID dashboard') }}">
                                 <x-wordmark class="h-10 w-auto" />
                                 @if ($isAdmin)
-                                    <span class="chip-blue">Admin</span>
+                                    <span class="chip-blue">{{ __('Admin') }}</span>
                                 @endif
                             </a>
                             <button type="button" class="icon-btn lg:hidden" @click="nav = false" aria-label="Close menu">

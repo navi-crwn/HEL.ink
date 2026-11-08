@@ -11,8 +11,10 @@
     @foreach ($family as $item)
         @continue($item['current'])
         @php
-            // The hub opens its dashboard; an app opens through its SSO start when this app knows one.
-            $href = $item['slug'] === 'hub' ? $hub.'/dashboard' : ($configured[$item['slug']]['open'] ?? $item['url']);
+            // The hub opens its dashboard; an app opens through its SSO start when this app knows one,
+            // otherwise through the hub's launcher (/apps/{slug}), which signs the person in there too.
+            // The bare app address would land them signed out in an app they have not used yet.
+            $href = $item['slug'] === 'hub' ? $hub.'/dashboard' : ($configured[$item['slug']]['open'] ?? $hub.'/apps/'.$item['slug']);
             $name = $item['slug'] === 'hub' ? 'HOP ID' : $item['name'];
         @endphp
         <li>

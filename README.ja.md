@@ -81,6 +81,24 @@ Hub からログアウトするとローカルセッションが破棄され、�
 
 <a id="family"></a>
 
+## セルフホスティング
+
+<!-- self-hosting:start -->
+HEL.ink に必要なものはすべて公開リポジトリにあります。非公開リポジトリ、トークン、hel.ink のアカウントは不要です。詳しくはファミリーガイド [docs/self-hosting.md](https://github.com/navi-crwn/HEL.ink/blob/main/docs/self-hosting.md)（英語）を参照してください。
+
+| 構成要素 | HEL.ink にとって | 役割 |
+| --- | --- | --- |
+| [HEL.ink](https://github.com/navi-crwn/HEL.ink) (ハブ、HOP ID) | このリポジトリ | すべてのアプリのアカウントとサインイン |
+| [hop/auth](https://github.com/navi-crwn/hop-auth), [hop/ui](https://github.com/navi-crwn/hop-ui), [hop/safety](https://github.com/navi-crwn/hop-safety) | `packages/` に同梱 | 共有 PHP コード：サインイン、UI、リンクの安全性 |
+| [Imperium](https://github.com/navi-crwn/Imperium) | 任意 | ファミリー全体の管理パネル。ハブが必要 |
+| ファミリーのフォントとタイル | インストール不要：`hel.ink/hop-assets` から読み込み | hel.ink がなければシステムフォント、浮遊タイルなし |
+
+- **インストール順**：まずこのハブ、次にアプリ、必要なら最後に Imperium。アプリの登録は `php artisan db:seed --class='Database\Seeders\HopAppsSeeder' --force`。[`install-family.sh`](install-family.sh) なら一度にすべて行います。
+- **最小限の設定**：`APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `FILEHOP_URL` (アプリごとに 1 つ); Imperium 利用時: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`。
+- **単体かファミリーか**：ハブ単体でアカウント、サインイン、ランチャーが使えます。各アプリに他に何が必要かは、それぞれの README にあります。
+- **Imperium なしの場合**：ハブにはアカウント用の独自の管理ページ（`/admin`）があります。Imperium はアプリのコンテンツ、通報、稼働状況を加えます。
+<!-- self-hosting:end -->
+
 ## HOP ファミリー
 
 HEL.ink はプライバシーを重視したオープンソース Web アプリファミリーの中心です。

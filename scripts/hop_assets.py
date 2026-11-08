@@ -78,7 +78,10 @@ def family_table() -> str:
                 addr.append(f"`{host(prefix)}/…`")
             repo = f"[{app['repo'].split('github.com/', 1)[-1]}]({app['repo']})"
         else:
-            addr, repo = ["private (owner only)"], "private"
+            # Not public-facing (Imperium: the optional admin panel), but its code is public too.
+            source = app.get("repo") or f"https://github.com/navi-crwn/{app['name']}"
+            addr = ["not public-facing: optional, for admins"]
+            repo = f"[{source.split('github.com/', 1)[-1]}]({source})"
         rows.append(f"| **{app['name']}** | {' · '.join(addr)} | {repo} | {app['tagline']} |")
     rows.append("<!-- hop-family:end -->")
     return "\n".join(rows) + "\n"

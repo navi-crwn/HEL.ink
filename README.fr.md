@@ -81,6 +81,24 @@ Oui, HEL.ink et toutes les applications publiques de HOP sont publiées sous lic
 
 <a id="family"></a>
 
+## Auto-hébergement
+
+<!-- self-hosting:start -->
+Tout ce dont HEL.ink a besoin se trouve dans des dépôts publics : aucun dépôt privé, aucun jeton et aucun compte hel.ink. Les détails sont dans le guide de la famille : [docs/self-hosting.md](https://github.com/navi-crwn/HEL.ink/blob/main/docs/self-hosting.md) (en anglais).
+
+| Élément | Pour HEL.ink | Rôle |
+| --- | --- | --- |
+| [HEL.ink](https://github.com/navi-crwn/HEL.ink) (hub, HOP ID) | Ce dépôt | Comptes et connexion pour toutes les apps |
+| [hop/auth](https://github.com/navi-crwn/hop-auth), [hop/ui](https://github.com/navi-crwn/hop-ui), [hop/safety](https://github.com/navi-crwn/hop-safety) | Fournis dans `packages/` | Code PHP partagé : connexion, interface, sécurité des liens |
+| [Imperium](https://github.com/navi-crwn/Imperium) | Facultatif | Panneau d'administration de toute la famille ; nécessite le hub |
+| Polices et tuiles de la famille | Rien à installer : chargés depuis `hel.ink/hop-assets` | Sans hel.ink : polices système, pas de tuiles flottantes |
+
+- **Ordre d'installation** : d'abord ce hub, puis les apps, puis Imperium si vous le voulez. Enregistrez les apps avec `php artisan db:seed --class='Database\Seeders\HopAppsSeeder' --force`. [`install-family.sh`](install-family.sh) fait tout d'un coup.
+- **Réglages minimaux** : `APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `FILEHOP_URL` (une par app); avec Imperium: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`.
+- **Seul ou en famille** : le hub seul fournit les comptes, la connexion et le lanceur ; le README de chaque app indique ce dont elle a besoin en plus.
+- **Sans Imperium** : le hub garde ses propres pages d'administration des comptes (`/admin`) ; Imperium ajoute le contenu, les signalements et l'état des apps.
+<!-- self-hosting:end -->
+
 ## La famille HOP
 
 HEL.ink est le hub d'une famille d'outils web ouverts qui respectent votre vie privée.

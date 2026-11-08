@@ -259,6 +259,10 @@ for a in "${APPLIST[@]}"; do
 $REPO  http://localhost:$P"
 done
 
+# Rows in the hub's app registry with the capabilities each app needs (account events, its own
+# sign-in form, the admin API for Imperium). Safe to repeat: an existing row is left alone.
+step "Registering the apps at the hub" bash -c 'cd "$1" && "$2" artisan db:seed --class="Database\\Seeders\\HopAppsSeeder" --force' _ "$BASE/hub" "$PHP_BIN"
+
 if [ "$DRY" = 0 ]; then
   {
     echo '#!/usr/bin/env bash'

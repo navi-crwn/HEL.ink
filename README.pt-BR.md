@@ -100,6 +100,24 @@ As mudanças estão listadas em [CHANGELOG.md](CHANGELOG.md).
 
 <a id="security"></a>
 
+## Hospedagem própria
+
+<!-- self-hosting:start -->
+Tudo o que o HEL.ink precisa está em repositórios públicos: nenhum repositório privado, nenhum token e nenhuma conta no hel.ink. Os detalhes estão no guia da família: [docs/self-hosting.md](https://github.com/navi-crwn/HEL.ink/blob/main/docs/self-hosting.md) (em inglês).
+
+| Peça | Para o HEL.ink | O que faz |
+| --- | --- | --- |
+| [HEL.ink](https://github.com/navi-crwn/HEL.ink) (hub, HOP ID) | Este repositório | Contas e login para todos os apps |
+| [hop/auth](https://github.com/navi-crwn/hop-auth), [hop/ui](https://github.com/navi-crwn/hop-ui), [hop/safety](https://github.com/navi-crwn/hop-safety) | Incluídos em `packages/` | Código PHP compartilhado: login, interface, segurança de links |
+| [Imperium](https://github.com/navi-crwn/Imperium) | Opcional | Painel de administração de toda a família; precisa do hub |
+| Fontes e blocos da família | Nada a instalar: carregados de `hel.ink/hop-assets` | Sem hel.ink: fontes do sistema, sem blocos flutuantes |
+
+- **Ordem de instalação**: primeiro este hub, depois os apps e, se quiser, o Imperium. Registre os apps com `php artisan db:seed --class='Database\Seeders\HopAppsSeeder' --force`. O [`install-family.sh`](install-family.sh) faz tudo de uma vez.
+- **Configuração mínima**: `APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `FILEHOP_URL` (um por app); com o Imperium: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`.
+- **Sozinho ou na família**: o hub sozinho oferece contas, login e o lançador; o README de cada app diz do que mais ele precisa.
+- **Sem o Imperium**: o hub mantém suas próprias páginas de administração de contas (`/admin`); o Imperium acrescenta o conteúdo, as denúncias e a saúde dos apps.
+<!-- self-hosting:end -->
+
 ## Ajuda e suporte
 
 Encontrou um problema ou precisa de ajuda? Abra uma issue no <a href="https://github.com/navi-crwn/HEL.ink/issues">GitHub Issues</a>ou envie uma pull request.

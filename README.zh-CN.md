@@ -81,6 +81,24 @@ HOP ID 是 HOP 家族的集中认证系统。拥有一个账户即可使用所�
 
 <a id="family"></a>
 
+## 自行托管
+
+<!-- self-hosting:start -->
+HEL.ink 所需的一切都在公开仓库中：不需要私有仓库、令牌或 hel.ink 账户。详细说明见家族指南：[docs/self-hosting.md](https://github.com/navi-crwn/HEL.ink/blob/main/docs/self-hosting.md)（英文）。
+
+| 组件 | 对 HEL.ink 而言 | 作用 |
+| --- | --- | --- |
+| [HEL.ink](https://github.com/navi-crwn/HEL.ink) (中心，HOP ID) | 就是本仓库 | 所有应用的账户与登录 |
+| [hop/auth](https://github.com/navi-crwn/hop-auth), [hop/ui](https://github.com/navi-crwn/hop-ui), [hop/safety](https://github.com/navi-crwn/hop-safety) | 已附带在 `packages/` 中 | 共享 PHP 代码：登录、界面、链接安全 |
+| [Imperium](https://github.com/navi-crwn/Imperium) | 可选 | 整个家族的管理面板；需要中心 |
+| 家族字体与浮动图块 | 无需安装：从 `hel.ink/hop-assets` 加载 | 无法访问 hel.ink 时：使用系统字体，没有浮动图块 |
+
+- **安装顺序**：先装本中心，再装各应用，需要时最后装 Imperium。用 `php artisan db:seed --class='Database\Seeders\HopAppsSeeder' --force` 登记各应用。[`install-family.sh`](install-family.sh) 可一次完成全部步骤。
+- **最少设置**：`APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `FILEHOP_URL` (每个应用一个); 使用 Imperium 时: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`。
+- **单独运行或加入家族**：单独的中心即可提供账户、登录与启动器；各应用的 README 会说明还需要什么。
+- **没有 Imperium 时**：中心保留自己的账户管理页面（`/admin`）；Imperium 另外提供各应用的内容、举报和健康状态。
+<!-- self-hosting:end -->
+
 ## HOP 家族
 
 HEL.ink 是注重隐私的开源应用家族中心。

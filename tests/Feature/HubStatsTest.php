@@ -201,7 +201,7 @@ test('/stats/github.json is numbers only, publicly cacheable, and calm when empt
 });
 
 test('/stats/uptime.json: the percentage and 30 daily buckets come from the watchdog probes', function () {
-    foreach (['biohop', 'pixelhop', 'notehop'] as $slug) {
+    foreach (['biohop', 'pixelhop', 'notehop', 'filehop'] as $slug) {
         config()->set("hop.apps.$slug.enabled", false);
     }
     config()->set('hop.apps.linkhop.url', 'https://link.example.com');

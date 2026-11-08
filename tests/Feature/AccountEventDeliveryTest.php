@@ -98,11 +98,12 @@ test('the seeder does not invent a secret: without one in the environment no row
 
 test('a configured event app with no row, or a row without events, is a warning; a good row is not', function () {
     eventEnv();
-    expect(EventRegistry::warnings())->toHaveCount(4)
+    expect(EventRegistry::warnings())->toHaveCount(5)
         ->and(EventRegistry::warnings()[0])->toContain('pixelhop')->toContain('no row');
 
     HopApp::factory()->pixelhop(EVENT_PIXEL_SECRET)->create(['capabilities' => ['account_api']]);
     HopApp::factory()->notehop(EVENT_NOTE_SECRET)->create(['capabilities' => ['events']]);
+    HopApp::factory()->filehop(EVENT_FILE_SECRET)->create();
     HopApp::factory()->create(['slug' => 'linkhop', 'url' => 'https://link.example.com', 'secret' => EVENT_LINK_SECRET, 'capabilities' => ['events']]);
     HopApp::factory()->create(['slug' => 'biohop', 'url' => 'https://bio.example.com', 'secret' => EVENT_BIO_SECRET, 'capabilities' => ['events']]);
     $warnings = EventRegistry::warnings();

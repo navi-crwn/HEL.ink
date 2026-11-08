@@ -26,13 +26,11 @@ test('the home page has one interactive section per public product in the manife
     expect($html)->not->toContain('data-home-tabs')->toContain('data-hx-acct');
 });
 
-test('FileHop has its own home section, product page and demo', function () {
+test('FileHop has its own home section, 3D tile and demo', function () {
     $html = $this->get('/')->assertOk()->getContent();
 
     expect($html)->toContain('data-app-section="filehop"')->toContain('data-home-demo="filehop"')
-        ->toContain('https://file.hel.ink')->toContain('Five apps');
-    $this->withoutVite()->get('/apps/filehop')->assertOk()->assertSee('FileHop')->assertSee('Convert a file')
-        ->assertSee('/images/apps/filehop.webp', false);
+        ->toContain('data-hop-hero="filehop"')->toContain('https://file.hel.ink')->toContain('Five apps');
 });
 
 test('the home page has the HOP sections and no back link', function () {

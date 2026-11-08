@@ -50,6 +50,7 @@ test('hel.ink/apps/{app} is a product page; hub.hel.ink/apps/{app} still opens t
     foreach (['linkhop' => 'LinkHop', 'biohop' => 'BioHop', 'pixelhop' => 'PixelHop', 'notehop' => 'NoteHop', 'filehop' => 'FileHop'] as $slug => $name) {
         $this->withoutVite()->get('https://hel.test/apps/'.$slug)->assertOk()->assertSee($name)->assertSee('Back to HOP');
     }
+    $this->withoutVite()->get('https://hel.test/apps/filehop')->assertSee('Convert a file')->assertSee('/images/apps/filehop.webp', false);
     $this->get('https://hel.test/apps/imperium')->assertNotFound();
     $this->get('https://hel.test/apps')->assertStatus(301);
     // The launcher's SSO route is untouched: a guest is sent to sign in.

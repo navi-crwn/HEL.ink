@@ -1,5 +1,6 @@
 <?php
 
+use App\Support\FamilyStory;
 use Hop\Ui\Assets;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -85,7 +86,7 @@ test('the new home scenes are complete as plain HTML: one account, numbers, ques
     $html = $this->get('/')->assertOk()->getContent();
 
     // "One account": the hub, every public app, all signed in, the code and the note are in the markup
-    expect(substr_count($html, 'data-hx-node'))->toBe(count(\App\Support\FamilyStory::APPS))
+    expect(substr_count($html, 'data-hx-node'))->toBe(count(FamilyStory::APPS))
         ->and($html)->toContain('data-hx-code')->toContain('data-hx-st')->toContain('data-signed-out=');
     // the running line, the four numbers and six question cards
     expect($html)->toContain('data-hx-marq')->toContain('data-hx-nums')->and(substr_count($html, 'class="hx-cell hx-q"'))->toBe(6);

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\HopApp;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\URL;
@@ -116,7 +117,20 @@ class SsoIssuerTest extends TestCase
     public function test_open_sends_to_the_apps_sso_start(): void
     {
         $this->signedIn()->get('/apps/pixelhop?to=upload')->assertRedirect('https://p.example.com/auth/helink?next=%2Fupload');
-        $this->signedIn()->get('/apps/linkhop')->assertRedirect('https://link.example.com/auth/sso');
+        $this->signedIn()->get('/apps/linkhop')->assertRedirect('https://link.example.com/auth/sso?next=%2Fdashboard');
+    }
+
+    public function test_open_notehop_uses_its_registry_dashboard_by_default(): void
+    {
+        HopApp::factory()->notehop()->create();
+        config()->set('hop.apps.notehop.url', 'https://note.example.com');
+
+        $this->signedIn()->get('/apps/notehop')
+            ->assertRedirect('https://note.example.com/auth/sso?next=%2Fdashboard');
+        $this->signedIn()->get('/apps/notehop?to=/')
+            ->assertRedirect('https://note.example.com/auth/sso?next=%2Fdashboard');
+        $this->signedIn()->get('/apps/notehop?to=//evil.example')
+            ->assertNotFound();
     }
 
     public function test_new_account_from_an_app_goes_back_after_verifying(): void

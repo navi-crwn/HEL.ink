@@ -27,6 +27,7 @@ final class HopApp implements \JsonSerializable
         public readonly ?string $repo,
         public readonly bool $hidden = false,
         public readonly array $capabilities = [],
+        public readonly ?string $defaultNext = null,
     ) {}
 
     /**
@@ -70,6 +71,7 @@ final class HopApp implements \JsonSerializable
             color: (string) ($c['color'] ?? 'indigo'),
             publicPrefix: $c['public_prefix'] ?? null,
             repo: $c['repo'] ?? null,
+            defaultNext: '/dashboard',
         );
     }
 
@@ -97,6 +99,7 @@ final class HopApp implements \JsonSerializable
                 repo: $display['repo'] ?? null,
                 hidden: false,
                 capabilities: (array) ($m->capabilities ?? []),
+                defaultNext: $m->page($m->continue_page),
             );
         }
 
@@ -119,6 +122,7 @@ final class HopApp implements \JsonSerializable
             repo: config('hop.registry_repos.'.$slug),
             hidden: (bool) $m->getAttribute('hidden'),
             capabilities: (array) ($m->capabilities ?? []),
+            defaultNext: $m->page($m->continue_page),
         );
     }
 

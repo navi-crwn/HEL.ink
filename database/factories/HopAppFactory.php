@@ -40,6 +40,13 @@ class HopAppFactory extends Factory
             'pages' => ['default' => '/dashboard', 'new' => '/'], 'continue_page' => 'default', 'secret' => $secret, 'sort_order' => 20]);
     }
 
+    public function filehop(string $secret = 'filehop-secret-that-is-long-enough-12345'): static
+    {
+        return $this->state(['slug' => 'filehop', 'name' => 'FileHop', 'menu_label' => 'Files', 'icon' => 'file', 'color' => 'amber',
+            'url' => 'https://file.example.com', 'callback_path' => '/auth/sso/callback', 'start_path' => '/auth/sso',
+            'pages' => ['default' => '/'], 'continue_page' => 'default', 'secret' => $secret, 'sort_order' => 50]);
+    }
+
     /** The control center: hidden from menus, allowed to use the admin API. */
     public function imperium(string $secret = 'imperium-secret-that-is-long-enough-1234'): static
     {

@@ -47,7 +47,7 @@ test('the hub host serves accounts', function () {
 });
 
 test('hel.ink/apps/{app} is a product page; hub.hel.ink/apps/{app} still opens the app', function () {
-    foreach (['linkhop' => 'LinkHop', 'biohop' => 'BioHop', 'pixelhop' => 'PixelHop', 'notehop' => 'NoteHop'] as $slug => $name) {
+    foreach (['linkhop' => 'LinkHop', 'biohop' => 'BioHop', 'pixelhop' => 'PixelHop', 'notehop' => 'NoteHop', 'filehop' => 'FileHop'] as $slug => $name) {
         $this->withoutVite()->get('https://hel.test/apps/'.$slug)->assertOk()->assertSee($name)->assertSee('Back to HOP');
     }
     $this->get('https://hel.test/apps/imperium')->assertNotFound();

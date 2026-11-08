@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Queue;
 
 const EVENT_PIXEL_SECRET = 'pixel-secret-that-is-long-enough-1234567890';
 const EVENT_NOTE_SECRET = 'notehop-secret-that-is-long-enough-12345';
+const EVENT_FILE_SECRET = 'filehop-secret-that-is-long-enough-12345';
 const EVENT_LINK_SECRET = 'linkhop-secret-that-is-long-enough-1234567';
 const EVENT_BIO_SECRET = 'biohop-secret-that-is-long-enough-123456789';
 
@@ -29,6 +30,8 @@ function eventEnv(): void
     config()->set('hop.apps.pixelhop.secret', EVENT_PIXEL_SECRET);
     config()->set('hop.apps.notehop.url', 'https://note.example.com');
     config()->set('hop.event_apps.notehop.secret', EVENT_NOTE_SECRET);
+    config()->set('hop.apps.filehop.url', 'https://file.example.com');
+    config()->set('hop.event_apps.filehop.secret', EVENT_FILE_SECRET);
     config()->set('hop.apps.linkhop.url', 'https://link.example.com');
     config()->set('hop.apps.linkhop.secret', EVENT_LINK_SECRET);
     config()->set('hop.apps.biohop.url', 'https://bio.example.com');
@@ -50,6 +53,21 @@ test('the seeder adds the pixelhop and notehop rows with the events capability a
         ->and($note->secret)->toBe(EVENT_NOTE_SECRET)
         ->and($note->callback_path)->toBe('/auth/sso/callback')
         ->and(EventRegistry::warnings())->toBe([]);
+});
+
+test('the seeder adds filehop like notehop: its own secret, the sso callback, the events capability', function () {
+    eventEnv();
+
+    $this->seed(HopAppsSeeder::class);
+
+    $file = HopApp::where('slug', 'filehop')->first();
+    expect($file)->not->toBeNull()
+        ->and($file->can('events'))->toBeTrue()
+        ->and($file->secret)->toBe(EVENT_FILE_SECRET)
+        ->and($file->url)->toBe('https://file.example.com')
+        ->and($file->callback_path)->toBe('/auth/sso/callback')
+        ->and($file->start_path)->toBe('/auth/sso')
+        ->and($file->menu_label)->toBe('Files');
 });
 
 test('running the seeder again, or on a database that has the rows, changes nothing', function () {
@@ -93,7 +111,7 @@ test('a configured event app with no row, or a row without events, is a warning;
 
 test('a disabled event app is not expected to have a row', function () {
     eventEnv();
-    foreach (['pixelhop', 'notehop', 'linkhop', 'biohop'] as $slug) {
+    foreach (['pixelhop', 'notehop', 'filehop', 'linkhop', 'biohop'] as $slug) {
         config()->set("hop.apps.{$slug}.enabled", false);
     }
 
@@ -171,7 +189,7 @@ test('without linkhop and biohop rows the warning names them and says what to ru
     expect($text)->toContain('linkhop: no row')->toContain('biohop: no row')->toContain('HopAppsSeeder');
 });
 
-test('after seeding, one sign-out at the hub queues session.revoked for all four apps', function () {
+test('after seeding, one sign-out at the hub queues session.revoked for all five apps', function () {
     eventEnv();
     $this->seed(HopAppsSeeder::class);
     Queue::fake();
@@ -179,8 +197,8 @@ test('after seeding, one sign-out at the hub queues session.revoked for all four
 
     $this->actingAs($user)->post('/logout')->assertRedirect();
 
-    Queue::assertPushed(SendHopEvent::class, 4);
-    foreach (['pixelhop', 'notehop', 'linkhop', 'biohop'] as $slug) {
+    Queue::assertPushed(SendHopEvent::class, 5);
+    foreach (['pixelhop', 'notehop', 'filehop', 'linkhop', 'biohop'] as $slug) {
         $id = HopApp::where('slug', $slug)->value('id');
         Queue::assertPushed(SendHopEvent::class, fn ($j) => $j->appId === $id && $j->type === 'session.revoked');
     }

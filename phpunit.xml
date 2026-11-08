@@ -50,5 +50,7 @@
         <server name="PIXELHOP_URL" value="https://pixel.hel.ink" force="true"/>
         <env name="NOTEHOP_URL" value="https://note.hel.ink" force="true"/>
         <server name="NOTEHOP_URL" value="https://note.hel.ink" force="true"/>
+        <env name="FILEHOP_URL" value="https://file.hel.ink" force="true"/>
+        <server name="FILEHOP_URL" value="https://file.hel.ink" force="true"/>
                                     </php>
 </phpunit>

@@ -35,7 +35,7 @@ return [
     // Self-hosted family on your own domain: set HOP_TRUSTED_HOSTS to a comma-separated list.
     'trusted_hosts' => array_values(array_filter(array_map('trim', explode(',', (string) env(
         'HOP_TRUSTED_HOSTS',
-        'hel.ink,www.hel.ink,hub.hel.ink,link.hel.ink,bio.hel.ink,note.hel.ink,pixel.hel.ink'
+        'hel.ink,www.hel.ink,hub.hel.ink,link.hel.ink,bio.hel.ink,note.hel.ink,pixel.hel.ink,file.hel.ink'
     ))))),
 
     // Account events from the hub (POST /hop/events: session.revoked, account.status, account.deleted, profile.updated).

@@ -36,8 +36,8 @@ test('every asset in the manifest exists and matches its SRI hash', function () 
 test('the manifest lists the public HOP apps at the addresses the hub uses', function () {
     $apps = collect(hopAssets()['apps'])->keyBy('slug');
 
-    expect($apps->keys()->all())->toContain('hub', 'linkhop', 'biohop', 'pixelhop', 'notehop');
-    foreach (['linkhop', 'biohop', 'pixelhop', 'notehop'] as $slug) {
+    expect($apps->keys()->all())->toContain('hub', 'linkhop', 'biohop', 'pixelhop', 'notehop', 'filehop');
+    foreach (['linkhop', 'biohop', 'pixelhop', 'notehop', 'filehop'] as $slug) {
         expect($apps[$slug]['url'])->toBe(rtrim((string) config("hop.apps.{$slug}.url"), '/'));
         expect($apps[$slug]['public'])->toBeTrue();
     }

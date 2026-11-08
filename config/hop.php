@@ -84,11 +84,17 @@ return [
             'sort_order' => 50,
         ],
     ],
-    // Where an app's bearer-token API and its documentation live, for the API page. An app that
-    // is not listed has no such API, so the page links nothing for it.
+    // Where an app's bearer-token API and its documentation live, for the API page and the token
+    // form. `scopes` is the prefix of that app's token scopes (ApiToken::SCOPES). An app that is
+    // not listed has no such API: the page says so and its scopes are not offered.
     'api_docs' => [
-        'linkhop' => ['base' => '/api', 'docs' => '/api-docs'],
-        'pixelhop' => ['base' => '/api/v1', 'docs' => '/docs'],
+        'linkhop' => ['base' => '/api', 'docs' => '/api-docs', 'scopes' => 'link'],
+        'pixelhop' => ['base' => '/api/v1', 'docs' => '/docs', 'scopes' => 'pixel'],
+    ],
+    // Why an app has no export link on the Export tab (English, translated on render).
+    'export_notes' => [
+        'notehop' => 'Notes are encrypted in your browser before they reach NoteHop, so there is nothing NoteHop could export for you.',
+        'filehop' => 'FileHop stores no files: everything is converted in your browser.',
     ],
     'registry_health' => [],   // default /healthz
     'registry_logout' => [
@@ -142,7 +148,8 @@ return [
             'callback' => env('PIXELHOP_SSO_CALLBACK', '/auth/helink/callback'),
             'start' => env('PIXELHOP_SSO_START', '/auth/helink'),
             'logout' => env('PIXELHOP_LOGOUT_PATH', '/auth/helink/logout'),
-            'export' => null,
+            // PixelHop's Settings → Export my data (a ZIP of every file and a list of files and albums).
+            'export' => '/settings#export',
             // PixelHop is not Laravel: its health endpoint is /healthz, not /up.
             'health' => env('PIXELHOP_HEALTH_PATH', '/healthz'),
             'check' => env('PIXELHOP_CHECK_URL'),

@@ -4,13 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Models\ApiToken;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 /**
- * API tokens live in the hub and work at every app (link.hel.ink/api,
- * bio.hel.ink/api) through hop/auth, limited to the scopes chosen here.
+ * API tokens live in the hub and work at every app that has a bearer-token API
+ * (config `hop.api_docs`: LinkHop, PixelHop) through hop/auth, limited to the
+ * scopes chosen here. Settings and the API page read their facts from here, so
+ * they cannot contradict each other.
  */
 class ApiTokenController extends Controller
 {
+    /** Requests per hour a new token may make at each app (shown on the API page). */
+    public const RATE_LIMIT = 100;
+
+    /**
+     * The scopes a person can pick: those of apps that have a token API. A scope whose app
+     * (config `hop.api_docs.<slug>.scopes`, the prefix before ":") has none is not offered.
+     *
+     * @param  list<string>  $appSlugs  apps with a token API
+     * @return array<string, string> scope => what it allows
+     */
+    public static function availableScopes(array $appSlugs): array
+    {
+        $prefixes = [];
+        foreach ($appSlugs as $slug) {
+            if ($prefix = config("hop.api_docs.{$slug}.scopes")) {
+                $prefixes[] = (string) $prefix;
+            }
+        }
+
+        return array_filter(ApiToken::SCOPES, fn ($what, $scope) => in_array(Str::before($scope, ':'), $prefixes, true), ARRAY_FILTER_USE_BOTH);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -22,7 +47,7 @@ class ApiTokenController extends Controller
         $result = ApiToken::generate(
             userId: $request->user()->id,
             name: $request->input('name'),
-            rateLimit: 100,
+            rateLimit: self::RATE_LIMIT,
             scopes: $scopes,
         );
         if ($request->wantsJson()) {
@@ -31,11 +56,11 @@ class ApiTokenController extends Controller
                 'token' => $result['plain_token'],
                 'name' => $result['model']->name,
                 'scopes' => $result['model']->scopes,
-                'message' => 'API token created successfully. Save this token - you won\'t be able to see it again!',
+                'message' => __('Token created. Copy it now: it is shown only this once.'),
             ]);
         }
 
-        return back()->with('status', 'API token created!')->with('api_token', $result['plain_token']);
+        return back()->with('status', __('Token created.'))->with('api_token', $result['plain_token']);
     }
 
     public function destroy(ApiToken $apiToken)
@@ -45,10 +70,10 @@ class ApiTokenController extends Controller
         }
         $apiToken->delete();
         if (request()->wantsJson()) {
-            return response()->json(['success' => true, 'message' => 'API token revoked successfully']);
+            return response()->json(['success' => true, 'message' => __('Token revoked.')]);
         }
 
-        return back()->with('status', 'API token revoked successfully');
+        return back()->with('status', __('Token revoked.'));
     }
 
     public function docs()

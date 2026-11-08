@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="mb-6">
-        <h1 class="page-title">Set a new password</h1>
-        <p class="mt-1 text-sm text-muted">For your HOP ID: the same password then works on {{ config('app.name') }} and every HOP app.</p>
+        <h1 class="page-title">{{ __('Set a new password') }}</h1>
+        <p class="mt-1 text-sm text-muted">{{ __('For your HOP ID: the same password then works on :hub and every HOP app.', ['hub' => config('app.name')]) }}</p>
     </div>
     @php $lockedEmail = \App\Support\Input::text($request->query('email')); @endphp
     <form method="POST" action="{{ route('password.store') }}" class="space-y-4">

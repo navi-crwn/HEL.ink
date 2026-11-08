@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ trim(($pageTitle ?? '') ?: config('app.name').' - Hop Easy Link') }}</title>
-        <meta name="description" content="Your HOP ID: one account for LinkHop, BioHop, PixelHop and every HOP app.">
+        <meta name="description" content="{{ __('Your HOP ID: one account for LinkHop, BioHop, PixelHop and every HOP app.') }}">
         <link rel="icon" href="{{ route('brand.favicon') }}">
         {{-- Apply the saved theme before first paint (no light flash in dark mode) --}}
         <script nonce="{{ Vite::cspNonce() }}">
@@ -45,7 +45,7 @@
                                     <span class="chip-blue">{{ __('Admin') }}</span>
                                 @endif
                             </a>
-                            <button type="button" class="icon-btn lg:hidden" @click="nav = false" aria-label="Close menu">
+                            <button type="button" class="icon-btn lg:hidden" @click="nav = false" aria-label="{{ __('Close menu') }}">
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></svg>
                             </button>
                         </div>
@@ -62,13 +62,13 @@
 
                 <header class="sticky top-0 z-30 px-3 pt-3 sm:px-5">
                     <div class="glass flex h-14 items-center gap-2 rounded-2xl px-2 sm:px-3">
-                        <button type="button" class="icon-btn lg:hidden" @click="nav = true" aria-label="Open menu">
+                        <button type="button" class="icon-btn lg:hidden" @click="nav = true" aria-label="{{ __('Open menu') }}">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h10"/></svg>
                         </button>
                         <p class="truncate pl-1 text-sm font-semibold text-ink">{{ $sectionTitle }}</p>
                         <div class="ml-auto flex items-center gap-1.5">
                             <x-hop::language-switcher />
-                            <button type="button" data-call="toggleTheme" id="theme-toggle-button" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">
+                            <button type="button" data-call="toggleTheme" id="theme-toggle-button" class="icon-btn" aria-label="{{ __('Toggle theme') }}" title="{{ __('Toggle theme') }}">
                                 <svg class="h-[18px] w-[18px] dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></svg>
                                 <svg class="hidden h-[18px] w-[18px] dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
                             </button>
@@ -83,11 +83,11 @@
                             <div class="glass flex flex-col gap-3 rounded-2xl border-amber-400/40 px-4 py-3 sm:flex-row sm:items-center">
                                 <div class="flex flex-1 items-start gap-3">
                                     <span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-300">!</span>
-                                    <p class="text-sm text-ink">Verify your email to open the apps. We sent a link to <strong>{{ $user->email }}</strong>.</p>
+                                    <p class="text-sm text-ink">{!! __('Verify your email to open the apps. We sent a link to :email.', ['email' => '<strong>'.e($user->email).'</strong>']) !!}</p>
                                 </div>
                                 <form method="POST" action="{{ route('verification.send') }}">
                                     @csrf
-                                    <button class="btn-soft btn-sm w-full sm:w-auto">Resend email</button>
+                                    <button class="btn-soft btn-sm w-full sm:w-auto">{{ __('Resend email') }}</button>
                                 </form>
                             </div>
                         @endunless

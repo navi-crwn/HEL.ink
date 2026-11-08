@@ -8,11 +8,11 @@
     },
     "float_css": {
       "url": "https://hel.ink/hop-assets/v3/hop-float.css",
-      "integrity": "sha384-sl7D409xEmIT5gkArlQLoQQ4rOkqF7tOGf1VhI/iMb7c2/s9w9NtDEjLbJMU/MQ/"
+      "integrity": "sha384-RSNL4INB2gFASph26ONv6qEJnx8m70VToOUb77o9v+N4cQZF5fEAx1IUxJSEzJSI"
     },
     "float_js": {
       "url": "https://hel.ink/hop-assets/v3/hop-float.js",
-      "integrity": "sha384-1aNl0vUUkc/1IH67lxGc86EHIkG3x+A9UA39AH3UoYUYfxt/uRRF75Vd60R7i/Nr"
+      "integrity": "sha384-Iem/UR0dJWsXWicGpiJ3ZaSGPE0uSfJ3OfoxkJPG9/DROnvnLYRUtblhyVcfpVrR"
     },
     "home_css": {
       "url": "https://hel.ink/hop-assets/v3/hop-home.css",
@@ -20,7 +20,7 @@
     },
     "hero3d_js": {
       "url": "https://hel.ink/hop-assets/v3/hop-hero3d.js",
-      "integrity": "sha384-wi71KZItg0PcFpk3q1ujXfzc8T5sFtT6mrLjm6ZZV7TGeRN6EFfW292RYrKTL8L9"
+      "integrity": "sha384-7MqKshgqnx52HWeD35ff9Qikl7Ay6ToUfC6DRhPMBeXz/7NXRSH3TOQXwklHJGer"
     },
     "motion_js": {
       "url": "https://hel.ink/hop-assets/v3/hop-motion.js",

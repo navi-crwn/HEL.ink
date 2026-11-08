@@ -71,6 +71,8 @@ return [
             'start_path' => env('FILEHOP_SSO_START', '/auth/sso'),
             'secret' => env('HOP_SSO_SECRET_FILEHOP'),
             'menu_label' => 'Files',
+            // admin_api: Imperium reads /hop/health, manifest, stats and users; zero_knowledge: it stores no files.
+            'capabilities' => ['admin_api', 'events', 'zero_knowledge'],
             'pages' => ['default' => '/'],
             'continue_page' => 'default',
             'sort_order' => 50,

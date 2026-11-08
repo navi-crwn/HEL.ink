@@ -67,7 +67,9 @@ test('the seeder adds filehop like notehop: its own secret, the sso callback, th
         ->and($file->url)->toBe('https://file.example.com')
         ->and($file->callback_path)->toBe('/auth/sso/callback')
         ->and($file->start_path)->toBe('/auth/sso')
-        ->and($file->menu_label)->toBe('Files');
+        ->and($file->menu_label)->toBe('Files')
+        ->and($file->can('admin_api'))->toBeTrue()
+        ->and($file->capabilities)->toEqualCanonicalizing(['admin_api', 'events', 'zero_knowledge']);
 });
 
 test('running the seeder again, or on a database that has the rows, changes nothing', function () {

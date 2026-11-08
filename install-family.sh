@@ -171,7 +171,7 @@ base folder, already connected to each other. Meant for a first try on one compu
 Options:
   -y, --yes             No questions: use the defaults and the flags below
       --dir DIR         Base folder (default ~/hop-family)
-      --apps LIST       Comma list of: linkhop,biohop,notehop,pixelhop (default: all four)
+      --apps LIST       Comma list of: linkhop,biohop,notehop,pixelhop,filehop (default: all five)
       --admin EMAIL     Owner e-mail (you become the owner when you sign up with it)
       --mail-host H --mail-port N --mail-user U --mail-from ADDR   Outgoing e-mail for the hub (password: HOP_MAIL_PASSWORD)
       --no-star         Do not offer the GitHub star page at the end
@@ -197,12 +197,12 @@ say "${D}The hub (HOP ID) plus the apps you choose. Free and open source; nothin
 hdr "A few questions (press Enter for the suggestion)"
 ask BASE "Base folder for the whole family?" "$HOME/hop-family"
 case "$BASE" in "~"*) BASE="$HOME${BASE#\~}" ;; esac
-ask APPS "Which apps besides the hub? (linkhop,biohop,notehop,pixelhop)" "linkhop,biohop,notehop,pixelhop"
+ask APPS "Which apps besides the hub? (linkhop,biohop,notehop,pixelhop,filehop)" "linkhop,biohop,notehop,pixelhop,filehop"
 APPS="$(printf '%s' "$APPS" | tr 'A-Z' 'a-z' | tr -d ' ')"
-WANT_GO=0; WANT_PHP=1
+WANT_GO=0; WANT_NODE=0; WANT_PHP=1
 IFS=',' read -r -a APPLIST <<<"$APPS"
 for a in "${APPLIST[@]}"; do
-  case "$a" in linkhop|biohop) ;; notehop|pixelhop) WANT_GO=1 ;; '') ;; *) die "Unknown app '$a'. Choose from: linkhop, biohop, notehop, pixelhop" ;; esac
+  case "$a" in linkhop|biohop) ;; notehop|pixelhop) WANT_GO=1 ;; filehop) WANT_GO=1; WANT_NODE=1 ;; '') ;; *) die "Unknown app '$a'. Choose from: linkhop, biohop, notehop, pixelhop, filehop" ;; esac
 done
 ask ADMIN "Your e-mail (you become the owner of the family)?" ""
 if [ -z "$MAIL_HOST" ] && confirm "Set up outgoing e-mail for the hub now? (sign-up confirmation needs it; you can do it later)" n; then ask MAIL_HOST "SMTP host?" ""; fi
@@ -219,7 +219,8 @@ have git && ok "git" || need "git is not installed" "macOS: xcode-select --insta
 if have "$PHP_BIN" && version_ge "$("$PHP_BIN" -r 'echo PHP_VERSION;')" 8.3; then ok "PHP $("$PHP_BIN" -r 'echo PHP_VERSION;')"; else need "PHP 8.3 or newer is needed (the hub and the Laravel apps)" "macOS: brew install php   ·   Debian/Ubuntu: https://deb.sury.org"; fi
 have composer && ok "Composer" || need "Composer is not installed" "https://getcomposer.org/download/"
 if have node && version_ge "$(node -v | sed 's/^v//')" 20; then ok "Node $(node -v)"; else need "Node 20 or newer is needed" "https://nodejs.org or: brew install node"; fi
-if [ "$WANT_GO" = 1 ]; then have go && ok "Go $(go env GOVERSION | sed 's/^go//')" || need "Go is needed for NoteHop and PixelHop" "https://go.dev/dl (macOS: brew install go)"; fi
+if [ "$WANT_GO" = 1 ]; then have go && ok "Go $(go env GOVERSION | sed 's/^go//')" || need "Go is needed for NoteHop, PixelHop and FileHop" "https://go.dev/dl (macOS: brew install go)"; fi
+if [ "$WANT_NODE" = 1 ]; then have node && have npm && ok "Node $(node -v | sed 's/^v//') (FileHop builds its browser app with it)" || need "Node 20.19+ with npm is needed for FileHop" "https://nodejs.org"; fi
 FREE="$(disk_free_mb "$HOME")"; [ "${FREE:-0}" -ge 4000 ] 2>/dev/null && ok "Disk: ${FREE} MB free" || warn "Less than 4 GB free (${FREE:-?} MB): the family needs about 3 GB"
 [ "$PROBLEMS" -gt 0 ] && die "$PROBLEMS thing(s) to fix first (see above). Run this again when done; it is safe to repeat."
 
@@ -248,7 +249,7 @@ N=1; STARTS="hub:$HUB_PORT"; URLS="Hub (sign in and account)  http://localhost:$
 for a in "${APPLIST[@]}"; do
   [ -n "$a" ] || continue
   N=$((N + 1))
-  case "$a" in linkhop) REPO=LinkHop; P0=8001 ;; biohop) REPO=BioHop; P0=8002 ;; notehop) REPO=NoteHop; P0=8090 ;; pixelhop) REPO=PixelHop; P0=8080 ;; esac
+  case "$a" in linkhop) REPO=LinkHop; P0=8001 ;; biohop) REPO=BioHop; P0=8002 ;; notehop) REPO=NoteHop; P0=8090 ;; pixelhop) REPO=PixelHop; P0=8080 ;; filehop) REPO=FileHop; P0=8095 ;; esac
   hdr "$N/$(( ${#APPLIST[@]} + 1 )): $REPO"
   clone "$REPO" "$a"
   P="$(pick_port "$P0")"

@@ -17,13 +17,27 @@ test('the home page has one interactive section per public product in the manife
         $slug = $app['slug'];
         $section = $xpath->query('//*[@data-app-section="'.$slug.'"]');
         expect($section->length)->toBe(1);
-        expect($xpath->query('.//canvas[@data-hop-hero="'.$slug.'"]', $section->item(0))->length)->toBe(1);
+        // Apps with a 3D tile in hop-assets v2 get the canvas; a later app (FileHop) shows its screenshot.
+        if (is_file(public_path('hop-assets/v2/home/'.$slug.'-light.webp'))) {
+            expect($xpath->query('.//canvas[@data-hop-hero="'.$slug.'"]', $section->item(0))->length)->toBe(1);
+        } else {
+            expect($xpath->query('.//figure[contains(@class,"h-art-shot")]/img[@src="/images/apps/'.$slug.'.webp"]', $section->item(0))->length)->toBe(1);
+        }
         expect($xpath->query('.//*[@data-home-demo="'.$slug.'"]', $section->item(0))->length)->toBe(1);
         expect($xpath->query('.//ul[@class="h-feats"]/li', $section->item(0))->length)->toBe(3);
         expect($html)->toContain($app['url'])->toContain($app['icons']['mark']['url']);
     }
     // the old connect tabs are gone: "One account" is a scene now
     expect($html)->not->toContain('data-home-tabs')->toContain('data-hx-acct');
+});
+
+test('FileHop has its own home section, product page and demo', function () {
+    $html = $this->get('/')->assertOk()->getContent();
+
+    expect($html)->toContain('data-app-section="filehop"')->toContain('data-home-demo="filehop"')
+        ->toContain('https://file.hel.ink')->toContain('Five apps');
+    $this->withoutVite()->get('/apps/filehop')->assertOk()->assertSee('FileHop')->assertSee('Convert a file')
+        ->assertSee('/images/apps/filehop.webp', false);
 });
 
 test('the home page has the HOP sections and no back link', function () {
@@ -34,7 +48,7 @@ test('the home page has the HOP sections and no back link', function () {
     }
     expect($html)->not->toContain('Back to HOP');
     expect($html)->not->toContain('id="status"');
-    expect(substr_count($html, '<section '))->toBe(9);
+    expect(substr_count($html, '<section '))->toBe(10);
 });
 
 test('the home page is English by default and speaks nine languages', function () {

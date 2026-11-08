@@ -9,7 +9,7 @@
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/readme/hero-en-dark.webp"><img src="docs/readme/hero-en-light.webp" alt="HEL.ink · HOP ファミリーハブ" width="100%"></picture></p>
 
-<p align="center"><b>HEL.ink は HOP のアカウントポータルおよびディレクトリです。HOP ID で一度ログインすれば、LinkHop、BioHop、PixelHop、NoteHop をシームレスに利用できます。</b></p>
+<p align="center"><b>HEL.ink は HOP のアカウントポータルおよびディレクトリです。HOP ID で一度ログインすれば、LinkHop、BioHop、PixelHop、NoteHop、FileHop をシームレスに利用できます。</b></p>
 
 <p align="center">
   <a href="https://hel.ink">hel.ink</a> ·
@@ -32,14 +32,14 @@ curl -fsSL https://raw.githubusercontent.com/navi-crwn/HEL.ink/main/install.sh |
 
 ## ファミリーハブ & アカウントポータル
 
-LinkHop、BioHop、PixelHop、NoteHop のための中央アカウントポータル、HOP ID シングルサインオン、ファミリーディレクトリ。
+LinkHop、BioHop、PixelHop、NoteHop、FileHop のための中央アカウントポータル、HOP ID シングルサインオン、ファミリーディレクトリ。
 
 <a id="features"></a>
 
 ## 主な機能
 
 - **シングルサインオン (HOP ID)**: 1 回のログインですべての HOP アプリに対応。署名付きチケットと連鎖ログアウトで安全を維持。
-- **統合アプリランチャー**: どこからでもワンクリックで LinkHop、BioHop、PixelHop、NoteHop を行き来できます。
+- **統合アプリランチャー**: どこからでもワンクリックで LinkHop、BioHop、PixelHop、NoteHop、FileHop を行き来できます。
 - **共有データベース構造**: 1 つの MySQL または SQLite でアカウントを保持し、アプリ別のマイグレーション台帳で競合を防止。
 - **堅牢なアカウントセキュリティ**: Argon2id ハッシュ、TOTP 二要素認証、Cloudflare Turnstile 保護、メール確認に対応。
 - **ライブサービスウォッチドッグ**: 秘密情報を漏らすことなく、ファミリーアプリ全体の稼働状況と応答速度を自動監視。
@@ -92,6 +92,7 @@ HEL.ink はプライバシーを重視したオープンソース Web アプリ�
 | **BioHop** | `bio.hel.ink` · `hel.ink/b/…` | [navi-crwn/BioHop](https://github.com/navi-crwn/BioHop) | リンクインバイオとテーマ |
 | **PixelHop** | `pixel.hel.ink` · `p.hel.ink/…` | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | 画像およびメディア配信 |
 | **NoteHop** | `note.hel.ink` · `n.hel.ink/…` | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | クライアント暗号化プライベートノート |
+| **FileHop** | `file.hel.ink` | [navi-crwn/FileHop](https://github.com/navi-crwn/FileHop) | ブラウザ内のファイル変換（アップロードなし） |
 
 ## 変更履歴
 

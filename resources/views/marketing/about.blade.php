@@ -38,7 +38,7 @@
                 </div>
             </div>
             <p class="mt-4 text-sm leading-relaxed {{ $muted }}">
-                {{ __('One free sign-in connects you to LinkHop, BioHop, PixelHop, and NoteHop. You can sign in with your email and password, or use Google Sign-In. You can enable two-factor authentication (TOTP) in settings, export all your account data at any time, or delete your account with immediate cascading removal across every app. When you log out, chained logout terminates active sessions across the entire family.') }}
+                {{ __('One free sign-in connects you to LinkHop, BioHop, PixelHop, NoteHop, and FileHop. You can sign in with your email and password, or use Google Sign-In. You can enable two-factor authentication (TOTP) in settings, export all your account data at any time, or delete your account with immediate cascading removal across every app. When you log out, chained logout terminates active sessions across the entire family.') }}
             </p>
         </div>
 

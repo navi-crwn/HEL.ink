@@ -44,7 +44,8 @@ class HopAppFactory extends Factory
     {
         return $this->state(['slug' => 'filehop', 'name' => 'FileHop', 'menu_label' => 'Files', 'icon' => 'file', 'color' => 'amber',
             'url' => 'https://file.example.com', 'callback_path' => '/auth/sso/callback', 'start_path' => '/auth/sso',
-            'pages' => ['default' => '/'], 'continue_page' => 'default', 'secret' => $secret, 'sort_order' => 50]);
+            'pages' => ['default' => '/'], 'continue_page' => 'default', 'secret' => $secret, 'sort_order' => 50,
+            'capabilities' => ['admin_api', 'events', 'zero_knowledge']]);
     }
 
     /** The control center: hidden from menus, allowed to use the admin API. */

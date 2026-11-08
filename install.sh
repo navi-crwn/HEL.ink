@@ -319,7 +319,7 @@ if [ "$KEEP_ENV" = 0 ] && [ "$DRY" = 0 ]; then
   set_env .env HUB_HOST "$HUBHOST"; set_env .env HUB_PUBLIC_HOST "$PUBHOST"; set_env .env HUB_PUBLIC_URL "$PUBLIC_URL"
   case "$HUBHOST" in localhost|127.0.0.1|*.localhost) set_env .env SESSION_DOMAIN null ;; *) set_env .env SESSION_DOMAIN "$HUBHOST" ;; esac
   set_env .env HOP_SSO_SECRET "${HUB_SECRET:-$(rand_hex 32)}"
-  for A in LINKHOP BIOHOP PIXELHOP NOTEHOP; do set_env .env "${A}_URL" ""; set_env .env "${A}_ENABLED" false; done
+  for A in LINKHOP BIOHOP PIXELHOP NOTEHOP FILEHOP; do set_env .env "${A}_URL" ""; set_env .env "${A}_ENABLED" false; done
   set_env .env SUPPORT_EMAIL "${ADMIN:-support@example.com}"; set_env .env SECURITY_EMAIL "${ADMIN:-security@example.com}"; set_env .env FEEDBACK_EMAIL "${ADMIN:-feedback@example.com}"
   [ -n "$MAIL_HOST" ] || set_env .env MAIL_FROM_ADDRESS "${ADMIN:-hello@example.com}"
   set_env .env WATCH_ALERT_EMAIL "${ADMIN:-}"
@@ -366,7 +366,7 @@ say ""
 say "  ${B}Start it:${Z}   cd $DIR && ./start.sh"
 say "  ${B}Open it:${Z}    $URL"
 say "  ${B}First time:${Z} open the address, press Sign up with ${ADMIN:-your e-mail}: the owner e-mail gets the admin role."
-say "  ${B}Next:${Z}      install the apps (LinkHop, BioHop, PixelHop, NoteHop); each installer asks for this hub's address ($URL)"
+say "  ${B}Next:${Z}      install the apps (LinkHop, BioHop, PixelHop, NoteHop, FileHop); each installer asks for this hub's address ($URL)"
 say "              and the secret, which is HOP_SSO_SECRET in $DIR/.env (the apps' installers can also install this hub for you)."
 
 say ""

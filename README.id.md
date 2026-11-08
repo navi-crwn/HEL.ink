@@ -44,7 +44,7 @@ Repositori ini bertindak sebagai **pusat ekosistem**:
 
 ## Fitur Utama
 
-- **Single Sign-On (HOP ID)**: Satu akun untuk masuk ke LinkHop, BioHop, PixelHop, dan NoteHop dengan tiket bertanda tangan dan pemutusan sesi berantai.
+- **Single Sign-On (HOP ID)**: Satu akun untuk masuk ke LinkHop, BioHop, PixelHop, NoteHop, dan FileHop dengan tiket bertanda tangan dan pemutusan sesi berantai.
 - **Peluncur Aplikasi Terpadu**: Bilah navigasi atas terintegrasi untuk berpindah cepat antar-aplikasi keluarga HOP.
 - **Keamanan Akun Tangguh**: Hashing Argon2id, autentikasi 2FA TOTP, proteksi bot Cloudflare Turnstile, dan verifikasi email.
 - **Basis Data Bersama**: Satu basis data identitas dengan tabel migrasi terisolasi per aplikasi (`migrations_hub`, `migrations_bio`, dsb.).
@@ -95,6 +95,7 @@ HEL.ink adalah bagian dari keluarga aplikasi web **HOP** open-source di balik [h
 | **BioHop** | [bio.hel.ink](https://bio.hel.ink) · `hel.ink/b/…` | [navi-crwn/BioHop](https://github.com/navi-crwn/BioHop) | Halaman link-in-bio untuk semua profil Anda. |
 | **PixelHop** | [pixel.hel.ink](https://pixel.hel.ink) · `p.hel.ink/…` | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | Hosting gambar dengan album dan tautan langsung. |
 | **NoteHop** | [note.hel.ink](https://note.hel.ink) · `n.hel.ink/…` | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | Catatan privat terenkripsi yang dibagikan lewat tautan. |
+| **FileHop** | [file.hel.ink](https://file.hel.ink) | [navi-crwn/FileHop](https://github.com/navi-crwn/FileHop) | Konversi file di browser, tanpa unggah |
 
 ## Changelog
 

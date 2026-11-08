@@ -9,7 +9,7 @@
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/readme/hero-en-dark.webp"><img src="docs/readme/hero-en-light.webp" alt="HEL.ink · HOP 家族中心" width="100%"></picture></p>
 
-<p align="center"><b>HEL.ink 是 HOP 的账户门户和家族目录。只需使用 HOP ID 登录一次，即可在 LinkHop、BioHop、PixelHop 和 NoteHop 之间无缝切换。</b></p>
+<p align="center"><b>HEL.ink 是 HOP 的账户门户和家族目录。只需使用 HOP ID 登录一次，即可在 LinkHop、BioHop、PixelHop、NoteHop 和 FileHop 之间无缝切换。</b></p>
 
 <p align="center">
   <a href="https://hel.ink">hel.ink</a> ·
@@ -32,14 +32,14 @@ curl -fsSL https://raw.githubusercontent.com/navi-crwn/HEL.ink/main/install.sh |
 
 ## 家族中心与账户门户
 
-适用于 LinkHop、BioHop、PixelHop 和 NoteHop 的中心账户门户、HOP ID 单点登录和家族目录。
+适用于 LinkHop、BioHop、PixelHop、NoteHop 和 FileHop 的中心账户门户、HOP ID 单点登录和家族目录。
 
 <a id="features"></a>
 
 ## 功能特性
 
 - **单点登录 (HOP ID)**: 一次登录覆盖所有 HOP 应用。签名凭证与链式登出确保会话一致。
-- **统一应用启动器**: 随时随地一键在 LinkHop、BioHop、PixelHop 和 NoteHop 间切换。
+- **统一应用启动器**: 随时随地一键在 LinkHop、BioHop、PixelHop、NoteHop 和 FileHop 间切换。
 - **共享数据库架构**: 共享单个 MySQL 或 SQLite 数据库存储身份，各应用独立的迁移账本避免冲突。
 - **严格的安全防护**: Argon2id 哈希、TOTP 双重认证、Cloudflare Turnstile 防护与邮箱验证。
 - **实时看门狗监测**: 自动健康监测与延迟监控，零密钥泄露。
@@ -92,6 +92,7 @@ HEL.ink 是注重隐私的开源应用家族中心。
 | **BioHop** | `bio.hel.ink` · `hel.ink/b/…` | [navi-crwn/BioHop](https://github.com/navi-crwn/BioHop) | 个人主页与链接展示 |
 | **PixelHop** | `pixel.hel.ink` · `p.hel.ink/…` | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | 图片与媒体存储托管 |
 | **NoteHop** | `note.hel.ink` · `n.hel.ink/…` | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | 客户端加密的私密便签 |
+| **FileHop** | `file.hel.ink` | [navi-crwn/FileHop](https://github.com/navi-crwn/FileHop) | 在浏览器中转换文件，无需上传 |
 
 ## 更新日志
 

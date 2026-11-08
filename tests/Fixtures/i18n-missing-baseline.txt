@@ -71,7 +71,6 @@ HOP Help Center
 HOP ID — One Account Everywhere
 HOP officially supports 8 languages: English (default), Bahasa Indonesia, Chinese (中文), Spanish (Español), Arabic (العربية with full RTL support), Portuguese (Português), French (Français), and Japanese (日本語). NoteHop additionally supports Russian (Русский).
 HOP runs efficiently on a single modest server behind Cloudflare with nginx, PHP-FPM, and Go microservices. Efficiency is treated as a core design virtue.
-HOP stands for Hop Easy Link. It is a family of four independent, open-source web services: LinkHop (short links & QR codes), BioHop (link-in-bio pages), PixelHop (image and document hosting), and NoteHop (zero-knowledge encrypted notes). They are tied together by one account system: your HOP ID.
 HOP started in 2024 as a single URL shortener. As time went on, link-in-bio pages, an image hosting service, and end-to-end encrypted notes grew alongside it. Initially bundled together, each tool eventually grew to deserve its own dedicated address, its own focus, and its own clean interface.
 Have a question, feedback, or a security issue? Here are the best ways to reach out.
 Have suggestions or thoughts on how to make HOP apps better? We would love to hear from you.
@@ -102,7 +101,6 @@ No. Web browsers never transmit the # fragment to web servers. The server only r
 Note text and file attachments are encrypted client-side in your web browser using Web Crypto AES-GCM before transmission. The decryption key is generated locally and stored exclusively in the URL hash fragment (#k=...).
 ONLINE
 One Small Server:
-One free sign-in connects you to LinkHop, BioHop, PixelHop, and NoteHop. You can sign in with your email and password, or use Google Sign-In. You can enable two-factor authentication (TOTP) in settings, export all your account data at any time, or delete your account with immediate cascading removal across every app. When you log out, chained logout terminates active sessions across the entire family.
 Open BioHop Help
 Open LinkHop Help
 Open NoteHop Help
@@ -179,7 +177,6 @@ Yes. You can add a passcode gate to keep your bio private, or toggle an 18+ cont
 You can add standard link buttons, rich media embeds (YouTube, Spotify, Soundcloud), interactive maps, image galleries, vCard contact cards, and text notes in any order.
 You can configure a note to permanently erase itself after a single view ("Burn after reading"), or set an expiration timer (from 1 hour to 30 days). Expired notes are completely purged from storage.
 You can group multiple files into an album with a single shareable link, or copy direct image URLs (/i/slug.png) for embedding in forums, chats, and markdown documents.
-You sign in once at hub.hel.ink. When you open LinkHop, BioHop, PixelHop, or NoteHop, you are automatically recognized via signed cryptographic session tickets. You never have to create separate accounts or remember multiple passwords.
 Zero Advertising & Surveillance:
 note.hel.ink is the web application where you write, view, and collaborate on notes. n.hel.ink is the lightweight short redirect domain that keeps URLs compact while preserving the cryptographic fragment (n.hel.ink/slug#k=...).
 pixel.hel.ink is the application interface where you log in, upload, manage albums, and edit photos. p.hel.ink is the dedicated public content domain serving raw media and shared views (p.hel.ink/{slug}).

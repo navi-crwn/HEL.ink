@@ -31,7 +31,7 @@ curl -fsSL https://raw.githubusercontent.com/navi-crwn/HEL.ink/main/install.sh |
 
 From a clone: `./install.sh` · update: `./update.sh` · remove: `./uninstall.sh`. Add `--yes` to take every default; `--help` lists the options.
 
-Everything at once (the hub plus any of LinkHop, BioHop, NoteHop and PixelHop, already connected):
+Everything at once (the hub plus any of LinkHop, BioHop, NoteHop, PixelHop and FileHop, already connected):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/navi-crwn/HEL.ink/main/install-family.sh | bash
@@ -50,7 +50,7 @@ This repository serves as the **ecosystem hub**:
 
 ## Features
 
-- **🔐 Single Sign-On (HOP ID)**: One account signs you into LinkHop, BioHop, PixelHop, and NoteHop without repetitive credentials. Signed cryptographic tickets and chained session termination.
+- **🔐 Single Sign-On (HOP ID)**: One account signs you into LinkHop, BioHop, PixelHop, NoteHop, and FileHop without repetitive credentials. Signed cryptographic tickets and chained session termination.
 - **🚀 Unified App Launcher**: An integrated top-level switcher letting users jump between all family apps seamlessly.
 - **🛡️ Comprehensive Account Security**: Argon2id password hashing, TOTP two-factor authentication, Cloudflare Turnstile anti-bot verification, and secure email verification.
 - **🗄️ Shared Identity Database**: Single MySQL or SQLite identity backend with isolated per-app migration tables (`migrations_hub`, `migrations_bio`, etc.) to prevent schema pollution.
@@ -97,7 +97,7 @@ php artisan test
 ## FAQ
 
 **What is HOP ID?**
-HOP ID is the central identity provider for the HOP family. Creating one account lets you sign into LinkHop, BioHop, PixelHop, and NoteHop with zero friction.
+HOP ID is the central identity provider for the HOP family. Creating one account lets you sign into LinkHop, BioHop, PixelHop, NoteHop, and FileHop with zero friction.
 
 **Can I run the hub without other apps?**
 Yes. You can run the hub standalone as a directory and user account portal, but it shines best when powering member apps.

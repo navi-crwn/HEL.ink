@@ -125,3 +125,19 @@ if (!reduced && document.querySelector('.hop-home')) {
     if (document.readyState === 'loading') addEventListener('DOMContentLoaded', start);
     else start();
 }
+
+// FileHop's demo (its app section has no entry in hop-assets v2's hop-home.js): a small CSV
+// typed into the box becomes JSON in the page, the way FileHop converts without uploading.
+function fileDemo(root) {
+    const input = $('textarea', root);
+    const output = $('output', root);
+    const cell = (v) => (/^-?\d+(\.\d+)?$/.test(v) && !/^0\d/.test(v) ? Number(v) : v);
+    const render = () => {
+        const rows = input.value.trim().split(/\r?\n/).filter(Boolean).map((r) => r.split(',').map((c) => c.trim()));
+        const [head = [], ...body] = rows;
+        output.textContent = JSON.stringify(body.slice(0, 4).map((r) => Object.fromEntries(head.map((h, i) => [h, cell(r[i] ?? '')]))));
+    };
+    input.addEventListener('input', render);
+    render();
+}
+$$('[data-home-demo="filehop"]').forEach(fileDemo);

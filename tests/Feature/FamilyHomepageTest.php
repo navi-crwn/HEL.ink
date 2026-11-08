@@ -17,12 +17,7 @@ test('the home page has one interactive section per public product in the manife
         $slug = $app['slug'];
         $section = $xpath->query('//*[@data-app-section="'.$slug.'"]');
         expect($section->length)->toBe(1);
-        // Apps with a 3D tile in hop-assets v2 get the canvas; a later app (FileHop) shows its screenshot.
-        if (is_file(public_path('hop-assets/v2/home/'.$slug.'-light.webp'))) {
-            expect($xpath->query('.//canvas[@data-hop-hero="'.$slug.'"]', $section->item(0))->length)->toBe(1);
-        } else {
-            expect($xpath->query('.//figure[contains(@class,"h-art-shot")]/img[@src="/images/apps/'.$slug.'.webp"]', $section->item(0))->length)->toBe(1);
-        }
+        expect($xpath->query('.//canvas[@data-hop-hero="'.$slug.'"]', $section->item(0))->length)->toBe(1);
         expect($xpath->query('.//*[@data-home-demo="'.$slug.'"]', $section->item(0))->length)->toBe(1);
         expect($xpath->query('.//ul[@class="h-feats"]/li', $section->item(0))->length)->toBe(3);
         expect($html)->toContain($app['url'])->toContain($app['icons']['mark']['url']);

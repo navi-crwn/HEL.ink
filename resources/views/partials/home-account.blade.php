@@ -2,7 +2,7 @@
      (resources/js/home.js adds the motion; the finished picture is complete as plain HTML and CSS.) --}}
 @php
     $family = collect(\Hop\Ui\Assets::family())->keyBy('slug');
-    $hubMark = $family['hub']['icons']['mark']['url'] ?? asset('hop-assets/v2/apps/hub/rabbit-mark.png');
+    $hubMark = $family['hub']['icons']['mark']['url'] ?? asset('hop-assets/v3/apps/hub/rabbit-mark.png');
 @endphp
 <section id="connects" class="hx hx-acct" aria-labelledby="connects-title" data-hx-acct>
     <div class="hx-wrap hx-grid">

@@ -217,7 +217,7 @@
             <div class="space-y-3">
                 <details class="{{ $card }}">
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('How does FileHop convert files without uploading them?') }}</summary>
-                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('Your browser opens the file with the File API and converts it in the tab with your own device's processor. The result comes back as a download. Nothing is sent to a server.') }}</p>
+                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('Your browser opens the file with the File API and converts it in the tab with your own device\'s processor. The result comes back as a download. Nothing is sent to a server.') }}</p>
                 </details>
                 <details class="{{ $card }}">
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('Which formats can FileHop convert?') }}</summary>

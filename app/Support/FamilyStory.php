@@ -93,7 +93,7 @@ final class FamilyStory
                     [__('Convert and download'), __('Your own device does the work; download each result, or all of them in one ZIP.')],
                 ],
                 'faqs' => [
-                    [__('Are my files uploaded?'), __('No. FileHop converts in your browser tab. Watch your browser's network tab while it runs: nothing is sent.')],
+                    [__('Are my files uploaded?'), __('No. FileHop converts in your browser tab. Watch your browser\'s network tab while it runs: nothing is sent.')],
                     [__('Do I need an account?'), __('No. Every conversion works without one. A HOP ID only adds your account menu for now.')],
                     [__('Which formats does FileHop handle?'), __('Images, PDF, CSV/TSV/JSON/YAML, Markdown/HTML/text and ZIP/TAR/GZIP archives. Video, audio and DOCX are not there yet.')],
                 ],

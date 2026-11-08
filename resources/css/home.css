@@ -1,5 +1,5 @@
 /* The hub home beyond the hero: running line, numbers, "one account" scene, question cards, closing call.
-   Tokens come from hop-assets/v2/hop-home.css (--home-*, --h-*). Everything shows its finished state without
+   Tokens come from hop-assets/v3/hop-home.css (--home-*, --h-*). Everything shows its finished state without
    script; resources/js/home.js adds the motion (class hx-motion on <html>). */
 .hop-home .hx { margin-top: 128px; scroll-margin-top: 90px; position: relative; }
 .hop-home .hx-wrap { min-width: 0; }
@@ -109,11 +109,7 @@
 /* Phones: tighter gutters and spacing, the hero type sized to the screen, full-width calls to action,
    and the four app scenes shown as their still pictures (a hidden canvas is never mounted by the engine;
    only the hero keeps its 3D scene, with the engine's own phone limits). */
-/* Apps without a 3D tile in hop-assets v2 (FileHop) show a screenshot in its place. */
-.hop-home .h-art.h-art-shot { aspect-ratio: 1280 / 900; }
-.hop-home .h-art.h-art-shot img { object-fit: cover; border-radius: 18px; border: 1px solid rgb(148 163 184 / .25); box-shadow: 0 18px 48px rgb(15 23 42 / .14); }
 @media (max-width: 800px) {
-    .hop-home .h-app .h-art.h-art-shot { max-width: 100%; }
     .hop-home { padding-inline: 16px; }
     .hop-home .h-hero { padding: 24px 0 8px; }
     .hop-home .h-hero h1 { font-size: clamp(34px, 9.5vw, 44px); margin: 18px 0 14px; }

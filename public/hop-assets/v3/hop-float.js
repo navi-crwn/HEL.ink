@@ -14,7 +14,7 @@
  */
 (function () {
   'use strict';
-  var THEMES = 6;
+  var THEMES = 7;
   var script = document.currentScript;
   var base = script && script.src ? script.src.replace(/[^/]*$/, '') : '';
   var SVG = 'http://www.w3.org/2000/svg';
@@ -31,7 +31,7 @@
     imperium: { box: '0 0 64 64', strokeShield: 'M32 11.5 17 17v12c0 9.6 6 16.4 15 21.5 9-5.1 15-11.9 15-21.5V17Z', fill: 'M27 23.5h3v2.5h4v-2.5h3V34h3v-2.5h3V40h-3v3H25v-3h-3v-8.5h3V34h2Zm2.5 19.5h5v-4.5a2.5 2.5 0 0 0-5 0Z', evenodd: true }
   };
   var TILES = [
-    ['linkhop', 0], ['pixelhop', 2], ['notehop', 1], ['filehop', 5], ['biohop', 4], ['remotehop', 3], ['imperium', 5]
+    ['linkhop', 0], ['pixelhop', 2], ['notehop', 1], ['filehop', 6], ['biohop', 4], ['remotehop', 3], ['imperium', 5]
   ];
 
   function el(name, attrs) {

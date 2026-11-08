@@ -31,7 +31,12 @@
                 $isAdmin = $user->isAdmin();
                 $sectionTitle = trim(\Illuminate\Support\Str::beforeLast($pageTitle ?? '', ' · ')) ?: 'HOP';
             @endphp
-            <div x-data="{ nav: false }" @keydown.escape.window="nav = false" class="lg:pl-68">
+            {{-- The drawer is modal on phones: Escape closes it, the page behind does not scroll while it is open,
+                 and growing past the lg breakpoint (where the sidebar is static) drops the state. --}}
+            <div x-data="{ nav: false }" @keydown.escape.window="nav = false"
+                 @resize.window="if (nav && window.innerWidth >= 1024) nav = false"
+                 x-effect="document.documentElement.classList.toggle('overflow-hidden', nav && window.innerWidth < 1024)"
+                 class="lg:pl-68">
                 <div x-show="nav" x-cloak x-transition.opacity @click="nav = false" class="fixed inset-0 z-40 bg-slate-950/40 backdrop-blur-xs lg:hidden"></div>
                 <aside class="fixed inset-y-0 left-0 z-50 w-68 p-3 transition-transform duration-300 lg:translate-x-0"
                        :class="nav ? 'translate-x-0' : '-translate-x-full'"
@@ -52,10 +57,10 @@
                         <nav class="flex-1 overflow-y-auto px-3 pb-3">
                             @include('components.partials.nav', ['isAdmin' => $isAdmin])
                         </nav>
-                        <div class="border-t border-slate-500/10 px-5 py-3 text-xs text-muted">
-                            <a href="{{ route('changelog') }}" class="hover:underline">{{ __('Changelog') }}</a>
-                            <span aria-hidden="true"> · </span>
-                            <a href="https://github.com/navi-crwn/HEL.ink" rel="noopener" class="hover:underline">GitHub</a>
+                        <div class="flex items-center gap-1 border-t border-slate-500/10 px-3.5 py-1 text-xs text-muted">
+                            <a href="{{ route('changelog') }}" class="inline-flex min-h-11 items-center px-1.5 hover:underline">{{ __('Changelog') }}</a>
+                            <span aria-hidden="true">·</span>
+                            <a href="https://github.com/navi-crwn/HEL.ink" rel="noopener" class="inline-flex min-h-11 items-center px-1.5 hover:underline">GitHub</a>
                         </div>
                     </div>
                 </aside>

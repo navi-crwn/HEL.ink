@@ -28,14 +28,24 @@
                 this.tab = hashTab;
             }
         },
+        // On a phone the tab row scrolls sideways: bring the active tab into view (opened via #api it sat off-screen).
+        reveal() {
+            this.$nextTick(() => {
+                const row = this.$refs.tabs, active = row && row.querySelector('[aria-selected=true]');
+                if (active && row.scrollWidth > row.clientWidth) {
+                    row.scrollTo({ left: active.offsetLeft - (row.clientWidth - active.offsetWidth) / 2, behavior: 'smooth' });
+                }
+            });
+        },
         init() {
             this.fromHash();
-            this.$watch('tab', value => history.replaceState(null, '', '#' + value));
+            this.reveal();
+            this.$watch('tab', value => { history.replaceState(null, '', '#' + value); this.reveal(); });
         }
     }" @tab-changed.window="tab = $event.detail" @hashchange.window="fromHash()">
-        <nav class="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1 lg:sticky lg:top-24 lg:mx-0 lg:flex-col lg:self-start lg:overflow-visible lg:px-0" aria-label="{{ __('Settings sections') }}">
+        <nav x-ref="tabs" role="tablist" class="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1 lg:sticky lg:top-24 lg:mx-0 lg:flex-col lg:self-start lg:overflow-visible lg:px-0" aria-label="{{ __('Settings sections') }}">
             @foreach ($settingsTabs as $key => [$label, $icon])
-                <button type="button" @click="tab = '{{ $key }}'" class="nav-item shrink-0 whitespace-nowrap" :class="tab === '{{ $key }}' && 'nav-item-active'">
+                <button type="button" role="tab" @click="tab = '{{ $key }}'" class="nav-item min-h-11 shrink-0 whitespace-nowrap" :class="tab === '{{ $key }}' && 'nav-item-active'" :aria-selected="tab === '{{ $key }}' ? 'true' : 'false'" :tabindex="tab === '{{ $key }}' ? 0 : -1">
                     <svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg>
                     {{ $label }}
                 </button>
@@ -559,24 +569,25 @@
                         <h4 class="text-sm font-semibold text-ink mb-3">{{ __('Your API tokens') }}</h4>
                         <div class="space-y-3">
                             @forelse($u->apiTokens as $token)
-                                <div class="flex items-center justify-between glass-inset rounded-xl p-4">
-                                    <div class="flex-1">
-                                        <h5 class="font-semibold text-ink">{{ $token->name }}</h5>
-                                        <div class="mt-1 flex items-center gap-4 text-xs text-muted">
-                                            <span>{{ __('Created :date', ['date' => $token->created_at->format('M d, Y')]) }}</span>
+                                {{-- Wraps at narrow widths: the meta line breaks per item and Revoke drops under it instead of leaving the card (375 px). --}}
+                                <div class="glass-inset flex flex-wrap items-start justify-between gap-3 rounded-xl p-4">
+                                    <div class="min-w-0 flex-1 basis-56">
+                                        <h5 class="truncate font-semibold text-ink">{{ $token->name }}</h5>
+                                        <div class="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
+                                            <span class="tabular-nums">{{ __('Created :date', ['date' => $token->created_at->format('M d, Y')]) }}</span>
                                             @if($token->last_used_at)
                                                 <span>{{ __('Last used :when', ['when' => $token->last_used_at->diffForHumans()]) }}</span>
                                             @else
                                                 <span class="text-amber-600 dark:text-amber-400">{{ __('Never used') }}</span>
                                             @endif
-                                            <span>{{ __(':count requests per hour', ['count' => $token->rate_limit]) }}</span>
-                                            <span>{{ __('Scopes: :scopes', ['scopes' => $token->scopes ? implode(', ', $token->scopes) : __('all')]) }}</span>
+                                            <span class="tabular-nums">{{ __(':count requests per hour', ['count' => $token->rate_limit]) }}</span>
+                                            <span class="min-w-0 break-words">{{ __('Scopes: :scopes', ['scopes' => $token->scopes ? implode(', ', $token->scopes) : __('all')]) }}</span>
                                         </div>
                                     </div>
-                                    <form method="POST" action="{{ route('api-tokens.destroy', $token) }}" data-confirm="{{ __('Revoke the token “:name”? Anything using it stops working at once.', ['name' => $token->name]) }}">
+                                    <form method="POST" action="{{ route('api-tokens.destroy', $token) }}" class="shrink-0" data-confirm="{{ __('Revoke the token “:name”? Anything using it stops working at once.', ['name' => $token->name]) }}">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="rounded-lg border border-red-300 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 dark:border-red-700 dark:text-red-400 dark:hover:bg-red-900/20">
+                                        <button type="submit" class="inline-flex min-h-11 items-center rounded-lg border border-red-300 px-3 text-sm font-medium text-red-600 transition hover:bg-red-50 active:scale-[0.97] dark:border-red-700 dark:text-red-400 dark:hover:bg-red-900/20">
                                             {{ __('Revoke') }}
                                         </button>
                                     </form>

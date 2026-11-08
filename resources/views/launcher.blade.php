@@ -29,7 +29,7 @@
                     {{ __('Status checks have not run yet') }}
                 @endif
             </span>
-            <a href="{{ route('status') }}" class="underline decoration-dotted underline-offset-2 hover:text-ink">{{ __('Status page') }}</a>
+            <a href="{{ route('status') }}" class="tap underline decoration-dotted underline-offset-2 hover:text-ink">{{ __('Status page') }}</a>
         </p>
     </div>
 
@@ -84,7 +84,7 @@
                 <ul class="mt-3 space-y-0.5 text-sm">
                     @foreach ($health['steps'] as $step)
                         <li>
-                            <a href="{{ $step['url'] }}" class="flex items-start gap-2.5 rounded-lg px-1 py-1.5 {{ $step['done'] ? 'text-muted' : 'text-ink hover:text-indigo-600 dark:hover:text-indigo-300' }}">
+                            <a href="{{ $step['url'] }}" class="flex min-h-11 items-start gap-2.5 rounded-lg px-1 py-1.5 {{ $step['done'] ? 'text-muted' : 'text-ink hover:text-indigo-600 dark:hover:text-indigo-300' }}">
                                 <span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border {{ $step['done'] ? 'border-emerald-500 bg-emerald-500 text-white' : 'border-slate-300 dark:border-slate-600' }}" aria-hidden="true">
                                     @if ($step['done'])<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>@endif
                                 </span>
@@ -108,7 +108,7 @@
                 @if ($user->hasTwoFactor())
                     <span class="chip-green">{{ __('Two-factor is on') }}</span>
                 @else
-                    <a href="{{ $settings }}#2fa" class="chip-amber">{{ __('Two-factor is off') }}</a>
+                    <a href="{{ $settings }}#2fa" class="chip-amber tap">{{ __('Two-factor is off') }}</a>
                 @endif
             </div>
             <p class="stat-label mt-3">{{ __('Last sign-ins') }}</p>
@@ -131,7 +131,7 @@
             </ul>
             <div class="mt-3 flex flex-wrap items-center gap-2">
                 <a href="{{ $settings }}#login" class="btn-soft btn-sm whitespace-nowrap">{{ __("This wasn't me") }}</a>
-                <a href="{{ $settings }}#login" class="text-xs font-medium text-indigo-600 hover:underline dark:text-indigo-300">{{ __('All sign-ins') }}</a>
+                <a href="{{ $settings }}#login" class="inline-flex min-h-11 items-center px-1.5 text-xs font-medium text-indigo-600 hover:underline dark:text-indigo-300">{{ __('All sign-ins') }}</a>
             </div>
         </section>
 
@@ -140,7 +140,7 @@
             <section class="glass-card min-w-0" aria-labelledby="activity-title">
                 <div class="flex items-center justify-between gap-2">
                     <h2 id="activity-title" class="section-title">{{ __('Recent activity') }}</h2>
-                    <a href="{{ $settings }}#activity" class="text-xs font-medium text-indigo-600 hover:underline dark:text-indigo-300">{{ __('View all') }}</a>
+                    <a href="{{ $settings }}#activity" class="inline-flex min-h-11 items-center px-1.5 text-xs font-medium text-indigo-600 hover:underline dark:text-indigo-300">{{ __('View all') }}</a>
                 </div>
                 <ul class="mt-2 divide-y divide-slate-500/10">
                     @forelse ($activity as $row)

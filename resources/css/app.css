@@ -110,6 +110,10 @@
         @apply rounded-xl;
     }
 
+    /* A 44 px touch target for a small inline link or chip, without changing how it looks. */
+    .tap { position: relative; }
+    .tap::after { content: ''; position: absolute; left: 50%; top: 50%; width: max(100%, 44px); height: 44px; transform: translate(-50%, -50%); }
+
     /* Typography helpers */
     .eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.14em]; color: rgb(var(--muted)); }
     .page-title { @apply text-xl font-semibold tracking-tight sm:text-2xl; color: rgb(var(--ink)); }

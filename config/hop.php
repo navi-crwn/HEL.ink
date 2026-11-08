@@ -36,14 +36,16 @@ return [
     // Apps from the HOP ID registry table (`apps`), which has no column for these.
     'registry_taglines' => [
         'notehop' => 'Encrypted notes you share with a link.',
+        'filehop' => 'Convert files in your browser; nothing is uploaded.',
     ],
     'registry_repos' => [
         'notehop' => 'https://github.com/navi-crwn/NoteHop',
+        'filehop' => 'https://github.com/navi-crwn/FileHop',
     ],
     // Apps that must have a row in `apps` with the `events` capability, or the hub's account
     // events (suspend, delete, sign-out) never reach them. `php artisan db:seed
     // --class='Database\Seeders\HopAppsSeeder'` adds a missing row; it never changes an existing one.
-    // The secret of a new row comes from the environment (HOP_SSO_SECRET_PIXELHOP, HOP_SSO_SECRET_NOTEHOP,
+    // The secret of a new row comes from the environment (HOP_SSO_SECRET_PIXELHOP, HOP_SSO_SECRET_NOTEHOP, HOP_SSO_SECRET_FILEHOP,
     // HOP_SSO_SECRET_LINKHOP, HOP_SSO_SECRET_BIOHOP, or the shared HOP_SSO_SECRET for the Laravel apps).
     // LinkHop and BioHop end their sessions on session.revoked through hop/auth's event receiver.
     'event_apps' => [
@@ -64,6 +66,17 @@ return [
         ],
         'linkhop' => ['sort_order' => 30],
         'biohop' => ['sort_order' => 40],
+        'filehop' => [
+            'callback_path' => env('FILEHOP_SSO_CALLBACK', '/auth/sso/callback'),
+            'start_path' => env('FILEHOP_SSO_START', '/auth/sso'),
+            'secret' => env('HOP_SSO_SECRET_FILEHOP'),
+            'menu_label' => 'Files',
+            // admin_api: Imperium reads /hop/health, manifest, stats and users; zero_knowledge: it stores no files.
+            'capabilities' => ['admin_api', 'events', 'zero_knowledge'],
+            'pages' => ['default' => '/'],
+            'continue_page' => 'default',
+            'sort_order' => 50,
+        ],
     ],
     // Where an app's bearer-token API and its documentation live, for the API page. An app that
     // is not listed has no such API, so the page links nothing for it.
@@ -74,6 +87,7 @@ return [
     'registry_health' => [],   // default /healthz
     'registry_logout' => [
         'notehop' => '/auth/sso/logout',
+        'filehop' => '/auth/sso/logout',
     ],   // slug => path that signs the visitor out, e.g. '/auth/sso/logout'
 
     // Seconds a sign-in ticket for an app stays valid.
@@ -148,12 +162,29 @@ return [
             'repo' => 'https://github.com/navi-crwn/NoteHop',
             'enabled' => (bool) env('NOTEHOP_ENABLED', true),
         ],
+        'filehop' => [
+            'name' => 'FileHop',
+            'tagline' => 'Convert files in your browser; nothing is uploaded.',
+            'url' => env('FILEHOP_URL', 'https://file.hel.ink'),
+            // Signs in with its own secret and callback from the HOP ID registry (`apps`), like NoteHop.
+            'registry' => true,
+            'public_prefix' => null,
+            'logout' => env('FILEHOP_LOGOUT_PATH', '/auth/sso/logout'),
+            'export' => null,
+            'health' => env('FILEHOP_HEALTH_PATH', '/healthz'),
+            'check' => env('FILEHOP_CHECK_URL'),
+            'icon' => 'file',
+            'color' => 'amber',
+            'repo' => 'https://github.com/navi-crwn/FileHop',
+            'enabled' => (bool) env('FILEHOP_ENABLED', true),
+        ],
     ],
 
     // What each app tells the hub about one account, for the numbers on the dashboard cards.
     // `auth` is how the hub signs the call: "hub" (Laravel apps: /internal/accounts/{id}/summary,
     // shared SSO secret) or "hop" (Go apps: the HOP App Protocol, GET /hop/users/{id}).
     // Counts only, never content. `fields` maps the app's answer to a label (English key, translated on render).
+    // FileHop is left out: it stores no files, so it has no numbers to show on a card.
     'summaries' => [
         'linkhop' => ['auth' => 'hub', 'path' => '/internal/accounts/{id}/summary', 'fields' => ['links' => 'Links', 'clicks_7d' => 'Clicks, 7 days']],
         'biohop' => ['auth' => 'hub', 'path' => '/internal/accounts/{id}/summary', 'fields' => ['pages' => 'Pages', 'published' => 'Published', 'clicks_7d' => 'Clicks, 7 days']],
@@ -184,6 +215,7 @@ return [
             'navi-crwn/BioHop',
             'navi-crwn/PixelHop',
             'navi-crwn/NoteHop',
+            'navi-crwn/FileHop',
         ],
         'token' => env('GITHUB_TOKEN'),
         'timeout' => 10,
@@ -203,7 +235,7 @@ return [
     // Usernames nobody can take: site routes of every app, staff-looking names,
     // and the brands. Lowercase. Prefixes end with "-".
     'reserved_usernames' => [
-        'hop', 'hopid', 'hop-id', 'imperium', 'citadel', 'linkhop', 'pixelhop', 'notehop', 'remotehop', 'biohop',
+        'hop', 'hopid', 'hop-id', 'imperium', 'citadel', 'linkhop', 'pixelhop', 'notehop', 'filehop', 'remotehop', 'biohop',
         'helink', 'hel', 'hel-ink', 'hub', 'admin', 'administrator', 'root', 'system', 'moderator', 'mod',
         'staff', 'team', 'official', 'support', 'help', 'abuse', 'report', 'dmca', 'security', 'verify',
         'verified', 'legal', 'billing', 'owner', 'sysadmin', 'webmaster', 'postmaster', 'hostmaster',
@@ -221,5 +253,5 @@ return [
     ],
     'reserved_username_prefixes' => ['hop-', 'hop_', 'admin-', 'admin_', 'official-', 'official_', 'staff-', 'staff_',
         'support-', 'support_', 'team-', 'team_', 'security-', 'security_', 'verify-', 'verified-', 'linkhop-',
-        'pixelhop-', 'notehop-', 'remotehop-', 'biohop-', 'helink-', 'imperium-'],
+        'pixelhop-', 'notehop-', 'filehop-', 'remotehop-', 'biohop-', 'helink-', 'imperium-'],
 ];

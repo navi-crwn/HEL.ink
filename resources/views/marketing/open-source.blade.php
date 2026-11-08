@@ -14,7 +14,7 @@
                 <li><a class="underline" href="https://github.com/navi-crwn/hop-auth">hop-auth</a>, <a class="underline" href="https://github.com/navi-crwn/hop-ui">hop-ui</a>, <a class="underline" href="https://github.com/navi-crwn/hop-safety">hop-safety</a>: {{ __('the shared packages.') }}</li>
             </ul>
             <h2 class="pt-4 text-xl font-semibold text-slate-900 dark:text-white">{{ __('Run your own') }}</h2>
-            <p>{{ __('The Laravel apps (hub, LinkHop, BioHop) share one database and run behind one nginx; PixelHop and NoteHop are each one Go binary with one SQLite file. Each README has a self-hosting guide.') }}</p>
+            <p>{{ __('The Laravel apps (hub, LinkHop, BioHop) share one database and run behind one nginx; PixelHop, NoteHop and FileHop are each one Go binary with one SQLite file. Each README has a self-hosting guide.') }}</p>
             <h2 class="pt-4 text-xl font-semibold text-slate-900 dark:text-white">{{ __('Contribute') }}</h2>
             <p>{{ __('Bug reports and ideas: open an issue on the app\'s repository. Fixes: pull requests are welcome. Security problems: a private security advisory, please.') }}</p>
         </div>

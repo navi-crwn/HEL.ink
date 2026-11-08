@@ -9,7 +9,7 @@
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/readme/hero-en-dark.webp"><img src="docs/readme/hero-en-light.webp" alt="HEL.ink · Hub da família HOP" width="100%"></picture></p>
 
-<p align="center"><b>O HEL.ink é o portal de contas e diretório da família para o HOP. Entre uma vez com seu HOP ID e navegue tranquilamente entre LinkHop, BioHop, PixelHop e NoteHop.</b></p>
+<p align="center"><b>O HEL.ink é o portal de contas e diretório da família para o HOP. Entre uma vez com seu HOP ID e navegue tranquilamente entre LinkHop, BioHop, PixelHop, NoteHop e FileHop.</b></p>
 
 <p align="center">
   <a href="https://hel.ink">hel.ink</a> ·
@@ -32,14 +32,14 @@ A partir de um clone: `./install.sh` · atualizar: `./update.sh` · remover: `./
 
 ## Hub da família e portal de contas
 
-Portal central de contas, logon único HOP ID e diretório da família para LinkHop, BioHop, PixelHop e NoteHop.
+Portal central de contas, logon único HOP ID e diretório da família para LinkHop, BioHop, PixelHop, NoteHop e FileHop.
 
 <a id="features"></a>
 
 ## Recursos
 
 - **Logon Único (HOP ID)**: Um login cobre todos os aplicativos HOP. Tickets assinados e encerramento em cadeia.
-- **Inicializador unificado de apps**: Alterne entre LinkHop, BioHop, PixelHop e NoteHop com um clique.
+- **Inicializador unificado de apps**: Alterne entre LinkHop, BioHop, PixelHop, NoteHop e FileHop com um clique.
 - **Arquitetura de banco compartilhado**: Um banco MySQL ou SQLite armazena identidades com tabelas de migração dedicadas por app.
 - **Segurança robusta de conta**: Hashing Argon2id, autenticação em dois fatores TOTP, Turnstile e verificação de e-mail.
 - **Monitor de integridade em tempo real**: Verificações automáticas de integridade e latência sem vazamento de segredos.
@@ -92,6 +92,7 @@ O HEL.ink é o hub de uma família de ferramentas web abertas que respeitam sua 
 | **BioHop** | `bio.hel.ink` · `hel.ink/b/…` | [navi-crwn/BioHop](https://github.com/navi-crwn/BioHop) | Páginas de link-in-bio e temas |
 | **PixelHop** | `pixel.hel.ink` · `p.hel.ink/…` | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | Hospedagem de imagens e mídia |
 | **NoteHop** | `note.hel.ink` · `n.hel.ink/…` | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | Notas privadas com criptografia no cliente |
+| **FileHop** | `file.hel.ink` | [navi-crwn/FileHop](https://github.com/navi-crwn/FileHop) | Conversão de arquivos no navegador, sem envio |
 
 ## Changelog
 

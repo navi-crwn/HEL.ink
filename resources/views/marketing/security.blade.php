@@ -21,6 +21,7 @@
                 <li>{{ __('No ad networks and no third-party analytics on HOP\'s own pages.') }}</li>
                 <li>{{ __('Visitor counts use a keyed hash of the IP address, never the address itself.') }}</li>
                 <li>{{ __('NoteHop’s encrypted notes are end-to-end encrypted in the browser.') }}</li>
+                <li>{{ __('FileHop converts files in the browser; they are never uploaded.') }}</li>
             </ul>
             <h2 class="pt-4 text-xl font-semibold text-slate-900 dark:text-white">{{ __('Found a problem?') }}</h2>
             <p>{!! __('Please report security problems privately, not in a public issue: open a <a class="underline" href="https://github.com/navi-crwn/HEL.ink/security/advisories/new" rel="noopener">security advisory</a> on the app\'s repository. Each repository has a <code>SECURITY.md</code> with the details. We answer and fix as fast as one person can, and credit reporters who want it.') !!}</p>

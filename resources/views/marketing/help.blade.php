@@ -100,6 +100,23 @@
                     <a href="https://note.hel.ink/faq" class="text-xs font-semibold text-emerald-600 underline hover:text-emerald-700 dark:text-emerald-400">{{ __('Open NoteHop Help') }} &rarr;</a>
                 </div>
             </div>
+
+            {{-- FileHop Guide --}}
+            <div class="{{ $card }} space-y-3">
+                <div class="flex items-center gap-3">
+                    <span class="h-3 w-3 rounded-full bg-amber-500"></span>
+                    <h2 class="text-base font-bold text-slate-900 dark:text-white">FileHop User Guide</h2>
+                </div>
+                <ul class="space-y-2 text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+                    <li>&bull; <strong>{{ __('Converting Files:') }}</strong> {{ __('Drop files on file.hel.ink, pick a format on each card, press Convert and download the result. Up to 50 files at a time.') }}</li>
+                    <li>&bull; <strong>{{ __('Private by Design:') }}</strong> {{ __('Files are converted inside your browser tab and never uploaded, so FileHop works even for documents you would not hand to a website.') }}</li>
+                    <li>&bull; <strong>{{ __('PDF Tools:') }}</strong> {{ __('Merge several PDFs, split one into pages, rotate it, pick pages, or turn pages into PNG or JPEG images.') }}</li>
+                    <li>&bull; <strong>{{ __('Hostile Files:') }}</strong> {{ __('Archives are measured before they are unpacked, so zip bombs and paths that point outside the archive are refused.') }}</li>
+                </ul>
+                <div class="pt-2 border-t border-slate-200/60 dark:border-white/10">
+                    <a href="https://file.hel.ink" class="text-xs font-semibold text-amber-700 underline hover:text-amber-800 dark:text-amber-400">{{ __('Open FileHop') }} &rarr;</a>
+                </div>
+            </div>
         </div>
 
         {{-- Troubleshooting & Support --}}

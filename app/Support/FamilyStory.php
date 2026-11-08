@@ -11,7 +11,7 @@ use Hop\Ui\Assets;
  */
 final class FamilyStory
 {
-    public const APPS = ['linkhop', 'biohop', 'pixelhop', 'notehop'];
+    public const APPS = ['linkhop', 'biohop', 'pixelhop', 'notehop', 'filehop'];
 
     /** @return array<string, array<string, mixed>> */
     public static function all(): array
@@ -80,6 +80,22 @@ final class FamilyStory
                     [__('Can the server read my note?'), __('Not an encrypted note, which is the default: its cryptographic key is in the URL hash fragment, which browsers never send to the server. A basic note is readable by the server.')],
                     [__('What happens if I lose the link?'), __('Because of zero-knowledge architecture, lost keys cannot be recovered by anyone.')],
                     [__('What is burn-after-reading?'), __('The note is permanently deleted from server storage the instant it is viewed.')],
+                ],
+            ],
+            'filehop' => [
+                'kicker' => __('File conversion'),
+                'story' => __('Turn an image, a PDF, a table or an archive into the format you need, right in your browser. Your files never leave your device: there is nothing to upload.'),
+                'features' => [__('Images to WebP, JPEG, PNG or PDF'), __('Merge, split, rotate and pick PDF pages'), __('CSV, JSON, YAML and TSV in any direction'), __('ZIP listings and SHA-256 checksums')],
+                'cta' => __('Convert a file'),
+                'steps' => [
+                    [__('Drop your files'), __('Drag files onto the page, paste them, or pick them; up to 50 at a time.')],
+                    [__('Pick a format'), __('Each file gets the formats that make sense for it, or set one for a whole group.')],
+                    [__('Convert and download'), __('Your own device does the work; download each result, or all of them in one ZIP.')],
+                ],
+                'faqs' => [
+                    [__('Are my files uploaded?'), __('No. FileHop converts in your browser tab. Watch your browser\'s network tab while it runs: nothing is sent.')],
+                    [__('Do I need an account?'), __('No. Every conversion works without one. A HOP ID only adds your account menu for now.')],
+                    [__('Which formats does FileHop handle?'), __('Images, PDF, CSV/TSV/JSON/YAML, Markdown/HTML/text and ZIP/TAR/GZIP archives. Video, audio and DOCX are not there yet.')],
                 ],
             ],
         ];

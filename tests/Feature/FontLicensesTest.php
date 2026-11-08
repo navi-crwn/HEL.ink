@@ -5,7 +5,7 @@
 test('LICENSE and CREDITS.md name every font that has a license file in hop-assets', function () {
     $license = file_get_contents(base_path('LICENSE'));
     $credits = file_get_contents(base_path('CREDITS.md'));
-    $files = glob(public_path('hop-assets/v2/fonts/LICENSE-*.txt'));
+    $files = glob(public_path('hop-assets/v3/fonts/LICENSE-*.txt'));
     expect($files)->not->toBeEmpty();
 
     foreach ($files as $file) {

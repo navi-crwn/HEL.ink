@@ -177,4 +177,14 @@ class HopAccountEventsTest extends TestCase
         $this->assertStringContainsString('https://pixel.hel.ink/auth/helink/logout', $decoded);
         $this->assertStringContainsString('https://note.example.com/auth/sso/logout', $decoded);
     }
+
+    public function test_the_logout_chain_passes_through_filehop(): void
+    {
+        config()->set('hop.sso_secret', self::SECRET);
+        HopApp::factory()->filehop()->create();
+
+        $this->assertSame('/auth/sso/logout', config('hop.apps.filehop.logout'));
+        $decoded = urldecode(urldecode(urldecode(urldecode(SsoController::logoutChain('https://hel.ink')))));
+        $this->assertStringContainsString('https://file.example.com/auth/sso/logout', $decoded);
+    }
 }

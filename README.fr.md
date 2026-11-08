@@ -9,7 +9,7 @@
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/readme/hero-en-dark.webp"><img src="docs/readme/hero-en-light.webp" alt="HEL.ink · Hub de la famille HOP" width="100%"></picture></p>
 
-<p align="center"><b>HEL.ink est le portail de comptes et le répertoire de la famille HOP. Connectez-vous une fois avec votre HOP ID et passez en toute fluidité entre LinkHop, BioHop, PixelHop et NoteHop.</b></p>
+<p align="center"><b>HEL.ink est le portail de comptes et le répertoire de la famille HOP. Connectez-vous une fois avec votre HOP ID et passez en toute fluidité entre LinkHop, BioHop, PixelHop, NoteHop et FileHop.</b></p>
 
 <p align="center">
   <a href="https://hel.ink">hel.ink</a> ·
@@ -32,14 +32,14 @@ Depuis un clone : `./install.sh` · mise à jour : `./update.sh` · suppression 
 
 ## Hub familial et portail de comptes
 
-Portail central de comptes, authentification unique HOP ID et répertoire de la famille LinkHop, BioHop, PixelHop et NoteHop.
+Portail central de comptes, authentification unique HOP ID et répertoire de la famille LinkHop, BioHop, PixelHop, NoteHop et FileHop.
 
 <a id="features"></a>
 
 ## Fonctionnalités
 
 - **Authentification unique (HOP ID)**: Une seule connexion pour toutes les applications HOP avec tickets signés et déconnexion en chaîne.
-- **Lanceur d'applications unifié**: Passez de LinkHop à BioHop, PixelHop et NoteHop en un clic depuis n'importe où.
+- **Lanceur d'applications unifié**: Passez de LinkHop à BioHop, PixelHop, NoteHop et FileHop en un clic depuis n'importe où.
 - **Base de données partagée**: Une base MySQL ou SQLite stocke les identités avec des tables de migration dédiées par application.
 - **Sécurité robuste des comptes**: Hachage Argon2id, 2FA TOTP, protection Cloudflare Turnstile et vérification des e-mails.
 - **Surveillance des services en direct**: Vérifications de santé automatisées et suivi de la latence sans exposition de secrets.
@@ -92,6 +92,7 @@ HEL.ink est le hub d'une famille d'outils web ouverts qui respectent votre vie p
 | **BioHop** | `bio.hel.ink` · `hel.ink/b/…` | [navi-crwn/BioHop](https://github.com/navi-crwn/BioHop) | Pages de liens bio et thèmes |
 | **PixelHop** | `pixel.hel.ink` · `p.hel.ink/…` | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | Hébergement d'images et médias |
 | **NoteHop** | `note.hel.ink` · `n.hel.ink/…` | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | Notes privées chiffrées côté client |
+| **FileHop** | `file.hel.ink` | [navi-crwn/FileHop](https://github.com/navi-crwn/FileHop) | Conversion de fichiers dans le navigateur, sans envoi |
 
 ## Journal des modifications
 

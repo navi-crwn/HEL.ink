@@ -125,3 +125,4 @@ if (!reduced && document.querySelector('.hop-home')) {
     if (document.readyState === 'loading') addEventListener('DOMContentLoaded', start);
     else start();
 }
+

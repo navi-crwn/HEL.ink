@@ -21,6 +21,7 @@
             <a href="#biohop" class="rounded-xl border border-slate-200 bg-white/80 px-3 py-1.5 font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-white/10 dark:bg-white/5 dark:text-white/80">BioHop</a>
             <a href="#pixelhop" class="rounded-xl border border-slate-200 bg-white/80 px-3 py-1.5 font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-white/10 dark:bg-white/5 dark:text-white/80">PixelHop</a>
             <a href="#notehop" class="rounded-xl border border-slate-200 bg-white/80 px-3 py-1.5 font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-white/10 dark:bg-white/5 dark:text-white/80">NoteHop</a>
+            <a href="#filehop" class="rounded-xl border border-slate-200 bg-white/80 px-3 py-1.5 font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-white/10 dark:bg-white/5 dark:text-white/80">FileHop</a>
         </div>
 
         {{-- Section 1: General & HOP ID --}}
@@ -32,12 +33,12 @@
             <div class="space-y-3">
                 <details class="{{ $card }}">
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('What is HOP and what apps belong to the family?') }}</summary>
-                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('HOP stands for Hop Easy Link. It is a family of four independent, open-source web services: LinkHop (short links & QR codes), BioHop (link-in-bio pages), PixelHop (image and document hosting), and NoteHop (zero-knowledge encrypted notes). They are tied together by one account system: your HOP ID.') }}</p>
+                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('HOP stands for Hop Easy Link. It is a family of five independent, open-source web services: LinkHop (short links & QR codes), BioHop (link-in-bio pages), PixelHop (image and document hosting), NoteHop (zero-knowledge encrypted notes), and FileHop (file conversion in the browser). They are tied together by one account system: your HOP ID.') }}</p>
                 </details>
 
                 <details class="{{ $card }}">
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('How does Single Sign-On (SSO) work with my HOP ID?') }}</summary>
-                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('You sign in once at hub.hel.ink. When you open LinkHop, BioHop, PixelHop, or NoteHop, you are automatically recognized via signed cryptographic session tickets. You never have to create separate accounts or remember multiple passwords.') }}</p>
+                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('You sign in once at hub.hel.ink. When you open LinkHop, BioHop, PixelHop, NoteHop, or FileHop, you are automatically recognized via signed cryptographic session tickets. You never have to create separate accounts or remember multiple passwords.') }}</p>
                 </details>
 
                 <details class="{{ $card }}">
@@ -200,6 +201,31 @@
                 <details class="{{ $card }}">
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('What is the difference between note.hel.ink and n.hel.ink?') }}</summary>
                     <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('note.hel.ink is the web application where you write, view, and collaborate on notes. n.hel.ink is the lightweight short redirect domain that keeps URLs compact while preserving the cryptographic fragment (n.hel.ink/slug#k=...).') }}</p>
+                </details>
+            </div>
+        </section>
+
+        {{-- Section 6: FileHop --}}
+        <section id="filehop" class="space-y-4 scroll-mt-24">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="h-3 w-3 rounded-full bg-amber-500"></span>
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-white">FileHop</h2>
+                </div>
+                <a href="https://file.hel.ink" class="text-xs font-semibold text-amber-700 underline underline-offset-2 dark:text-amber-400">{{ __('Open FileHop') }} &rarr;</a>
+            </div>
+            <div class="space-y-3">
+                <details class="{{ $card }}">
+                    <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('How does FileHop convert files without uploading them?') }}</summary>
+                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('Your browser opens the file with the File API and converts it in the tab with your own device\'s processor. The result comes back as a download. Nothing is sent to a server.') }}</p>
+                </details>
+                <details class="{{ $card }}">
+                    <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('Which formats can FileHop convert?') }}</summary>
+                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('Images (PNG, JPEG, WebP, GIF, BMP, TIFF, SVG and more) to WebP, JPEG, PNG or PDF; PDFs merged, split, rotated or turned into images; CSV, TSV, JSON and YAML in any direction; Markdown, HTML and plain text; ZIP, TAR and GZIP archives. Video, audio and DOCX are not supported yet.') }}</p>
+                </details>
+                <details class="{{ $card }}">
+                    <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('Do I need a HOP ID to use FileHop?') }}</summary>
+                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('No. Every conversion works without an account. Signing in with your HOP ID only adds the account menu for now.') }}</p>
                 </details>
             </div>
         </section>

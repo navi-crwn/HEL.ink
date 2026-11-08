@@ -6,6 +6,7 @@ use Hop\Ui\Apps;
 test('the app list comes from config/hop.php with the current app marked', function () {
     config()->set('hop.apps.biohop.enabled', false);
     config()->set('hop.apps.notehop.enabled', false);
+    config()->set('hop.apps.filehop.enabled', false);
     $apps = Apps::all();
     expect(array_column($apps, 'slug'))->toBe(['hub', 'linkhop', 'pixelhop']);
     expect($apps[0]['current'])->toBeTrue();

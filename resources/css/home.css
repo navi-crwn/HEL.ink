@@ -1,5 +1,5 @@
 /* The hub home beyond the hero: running line, numbers, "one account" scene, question cards, closing call.
-   Tokens come from hop-assets/v2/hop-home.css (--home-*, --h-*). Everything shows its finished state without
+   Tokens come from hop-assets/v3/hop-home.css (--home-*, --h-*). Everything shows its finished state without
    script; resources/js/home.js adds the motion (class hx-motion on <html>). */
 .hop-home .hx { margin-top: 128px; scroll-margin-top: 90px; position: relative; }
 .hop-home .hx-wrap { min-width: 0; }

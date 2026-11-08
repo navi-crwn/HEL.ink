@@ -1,6 +1,6 @@
 {
-  "version": "v2",
-  "base": "https://hel.ink/hop-assets/v2/",
+  "version": "v3",
+  "base": "https://hel.ink/hop-assets/v3/",
   "assets": {
     "fonts_css": "fonts-amnesia.css",
     "float_css": "hop-float.css",
@@ -18,7 +18,9 @@
     "hero_pixelhop_light": "home/pixelhop-light.webp",
     "hero_pixelhop_dark": "home/pixelhop-dark.webp",
     "hero_notehop_light": "home/notehop-light.webp",
-    "hero_notehop_dark": "home/notehop-dark.webp"
+    "hero_notehop_dark": "home/notehop-dark.webp",
+    "hero_filehop_light": "home/filehop-light.webp",
+    "hero_filehop_dark": "home/filehop-dark.webp"
   },
   "apps": [
     {"slug": "hub", "name": "HOP ID", "tagline": "One account for every HOP app.", "url": "https://hel.ink", "account_url": "https://hub.hel.ink", "color": "#6366f1", "public": true, "repo": "https://github.com/navi-crwn/HEL.ink",
@@ -31,6 +33,8 @@
      "icons": {"mark": "apps/pixelhop/mark.svg", "favicon": "apps/pixelhop/mark.svg", "icon_192": "apps/pixelhop/icon-192.png", "icon_512": "apps/pixelhop/icon-512.png", "apple_touch": "apps/pixelhop/apple-touch-icon.png"}},
     {"slug": "notehop", "name": "NoteHop", "tagline": "Encrypted notes you share with a link.", "url": "https://note.hel.ink", "public_prefix": "https://n.hel.ink/", "color": "#10b981", "public": true, "repo": "https://github.com/navi-crwn/NoteHop",
      "icons": {"mark": "apps/notehop/mark.svg", "favicon": "apps/notehop/mark.svg", "icon_192": "apps/notehop/icon-192.png", "icon_512": "apps/notehop/icon-512.png"}},
+    {"slug": "filehop", "name": "FileHop", "tagline": "Convert files in your browser; nothing is uploaded.", "url": "https://file.hel.ink", "color": "#f59e0b", "public": true, "repo": "https://github.com/navi-crwn/FileHop",
+     "icons": {"mark": "apps/filehop/mark.svg", "favicon": "apps/filehop/mark.svg", "icon_192": "apps/filehop/icon-192.png", "icon_512": "apps/filehop/icon-512.png"}},
     {"slug": "imperium", "name": "Imperium", "tagline": "The HOP control panel.", "url": "", "color": "#f472b6", "public": false, "repo": "",
      "icons": {"mark": "apps/imperium/mark.svg"}}
   ]

@@ -13,6 +13,7 @@ beforeEach(function () {
     config()->set('hop.apps.biohop.enabled', false);
     config()->set('hop.apps.pixelhop.enabled', false);
     config()->set('hop.apps.notehop.enabled', false);
+    config()->set('hop.apps.filehop.enabled', false);
     config()->set('hop.watch.alert_email', 'owner@example.com');
     config()->set('hop.watch.telegram_token', null);
 });

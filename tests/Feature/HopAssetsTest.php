@@ -36,8 +36,8 @@ test('every asset in the manifest exists and matches its SRI hash', function () 
 test('the manifest lists the public HOP apps at the addresses the hub uses', function () {
     $apps = collect(hopAssets()['apps'])->keyBy('slug');
 
-    expect($apps->keys()->all())->toContain('hub', 'linkhop', 'biohop', 'pixelhop', 'notehop');
-    foreach (['linkhop', 'biohop', 'pixelhop', 'notehop'] as $slug) {
+    expect($apps->keys()->all())->toContain('hub', 'linkhop', 'biohop', 'pixelhop', 'notehop', 'filehop');
+    foreach (['linkhop', 'biohop', 'pixelhop', 'notehop', 'filehop'] as $slug) {
         expect($apps[$slug]['url'])->toBe(rtrim((string) config("hop.apps.{$slug}.url"), '/'));
         expect($apps[$slug]['public'])->toBeTrue();
     }
@@ -48,7 +48,7 @@ test('BioHop uses its official purple document mark everywhere', function () {
     $mark = file_get_contents(hopAssetPath(collect(hopAssets()['apps'])->firstWhere('slug', 'biohop')['icons']['mark']['url']));
 
     expect($mark)->toContain('#d946ef')->toContain('#8b5cf6');
-    expect(file_get_contents(public_path('hop-assets/v2/hop-float.js')))->not->toContain('leaf');
+    expect(file_get_contents(public_path('hop-assets/v3/hop-float.js')))->not->toContain('leaf');
 });
 
 test('fonts.css only points at fonts that ship with it', function () {
@@ -57,7 +57,7 @@ test('fonts.css only points at fonts that ship with it', function () {
 
     expect($m[1])->not->toBeEmpty();
     foreach ($m[1] as $rel) {
-        expect(is_file(public_path('hop-assets/v2/'.$rel)))->toBeTrue("missing font {$rel}");
+        expect(is_file(public_path('hop-assets/v3/'.$rel)))->toBeTrue("missing font {$rel}");
     }
     expect($css)->toContain("font-family: 'Inter'")
         ->toContain("font-family: 'Instrument Serif'")

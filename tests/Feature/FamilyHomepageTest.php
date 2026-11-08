@@ -26,6 +26,13 @@ test('the home page has one interactive section per public product in the manife
     expect($html)->not->toContain('data-home-tabs')->toContain('data-hx-acct');
 });
 
+test('FileHop has its own home section, 3D tile and demo', function () {
+    $html = $this->get('/')->assertOk()->getContent();
+
+    expect($html)->toContain('data-app-section="filehop"')->toContain('data-home-demo="filehop"')
+        ->toContain('data-hop-hero="filehop"')->toContain('https://file.hel.ink')->toContain('Five apps');
+});
+
 test('the home page has the HOP sections and no back link', function () {
     $html = $this->get('/')->assertOk()->getContent();
 
@@ -34,7 +41,7 @@ test('the home page has the HOP sections and no back link', function () {
     }
     expect($html)->not->toContain('Back to HOP');
     expect($html)->not->toContain('id="status"');
-    expect(substr_count($html, '<section '))->toBe(9);
+    expect(substr_count($html, '<section '))->toBe(10);
 });
 
 test('the home page is English by default and speaks nine languages', function () {

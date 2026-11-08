@@ -82,7 +82,8 @@ final class EventRegistry
                 'color' => $app['color'] ?? null,
                 'status' => HopAppRow::STATUS_ACTIVE,
                 'secret' => $secret,
-                'capabilities' => ['events'],
+                // An app may ask for more than events (FileHop: admin_api, so Imperium polls its /hop/health).
+                'capabilities' => array_values(array_unique(array_merge(['events'], (array) ($spec['capabilities'] ?? [])))),
                 'sort_order' => (int) ($spec['sort_order'] ?? 100),
             ]);
             $result[$slug] = 'created';

@@ -1,5 +1,5 @@
 /* The hub home beyond the hero: running line, numbers, "one account" scene, question cards, closing call.
-   Tokens come from hop-assets/v3/hop-home.css (--home-*, --h-*). Everything shows its finished state without
+   Tokens come from hop-assets/v4/hop-home.css (--home-*, --h-*). Everything shows its finished state without
    script; resources/js/home.js adds the motion (class hx-motion on <html>). */
 .hop-home .hx { margin-top: 128px; scroll-margin-top: 90px; position: relative; }
 .hop-home .hx-wrap { min-width: 0; }
@@ -49,10 +49,12 @@
 .hop-home .hx-hub.is-secure { border-color: #10b981; box-shadow: 0 0 0 5px #10b98122, 0 30px 70px -40px #10b981; }
 .hop-home .hx-node { position: absolute; transform: translate(-50%, -50%); display: grid; justify-items: center; gap: 3px; width: 120px; padding: 12px 8px; border: 1px solid var(--home-line); border-radius: 22px; background: var(--home-panel); z-index: 2; transition: opacity .35s, border-color .35s; text-align: center; }
 .hop-home .hx-node b { font-size: 14px; }
+/* the apps sit on a ring around HOP ID; --cx/--cy (cos and sin of each app's angle) come from the markup */
+.hop-home .hx-node { left: calc(50% + var(--cx, 0) * var(--ring-x, 36%)); top: calc(50% + var(--cy, 0) * var(--ring-y, 36%)); }
+.hop-home .hx-code { white-space: nowrap; }
 .hop-home .hx-node .st { font: 600 10px var(--h-mono); font-style: normal; color: #10b981; letter-spacing: .04em; }
 .hop-home .hx-node.is-out { border-color: #f43f5e66; }
 .hop-home .hx-node.is-out .st { color: #f43f5e; }
-.hop-home .hx-node.n1 { left: 20.5%; top: 20.5%; } .hop-home .hx-node.n2 { left: 79.5%; top: 20.5%; } .hop-home .hx-node.n3 { left: 20.5%; top: 79.5%; } .hop-home .hx-node.n4 { left: 79.5%; top: 79.5%; }
 .hop-home .hx-ticket { position: absolute; left: 50%; top: 31%; transform: translateX(-50%); display: none; gap: 0; padding: 4px 12px; border-radius: 10px; background: #22d3ee; color: #082f49; font: 600 11px var(--h-mono); z-index: 3; }
 .hop-home .hx-ticket small { margin-inline-end: 6px; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; }
 .hop-home .hx-note { position: absolute; left: 0; right: 0; bottom: -2px; margin: 0; text-align: center; font: 12px var(--h-mono); color: var(--home-muted); }
@@ -132,6 +134,7 @@
     .hop-home .hx-faq { grid-template-columns: minmax(0, 1fr); }
     .hop-home .hx-node { width: 96px; padding: 10px 6px; } .hop-home .hx-node img { width: 34px; height: 34px; } .hop-home .hx-node b { font-size: 12px; }
     .hop-home .hx-hub { width: 108px; } .hop-home .hx-hub img { width: 44px; height: 44px; }
+    .hop-home .hx-stage { --ring-x: 38%; --ring-y: 43%; margin-block: 22px 30px; } .hop-home .hx-note { bottom: -28px; }
 }
 @media (prefers-reduced-motion: reduce) { .hop-home .hx *, .hop-home .hx *::before { animation: none !important; transition: none !important; } }
 

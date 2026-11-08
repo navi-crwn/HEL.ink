@@ -81,10 +81,12 @@ function account() {
         .to(paths, { strokeDashoffset: 0, duration: .8, stagger: .08, ease: 'power2.inOut' }, .3)
         // 2 open any app: a ticket travels to each app, which signs in
         .set(ticket, { display: 'grid' }, 1.6);
-    [0, 1, 2, 3].forEach((i) => {
-        const at = 1.7 + i * .7;
-        tl.set(pkt, { opacity: 1 }, at).add(travel(i), at).set(pkt, { opacity: 0 }, at + .55)
-            .to(nodes[i], { opacity: 1, duration: .25 }, at + .5).to(sts[i], { autoAlpha: 1, duration: .25 }, at + .55);
+    // the same 2.8 s (in) and 2 s (out) for any number of apps, so the steps stay in place
+    const inStep = 2.8 / nodes.length, outStep = 2 / nodes.length;
+    nodes.forEach((_, i) => {
+        const at = 1.7 + i * inStep, dur = Math.min(.55, inStep - .02);
+        tl.set(pkt, { opacity: 1 }, at).add(travel(i, dur), at).set(pkt, { opacity: 0 }, at + dur)
+            .to(nodes[i], { opacity: 1, duration: .25 }, at + dur - .05).to(sts[i], { autoAlpha: 1, duration: .25 }, at + dur);
     });
     tl.to(ticket, { autoAlpha: 0, duration: .2 }, 4.6)
         // 3 keep it safe: the code and the green ring
@@ -92,10 +94,10 @@ function account() {
         .to(note, { autoAlpha: 1, duration: .3 }, 5.1)
         // 4 leave everywhere: one sign-out reaches every app, one after another
         .call(() => { stage.classList.add('is-out'); hub.classList.remove('is-secure'); note.textContent = noteOut; }, null, 6.2);
-    [0, 1, 2, 3].forEach((i) => {
-        const at = 6.3 + i * .5;
-        tl.set(pkt, { opacity: 1 }, at).add(travel(i, .45), at).set(pkt, { opacity: 0 }, at + .45)
-            .call(() => { nodes[i].classList.add('is-out'); sts[i].textContent = outTxt; }, null, at + .45).to(nodes[i], { opacity: .55, duration: .2 }, at + .45);
+    nodes.forEach((_, i) => {
+        const at = 6.3 + i * outStep, dur = Math.min(.45, outStep - .02);
+        tl.set(pkt, { opacity: 1 }, at).add(travel(i, dur), at).set(pkt, { opacity: 0 }, at + dur)
+            .call(() => { nodes[i].classList.add('is-out'); sts[i].textContent = outTxt; }, null, at + dur).to(nodes[i], { opacity: .55, duration: .2 }, at + dur);
     });
     tl.to({}, { duration: .5 }); // a short hold at the end
     // when the scrub goes back, the stage returns to its signed-in state

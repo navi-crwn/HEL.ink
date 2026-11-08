@@ -18,7 +18,7 @@
         <div class="{{ $card }}">
             <h2 class="text-base font-bold text-slate-900 dark:text-white">{{ __('The HOP Family & Single Account') }}</h2>
             <p class="mt-2 text-sm leading-relaxed {{ $muted }}">
-                {{ __('Your HOP ID is a unified account providing authenticated access to all member apps: LinkHop, BioHop, PixelHop, and NoteHop. These Master Terms form a single binding agreement across the entire ecosystem. Suspension or deletion of your HOP ID applies universally across every connected service.') }}
+                {{ __('Your HOP ID is a unified account providing authenticated access to all member apps: LinkHop, BioHop, PixelHop, NoteHop, and FileHop. These Master Terms form a single binding agreement across the entire ecosystem. Suspension or deletion of your HOP ID applies universally across every connected service.') }}
             </p>
         </div>
 
@@ -116,6 +116,19 @@
                         <li>&bull; {{ __('Zero-knowledge encryption: Note text and files are encrypted in your browser with AES-GCM before transmission. The decryption key never touches our server.') }}</li>
                         <li>&bull; {{ __('Key custody: Because the server has no access to your key, HOP administrators cannot recover, decrypt, or reset lost note links or keys.') }}</li>
                         <li>&bull; {{ __('Self-destructing and expired notes are permanently purged from server memory upon redemption or timer completion.') }}</li>
+                    </ul>
+                </div>
+
+                {{-- FileHop --}}
+                <div class="{{ $card }}">
+                    <div class="flex items-center gap-2.5">
+                        <span class="h-2.5 w-2.5 rounded-full bg-amber-500"></span>
+                        <h3 class="font-bold text-slate-900 dark:text-white">FileHop (file.hel.ink)</h3>
+                    </div>
+                    <ul class="mt-3 space-y-2 text-xs text-slate-600 dark:text-slate-400">
+                        <li>&bull; {{ __('Files are converted in your browser, on your own device. They are never uploaded, so HOP cannot see, recover or restore a file or a result: keep your originals.') }}</li>
+                        <li>&bull; {{ __('Use FileHop only on files you have the right to use and convert.') }}</li>
+                        <li>&bull; {{ __('Results are provided as they are. Check an important result before you rely on it.') }}</li>
                     </ul>
                 </div>
             </div>

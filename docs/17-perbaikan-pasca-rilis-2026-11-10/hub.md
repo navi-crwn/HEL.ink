@@ -1,6 +1,6 @@
 # HEL.ink (hub): post-release fixes, 2026-11-10
 
-PR: PR_URL · branch `fix/post-release-hub` · items 1, 2, 3, 5, 6 (4 is the hop-assets v6 scope).
+PR: https://github.com/navi-crwn/HEL.ink/pull/61 · branch `fix/post-release-hub` · items 1, 2, 3, 5, 6 (4 is the hop-assets v6 scope).
 
 ## 1. Changelog snapshot
 - Root cause: `scripts/build-changelog.py` read the checkout's local `origin/main` and tags without fetching. A family checkout that was not fetched gave a snapshot that stops at the last fetch (2026-11-04); `resources/changelog.json` was last committed on 2026-11-04, so the 2026-11-10 "regeneration" did not change it. PRs came live from `gh`, commits and tags from stale git.

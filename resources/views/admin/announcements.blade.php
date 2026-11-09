@@ -23,7 +23,7 @@
                     @unless ($a->published_at)
                         <form method="POST" action="{{ route('admin.announcements.update', $a) }}">@csrf @method('PUT')<input type="hidden" name="title" value="{{ $a->title }}"><input type="hidden" name="body" value="{{ $a->body }}"><input type="hidden" name="level" value="{{ $a->level }}"><input type="hidden" name="app_slug" value="{{ $a->app_slug }}"><input type="hidden" name="publish_now" value="1"><button class="btn-soft btn-sm">Publish</button></form>
                     @endunless
-                    <form method="POST" action="{{ route('admin.announcements.destroy', $a) }}" data-confirm="Delete this announcement?">@csrf @method('DELETE')<button class="btn-ghost btn-sm text-rose-600 dark:text-rose-400">Delete</button></form>
+                    <form method="POST" action="{{ route('admin.announcements.destroy', $a) }}" data-confirm="Delete this announcement?" data-danger data-subject="{{ $a->title }}">@csrf @method('DELETE')<button class="btn-ghost btn-sm text-rose-600 dark:text-rose-400">Delete</button></form>
                 </div>
             </div>
         @empty

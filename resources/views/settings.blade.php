@@ -612,7 +612,7 @@
                                             <span class="min-w-0 break-words">{{ __('Scopes: :scopes', ['scopes' => $token->scopes ? implode(', ', $token->scopes) : __('all')]) }}</span>
                                         </div>
                                     </div>
-                                    <form method="POST" action="{{ route('api-tokens.destroy', $token) }}" class="shrink-0" data-confirm="{{ __('Revoke the token “:name”? Anything using it stops working at once.', ['name' => $token->name]) }}">
+                                    <form method="POST" action="{{ route('api-tokens.destroy', $token) }}" class="shrink-0" data-confirm="{{ __('Revoke the token “:name”? Anything using it stops working at once.', ['name' => $token->name]) }}" data-danger data-subject="{{ $token->name }}" data-confirm-title="{{ __('Revoke') }}" data-confirm-ok="{{ __('Revoke') }}">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="inline-flex min-h-11 items-center rounded-lg border border-red-300 px-3 text-sm font-medium text-red-600 transition hover:bg-red-50 active:scale-[0.97] dark:border-red-700 dark:text-red-400 dark:hover:bg-red-900/20">
@@ -666,11 +666,11 @@
                             window.location.reload();
                         }, 10000);
                     } else {
-                        alert(@js(__('Could not create the token: :message')).replace(':message', data.message || @js(__('Unknown error'))));
+                        window.HopDialogs.alert({ message: @js(__('Could not create the token: :message')).replace(':message', data.message || @js(__('Unknown error'))) });
                     }
                 } catch (error) {
                     console.error('Error creating token:', error);
-                    alert(@js(__('Something went wrong while creating the token.')));
+                    window.HopDialogs.alert({ message: @js(__('Something went wrong while creating the token.')) });
                 } finally {
                     this.isCreating = false;
                 }

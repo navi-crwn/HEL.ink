@@ -19,6 +19,7 @@
             })();
         </script>
         <x-hop::fonts />
+        @include('partials.hop-ui')
         @stack('scripts-head')
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @stack('styles')

@@ -19,6 +19,7 @@
             })();
         </script>
         <x-hop::fonts />
+        @include('partials.hop-ui')
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="app-bg min-h-screen">

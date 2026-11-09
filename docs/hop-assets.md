@@ -7,12 +7,12 @@ hub from `https://hel.ink/hop-assets/`.
 | Path | What | Cache |
 |---|---|---|
 | `/hop-assets/apps.json` | Manifest: version, asset URLs with SRI hashes, and every app (name, tagline, URL, colour, icons, public or not) | 5 minutes |
-| `/hop-assets/v5/fonts.css` | Syne (display), Plus Jakarta Sans (body), JetBrains Mono (code), self-hosted woff2, plus `--hop-font-display`, `--hop-font-body`, `--hop-font-mono` | 1 year |
-| `/hop-assets/v5/hop-float.css`, `hop-float.js` | The floating tiles; the script draws all seven tiles itself | 1 year |
-| `/hop-assets/v5/hop-ui.css`, `hop-ui.js` | `HopUI.alert/confirm/prompt` dialogs that replace the browser's own, and the "Hide, shows again next week" button on reminder cards (`[data-hop-remind]`) | 1 year |
-| `/hop-assets/v5/apps/<slug>/…` | Official marks, wordmarks, favicons and icons per app | 1 year |
+| `/hop-assets/v6/fonts.css` | Syne (display), Plus Jakarta Sans (body), JetBrains Mono (code), self-hosted woff2, plus `--hop-font-display`, `--hop-font-body`, `--hop-font-mono` | 1 year |
+| `/hop-assets/v6/hop-float.css`, `hop-float.js` | The floating tiles; the script draws all seven tiles itself | 1 year |
+| `/hop-assets/v6/hop-ui.css`, `hop-ui.js` | `HopUI.alert/confirm/prompt` dialogs that replace the browser's own, and the "Hide, shows again next week" button on reminder cards (`[data-hop-remind]`) | 1 year |
+| `/hop-assets/v6/apps/<slug>/…` | Official marks, wordmarks, favicons and icons per app | 1 year |
 
-Sources: `public/hop-assets/v5/` (the files) and `resources/hop-assets/apps.source.json`
+Sources: `public/hop-assets/v6/` (the files) and `resources/hop-assets/apps.source.json`
 (the app list). `python3 scripts/hop_assets.py build` writes `apps.json` with URLs and
 sha384 hashes; `check` (run in CI) fails when the manifest is stale or a file is missing.
 
@@ -42,6 +42,14 @@ sha384 hashes; `check` (run in CI) fails when the manifest is stale or a file is
   Laravel apps include it with `<x-hop::ui />` (hop/ui); PixelHop and FileHop take `ui_css`/`ui_js`
   from the manifest.
 
+- **v6** (2026-11-10): new LinkHop and BioHop marks (owner decision 2026-11-10; HOP ID is unchanged).
+  LinkHop is candidate C, an 8x8 pixel rabbit (two ears over a ring-shaped face, same grid and gradient
+  language as NoteHop, PixelHop and FileHop): `apps/linkhop/mark.svg`, `mark-white.svg`, `favicon.png`
+  (256), `logo.png` (white mark) and `logo-dark.png` (tile). BioHop is a 9x9 pixel document (a rounded
+  square with three white lines): `apps/biohop/mark.svg` and `wordmark.svg`. `hop-float.js` draws both
+  as pixel paths (no more `<img>` for LinkHop) and `hop-hero3d.js` uses the 8x8 LinkHop map. `home/linkhop-*.webp`
+  (the fallback image under the 3D canvas) is re-rendered from the v6 engine; the other hero images are v5 copies (BioHop's 3D map was already this pixel mark). Everything else is v5 copied unchanged; v5 stays as it was.
+
 FileHop sends `Cross-Origin-Embedder-Policy: require-corp`, so anything it loads from
 hel.ink must carry `Cross-Origin-Resource-Policy: cross-origin` (already in
 `deploy/nginx/hop-assets.conf`; check the live vhost has it before FileHop uses v3 or v4).
@@ -65,12 +73,12 @@ the live config, before `location /`, then `sudo nginx -t && sudo systemctl relo
 ## Using it in an app
 
 ```html
-<link rel="stylesheet" href="https://hel.ink/hop-assets/v5/fonts.css" crossorigin>
-<link rel="stylesheet" href="https://hel.ink/hop-assets/v5/hop-float.css" crossorigin>
+<link rel="stylesheet" href="https://hel.ink/hop-assets/v6/fonts.css" crossorigin>
+<link rel="stylesheet" href="https://hel.ink/hop-assets/v6/hop-float.css" crossorigin>
 <div data-hop-float></div>
-<script src="https://hel.ink/hop-assets/v5/hop-float.js" integrity="sha384-…" crossorigin defer></script>
-<link rel="stylesheet" href="https://hel.ink/hop-assets/v5/hop-ui.css" crossorigin>
-<script src="https://hel.ink/hop-assets/v5/hop-ui.js" integrity="sha384-…" crossorigin defer></script>
+<script src="https://hel.ink/hop-assets/v6/hop-float.js" integrity="sha384-…" crossorigin defer></script>
+<link rel="stylesheet" href="https://hel.ink/hop-assets/v6/hop-ui.css" crossorigin>
+<script src="https://hel.ink/hop-assets/v6/hop-ui.js" integrity="sha384-…" crossorigin defer></script>
 ```
 
 Dialogs, in place of `confirm()`:

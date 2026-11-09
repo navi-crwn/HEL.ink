@@ -22,12 +22,12 @@
                 @if ($user->isSuspended())
                     <form method="POST" action="{{ route('admin.users.activate', $user) }}">@csrf<button class="btn-primary btn-sm">Reinstate</button></form>
                 @else
-                    <form method="POST" action="{{ route('admin.users.suspend', $user) }}" data-confirm="Suspend this account in every HOP app?">@csrf<button class="btn-soft btn-sm">Suspend</button></form>
+                    <form method="POST" action="{{ route('admin.users.suspend', $user) }}" data-confirm="Suspend this account in every HOP app?">@csrf<button class="btn-outline btn-sm">Suspend</button></form>
                 @endif
                 @if (auth()->user()->isOwner())
                     <form method="POST" action="{{ route('admin.users.role', $user) }}">@csrf<input type="hidden" name="role" value="admin"><input type="hidden" name="grant" value="{{ $user->hasRole('admin') ? 0 : 1 }}"><button class="btn-ghost btn-sm">{{ $user->hasRole('admin') ? 'Remove admin' : 'Make admin' }}</button></form>
                 @endif
-                <form method="POST" action="{{ route('admin.users.destroy', $user) }}" data-confirm="Delete this account and everything it owns in every app? This cannot be undone.">@csrf @method('DELETE')<button class="btn-ghost btn-sm text-rose-600 dark:text-rose-400">Delete</button></form>
+                <form method="POST" action="{{ route('admin.users.destroy', $user) }}" data-confirm="Delete this account and everything it owns in every app? This cannot be undone." data-danger data-subject="{{ $user->username ?: $user->email }}">@csrf @method('DELETE')<button class="btn-danger-outline btn-sm">Delete</button></form>
                 @endif
             </div>
         </div>

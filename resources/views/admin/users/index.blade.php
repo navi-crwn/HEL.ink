@@ -13,9 +13,12 @@
         </div>
     @endif
     <form method="GET" class="glass flex flex-wrap items-center gap-2 rounded-2xl p-3">
-        <input type="search" name="q" value="{{ $q }}" placeholder="Email, name or @username" class="input flex-1">
+        <div class="search">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="m20 20-3.5-3.5"/></svg>
+            <input type="search" name="q" value="{{ $q }}" placeholder="Email, name or @username" aria-label="Search accounts" class="input">
+        </div>
         <label class="flex items-center gap-2 text-sm text-muted"><input type="checkbox" name="status" value="suspended" @checked(request('status') === 'suspended')> Suspended only</label>
-        <button class="btn-primary btn-sm">Search</button>
+        <button class="btn-outline">Search</button>
     </form>
     <div class="glass overflow-x-auto rounded-2xl">
         <table class="min-w-full text-sm">

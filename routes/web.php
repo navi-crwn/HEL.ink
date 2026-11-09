@@ -11,6 +11,7 @@ use App\Http\Controllers\LauncherController;
 use App\Http\Controllers\LegalArtifactController;
 use App\Http\Controllers\MarketingPageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SsoController;
 use App\Http\Controllers\StatsController;
@@ -113,6 +114,8 @@ Route::domain(config('hop.hub_host'))->group(function () use ($marketing) {
         Route::post('/api-tokens', [ApiTokenController::class, 'store'])->middleware('verified')->name('api-tokens.store');
         Route::delete('/api-tokens/{apiToken}', [ApiTokenController::class, 'destroy'])->name('api-tokens.destroy');
         Route::get('/api-docs', [ApiTokenController::class, 'docs'])->name('api-docs');
+        // The "Hide" button of a reminder card on the dashboard (data-hop-remind): away for seven days.
+        Route::post('/reminders/dismiss', [ReminderController::class, 'dismiss'])->middleware('throttle:30,1,reminders')->name('reminders.dismiss');
     });
     Route::middleware(['auth', '2fa', 'admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', fn () => redirect()->route('admin.users.index'))->name('home');

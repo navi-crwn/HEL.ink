@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="pageTitle">Launcher · HOP</x-slot>
+    <x-slot name="pageTitle">{{ __('Launcher') }} · HOP</x-slot>
     @php
         $user = auth()->user();
         // The first name sits in an italic serif span; "@@NAME@@" keeps it out of the translated sentence.
@@ -12,7 +12,7 @@
         $period = $dashboard->period();
         $tone = ['ok' => 'bg-emerald-500', 'problem' => 'bg-rose-500', 'unknown' => 'bg-slate-400'][$summary['state']];
         $settings = route('settings');
-        $actionLabels = ['created' => __('Created'), 'updated' => __('Updated'), 'suspended' => __('Suspended'), 'activated' => __('Activated')];
+        $actionLabels = ['created' => __('Created'), 'updated' => __('Updated'), 'deleted' => __('Deleted'), 'suspended' => __('Suspended'), 'activated' => __('Activated')];
     @endphp
 
     <div class="min-w-0">
@@ -29,7 +29,7 @@
                     {{ __('Status checks have not run yet') }}
                 @endif
             </span>
-            <a href="{{ route('status') }}" class="underline decoration-dotted underline-offset-2 hover:text-ink">{{ __('Status page') }}</a>
+            <a href="{{ route('status') }}" class="tap underline decoration-dotted underline-offset-2 hover:text-ink">{{ __('Status page') }}</a>
         </p>
     </div>
 
@@ -43,6 +43,32 @@
             </span>
         </a>
     @endforeach
+
+    {{-- Reminders the person can hide for a week (App\Support\Reminders). The shared hop-ui.js, or the hub's own
+         reminders.js without it, adds the "Hide" button; the announcements above are not reminders and stay. --}}
+    @php
+        $remindAttrs = 'data-hop-remind-url="'.e(route('reminders.dismiss')).'" data-hop-remind-hide="'.e(__('Hide')).'" data-hop-remind-again="'.e(__('Shows again next week')).'"';
+        $showHealth = $health && in_array(\App\Support\Reminders::ACCOUNT_HEALTH, $reminders, true);
+    @endphp
+    @if (in_array(\App\Support\Reminders::TWO_FACTOR, $reminders, true))
+        <section class="glass flex flex-wrap items-center gap-x-4 gap-y-2 rounded-2xl py-3 pl-4 pr-14" aria-labelledby="remind-2fa-title" data-hop-remind="{{ \App\Support\Reminders::TWO_FACTOR }}" {!! $remindAttrs !!}>
+            <div class="min-w-0 flex-1 basis-56">
+                <h2 id="remind-2fa-title" class="text-sm font-semibold text-ink">{{ __('Two-factor is off') }}</h2>
+                <p class="text-xs text-muted">{{ __('Adds a code from your phone at sign-in') }}</p>
+            </div>
+            <a href="{{ $settings }}#2fa" class="btn-soft btn-sm whitespace-nowrap">{{ __('Turn on two-factor') }}</a>
+        </section>
+    @endif
+    @if (in_array(\App\Support\Reminders::RECOVERY_CODES, $reminders, true))
+        @php $codesLeft = $dashboard->recoveryCodesLeft(); @endphp
+        <section class="glass flex flex-wrap items-center gap-x-4 gap-y-2 rounded-2xl border-amber-400/40 py-3 pl-4 pr-14" aria-labelledby="remind-codes-title" data-hop-remind="{{ \App\Support\Reminders::RECOVERY_CODES }}" {!! $remindAttrs !!}>
+            <div class="min-w-0 flex-1 basis-56">
+                <h2 id="remind-codes-title" class="text-sm font-semibold tabular-nums text-ink">{{ trans_choice('{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left', $codesLeft, ['count' => $codesLeft]) }}</h2>
+                <p class="text-xs text-muted">{{ __('Each code works once. Make new ones before you need them.') }}</p>
+            </div>
+            <a href="{{ $settings }}#2fa" class="btn-soft btn-sm whitespace-nowrap">{{ __('Make new codes') }}</a>
+        </section>
+    @endif
 
     {{-- My apps --}}
     <section aria-labelledby="apps-title" class="space-y-3">
@@ -64,11 +90,12 @@
         </div>
     </section>
 
-    <div class="grid gap-3 lg:grid-cols-3">
-        {{-- Account health --}}
-        @if ($health)
-            <section class="glass-card min-w-0" aria-labelledby="health-title">
-                <div class="flex items-center gap-4">
+    <div class="grid gap-3 {{ $showHealth ? 'lg:grid-cols-3' : 'lg:grid-cols-2' }}">
+        {{-- Account health: the checklist, while a step is open and the person has not hidden it this week.
+             Once every step is done it is gone for good. --}}
+        @if ($showHealth)
+            <section class="glass-card remind-compact min-w-0" aria-labelledby="health-title" data-hop-remind="{{ \App\Support\Reminders::ACCOUNT_HEALTH }}" {!! $remindAttrs !!}>
+                <div class="flex items-center gap-4 pr-10">
                     <div class="relative h-16 w-16 shrink-0" role="img" aria-label="{{ __(':done of :total done', ['done' => $health['done'], 'total' => $health['total']]) }}">
                         <svg viewBox="0 0 36 36" class="h-16 w-16 -rotate-90" fill="none" stroke-width="3.4" aria-hidden="true">
                             <circle cx="18" cy="18" r="15.9155" class="text-slate-900/10 dark:text-white/10" stroke="currentColor"/>
@@ -78,13 +105,13 @@
                     </div>
                     <div class="min-w-0">
                         <h2 id="health-title" class="section-title">{{ __('Account health') }}</h2>
-                        <p class="mt-0.5 text-xs text-muted">{{ $health['done'] === $health['total'] ? __('Your account is fully set up') : __(':done of :total done', ['done' => $health['done'], 'total' => $health['total']]) }}</p>
+                        <p class="mt-0.5 text-xs tabular-nums text-muted">{{ __(':done of :total done', ['done' => $health['done'], 'total' => $health['total']]) }}</p>
                     </div>
                 </div>
                 <ul class="mt-3 space-y-0.5 text-sm">
                     @foreach ($health['steps'] as $step)
                         <li>
-                            <a href="{{ $step['url'] }}" class="flex items-start gap-2.5 rounded-lg px-1 py-1.5 {{ $step['done'] ? 'text-muted' : 'text-ink hover:text-indigo-600 dark:hover:text-indigo-300' }}">
+                            <a href="{{ $step['url'] }}" class="flex min-h-11 items-start gap-2.5 rounded-lg px-1 py-1.5 {{ $step['done'] ? 'text-muted' : 'text-ink hover:text-indigo-600 dark:hover:text-indigo-300' }}">
                                 <span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border {{ $step['done'] ? 'border-emerald-500 bg-emerald-500 text-white' : 'border-slate-300 dark:border-slate-600' }}" aria-hidden="true">
                                     @if ($step['done'])<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>@endif
                                 </span>
@@ -108,7 +135,7 @@
                 @if ($user->hasTwoFactor())
                     <span class="chip-green">{{ __('Two-factor is on') }}</span>
                 @else
-                    <a href="{{ $settings }}#2fa" class="chip-amber">{{ __('Two-factor is off') }}</a>
+                    <span class="chip-amber">{{ __('Two-factor is off') }}</span>
                 @endif
             </div>
             <p class="stat-label mt-3">{{ __('Last sign-ins') }}</p>
@@ -130,8 +157,12 @@
                 @endforelse
             </ul>
             <div class="mt-3 flex flex-wrap items-center gap-2">
-                <a href="{{ $settings }}#login" class="btn-soft btn-sm whitespace-nowrap">{{ __("This wasn't me") }}</a>
-                <a href="{{ $settings }}#login" class="text-xs font-medium text-indigo-600 hover:underline dark:text-indigo-300">{{ __('All sign-ins') }}</a>
+                <a href="{{ $settings }}#login" class="btn-outline btn-sm">{{ __("This wasn't me") }}</a>
+                <a href="{{ $settings }}#login" class="btn-link btn-sm">{{ __('All sign-ins') }}</a>
+                {{-- The status above is a chip, and a chip is not a link: the way to turn it on is a button here. --}}
+                @unless ($user->hasTwoFactor())
+                    <a href="{{ $settings }}#2fa" class="btn-link btn-sm">{{ __('Turn on two-factor') }}</a>
+                @endunless
             </div>
         </section>
 
@@ -140,7 +171,7 @@
             <section class="glass-card min-w-0" aria-labelledby="activity-title">
                 <div class="flex items-center justify-between gap-2">
                     <h2 id="activity-title" class="section-title">{{ __('Recent activity') }}</h2>
-                    <a href="{{ $settings }}#activity" class="text-xs font-medium text-indigo-600 hover:underline dark:text-indigo-300">{{ __('View all') }}</a>
+                    <a href="{{ $settings }}#activity" class="btn-link btn-sm -mr-1.5">{{ __('View all') }}</a>
                 </div>
                 <ul class="mt-2 divide-y divide-slate-500/10">
                     @forelse ($activity as $row)
@@ -162,9 +193,9 @@
                 <h2 id="data-title" class="section-title">{{ __('Data and privacy') }}</h2>
                 <p class="mt-1 text-xs text-muted">{{ __('Your account data is yours: download a copy, or delete the account for good.') }}</p>
                 <div class="mt-3 flex flex-wrap items-center gap-2">
-                    <a href="{{ $settings }}#backup" class="btn-soft btn-sm whitespace-nowrap">{{ __('Export my data') }}</a>
+                    <a href="{{ $settings }}#backup" class="btn-outline btn-sm">{{ __('Export my data') }}</a>
                     @unless ($user->isSuperAdmin())
-                        <a href="{{ $settings }}#account" class="btn-ghost btn-sm whitespace-nowrap text-rose-600 dark:text-rose-400">{{ __('Delete account') }}</a>
+                        <a href="{{ $settings }}#account" class="btn-danger-outline btn-sm">{{ __('Delete account') }}</a>
                     @endunless
                 </div>
             </section>

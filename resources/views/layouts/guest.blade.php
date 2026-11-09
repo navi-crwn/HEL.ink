@@ -12,6 +12,7 @@
             (function () {
                 try {
                     var t = localStorage.getItem('helink-theme');
+                    if (/(?:^|; )hop_ui=clean(?:;|$)/.test(document.cookie)) document.documentElement.dataset.ui = 'clean';
                     if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                         document.documentElement.classList.add('dark');
                     }
@@ -19,28 +20,33 @@
             })();
         </script>
         <x-hop::fonts />
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @include('partials.hop-ui')
+        @vite(['resources/css/app.css', 'resources/css/coss.css', 'resources/js/app.js'])
     </head>
-    <body class="app-bg min-h-screen">
+    <body class="app-bg hub-chrome min-h-screen">
         <x-session-expired-notice />
         <div class="relative z-10 flex min-h-screen flex-col items-center px-4 py-8 sm:justify-center">
-            <div class="mb-6 flex w-full max-w-md items-center justify-between">
-                <a href="{{ route('home') }}" class="flex items-center gap-2.5">
+            <div class="mb-6 flex w-full max-w-sm items-center justify-between">
+                <a href="{{ route('home') }}" class="flex items-center gap-2.5" title="{{ __('Home') }}">
                     <x-wordmark class="h-10 w-auto" />
                 </a>
-                <button type="button" class="icon-btn" aria-label="Toggle theme"
-                    data-toggle-dark>
-                    <svg class="h-[18px] w-[18px] dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></svg>
-                    <svg class="hidden h-[18px] w-[18px] dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-                </button>
+                {{-- Language and theme, as in every dashboard top bar: the sign-in pages are the first thing a visitor sees. --}}
+                <div class="flex items-center gap-1.5">
+                    <x-hop::language-switcher />
+                    <button type="button" class="icon-btn" aria-label="{{ __('Toggle theme') }}" title="{{ __('Toggle theme') }}"
+                        data-toggle-dark>
+                        <svg class="h-[18px] w-[18px] dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></svg>
+                        <svg class="hidden h-[18px] w-[18px] dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+                    </button>
+                </div>
             </div>
-            <main class="w-full max-w-md">
-                <div class="auth-card glass-strong w-full max-w-md rounded-3xl border-t-4 border-t-sky-400/70 p-6 text-ink shadow-xl shadow-sky-900/5 sm:p-8">
+            <main class="w-full max-w-sm">
+                <div class="auth-card glass-strong w-full max-w-sm rounded-3xl border-t-4 border-t-sky-400/70 p-6 text-ink shadow-xl shadow-sky-900/5">
                     {{ $slot }}
                 </div>
             </main>
-            <p class="mt-6 text-xs text-muted">
-                <a href="{{ route('terms') }}" class="hover:underline">Terms</a> · <a href="{{ route('privacy') }}" class="hover:underline">Privacy</a> · <a href="{{ route('help') }}" class="hover:underline">Help</a>
+            <p class="mt-6 flex flex-wrap items-center justify-center gap-x-1 text-xs text-muted">
+                <a href="{{ route('terms') }}" class="inline-flex min-h-11 items-center px-1.5 hover:underline">{{ __('Terms') }}</a> · <a href="{{ route('privacy') }}" class="inline-flex min-h-11 items-center px-1.5 hover:underline">{{ __('Privacy') }}</a> · <a href="{{ route('help') }}" class="inline-flex min-h-11 items-center px-1.5 hover:underline">{{ __('Help') }}</a>
             </p>
         </div>
     </body>

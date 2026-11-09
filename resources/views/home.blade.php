@@ -6,7 +6,7 @@
     <script src="{{ asset('hop-assets/v5/hop-hero3d.js') }}" defer></script>
     <script src="{{ asset('hop-assets/v5/hop-motion.js') }}" defer></script>
     <script src="{{ asset('hop-assets/v5/hop-home.js') }}" defer></script>
-    @vite(['resources/css/home.css', 'resources/js/home.js'])
+    @vite(['resources/css/home.css', 'resources/css/coss-home.css', 'resources/js/home.js'])
 @endpush
 <x-marketing-layout :title="'HEL.ink · '.__('One account. Every HOP app.')" :themed="true" :back="false" :alternates="true">
 <div class="hop-home">
@@ -33,6 +33,10 @@
         @endif
     </div>
     @include('partials.home-account')
+    <div id="apps-list" class="coss-apps" role="region" aria-labelledby="apps-list-title">
+        <h2 id="apps-list-title">{{ __('The HOP apps') }}</h2>
+        <ul>@foreach ($stories as $slug => $app)<li><img src="{{ $app['mark'] }}" alt="" width="36" height="36"><div><b>{{ $app['name'] }}</b><span>{{ $app['kicker'] }}</span></div><code>{{ parse_url($app['url'], PHP_URL_HOST) }}</code><a class="h-pill" href="{{ $app['url'] }}">{{ __('Open :app', ['app' => $app['name']]) }}</a></li>@endforeach</ul>
+    </div>
     <span id="apps" aria-hidden="true"></span>
     @foreach ($stories as $slug => $app)
     <section id="{{ $slug }}" class="h-sec h-app" style="--app-accent: {{ $app['color'] }}" aria-labelledby="{{ $slug }}-title" data-app-section="{{ $slug }}">

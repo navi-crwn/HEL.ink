@@ -26,6 +26,7 @@
                 (function () {
                     try {
                         var t = localStorage.getItem('helink-theme');
+                    if (/(?:^|; )hop_ui=clean(?:;|$)/.test(document.cookie)) document.documentElement.dataset.ui = 'clean';
                         if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                             document.documentElement.classList.add('dark');
                         }
@@ -39,7 +40,7 @@
             @endforeach
         @endif
         <x-hop::fonts />
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/css/coss.css', 'resources/js/app.js'])
         @stack('head')
     </head>
     @if ($themed)

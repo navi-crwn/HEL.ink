@@ -23,7 +23,7 @@
             </label>
         </div>
         <div class="mt-6 flex flex-col gap-3">
-            <button type="submit" class="btn btn-primary w-full py-3 text-base">
+            <button type="submit" class="btn-primary btn-lg btn-block">
                 {{ __('Agree and continue with Google') }}
             </button>
             <a href="{{ route('register') }}" class="text-center text-sm text-muted hover:underline">

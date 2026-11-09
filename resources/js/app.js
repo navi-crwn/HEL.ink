@@ -4,9 +4,13 @@ import collapse from '@alpinejs/collapse';
 import modal from './modal';
 import installInlineActions from './inline-actions';
 import installFamilyTabs from './family-tabs';
+import installDialogs from './dialogs';
+import installReminders from './reminders';
 Alpine.plugin(collapse);
 Alpine.plugin(modal);
 window.Alpine = Alpine;
+installDialogs();
+installReminders();
 installInlineActions();
 installFamilyTabs();
 // Use requestAnimationFrame to ensure inline scripts in blade templates have executed

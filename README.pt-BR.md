@@ -42,6 +42,8 @@ Portal central de contas, logon único HOP ID e diretório da família para Link
 - **Inicializador unificado de apps**: Alterne entre LinkHop, BioHop, PixelHop, NoteHop e FileHop com um clique.
 - **Arquitetura de banco compartilhado**: Um banco MySQL ou SQLite armazena identidades com tabelas de migração dedicadas por app.
 - **Segurança robusta de conta**: Hashing Argon2id, autenticação em dois fatores TOTP, Turnstile e verificação de e-mail.
+- **Porta SSO, CSP e UI compartilhada**: todas as páginas saem com Content-Security-Policy (com nonce nas páginas do app), a passagem SSO é assinada e verificada pelos apps, e os diálogos e os menus de idioma e conta vêm do pacote compartilhado HopUI.
+- **Um padrão de controles**: campos, seletores e botões compartilham um raio e uma altura (tokens `--hop-ctl-*`), texto de 16 px e alvos de toque de 44 px no celular, e layout estático com movimento reduzido.
 - **Monitor de integridade em tempo real**: Verificações automáticas de integridade e latência sem vazamento de segredos.
 - **Recursos visuais centralizados**: Marcas oficiais, fontes e blocos flutuantes 3D servidos de hel.ink com hashes SRI.
 - **Tokens de API com escopos granulares**: Crie tokens de serviço para comunicação entre apps e automações de desenvolvedores.

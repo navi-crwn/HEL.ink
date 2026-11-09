@@ -37,6 +37,9 @@ class UserDeletion
             DB::table('sessions')->where('user_id', $user->id)->delete();
             DB::table('login_histories')->where('user_id', $user->id)->delete();
             DB::table('activity_logs')->where('user_id', $user->id)->delete();
+            if (Schema::hasTable('hub_reminder_dismissals')) {
+                DB::table('hub_reminder_dismissals')->where('user_id', $user->id)->delete();
+            }
             DB::table('api_tokens')->where('user_id', $user->id)->delete();
             DB::table('roles')->where('user_id', $user->id)->delete();
             if (Schema::hasTable('links')) {

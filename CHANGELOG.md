@@ -10,17 +10,25 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ### Changed
 
+- Controls: the hub follows the HOP control standard (`--hop-ctl-*` tokens): one radius and one height for inputs, selects, buttons and search, capped field widths, 16 px text and 44 px touch targets on phones, no motion transforms under reduced motion. Applies to the dashboard, Settings, sign-in pages and admin.
+- Hub UI: layered flat surfaces on the home page, dashboard, Settings, auth and admin, as an optional "Clean" interface style (Settings, Interface style). The HOP look stays the default.
+- Dashboard: translated top bar title and "Deleted" badge, a drawn arrow on "Visit site", the wordmark opens the HOP ID dashboard, and the sidebar lists the HOP family.
 - hop-assets v4: FileHop gets a pixel mark like NoteHop and PixelHop, the same 8x8 map as its 3D preset, its floating tile and its PWA icons (plus an Apple touch icon); the home page, `/apps/filehop` and the manifest use v4. v3 is unchanged.
 - The HOP ID diagram on the home page shows every app on a ring around HOP ID (FileHop was missing; it showed four). Positions follow the number of apps, and the sign-in code no longer breaks over two lines on phones.
 - Privacy: a FileHop section (what it keeps when you sign in, and that files never reach the server) and a line under retention. Terms: FileHop in the list of member apps and its own section. FAQ: FileHop in the deletion answer, and the languages answer lists the nine languages (it named eight, with Arabic).
 
 ### Added
 
+- Dialogs: the hub asks through the shared HopUI dialog when it is on the page and falls back to the browser's own.
+- Reminders on the dashboard: HOP ID's reminder cards can be hidden for a week.
 - `docs/adding-an-app.md`: every place to change when an app joins the family.
 - Translations of the FAQ, help, contact, about, app pages and status ticker texts that were shown in English in every language.
 
 ### Fixed
 
+- Settings: `#security`, `#data` and `#tokens` open the tab they name, and on phones the active tab is brought into view.
+- Registry: `/api/hop/apps` reports LinkHop's capabilities from its row instead of a list in the controller.
+- Sign-in history keeps single sign-on hand-offs apart from real sign-ins.
 - `GET /auth/google/consent` answers with the Google redirect while no terms version is required; it was a 500.
 - The API page names the real API address and documentation of LinkHop and PixelHop, and no longer links pages that do not exist on BioHop and NoteHop.
 - `/status` and `/status.json` answer while the database is down, with no numbers, as the home page already did. This holds when sessions are not stored in the database: with `SESSION_DRIVER=database` every web page still fails while the database is down.

@@ -247,5 +247,91 @@ http {{
                 self.assertNotIn("Location", headers)
 
 
+def bio_server(source):
+    return source.split("server_name bio.hel.ink;", 1)[1].split("\nserver {", 1)[0]
+
+
+class BioFontsCors(unittest.TestCase):
+    """BioHop's theme fonts are loaded by pages at hel.ink/b/*: bio.hel.ink must send them with CORS."""
+
+    ORIGIN = 'add_header Access-Control-Allow-Origin "https://hel.ink";'
+
+    @classmethod
+    def setUpClass(cls):
+        cls.block = bio_server(SOURCE.read_text(encoding="utf-8"))
+        match = re.search(r"^    location \^~ /fonts/\s*\{.*\}$", cls.block, re.MULTILINE)
+        if not match:
+            raise AssertionError("bio.hel.ink has no location for /fonts/")
+        cls.location = match.group(0)
+
+    def test_fonts_location_allows_the_public_host(self):
+        self.assertIn("root /var/www/helink/biohop/public;", self.location)
+        self.assertIn(self.ORIGIN, self.location)
+        self.assertIn("try_files $uri =404;", self.location)
+        # Declared before the catch-all, like /build/ and /storage/.
+        self.assertLess(self.block.index("location ^~ /fonts/"), self.block.index("location / {"))
+
+    @unittest.skipUnless(shutil.which("nginx"), "nginx is unavailable; the source check is not HTTP proof")
+    def test_a_font_is_served_with_the_header_and_a_missing_one_is_404(self):
+        with tempfile.TemporaryDirectory(prefix=".fonts-", dir=TESTS_DIR) as temp:
+            runtime = Path(temp)
+            (runtime / "public" / "fonts" / "bio").mkdir(parents=True)
+            (runtime / "public" / "fonts" / "bio" / "inter-test.woff2").write_bytes(b"wOF2")
+            (runtime / "public" / "index.html").write_text("app", encoding="utf-8")
+            port = LoopbackContract.free_port()
+            location = self.location.replace("/var/www/helink/biohop/public", str(runtime / "public"))
+            config = runtime / "nginx.conf"
+            config.write_text(
+                f"pid {runtime}/nginx.pid;\nerror_log stderr notice;\nevents {{}}\nhttp {{\n    access_log off;\n"
+                f"    types {{ font/woff2 woff2; text/html html; }}\n"
+                f"    server {{\n        listen 127.0.0.1:{port};\n        server_name _;\n{location}\n"
+                f"        location / {{ root {runtime}/public; }}\n    }}\n}}\n",
+                encoding="utf-8",
+            )
+            with (runtime / "process.log").open("w", encoding="utf-8") as log:
+                process = subprocess.Popen(
+                    ["nginx", "-p", str(runtime), "-c", str(config), "-g", "daemon off; master_process off;"],
+                    stdin=subprocess.DEVNULL,
+                    stdout=log,
+                    stderr=subprocess.STDOUT,
+                )
+                try:
+                    deadline = time.monotonic() + 5
+                    while time.monotonic() < deadline:
+                        if process.poll() is not None:
+                            raise RuntimeError("isolated nginx fixture exited before accepting requests")
+                        try:
+                            with socket.create_connection(("127.0.0.1", port), timeout=0.1):
+                                break
+                        except OSError:
+                            time.sleep(0.02)
+                    else:
+                        raise RuntimeError("isolated nginx fixture did not become ready")
+
+                    def get(path):
+                        conn = http.client.HTTPConnection("127.0.0.1", port, timeout=2)
+                        try:
+                            conn.request("GET", path, headers={"Origin": "https://hel.ink"})
+                            response = conn.getresponse()
+                            response.read()
+                            return response.status, dict(response.getheaders())
+                        finally:
+                            conn.close()
+
+                    status, headers = get("/fonts/bio/inter-test.woff2")
+                    self.assertEqual(status, 200)
+                    self.assertEqual(headers.get("Access-Control-Allow-Origin"), "https://hel.ink")
+                    self.assertEqual(headers.get("Content-Type"), "font/woff2")
+                    status, headers = get("/fonts/bio/missing.woff2")
+                    self.assertEqual(status, 404)
+                    # Other paths are the app's: no CORS header is added to them here.
+                    status, headers = get("/index.html")
+                    self.assertEqual(status, 200)
+                    self.assertNotIn("Access-Control-Allow-Origin", headers)
+                finally:
+                    process.terminate()
+                    process.wait(timeout=5)
+
+
 if __name__ == "__main__":
     unittest.main()

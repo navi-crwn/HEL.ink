@@ -1,3 +1,4 @@
+<div class="coss-footer-brand"><img src="{{ route('brand.favicon') }}" alt="" width="28" height="28"><span><b>HOP</b> · Hop Easy Link</span></div>
 <x-hop::footer
     app="hub"
     name="HEL.ink"

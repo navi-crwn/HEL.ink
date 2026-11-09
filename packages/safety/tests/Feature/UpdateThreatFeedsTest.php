@@ -31,7 +31,7 @@ test('feeds are normalized, de-duplicated and written without leftovers', functi
     expect(file_get_contents($this->feedDir.'/malware.txt'))->toBe("bad.example/path\nother.example/x");
     expect(file_get_contents($this->feedDir.'/phishing.txt'))->toBe('phish.example/login');
     expect(array_values(array_diff(scandir($this->feedDir), ['.', '..'])))->toBe(['malware.txt', 'phishing.txt']);
-});
+})->skip(! defined('CURLOPT_PROGRESSFUNCTION'), 'Requires ext-curl: without it the command fails closed before the download.');
 
 test('a download over the size limit is refused and the previous file is kept', function () {
     config()->set('safety.feed_max_bytes', 100);
@@ -47,7 +47,7 @@ test('a download over the size limit is refused and the previous file is kept', 
     expect(file_get_contents($this->feedDir.'/malware.txt'))->toBe('old.example/a');
     expect(file_get_contents($this->feedDir.'/phishing.txt'))->toBe('old.example/b');
     expect(array_values(array_diff(scandir($this->feedDir), ['.', '..'])))->toBe(['malware.txt', 'phishing.txt']);
-});
+})->skip(! defined('CURLOPT_PROGRESSFUNCTION'), 'Requires ext-curl: without it the command fails closed before the download.');
 
 test('an empty feed or a page that is not a URL list never replaces a good file', function () {
     file_put_contents($this->feedDir.'/malware.txt', 'old.example/a');
@@ -62,7 +62,7 @@ test('an empty feed or a page that is not a URL list never replaces a good file'
     expect(file_get_contents($this->feedDir.'/malware.txt'))->toBe('old.example/a');
     expect(file_get_contents($this->feedDir.'/phishing.txt'))->toBe('old.example/b');
     expect(array_values(array_diff(scandir($this->feedDir), ['.', '..'])))->toBe(['malware.txt', 'phishing.txt']);
-});
+})->skip(! defined('CURLOPT_PROGRESSFUNCTION'), 'Requires ext-curl: without it the command fails closed before the download.');
 
 test('one failing feed does not stop the other and the run still succeeds', function () {
     file_put_contents($this->feedDir.'/malware.txt', 'old.example/a');
@@ -75,7 +75,32 @@ test('one failing feed does not stop the other and the run still succeeds', func
 
     expect(file_get_contents($this->feedDir.'/malware.txt'))->toBe('old.example/a');
     expect(file_get_contents($this->feedDir.'/phishing.txt'))->toBe('phish.example/x');
-});
+})->skip(! defined('CURLOPT_PROGRESSFUNCTION'), 'Requires ext-curl: without it the command fails closed before the download.');
+
+test('without curl the command fails closed, keeps the previous files and makes no request', function () {
+    file_put_contents($this->feedDir.'/malware.txt', 'old.example/a');
+    file_put_contents($this->feedDir.'/phishing.txt', 'old.example/b');
+    // No fakes here on purpose: anything that reaches the transport layer is counted and refused by this
+    // middleware, which runs before the real handler and never opens a socket.
+    $attempts = 0;
+    Http::globalMiddleware(function () use (&$attempts) {
+        return function ($request, $options) use (&$attempts) {
+            $attempts++;
+
+            throw new RuntimeException('network attempted in test');
+        };
+    });
+
+    $this->artisan('abuse:feeds')
+        ->expectsOutputToContain('malware: the curl extension is required to size-limit the feed download')
+        ->expectsOutputToContain('phishing: the curl extension is required to size-limit the feed download')
+        ->assertFailed();
+
+    expect($attempts)->toBe(0, 'a feed download was attempted without the size-limit guard')
+        ->and(file_get_contents($this->feedDir.'/malware.txt'))->toBe('old.example/a')
+        ->and(file_get_contents($this->feedDir.'/phishing.txt'))->toBe('old.example/b')
+        ->and(array_values(array_diff(scandir($this->feedDir), ['.', '..'])))->toBe(['malware.txt', 'phishing.txt']);
+})->skip(defined('CURLOPT_PROGRESSFUNCTION'), 'This checks the no-curl fallback.');
 
 test('the default limit is 64 MB and can be set in the config', function () {
     expect(config('safety.feed_max_bytes'))->toBe(64 * 1024 * 1024);

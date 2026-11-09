@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\HopApp;
 use App\Models\User;
+use App\Support\EventRegistry;
 use App\Support\Input;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -63,20 +64,25 @@ class HopController extends Controller
             'color' => $a->color, 'capabilities' => $a->capabilities ?? [], 'menu_label' => $a->label(), 'hidden' => (bool) $a->getAttribute('hidden'),
         ] + ($withSecret ? ['secret' => $a->secret] : []));
 
-        // LinkHop uses the shared account registry for caller authentication,
-        // but its content/metrics API belongs to its own configured origin.
-        // Older installations did not need a LinkHop registry row because
-        // Imperium incorrectly treated the account hub as LinkHop.
+        // LinkHop uses the shared account registry for caller authentication, but its content and
+        // metrics API belongs to its own configured origin: an old registry row can still carry the
+        // hub's address, from when Imperium treated the account hub as LinkHop. So the address comes
+        // from config and no secret is handed out, as before. Everything else is the registry row's:
+        // the capabilities are what the row says, not a list written here. An installation without a
+        // LinkHop row (HopAppsSeeder not run yet) is answered with what the seeder would create.
         if (config('hop.apps.linkhop.enabled') && config('hop.apps.linkhop.url')) {
+            $row = $apps->firstWhere('slug', 'linkhop');
             $linkhop = [
-                'slug' => 'linkhop', 'name' => 'LinkHop', 'url' => config('hop.apps.linkhop.url'),
-                'status' => 'active', 'icon' => 'link', 'color' => 'indigo',
-                'capabilities' => ['admin_api', 'metrics'], 'menu_label' => 'LinkHop', 'hidden' => false,
+                'slug' => 'linkhop',
+                'name' => $row['name'] ?? (string) config('hop.apps.linkhop.name', 'LinkHop'),
+                'url' => config('hop.apps.linkhop.url'),
+                'status' => $row['status'] ?? HopApp::STATUS_ACTIVE,
+                'icon' => $row['icon'] ?? (string) config('hop.apps.linkhop.icon', 'link'),
+                'color' => $row['color'] ?? (string) config('hop.apps.linkhop.color', 'indigo'),
+                'capabilities' => $row ? $row['capabilities'] : EventRegistry::capabilitiesFor('linkhop'),
+                'menu_label' => $row['menu_label'] ?? 'LinkHop',
+                'hidden' => $row['hidden'] ?? false,
             ];
-            $existing = $apps->firstWhere('slug', 'linkhop');
-            if ($existing) {
-                $linkhop['status'] = $existing['status'];
-            }
             $apps = $apps->reject(fn ($app) => $app['slug'] === 'linkhop')->push($linkhop)->values();
         }
 

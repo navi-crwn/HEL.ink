@@ -42,6 +42,8 @@ curl -fsSL https://raw.githubusercontent.com/navi-crwn/HEL.ink/main/install.sh |
 - **统一应用启动器**: 随时随地一键在 LinkHop、BioHop、PixelHop、NoteHop 和 FileHop 间切换。
 - **共享数据库架构**: 共享单个 MySQL 或 SQLite 数据库存储身份，各应用独立的迁移账本避免冲突。
 - **严格的安全防护**: Argon2id 哈希、TOTP 双重认证、Cloudflare Turnstile 防护与邮箱验证。
+- **SSO 网关、CSP 与共享界面**: 每个页面都带有 Content-Security-Policy（应用页面使用 nonce），SSO 交接经过签名并由各应用验证，对话框以及语言和账号菜单来自共享的 HopUI 包。
+- **统一的控件标准**: 输入框、下拉框和按钮共用同一圆角和高度（`--hop-ctl-*` 令牌），手机上为 16 px 文字和 44 px 触控区域，减少动态效果时为静态布局。
 - **实时看门狗监测**: 自动健康监测与延迟监控，零密钥泄露。
 - **集中式家族资产**: 官方图标、家族字体（Syne、Plus Jakarta Sans）和 3D 浮动卡片由 hel.ink 提供 SRI 支持。
 - **细粒度 API 令牌**: 生成带权限范围的令牌，用于应用间通信与开发者自动化。

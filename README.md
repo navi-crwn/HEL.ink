@@ -53,6 +53,8 @@ This repository serves as the **ecosystem hub**:
 - **🔐 Single Sign-On (HOP ID)**: One account signs you into LinkHop, BioHop, PixelHop, NoteHop, and FileHop without repetitive credentials. Signed cryptographic tickets and chained session termination.
 - **🚀 Unified App Launcher**: An integrated top-level switcher letting users jump between all family apps seamlessly.
 - **🛡️ Comprehensive Account Security**: Argon2id password hashing, TOTP two-factor authentication, Cloudflare Turnstile anti-bot verification, and secure email verification.
+- **🧱 SSO gate, CSP and shared UI**: Every page is served with a Content-Security-Policy (nonce-based on the app pages), the SSO hand-off is signed and verified by the apps, and dialogs and the language and account menus come from the shared HopUI package.
+- **🎛️ One control standard**: Inputs, selects and buttons share one radius and height (`--hop-ctl-*` tokens), 16 px text and 44 px touch targets on phones, and a static layout under reduced motion.
 - **🗄️ Shared Identity Database**: Single MySQL or SQLite identity backend with isolated per-app migration tables (`migrations_hub`, `migrations_bio`, etc.) to prevent schema pollution.
 - **📡 Live Service Watchdog**: Scheduled background health checks and latency monitoring for all member apps with zero credential exposure in public status JSON.
 - **🎨 Central Asset Delivery**: Official marks, Syne/Plus Jakarta Sans/JetBrains Mono fonts, and floating 3D canvas tiles served with SRI hashes from `hel.ink/hop-assets/v2/`.

@@ -20,10 +20,14 @@ class LoginRecorder
         private readonly ProxyDetectionService $proxy,
     ) {}
 
-    /** @param string $via "password", "google", or an app name ("PixelHop") */
+    /**
+     * @param  string  $via  "password", "google", or an app name ("PixelHop") for a single sign-on
+     *                       hand-off into that app, which is kept apart from the real sign-ins
+     */
     public function record(User $user, string $ip, ?string $userAgent, string $via = 'password'): void
     {
-        defer(function () use ($user, $ip, $userAgent, $via) {
+        $kind = in_array($via, ['password', 'google'], true) ? LoginHistory::KIND_LOGIN : LoginHistory::KIND_SSO;
+        defer(function () use ($user, $ip, $userAgent, $via, $kind) {
             $geoDetails = $this->geoIp->details($ip);
             $uaDetails = $this->userAgent->parse($userAgent);
             $proxyResult = $this->proxy->detect($ip);
@@ -38,6 +42,7 @@ class LoginRecorder
             ])->saveQuietly();
             LoginHistory::create([
                 'user_id' => $user->id,
+                'kind' => $kind,
                 'ip_address' => $ip,
                 'country' => $geoDetails['country'],
                 'country_name' => $geoDetails['country_name'] ?? null,

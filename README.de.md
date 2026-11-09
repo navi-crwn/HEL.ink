@@ -40,6 +40,11 @@ Alles, was HEL.ink braucht, liegt in öffentlichen Repositorys: kein privates Re
 - **Ohne Imperium**: der Hub behält seine eigenen Admin-Seiten für Konten (`/admin`); Imperium ergänzt Inhalte, Meldungen und Zustand der Apps.
 <!-- self-hosting:end -->
 
+## Funktionen
+
+- **SSO-Gate, CSP und gemeinsame UI**: Jede Seite wird mit einer Content-Security-Policy ausgeliefert (auf den App-Seiten mit Nonce), die SSO-Übergabe ist signiert und wird von den Apps geprüft, und Dialoge sowie Sprach- und Kontomenüs kommen aus dem gemeinsamen Paket HopUI.
+- **Ein Standard für Bedienelemente**: Eingabefelder, Auswahlfelder und Schaltflächen teilen sich einen Radius und eine Höhe (Tokens `--hop-ctl-*`), 16-px-Text und 44-px-Touch-Ziele auf dem Handy und ein statisches Layout bei reduzierter Bewegung.
+
 ## Mehr erfahren
 
 Die vollständige Dokumentation (Funktionen, Einstellungen, Sicherheit) steht auf Englisch in der [README](README.md).

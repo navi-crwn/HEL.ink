@@ -9,14 +9,14 @@
         'users' => 'M16 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0Zm-9 10a5 5 0 0 1 10 0M20 8v6m3-3h-6',
     ];
     $items = array_filter([
-        ['label' => 'Launcher', 'icon' => 'home', 'route' => 'dashboard', 'active' => 'dashboard'],
-        ['label' => 'Announcements', 'icon' => 'bell', 'route' => 'announcements.index', 'active' => 'announcements.*'],
-        ['label' => 'Status', 'icon' => 'pulse', 'route' => 'status', 'active' => 'status'],
-        ['label' => 'Settings', 'icon' => 'settings', 'route' => 'settings', 'active' => ['settings', 'profile.*']],
+        ['label' => __('Launcher'), 'icon' => 'home', 'route' => 'dashboard', 'active' => 'dashboard'],
+        ['label' => __('Announcements'), 'icon' => 'bell', 'route' => 'announcements.index', 'active' => 'announcements.*'],
+        ['label' => __('Status'), 'icon' => 'pulse', 'route' => 'status', 'active' => 'status'],
+        ['label' => __('Settings'), 'icon' => 'settings', 'route' => 'settings', 'active' => ['settings', 'profile.*']],
     ]);
     $adminItems = $isAdmin ? [
-        ['label' => 'Accounts', 'icon' => 'users', 'route' => 'admin.users.index', 'active' => 'admin.users.*'],
-        ['label' => 'Manage announcements', 'icon' => 'bell', 'route' => 'admin.announcements.index', 'active' => 'admin.announcements.*'],
+        ['label' => __('Accounts'), 'icon' => 'users', 'route' => 'admin.users.index', 'active' => 'admin.users.*'],
+        ['label' => __('Manage announcements'), 'icon' => 'bell', 'route' => 'admin.announcements.index', 'active' => 'admin.announcements.*'],
     ] : [];
     $control = (string) config('hop.control_url');
 @endphp
@@ -30,7 +30,7 @@
         </li>
     @endforeach
     @if ($isAdmin)
-        <li class="px-3 pb-1 pt-4 text-[11px] font-semibold uppercase tracking-wider text-muted">Admin</li>
+        <li class="px-3 pb-1 pt-4 text-[11px] font-semibold uppercase tracking-wider text-muted">{{ __('Admin') }}</li>
         @if ($control !== '')
             <li>
                 <a href="{{ $control }}" class="nav-item">
@@ -51,4 +51,4 @@
     @endif
 </ul>
 {{-- The apps: one list in the sidebar, from the shared manifest; the top bar keeps settings-type controls only. --}}
-<x-hop::family-nav app="hub" :label="__('Apps')" />
+<x-hop::family-nav app="hub" :label="__('HOP family')" />

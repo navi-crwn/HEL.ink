@@ -60,6 +60,11 @@ class UpdateThreatFeeds extends Command
     private function download(string $url, string $path, int $max): void
     {
         $tooBig = fn () => new \RuntimeException('the feed is larger than '.$max.' bytes');
+        // Without ext-curl the body would be streamed into the sink in full and only checked afterwards, so an
+        // oversized feed could fill the disk. Fail closed and keep the previous file.
+        if (! defined('CURLOPT_PROGRESSFUNCTION')) {
+            throw new \RuntimeException('the curl extension is required to size-limit the feed download');
+        }
         $exceeded = false;
         try {
             $response = Http::timeout(60)->withOptions([

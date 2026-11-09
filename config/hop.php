@@ -70,7 +70,8 @@ return [
             'capabilities' => ['admin_api', 'events', 'metrics', 'zero_knowledge'],
             'sort_order' => 20,
         ],
-        'linkhop' => ['capabilities' => ['admin_api', 'events'], 'sort_order' => 30],
+        // admin_api and metrics: what GET /api/hop/apps used to hard-code for LinkHop; now the row carries them.
+        'linkhop' => ['capabilities' => ['admin_api', 'events', 'metrics'], 'sort_order' => 30],
         'biohop' => ['capabilities' => ['account_api', 'admin_api', 'events', 'reports', 'settings', 'metrics'], 'sort_order' => 40],
         'filehop' => [
             'callback_path' => env('FILEHOP_SSO_CALLBACK', '/auth/sso/callback'),

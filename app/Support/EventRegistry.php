@@ -82,14 +82,25 @@ final class EventRegistry
                 'color' => $app['color'] ?? null,
                 'status' => HopAppRow::STATUS_ACTIVE,
                 'secret' => $secret,
-                // An app may ask for more than events (FileHop: admin_api, so Imperium polls its /hop/health).
-                'capabilities' => array_values(array_unique(array_merge(['events'], (array) ($spec['capabilities'] ?? [])))),
+                'capabilities' => self::capabilitiesFor($slug),
                 'sort_order' => (int) ($spec['sort_order'] ?? 100),
             ]);
             $result[$slug] = 'created';
         }
 
         return $result;
+    }
+
+    /**
+     * The capabilities a new row of this app starts with: `events`, plus what config/hop.php lists
+     * for it (FileHop: admin_api, so Imperium polls its /hop/health). Only for a row that does not
+     * exist yet; an existing row's capabilities are the owner's and are never rewritten from here.
+     *
+     * @return list<string>
+     */
+    public static function capabilitiesFor(string $slug): array
+    {
+        return array_values(array_unique(array_merge(['events'], (array) config("hop.event_apps.{$slug}.capabilities", []))));
     }
 
     /** @return list<string> slugs of the event apps that are enabled in config/hop.php */

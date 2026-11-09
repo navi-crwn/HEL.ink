@@ -1009,5 +1009,8 @@
     "Check your inbox and spam folder for the verification email from :sender.": "Sieh im Posteingang und im Spam-Ordner nach der Bestätigungs-E-Mail von :sender.",
     "App sign-ins": "App-Anmeldungen",
     "Each time you open an app from here, the hub signs you in to it. These are not new sign-ins to your account.": "Jedes Mal, wenn du von hier eine App öffnest, meldet dich der Hub dort an. Das sind keine neuen Anmeldungen bei deinem Konto.",
-    "Times in :zone": "Zeiten in :zone"
+    "Times in :zone": "Zeiten in :zone",
+    "Shows again next week": "Erscheint nächste Woche wieder",
+    "Each code works once. Make new ones before you need them.": "Jeder Code funktioniert einmal. Erstelle neue, bevor du sie brauchst.",
+    "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} Du hast keine Wiederherstellungscodes mehr|{1} Du hast noch :count Wiederherstellungscode|[2,*] Du hast noch :count Wiederherstellungscodes"
 }

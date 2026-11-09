@@ -1009,5 +1009,8 @@
     "Check your inbox and spam folder for the verification email from :sender.": ":sender からの確認メールを受信トレイと迷惑メールフォルダで確認してください。",
     "App sign-ins": "アプリへのサインイン",
     "Each time you open an app from here, the hub signs you in to it. These are not new sign-ins to your account.": "ここからアプリを開くたびに、ハブがそのアプリにサインインさせます。アカウントへの新しいサインインではありません。",
-    "Times in :zone": "時刻は :zone"
+    "Times in :zone": "時刻は :zone",
+    "Shows again next week": "来週また表示されます",
+    "Each code works once. Make new ones before you need them.": "各コードは 1 回だけ使えます。必要になる前に新しいコードを作ってください。",
+    "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} 復旧コードが残っていません|{1} 復旧コードは残り :count 個です|[2,*] 復旧コードは残り :count 個です"
 }

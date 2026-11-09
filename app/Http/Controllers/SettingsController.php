@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LoginHistory;
 use App\Support\HopApps;
 use App\Support\Input;
+use App\Support\Reminders;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -56,6 +57,7 @@ class SettingsController extends Controller
             'login_history' => $user->loginHistories()->latest('logged_in_at')->get(['kind', 'logged_in_at', 'ip_address', 'country', 'city', 'device', 'browser', 'provider']),
             'activity_log' => $user->activityLogs()->latest()->get(['created_at', 'action', 'model', 'description']),
             'api_tokens' => $user->apiTokens()->get(['name', 'scopes', 'created_at', 'last_used_at', 'expires_at']),
+            'hidden_reminders' => Reminders::export($user),
             'app_exports' => collect(HopApps::all())->filter->export->mapWithKeys(fn ($a) => [$a->slug => $a->exportUrl()]),
         ];
 

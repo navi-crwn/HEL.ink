@@ -81,7 +81,9 @@ test('the dashboard renders for a fully set-up user', function () {
 
     $this->actingAs($user)->withSession(['2fa_verified' => true])->get('/dashboard')
         ->assertOk()
-        ->assertSee('Your account is fully set up')
+        // Every step done: the checklist is a reminder and is gone for good.
+        ->assertDontSee('Account health')
+        ->assertDontSee('data-hop-remind="account-health"', false)
         ->assertSee('Two-factor is on')
         ->assertSee('Jakarta, Indonesia')
         ->assertSee('Changed profile photo')

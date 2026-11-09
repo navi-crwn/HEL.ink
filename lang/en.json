@@ -1009,5 +1009,8 @@
     "Check your inbox and spam folder for the verification email from :sender.": "Check your inbox and spam folder for the verification email from :sender.",
     "App sign-ins": "App sign-ins",
     "Each time you open an app from here, the hub signs you in to it. These are not new sign-ins to your account.": "Each time you open an app from here, the hub signs you in to it. These are not new sign-ins to your account.",
-    "Times in :zone": "Times in :zone"
+    "Times in :zone": "Times in :zone",
+    "Shows again next week": "Shows again next week",
+    "Each code works once. Make new ones before you need them.": "Each code works once. Make new ones before you need them.",
+    "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left"
 }

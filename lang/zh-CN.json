@@ -1009,5 +1009,8 @@
     "Check your inbox and spam folder for the verification email from :sender.": "请在收件箱和垃圾邮件中查找来自 :sender 的验证邮件。",
     "App sign-ins": "应用登录",
     "Each time you open an app from here, the hub signs you in to it. These are not new sign-ins to your account.": "每次从这里打开应用时，中心都会为你登录该应用。这些不是对你账户的新登录。",
-    "Times in :zone": "时间为 :zone"
+    "Times in :zone": "时间为 :zone",
+    "Shows again next week": "下周再次显示",
+    "Each code works once. Make new ones before you need them.": "每个恢复码只能用一次。请在需要之前生成新的。",
+    "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} 你已没有恢复码|{1} 你还剩 :count 个恢复码|[2,*] 你还剩 :count 个恢复码"
 }

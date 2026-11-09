@@ -1009,5 +1009,8 @@
     "Check your inbox and spam folder for the verification email from :sender.": "Проверьте входящие и папку «Спам»: письмо для подтверждения отправлено от :sender.",
     "App sign-ins": "Входы в приложения",
     "Each time you open an app from here, the hub signs you in to it. These are not new sign-ins to your account.": "Каждый раз, когда вы открываете приложение отсюда, хаб выполняет вход в него. Это не новые входы в ваш аккаунт.",
-    "Times in :zone": "Время в :zone"
+    "Times in :zone": "Время в :zone",
+    "Shows again next week": "Появится снова через неделю",
+    "Each code works once. Make new ones before you need them.": "Каждый код действует один раз. Создайте новые заранее.",
+    "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} Коды восстановления закончились|{1} Остался :count код восстановления|[2,*] Осталось кодов восстановления: :count"
 }

@@ -1009,5 +1009,8 @@
     "Check your inbox and spam folder for the verification email from :sender.": "Periksa kotak masuk dan folder spam untuk email verifikasi dari :sender.",
     "App sign-ins": "Masuk ke app",
     "Each time you open an app from here, the hub signs you in to it. These are not new sign-ins to your account.": "Setiap kali kamu membuka app dari sini, hub memasukkanmu ke app itu. Ini bukan login baru ke akunmu.",
-    "Times in :zone": "Waktu dalam :zone"
+    "Times in :zone": "Waktu dalam :zone",
+    "Shows again next week": "Muncul lagi minggu depan",
+    "Each code works once. Make new ones before you need them.": "Tiap kode hanya berlaku sekali. Buat yang baru sebelum kamu membutuhkannya.",
+    "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} Kode pemulihanmu sudah habis|{1} Kode pemulihanmu tinggal :count|[2,*] Kode pemulihanmu tinggal :count"
 }

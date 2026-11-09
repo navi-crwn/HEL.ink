@@ -44,6 +44,32 @@
         </a>
     @endforeach
 
+    {{-- Reminders the person can hide for a week (App\Support\Reminders). The shared hop-ui.js, or the hub's own
+         reminders.js without it, adds the "Hide" button; the announcements above are not reminders and stay. --}}
+    @php
+        $remindAttrs = 'data-hop-remind-url="'.e(route('reminders.dismiss')).'" data-hop-remind-hide="'.e(__('Hide')).'" data-hop-remind-again="'.e(__('Shows again next week')).'"';
+        $showHealth = $health && in_array(\App\Support\Reminders::ACCOUNT_HEALTH, $reminders, true);
+    @endphp
+    @if (in_array(\App\Support\Reminders::TWO_FACTOR, $reminders, true))
+        <section class="glass flex flex-wrap items-center gap-x-4 gap-y-2 rounded-2xl py-3 pl-4 pr-14" aria-labelledby="remind-2fa-title" data-hop-remind="{{ \App\Support\Reminders::TWO_FACTOR }}" {!! $remindAttrs !!}>
+            <div class="min-w-0 flex-1 basis-56">
+                <h2 id="remind-2fa-title" class="text-sm font-semibold text-ink">{{ __('Two-factor is off') }}</h2>
+                <p class="text-xs text-muted">{{ __('Adds a code from your phone at sign-in') }}</p>
+            </div>
+            <a href="{{ $settings }}#2fa" class="btn-soft btn-sm whitespace-nowrap">{{ __('Turn on two-factor') }}</a>
+        </section>
+    @endif
+    @if (in_array(\App\Support\Reminders::RECOVERY_CODES, $reminders, true))
+        @php $codesLeft = $dashboard->recoveryCodesLeft(); @endphp
+        <section class="glass flex flex-wrap items-center gap-x-4 gap-y-2 rounded-2xl border-amber-400/40 py-3 pl-4 pr-14" aria-labelledby="remind-codes-title" data-hop-remind="{{ \App\Support\Reminders::RECOVERY_CODES }}" {!! $remindAttrs !!}>
+            <div class="min-w-0 flex-1 basis-56">
+                <h2 id="remind-codes-title" class="text-sm font-semibold tabular-nums text-ink">{{ trans_choice('{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left', $codesLeft, ['count' => $codesLeft]) }}</h2>
+                <p class="text-xs text-muted">{{ __('Each code works once. Make new ones before you need them.') }}</p>
+            </div>
+            <a href="{{ $settings }}#2fa" class="btn-soft btn-sm whitespace-nowrap">{{ __('Make new codes') }}</a>
+        </section>
+    @endif
+
     {{-- My apps --}}
     <section aria-labelledby="apps-title" class="space-y-3">
         <h2 id="apps-title" class="section-title">{{ __('My apps') }}</h2>
@@ -64,11 +90,12 @@
         </div>
     </section>
 
-    <div class="grid gap-3 lg:grid-cols-3">
-        {{-- Account health --}}
-        @if ($health)
-            <section class="glass-card min-w-0" aria-labelledby="health-title">
-                <div class="flex items-center gap-4">
+    <div class="grid gap-3 {{ $showHealth ? 'lg:grid-cols-3' : 'lg:grid-cols-2' }}">
+        {{-- Account health: the checklist, while a step is open and the person has not hidden it this week.
+             Once every step is done it is gone for good. --}}
+        @if ($showHealth)
+            <section class="glass-card remind-compact min-w-0" aria-labelledby="health-title" data-hop-remind="{{ \App\Support\Reminders::ACCOUNT_HEALTH }}" {!! $remindAttrs !!}>
+                <div class="flex items-center gap-4 pr-10">
                     <div class="relative h-16 w-16 shrink-0" role="img" aria-label="{{ __(':done of :total done', ['done' => $health['done'], 'total' => $health['total']]) }}">
                         <svg viewBox="0 0 36 36" class="h-16 w-16 -rotate-90" fill="none" stroke-width="3.4" aria-hidden="true">
                             <circle cx="18" cy="18" r="15.9155" class="text-slate-900/10 dark:text-white/10" stroke="currentColor"/>
@@ -78,7 +105,7 @@
                     </div>
                     <div class="min-w-0">
                         <h2 id="health-title" class="section-title">{{ __('Account health') }}</h2>
-                        <p class="mt-0.5 text-xs text-muted">{{ $health['done'] === $health['total'] ? __('Your account is fully set up') : __(':done of :total done', ['done' => $health['done'], 'total' => $health['total']]) }}</p>
+                        <p class="mt-0.5 text-xs tabular-nums text-muted">{{ __(':done of :total done', ['done' => $health['done'], 'total' => $health['total']]) }}</p>
                     </div>
                 </div>
                 <ul class="mt-3 space-y-0.5 text-sm">

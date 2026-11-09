@@ -60,3 +60,12 @@ test('the FAQ names all nine languages and never Arabic, in every language', fun
         expect($html)->not->toContain('eight languages')->not->toContain('8 languages')->not->toContain('العربية')->not->toContain('Arabic');
     }
 });
+
+test('settings understands the hashes the apps still link to', function () {
+    $this->actingAs(User::factory()->create());
+
+    $this->get('/settings')->assertOk()
+        ->assertSee("security: '2fa'", false)
+        ->assertSee("data: 'backup'", false)
+        ->assertSee("tokens: 'api'", false);
+});

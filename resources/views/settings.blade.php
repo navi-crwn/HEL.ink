@@ -30,7 +30,10 @@
     <div class="grid gap-4 lg:grid-cols-[13rem_minmax(0,1fr)]" x-data="{
         tab: '{{ session('active_tab', 'account') }}',
         fromHash() {
-            const hashTab = window.location.hash.substring(1);
+            // Older links from the apps (LinkHop: #security, #data) and obvious guesses still land on the right tab.
+            const aliases = { security: '2fa', 'two-factor': '2fa', data: 'backup', export: 'backup', tokens: 'api', logins: 'login', profile: 'account', password: 'account' };
+            const hash = window.location.hash.substring(1);
+            const hashTab = aliases[hash] || hash;
             if (@js(array_keys($settingsTabs)).includes(hashTab)) {
                 this.tab = hashTab;
             }

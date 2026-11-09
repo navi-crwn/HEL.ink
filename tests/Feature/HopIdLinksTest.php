@@ -33,10 +33,10 @@ test('only "Visit site" opens a new tab and only it is marked with the arrow', f
 
     expect($open[0])->not->toBeEmpty()->and($visit[0])->not->toBeEmpty();
     foreach ($open[1] as $label) {
-        expect($label)->not->toContain('↗');
+        expect($label)->not->toContain('↗')->not->toContain('M7 17 17 7');
     }
     foreach ($visit[1] as $label) {
-        expect($label)->toContain('↗')->toContain('opens in a new tab');
+        expect($label)->toContain('M7 17 17 7M8 7h9v9')->toContain('opens in a new tab');
     }
     foreach ($open[0] as $tag) {
         expect($tag)->not->toContain('target="_blank"');

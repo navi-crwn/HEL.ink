@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="pageTitle">Launcher · HOP</x-slot>
+    <x-slot name="pageTitle">{{ __('Launcher') }} · HOP</x-slot>
     @php
         $user = auth()->user();
         // The first name sits in an italic serif span; "@@NAME@@" keeps it out of the translated sentence.
@@ -12,7 +12,7 @@
         $period = $dashboard->period();
         $tone = ['ok' => 'bg-emerald-500', 'problem' => 'bg-rose-500', 'unknown' => 'bg-slate-400'][$summary['state']];
         $settings = route('settings');
-        $actionLabels = ['created' => __('Created'), 'updated' => __('Updated'), 'suspended' => __('Suspended'), 'activated' => __('Activated')];
+        $actionLabels = ['created' => __('Created'), 'updated' => __('Updated'), 'deleted' => __('Deleted'), 'suspended' => __('Suspended'), 'activated' => __('Activated')];
     @endphp
 
     <div class="min-w-0">

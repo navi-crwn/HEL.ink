@@ -32,13 +32,13 @@
     @endif
     @if ($open)
         <div class="mt-auto flex flex-wrap items-center gap-2">
-            {{-- "Open" stays in this tab (SSO round trip); only "Visit site" opens a new tab, so only it gets the ↗ mark. --}}
+            {{-- "Open" stays in this tab (SSO round trip); only "Visit site" opens a new tab, so only it gets the arrow (drawn, not the ↗ character, which some systems show as an emoji). --}}
             @if ($app->isConfigured())
                 <a href="{{ route('apps.open', ['app' => $app->slug]) }}" class="btn-primary btn-sm whitespace-nowrap">{{ __('Open') }}</a>
             @else
                 <span class="btn-soft btn-sm cursor-not-allowed whitespace-nowrap opacity-60" title="{{ __('Not configured (URL or secret missing)') }}">{{ __('Open') }}</span>
             @endif
-            <a href="{{ $app->url }}" class="btn-ghost btn-sm whitespace-nowrap" target="_blank" rel="noopener">{{ __('Visit site') }} <span aria-hidden="true">↗</span><span class="sr-only">({{ __('opens in a new tab') }})</span></a>
+            <a href="{{ $app->url }}" class="btn-ghost btn-sm whitespace-nowrap" target="_blank" rel="noopener">{{ __('Visit site') }} <svg class="h-3.5 w-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 17 17 7M8 7h9v9"/></svg><span class="sr-only">({{ __('opens in a new tab') }})</span></a>
         </div>
     @endif
 </div>

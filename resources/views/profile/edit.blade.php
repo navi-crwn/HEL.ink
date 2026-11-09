@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="pageTitle">Account · HOP</x-slot>
+    <x-slot name="pageTitle">{{ __('Account') }} · HOP</x-slot>
     <x-page-header title="Account" subtitle="Profile, password and account removal.">
         <x-slot name="actions">
             <a href="{{ route('settings') }}" class="btn-soft btn-sm">All settings</a>

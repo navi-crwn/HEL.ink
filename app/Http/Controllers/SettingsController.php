@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LoginHistory;
 use App\Support\HopApps;
 use App\Support\Input;
 use Illuminate\Http\Request;
@@ -12,10 +13,15 @@ class SettingsController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $loginHistories = DB::table('login_histories')
-            ->where('user_id', $user->id)
-            ->orderBy('logged_in_at', 'desc')
-            ->limit(5)
+        // Real sign-ins and single sign-on hand-offs into the apps are two lists: opening five
+        // apps must not push the sign-ins (what people check for intruders) out of view.
+        $loginHistories = LoginHistory::where('user_id', $user->id)->signIns()
+            ->orderByDesc('logged_in_at')->orderByDesc('id')
+            ->limit(LoginHistory::KEEP)
+            ->get();
+        $appSignIns = LoginHistory::where('user_id', $user->id)->handoffs()
+            ->orderByDesc('logged_in_at')->orderByDesc('id')
+            ->limit(LoginHistory::KEEP)
             ->get();
         $activityQuery = DB::table('activity_logs')
             ->where('user_id', $user->id)
@@ -29,6 +35,7 @@ class SettingsController extends Controller
 
         return view('settings', [
             'loginHistories' => $loginHistories,
+            'appSignIns' => $appSignIns,
             'activityLogs' => $activityQuery->limit(50)->get(),
             'apps' => HopApps::all(),
         ]);
@@ -46,7 +53,7 @@ class SettingsController extends Controller
             'exported_at' => now()->toIso8601String(),
             'account' => $user->only(['username', 'name', 'email', 'bio', 'website', 'location', 'locale', 'timezone', 'show_owner', 'created_at', 'email_verified_at', 'last_login_at']),
             'roles' => $user->roleNames(),
-            'login_history' => $user->loginHistories()->latest('logged_in_at')->get(['logged_in_at', 'ip_address', 'country', 'city', 'device', 'browser', 'provider']),
+            'login_history' => $user->loginHistories()->latest('logged_in_at')->get(['kind', 'logged_in_at', 'ip_address', 'country', 'city', 'device', 'browser', 'provider']),
             'activity_log' => $user->activityLogs()->latest()->get(['created_at', 'action', 'model', 'description']),
             'api_tokens' => $user->apiTokens()->get(['name', 'scopes', 'created_at', 'last_used_at', 'expires_at']),
             'app_exports' => collect(HopApps::all())->filter->export->mapWithKeys(fn ($a) => [$a->slug => $a->exportUrl()]),

@@ -14,6 +14,13 @@
         // Apps with a bearer-token API (config hop.api_docs), for the API tab's wording.
         $apiApps = collect($apps)->filter(fn ($a) => config('hop.api_docs.'.$a->slug))->values();
         $apiScopes = \App\Http\Controllers\ApiTokenController::availableScopes($apiApps->pluck('slug')->all());
+        // Sign-in times are shown in the person's timezone (the app's when none or an unknown one is saved), and say so.
+        $tz = $u->timezone ?: config('app.timezone');
+        try {
+            new \DateTimeZone($tz);
+        } catch (\Throwable) {
+            $tz = config('app.timezone');
+        }
         $activityFrom = \App\Support\Input::text(request('activity_from'));
         $activityTo = \App\Support\Input::text(request('activity_to'));
     @endphp
@@ -437,7 +444,7 @@
                 <div x-show="tab === 'login'" x-cloak class="space-y-4 p-5">
                     <div>
                         <h3 class="text-base font-semibold text-ink">{{ __('Login history') }}</h3>
-                        <p class="text-sm text-muted">{{ __('Your last 5 sign-ins') }}</p>
+                        <p class="text-sm text-muted">{{ __('Your last 5 sign-ins') }} · {{ __('Times in :zone', ['zone' => $tz]) }}</p>
                     </div>
                     @forelse($loginHistories as $index => $history)
                         <div class="glass-inset rounded-xl p-4">
@@ -448,7 +455,7 @@
                                     </span>
                                     <div>
                                         <p class="text-sm font-medium tabular-nums text-ink">
-                                            {{ \Carbon\Carbon::parse($history->logged_in_at)->format('M d, Y - H:i:s') }}
+                                            {{ \Carbon\Carbon::parse($history->logged_in_at)->timezone($tz)->format('M d, Y - H:i:s') }}
                                         </p>
                                         <p class="text-xs text-muted">{{ \Carbon\Carbon::parse($history->logged_in_at)->diffForHumans() }}</p>
                                     </div>
@@ -502,6 +509,27 @@
                     @empty
                         <p class="text-sm text-muted">{{ __('No sign-ins recorded yet.') }}</p>
                     @endforelse
+                    {{-- Opening an app through the hub is a hand-off, not a new sign-in: kept in its own folded list so it never hides the sign-ins above. --}}
+                    @if ($appSignIns->isNotEmpty())
+                        <details class="glass-inset rounded-xl">
+                            <summary class="flex min-h-11 cursor-pointer items-center justify-between gap-3 px-4 py-2 text-sm font-medium text-ink">
+                                <span>{{ __('App sign-ins') }}</span>
+                                <span class="text-xs font-normal tabular-nums text-muted">{{ $appSignIns->count() }}</span>
+                            </summary>
+                            <div class="px-4 pb-4">
+                                <p class="text-xs text-muted">{{ __('Each time you open an app from here, the hub signs you in to it. These are not new sign-ins to your account.') }}</p>
+                                <ul class="mt-2 divide-y divide-slate-500/10">
+                                    @foreach ($appSignIns as $handoff)
+                                        <li class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5 py-2 text-sm">
+                                            <span class="min-w-0 truncate font-medium text-ink">{{ $handoff->provider ?? __('Unknown') }}</span>
+                                            <time class="shrink-0 text-xs tabular-nums text-muted" datetime="{{ $handoff->logged_in_at->toIso8601String() }}">{{ $handoff->logged_in_at->timezone($tz)->format('M d, Y - H:i') }}</time>
+                                            <span class="w-full truncate text-xs text-muted">{{ collect([$handoff->device, $handoff->browser, $handoff->ip_address])->filter()->implode(' · ') ?: __('Unknown device') }}</span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </details>
+                    @endif
                 </div>
                 <!-- API tokens -->
                 <div x-show="tab === 'api'" x-cloak x-data="apiSettings()" class="space-y-4 p-5">

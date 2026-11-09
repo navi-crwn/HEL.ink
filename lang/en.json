@@ -1006,5 +1006,8 @@
     "If you didn't receive the email, we will gladly send you another.": "If you didn't receive the email, we will gladly send you another.",
     "A new verification link has been sent to your email address.": "A new verification link has been sent to your email address.",
     "Resend verification email": "Resend verification email",
-    "Check your inbox and spam folder for the verification email from :sender.": "Check your inbox and spam folder for the verification email from :sender."
+    "Check your inbox and spam folder for the verification email from :sender.": "Check your inbox and spam folder for the verification email from :sender.",
+    "App sign-ins": "App sign-ins",
+    "Each time you open an app from here, the hub signs you in to it. These are not new sign-ins to your account.": "Each time you open an app from here, the hub signs you in to it. These are not new sign-ins to your account.",
+    "Times in :zone": "Times in :zone"
 }

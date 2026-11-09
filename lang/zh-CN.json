@@ -1006,5 +1006,8 @@
     "If you didn't receive the email, we will gladly send you another.": "如果没有收到邮件，我们可以再发一封。",
     "A new verification link has been sent to your email address.": "新的验证链接已发送到你的邮箱。",
     "Resend verification email": "重新发送验证邮件",
-    "Check your inbox and spam folder for the verification email from :sender.": "请在收件箱和垃圾邮件中查找来自 :sender 的验证邮件。"
+    "Check your inbox and spam folder for the verification email from :sender.": "请在收件箱和垃圾邮件中查找来自 :sender 的验证邮件。",
+    "App sign-ins": "应用登录",
+    "Each time you open an app from here, the hub signs you in to it. These are not new sign-ins to your account.": "每次从这里打开应用时，中心都会为你登录该应用。这些不是对你账户的新登录。",
+    "Times in :zone": "时间为 :zone"
 }

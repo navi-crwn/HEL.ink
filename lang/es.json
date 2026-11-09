@@ -1006,5 +1006,8 @@
     "If you didn't receive the email, we will gladly send you another.": "Si no recibiste el correo, te enviaremos otro con gusto.",
     "A new verification link has been sent to your email address.": "Se envió un nuevo enlace de verificación a tu correo.",
     "Resend verification email": "Reenviar correo de verificación",
-    "Check your inbox and spam folder for the verification email from :sender.": "Busca el correo de verificación de :sender en tu bandeja de entrada y en spam."
+    "Check your inbox and spam folder for the verification email from :sender.": "Busca el correo de verificación de :sender en tu bandeja de entrada y en spam.",
+    "App sign-ins": "Accesos a las apps",
+    "Each time you open an app from here, the hub signs you in to it. These are not new sign-ins to your account.": "Cada vez que abres una app desde aquí, el hub inicia tu sesión en ella. No son nuevos inicios de sesión en tu cuenta.",
+    "Times in :zone": "Horas en :zone"
 }

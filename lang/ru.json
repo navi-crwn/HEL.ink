@@ -1006,5 +1006,8 @@
     "If you didn't receive the email, we will gladly send you another.": "Если письмо не пришло, мы с радостью отправим ещё одно.",
     "A new verification link has been sent to your email address.": "Новая ссылка для подтверждения отправлена на вашу почту.",
     "Resend verification email": "Отправить письмо ещё раз",
-    "Check your inbox and spam folder for the verification email from :sender.": "Проверьте входящие и папку «Спам»: письмо для подтверждения отправлено от :sender."
+    "Check your inbox and spam folder for the verification email from :sender.": "Проверьте входящие и папку «Спам»: письмо для подтверждения отправлено от :sender.",
+    "App sign-ins": "Входы в приложения",
+    "Each time you open an app from here, the hub signs you in to it. These are not new sign-ins to your account.": "Каждый раз, когда вы открываете приложение отсюда, хаб выполняет вход в него. Это не новые входы в ваш аккаунт.",
+    "Times in :zone": "Время в :zone"
 }

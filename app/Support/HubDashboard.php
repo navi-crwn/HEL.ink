@@ -165,13 +165,14 @@ final class HubDashboard
     }
 
     /**
-     * The person's latest sign-ins (never anyone else's).
+     * The person's latest real sign-ins (never anyone else's, never the single sign-on
+     * hand-offs into the apps, which would otherwise fill the list).
      *
      * @return Collection<int, LoginHistory>
      */
     public function logins(): Collection
     {
-        return LoginHistory::where('user_id', $this->user->id)
+        return LoginHistory::where('user_id', $this->user->id)->signIns()
             ->orderByDesc('logged_in_at')->orderByDesc('id')
             ->limit(self::LOGINS)
             ->get(['id', 'user_id', 'logged_in_at', 'country', 'country_name', 'city', 'device', 'browser', 'is_proxy']);

@@ -1006,5 +1006,8 @@
     "If you didn't receive the email, we will gladly send you another.": "メールが届かない場合は、もう一度お送りします。",
     "A new verification link has been sent to your email address.": "新しい確認リンクをメールアドレスに送りました。",
     "Resend verification email": "確認メールを再送",
-    "Check your inbox and spam folder for the verification email from :sender.": ":sender からの確認メールを受信トレイと迷惑メールフォルダで確認してください。"
+    "Check your inbox and spam folder for the verification email from :sender.": ":sender からの確認メールを受信トレイと迷惑メールフォルダで確認してください。",
+    "App sign-ins": "アプリへのサインイン",
+    "Each time you open an app from here, the hub signs you in to it. These are not new sign-ins to your account.": "ここからアプリを開くたびに、ハブがそのアプリにサインインさせます。アカウントへの新しいサインインではありません。",
+    "Times in :zone": "時刻は :zone"
 }

@@ -14,7 +14,7 @@
                 <div class="flex-1">
                     <p class="text-sm font-semibold text-red-900 dark:text-red-100">{{ session('error') }}</p>
                     @if(Str::contains(session('error'), 'not found') || Str::contains(session('error'), 'register'))
-                        <a href="{{ route('register') }}" class="mt-2 inline-flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-500">
+                        <a href="{{ route('register') }}" class="btn-danger btn-sm mt-2">
                             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
                             </svg>
@@ -31,7 +31,7 @@
     @endphp
     <div class="mb-6">
         <a href="{{ route('auth.google', ['from_register' => 0]) }}"
-           class="w-full inline-flex items-center justify-center gap-3 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all shadow-xs">
+           class="btn-outline btn-lg btn-block">
             <svg class="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -53,13 +53,13 @@
         @csrf
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <x-text-input id="email" class="input-lg" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
         <div class="mt-4" x-data="{ showPassword: false }">
             <x-input-label for="password" :value="__('Password')" />
             <div class="relative">
-                <x-text-input id="password" class="block mt-1 w-full pr-10"
+                <x-text-input id="password" class="input-lg pr-20"
                                 type="password"
                                 x-bind:type="showPassword ? 'text' : 'password'"
                                 name="password"
@@ -67,7 +67,7 @@
                 <button
                     type="button"
                     @click="showPassword = !showPassword"
-                    class="absolute inset-y-0 right-0 flex items-center pr-3 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                    class="absolute inset-y-0 right-0 flex items-center px-3 text-xs font-medium text-muted hover:text-ink"
                     tabindex="-1"
                 >
                     <span x-show="!showPassword">{{ __('Show') }}</span>
@@ -83,7 +83,7 @@
             </label>
         </div>
         <x-turnstile class="mt-5" size="flexible" />
-        <button type="submit" class="btn-primary mt-5 w-full py-3 text-base">
+        <button type="submit" class="btn-primary btn-lg btn-block mt-5">
             @if ($turnstileKey)
                 <span x-show="!waiting">{{ __('Login with HOP') }}</span><span x-cloak x-show="waiting">{{ __('Verifying…') }}</span>
             @else

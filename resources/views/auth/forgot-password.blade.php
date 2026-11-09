@@ -8,11 +8,11 @@
         @csrf
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <x-text-input id="email" class="input-lg" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
         <x-turnstile size="flexible" />
-        <x-primary-button class="w-full py-3 text-base"><span x-show="!waiting">{{ __('Send reset link') }}</span><span x-cloak x-show="waiting">{{ __('Verifying…') }}</span></x-primary-button>
+        <x-primary-button class="btn-lg btn-block"><span x-show="!waiting">{{ __('Send reset link') }}</span><span x-cloak x-show="waiting">{{ __('Verifying…') }}</span></x-primary-button>
         <p class="pt-1 text-center text-sm text-muted"><a href="{{ route('login') }}" class="hover:text-ink hover:underline">{{ __('Back to login') }}</a></p>
     </form>
 </x-guest-layout>

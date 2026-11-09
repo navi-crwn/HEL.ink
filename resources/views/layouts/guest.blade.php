@@ -22,10 +22,10 @@
         @include('partials.hop-ui')
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="app-bg min-h-screen">
+    <body class="app-bg hub-chrome min-h-screen">
         <x-session-expired-notice />
         <div class="relative z-10 flex min-h-screen flex-col items-center px-4 py-8 sm:justify-center">
-            <div class="mb-6 flex w-full max-w-md items-center justify-between">
+            <div class="mb-6 flex w-full max-w-sm items-center justify-between">
                 <a href="{{ route('home') }}" class="flex items-center gap-2.5" title="{{ __('Home') }}">
                     <x-wordmark class="h-10 w-auto" />
                 </a>
@@ -39,8 +39,8 @@
                     </button>
                 </div>
             </div>
-            <main class="w-full max-w-md">
-                <div class="auth-card glass-strong w-full max-w-md rounded-3xl border-t-4 border-t-sky-400/70 p-6 text-ink shadow-xl shadow-sky-900/5 sm:p-8">
+            <main class="w-full max-w-sm">
+                <div class="auth-card glass-strong w-full max-w-sm rounded-3xl border-t-4 border-t-sky-400/70 p-6 text-ink shadow-xl shadow-sky-900/5">
                     {{ $slot }}
                 </div>
             </main>

@@ -13,7 +13,7 @@
                 <div class="flex-1">
                     <p class="text-sm font-semibold text-red-900 dark:text-red-100">{{ session('error') }}</p>
                     @if(Str::contains(session('error'), 'exists') || Str::contains(session('error'), 'login'))
-                        <a href="{{ route('login') }}" class="mt-2 inline-flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-500">
+                        <a href="{{ route('login') }}" class="btn-danger btn-sm mt-2">
                             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
                             </svg>
@@ -32,7 +32,7 @@
         <div class="mb-6">
             <a href="{{ $termsVersion ? route('auth.google.consent') : route('auth.google', ['from_register' => 1]) }}"
                @click.prevent="if (!tosAccepted) { showTosError = true; setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }), 100); } else { window.location.href = $el.href; }"
-               class="w-full inline-flex items-center justify-center gap-3 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all shadow-xs">
+               class="btn-outline btn-lg btn-block">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
                     <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -61,18 +61,18 @@
         @endif
         <div>
             <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <x-text-input id="name" class="input-lg" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            <x-text-input id="email" class="input-lg" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
         <div class="mt-4" x-data="{ showPassword: false }">
             <x-input-label for="password" :value="__('Password')" />
             <div class="relative">
-                <x-text-input id="password" class="block mt-1 w-full pr-10"
+                <x-text-input id="password" class="input-lg pr-20"
                                 type="password"
                                 x-bind:type="showPassword ? 'text' : 'password'"
                                 name="password"
@@ -80,7 +80,7 @@
                 <button
                     type="button"
                     @click="showPassword = !showPassword"
-                    class="absolute inset-y-0 right-0 flex items-center pr-3 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                    class="absolute inset-y-0 right-0 flex items-center px-3 text-xs font-medium text-muted hover:text-ink"
                     tabindex="-1"
                 >
                     <span x-show="!showPassword">{{ __('Show') }}</span>
@@ -92,14 +92,14 @@
         <div class="mt-4" x-data="{ showConfirm: false }">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
             <div class="relative">
-                <x-text-input id="password_confirmation" class="block mt-1 w-full pr-10"
+                <x-text-input id="password_confirmation" class="input-lg pr-20"
                                 type="password"
                                 x-bind:type="showConfirm ? 'text' : 'password'"
                                 name="password_confirmation" required autocomplete="new-password" />
                 <button
                     type="button"
                     @click="showConfirm = !showConfirm"
-                    class="absolute inset-y-0 right-0 flex items-center pr-3 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                    class="absolute inset-y-0 right-0 flex items-center px-3 text-xs font-medium text-muted hover:text-ink"
                     tabindex="-1"
                 >
                     <span x-show="!showConfirm">{{ __('Show') }}</span>
@@ -132,7 +132,7 @@
         <x-turnstile class="mt-5" size="flexible" />
         <button
             type="submit"
-            class="btn mt-5 w-full py-3 text-base"
+            class="btn btn-lg btn-block mt-5"
             x-bind:class="tosAccepted ? 'btn-primary' : 'bg-slate-500/20 text-muted cursor-not-allowed'"
             x-bind:disabled="!tosAccepted"
         >

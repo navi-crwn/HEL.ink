@@ -88,7 +88,7 @@
                                 @endif
                                 <form method="POST" action="{{ route('profile.avatar') }}" enctype="multipart/form-data" class="flex flex-wrap items-center gap-2">
                                     @csrf
-                                    <label class="btn-soft btn-sm cursor-pointer">
+                                    <label class="btn-outline btn-sm cursor-pointer">
                                         <input type="file" name="avatar" accept="image/png,image/jpeg,image/webp,image/gif" class="sr-only" @change="$el.form.requestSubmit()">
                                         {{ __('Change photo') }}
                                     </label>
@@ -122,11 +122,12 @@
                                 @method('PATCH')
                                 <input type="hidden" name="_profile_form" value="1">
                                 <input type="hidden" name="_back" value="{{ route('settings', [], false) }}#account">
-                                <div class="grid gap-4 sm:grid-cols-2">
+                                {{-- Two capped columns: no field here is wider than 24rem, whatever the screen. --}}
+                                <div class="grid max-w-[49rem] gap-4 sm:grid-cols-2">
                                     <div>
                                         <label for="fsettin-1" class="label">{{ __('Name') }}</label>
                                         <input id="fsettin-1" type="text" name="name" value="{{ \App\Support\Input::text(old('name', $u->name)) }}" class="input" required autocomplete="name">
-                                        @error('name')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
+                                        @error('name')<p class="help-error">{{ $message }}</p>@enderror
                                     </div>
                                     <div>
                                         <label for="fsettin-3" class="label">{{ __('Username') }}</label>
@@ -134,35 +135,35 @@
                                             <span class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-muted">@</span>
                                             <input id="fsettin-3" type="text" name="username" value="{{ \App\Support\Input::text(old('username', $u->username)) }}" class="input pl-7" required autocomplete="username" minlength="3" maxlength="30" x-model="value" @input.debounce.400ms="check()" spellcheck="false">
                                         </div>
-                                        <p class="mt-1 text-xs" :class="ok === false ? 'text-rose-600' : 'text-muted'" x-text="message">{{ __('Your handle in every HOP app: 3 to 30 lowercase letters, numbers, dots, dashes or underscores.') }}</p>
-                                        @error('username')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
+                                        <p class="help" :class="ok === false && 'help-error'" x-text="message">{{ __('Your handle in every HOP app: 3 to 30 lowercase letters, numbers, dots, dashes or underscores.') }}</p>
+                                        @error('username')<p class="help-error">{{ $message }}</p>@enderror
                                     </div>
                                     <div>
                                         <label for="fsettin-2" class="label">{{ __('Email') }}</label>
                                         <input id="fsettin-2" type="email" name="email" value="{{ \App\Support\Input::text(old('email', $u->email)) }}" class="input" required autocomplete="email">
-                                        @error('email')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
+                                        @error('email')<p class="help-error">{{ $message }}</p>@enderror
                                     </div>
                                     <div>
                                         <label for="fsettin-4" class="label">{{ __('Location') }} <span class="text-muted">({{ __('optional') }})</span></label>
                                         <input id="fsettin-4" type="text" name="location" value="{{ \App\Support\Input::text(old('location', $u->location)) }}" class="input" maxlength="100" autocomplete="address-level2">
                                     </div>
-                                    <div class="sm:col-span-2">
+                                    <div class="field sm:col-span-2">
                                         <label for="fsettin-5" class="label">{{ __('Website') }} <span class="text-muted">({{ __('optional') }})</span></label>
                                         <input id="fsettin-5" type="text" name="website" value="{{ \App\Support\Input::text(old('website', $u->website)) }}" class="input" maxlength="200" placeholder="https://" autocomplete="url">
-                                        @error('website')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
+                                        @error('website')<p class="help-error">{{ $message }}</p>@enderror
                                     </div>
-                                    <div class="sm:col-span-2">
+                                    <div class="field-wide sm:col-span-2">
                                         <label for="fsettin-6" class="label">{{ __('Bio') }} <span class="text-muted">({{ __('optional') }})</span></label>
                                         <textarea id="fsettin-6" name="bio" rows="3" maxlength="300" class="input">{{ \App\Support\Input::text(old('bio', $u->bio)) }}</textarea>
-                                        @error('bio')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
+                                        @error('bio')<p class="help-error">{{ $message }}</p>@enderror
                                     </div>
                                     <label class="flex items-start gap-3 sm:col-span-2">
-                                        <input type="checkbox" name="show_owner" value="1" class="mt-0.5 rounded" @checked(old('show_owner', $u->show_owner))>
+                                        <input type="checkbox" name="show_owner" value="1" class="mt-0.5" @checked(old('show_owner', $u->show_owner))>
                                         <span class="text-sm text-ink">{{ __('Show my name and photo on what I share in the apps') }}<span class="block text-xs text-muted">{{ __("Off: images, notes and pages you share don't say who made them.") }}</span></span>
                                     </label>
                                 </div>
-                                <div class="flex justify-end">
-                                    <button type="submit" class="btn-primary btn-sm">{{ __('Save profile') }}</button>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-primary">{{ __('Save profile') }}</button>
                                 </div>
                             </form>
                         </div>
@@ -182,11 +183,11 @@
                                     @endforeach
                                 </ul>
                             @endif
-                            <div>
+                            <div class="field-narrow">
                                 <label for="fsettin-pw-3" class="label">{{ __('Current password') }}</label>
-                                <input id="fsettin-pw-3" type="password" name="current_password" class="input sm:max-w-[calc(50%-0.5rem)]" required autocomplete="current-password">
+                                <input id="fsettin-pw-3" type="password" name="current_password" class="input" required autocomplete="current-password">
                             </div>
-                            <div class="grid gap-4 sm:grid-cols-2">
+                            <div class="grid max-w-[49rem] gap-4 sm:grid-cols-2">
                                 <div>
                                     <label for="fsettin-pw-4" class="label">{{ __('New password') }}</label>
                                     <input id="fsettin-pw-4" type="password" name="password" class="input" required autocomplete="new-password">
@@ -196,8 +197,8 @@
                                     <input id="fsettin-pw-5" type="password" name="password_confirmation" class="input" required autocomplete="new-password">
                                 </div>
                             </div>
-                            <div class="flex justify-end">
-                                <button type="submit" class="btn-primary btn-sm">{{ __('Update password') }}</button>
+                            <div class="form-actions">
+                                <button type="submit" class="btn-outline">{{ __('Update password') }}</button>
                             </div>
                         </form>
                     </section>
@@ -223,11 +224,11 @@
                                 <h3 class="section-title text-rose-600 dark:text-rose-400">{{ __('Delete account') }}</h3>
                                 <p class="mt-1 text-xs text-muted">{{ __('Removes your HOP ID and everything you made in the apps (links, bio pages, images, notes, folders, tags, analytics) for good.') }}</p>
                             </div>
-                            <div class="flex items-start md:col-span-2 md:justify-end">
-                                <button type="button" @click="showModal = true; $nextTick(() => startCountdown())" class="btn-danger btn-sm">{{ __('Delete my account') }}</button>
+                            <div class="flex items-start md:col-span-2">
+                                <button type="button" @click="showModal = true; $nextTick(() => startCountdown())" class="btn-danger-outline">{{ __('Delete my account') }}</button>
                             </div>
                             <div x-show="showModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-xs" @click.self="showModal = false; password = ''" @keydown.escape.window="showModal = false; password = ''">
-                                <div class="glass-strong w-full max-w-md rounded-2xl p-5" role="dialog" aria-modal="true" aria-labelledby="delete-account-title">
+                                <div class="glass-strong w-full max-w-sm rounded-2xl p-5" role="dialog" aria-modal="true" aria-labelledby="delete-account-title">
                                     <h3 id="delete-account-title" class="text-base font-semibold text-rose-600 dark:text-rose-400">{{ __('Delete account') }}</h3>
                                     <p class="mt-1 text-sm text-muted"><strong class="text-ink">{{ __('This is permanent.') }}</strong> {{ __('Your links, bio pages, images, notes, folders, tags and analytics are deleted together with your HOP ID.') }}</p>
                                     <form method="POST" action="{{ route('profile.destroy') }}" class="mt-4 space-y-3">
@@ -241,9 +242,9 @@
                                             <span x-show="!canDelete">{!! str_replace('@@S@@', '<span x-text="countdown" class="font-semibold tabular-nums text-ink"></span>', e(__('You can confirm in :seconds s', ['seconds' => '@@S@@']))) !!}</span>
                                             <span x-show="canDelete">{{ __('You can now delete your account.') }}</span>
                                         </p>
-                                        <div class="flex gap-2">
-                                            <button type="button" @click="showModal = false; password = ''" class="btn-soft flex-1">{{ __('Cancel') }}</button>
-                                            <button type="submit" :disabled="!canDelete || !password" class="btn-danger flex-1">{{ __('Delete forever') }}</button>
+                                        <div class="form-actions sm:justify-end">
+                                            <button type="button" @click="showModal = false; password = ''" class="btn-outline">{{ __('Cancel') }}</button>
+                                            <button type="submit" :disabled="!canDelete || !password" class="btn-danger">{{ __('Delete forever') }}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -268,11 +269,11 @@
                             </p>
                             <form method="POST" action="{{ route('settings.2fa.enable') }}" class="mt-4 space-y-3">
                                 @csrf
-                                <div>
+                                <div class="field-narrow">
                                     <label for="fsettin-7" class="label">{{ __('Confirm your password') }}</label>
-                                    <input id="fsettin-7" type="password" name="password" class="input mt-1" required autocomplete="current-password">
+                                    <input id="fsettin-7" type="password" name="password" class="input" required autocomplete="current-password">
                                 </div>
-                                <button type="submit" class="btn-primary btn-sm">
+                                <button type="submit" class="btn-primary">
                                     {{ __('Enable 2FA') }}
                                 </button>
                             </form>
@@ -302,11 +303,11 @@
                                 </div>
                                 <form method="POST" action="{{ route('settings.2fa.confirm') }}" class="mt-4 space-y-3">
                                     @csrf
-                                    <div>
+                                    <div class="field-short">
                                         <label for="fsettin-8" class="label">{{ __('Enter the 6-digit code from your app') }}</label>
-                                        <input id="fsettin-8" type="text" name="code" maxlength="6" pattern="[0-9]{6}" inputmode="numeric" autocomplete="one-time-code" class="input mt-1" required>
+                                        <input id="fsettin-8" type="text" name="code" maxlength="6" pattern="[0-9]{6}" inputmode="numeric" autocomplete="one-time-code" class="input tabular-nums" required>
                                     </div>
-                                    <button type="submit" class="btn-primary btn-sm">
+                                    <button type="submit" class="btn-primary">
                                         {{ __('Confirm and activate') }}
                                     </button>
                                 </form>
@@ -339,7 +340,7 @@
                                 <form method="POST" action="{{ route('settings.2fa.recovery-codes') }}" class="mt-4" data-confirm="{{ __('Make new recovery codes? The old ones stop working.') }}">
                                     @csrf
                                     <input type="hidden" name="password" value="">
-                                    <button type="button" data-prompt-password="{{ __('Enter your password to make new recovery codes:') }}" class="btn-soft btn-sm">
+                                    <button type="button" data-prompt-password="{{ __('Enter your password to make new recovery codes:') }}" class="btn-outline">
                                         {{ __('Make new codes') }}
                                     </button>
                                 </form>
@@ -353,7 +354,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <input type="hidden" name="password" value="">
-                                    <button type="button" data-prompt-password="{{ __('Enter your password to turn off two-factor:') }}" class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700">
+                                    <button type="button" data-prompt-password="{{ __('Enter your password to turn off two-factor:') }}" class="btn-danger">
                                         {{ __('Disable 2FA') }}
                                     </button>
                                 </form>
@@ -408,27 +409,24 @@
                     </div>
                     <form method="GET" action="{{ route('settings') }}#activity" class="glass-inset rounded-xl p-4">
                         <input type="hidden" name="tab" value="activity">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
+                        {{-- Dates are short fields; the buttons sit on their row at the same height. --}}
+                        <div class="flex flex-wrap items-end gap-3">
+                            <div class="field-short">
                                 <label for="fsettin-15" class="label">{{ __('From date') }}</label>
-                                <input id="fsettin-15" type="date" name="activity_from" value="{{ $activityFrom }}" class="input mt-1">
+                                <input id="fsettin-15" type="date" name="activity_from" value="{{ $activityFrom }}" class="input tabular-nums">
                             </div>
-                            <div>
+                            <div class="field-short">
                                 <label for="fsettin-16" class="label">{{ __('To date') }}</label>
-                                <input id="fsettin-16" type="date" name="activity_to" value="{{ $activityTo }}" class="input mt-1">
+                                <input id="fsettin-16" type="date" name="activity_to" value="{{ $activityTo }}" class="input tabular-nums">
+                            </div>
+                            <div class="form-actions w-full sm:w-auto">
+                                <a href="{{ route('settings') }}#activity" class="btn-ghost">{{ __('Clear') }}</a>
+                                <button type="submit" class="btn-outline">{{ __('Apply filter') }}</button>
                             </div>
                         </div>
                         @if ($activityFrom && $activityTo && $activityFrom > $activityTo)
                             <p class="mt-3 text-sm text-rose-600 dark:text-rose-400" role="alert">{{ __('The start date is after the end date, so nothing matches.') }}</p>
                         @endif
-                        <div class="mt-3 flex gap-2">
-                            <button type="submit" class="btn-primary btn-sm">
-                                {{ __('Apply filter') }}
-                            </button>
-                            <a href="{{ route('settings') }}#activity" class="btn-ghost btn-sm">
-                                {{ __('Clear') }}
-                            </a>
-                        </div>
                     </form>
                     <div class="space-y-2">
                         @forelse ($activityLogs as $log)
@@ -551,7 +549,7 @@
                         <h4 class="text-sm font-semibold text-ink mb-3">{{ __('Create a token') }}</h4>
                         <form method="POST" action="{{ route('api-tokens.store') }}" @submit.prevent="createToken" class="space-y-3">
                             @csrf
-                            <div>
+                            <div class="field-narrow">
                                 <label for="fsettin-17" class="label">{{ __('Token name') }}</label>
                                 <input id="fsettin-17"
                                     type="text"
@@ -561,7 +559,7 @@
                                     required
                                     class="input"
                                 >
-                                <p class="mt-1 text-xs text-muted">{{ __('A name that tells you where the token is used.') }}</p>
+                                <p class="help">{{ __('A name that tells you where the token is used.') }}</p>
                             </div>
                             <fieldset>
                                 <legend class="label">{{ __('Scopes (none checked: everything you can do)') }}</legend>
@@ -571,7 +569,7 @@
                                     @endforeach
                                 </div>
                             </fieldset>
-                            <button type="submit" class="btn-primary btn-sm" :disabled="isCreating">
+                            <button type="submit" class="btn-primary" :disabled="isCreating">
                                 <span x-show="!isCreating">{{ __('Generate token') }}</span>
                                 <span x-show="isCreating" x-cloak>{{ __('Generating…') }}</span>
                             </button>
@@ -581,19 +579,11 @@
                     <div x-show="newlyCreatedToken" x-cloak class="rounded-xl border border-emerald-300 bg-emerald-50 p-4 dark:border-emerald-700 dark:bg-emerald-900/20" role="status">
                         <h4 class="text-sm font-semibold text-emerald-900 dark:text-emerald-200 mb-2">{{ __('Token created') }}</h4>
                         <p class="text-xs text-emerald-800 dark:text-emerald-300 mb-3">{{ __("Copy it now: it is shown only this once.") }}</p>
-                        <div class="flex gap-2">
-                            <input
-                                type="text"
-                                :value="newlyCreatedToken"
-                                readonly
-                                aria-label="{{ __('New token') }}"
-                                class="min-w-0 flex-1 rounded-lg border-emerald-300 bg-white px-3 py-2 text-sm font-mono text-emerald-900 dark:border-emerald-600 dark:bg-emerald-950 dark:text-emerald-100"
-                            >
-                            <button
-                                type="button"
-                                @click="copyToken(newlyCreatedToken)"
-                                class="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-500"
-                            >
+                        <div class="flex items-center gap-2">
+                            <div class="min-w-0 max-w-[28rem] flex-1">
+                                <input type="text" :value="newlyCreatedToken" readonly aria-label="{{ __('New token') }}" class="input font-mono">
+                            </div>
+                            <button type="button" @click="copyToken(newlyCreatedToken)" class="btn-secondary">
                                 <span x-show="!copied">{{ __('Copy') }}</span>
                                 <span x-show="copied" x-cloak>{{ __('Copied!') }}</span>
                             </button>
@@ -622,7 +612,7 @@
                                     <form method="POST" action="{{ route('api-tokens.destroy', $token) }}" class="shrink-0" data-confirm="{{ __('Revoke the token “:name”? Anything using it stops working at once.', ['name' => $token->name]) }}" data-danger data-subject="{{ $token->name }}" data-confirm-title="{{ __('Revoke') }}" data-confirm-ok="{{ __('Revoke') }}">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="inline-flex min-h-11 items-center rounded-lg border border-red-300 px-3 text-sm font-medium text-red-600 transition hover:bg-red-50 active:scale-[0.97] dark:border-red-700 dark:text-red-400 dark:hover:bg-red-900/20">
+                                        <button type="submit" class="btn-danger-outline btn-sm">
                                             {{ __('Revoke') }}
                                         </button>
                                     </form>
@@ -636,7 +626,7 @@
                     <div class="rounded-xl border border-indigo-500/30 bg-indigo-500/10 p-4">
                         <h4 class="section-title mb-1">{{ __('API documentation') }}</h4>
                         <p class="mb-3 text-sm text-muted">{{ __("Where each app's API lives, what the scopes mean and the rate limit.") }}</p>
-                        <a href="{{ route('api-docs') }}" class="btn-primary btn-sm">
+                        <a href="{{ route('api-docs') }}" class="btn-outline btn-sm">
                             {{ __('View API docs') }}
                         </a>
                     </div>

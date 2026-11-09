@@ -135,7 +135,7 @@
                 @if ($user->hasTwoFactor())
                     <span class="chip-green">{{ __('Two-factor is on') }}</span>
                 @else
-                    <a href="{{ $settings }}#2fa" class="chip-amber tap">{{ __('Two-factor is off') }}</a>
+                    <span class="chip-amber">{{ __('Two-factor is off') }}</span>
                 @endif
             </div>
             <p class="stat-label mt-3">{{ __('Last sign-ins') }}</p>
@@ -157,8 +157,12 @@
                 @endforelse
             </ul>
             <div class="mt-3 flex flex-wrap items-center gap-2">
-                <a href="{{ $settings }}#login" class="btn-soft btn-sm whitespace-nowrap">{{ __("This wasn't me") }}</a>
-                <a href="{{ $settings }}#login" class="inline-flex min-h-11 items-center px-1.5 text-xs font-medium text-indigo-600 hover:underline dark:text-indigo-300">{{ __('All sign-ins') }}</a>
+                <a href="{{ $settings }}#login" class="btn-outline btn-sm">{{ __("This wasn't me") }}</a>
+                <a href="{{ $settings }}#login" class="btn-link btn-sm">{{ __('All sign-ins') }}</a>
+                {{-- The status above is a chip, and a chip is not a link: the way to turn it on is a button here. --}}
+                @unless ($user->hasTwoFactor())
+                    <a href="{{ $settings }}#2fa" class="btn-link btn-sm">{{ __('Turn on two-factor') }}</a>
+                @endunless
             </div>
         </section>
 
@@ -167,7 +171,7 @@
             <section class="glass-card min-w-0" aria-labelledby="activity-title">
                 <div class="flex items-center justify-between gap-2">
                     <h2 id="activity-title" class="section-title">{{ __('Recent activity') }}</h2>
-                    <a href="{{ $settings }}#activity" class="inline-flex min-h-11 items-center px-1.5 text-xs font-medium text-indigo-600 hover:underline dark:text-indigo-300">{{ __('View all') }}</a>
+                    <a href="{{ $settings }}#activity" class="btn-link btn-sm -mr-1.5">{{ __('View all') }}</a>
                 </div>
                 <ul class="mt-2 divide-y divide-slate-500/10">
                     @forelse ($activity as $row)
@@ -189,9 +193,9 @@
                 <h2 id="data-title" class="section-title">{{ __('Data and privacy') }}</h2>
                 <p class="mt-1 text-xs text-muted">{{ __('Your account data is yours: download a copy, or delete the account for good.') }}</p>
                 <div class="mt-3 flex flex-wrap items-center gap-2">
-                    <a href="{{ $settings }}#backup" class="btn-soft btn-sm whitespace-nowrap">{{ __('Export my data') }}</a>
+                    <a href="{{ $settings }}#backup" class="btn-outline btn-sm">{{ __('Export my data') }}</a>
                     @unless ($user->isSuperAdmin())
-                        <a href="{{ $settings }}#account" class="btn-ghost btn-sm whitespace-nowrap text-rose-600 dark:text-rose-400">{{ __('Delete account') }}</a>
+                        <a href="{{ $settings }}#account" class="btn-danger-outline btn-sm">{{ __('Delete account') }}</a>
                     @endunless
                 </div>
             </section>

@@ -41,14 +41,14 @@
                         id="password" 
                         name="password" 
                         x-bind:type="showPass ? 'text' : 'password'"
-                        class="block w-full pr-10" 
+                        class="pr-20" 
                         autocomplete="new-password" 
                         required
                     />
                     <button 
                         type="button"
                         @click="showPass = !showPass"
-                        class="absolute inset-y-0 right-0 flex items-center pr-3 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                        class="absolute inset-y-0 right-0 flex items-center px-3 text-xs font-medium text-muted hover:text-ink"
                     >
                         <span x-show="!showPass">Show</span>
                         <span x-show="showPass" x-cloak>Hide</span>
@@ -63,14 +63,14 @@
                         id="password_confirmation" 
                         name="password_confirmation" 
                         x-bind:type="showConf ? 'text' : 'password'"
-                        class="block w-full pr-10" 
+                        class="pr-20" 
                         autocomplete="new-password" 
                         required
                     />
                     <button 
                         type="button"
                         @click="showConf = !showConf"
-                        class="absolute inset-y-0 right-0 flex items-center pr-3 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                        class="absolute inset-y-0 right-0 flex items-center px-3 text-xs font-medium text-muted hover:text-ink"
                     >
                         <span x-show="!showConf">Show</span>
                         <span x-show="showConf" x-cloak>Hide</span>
@@ -98,17 +98,17 @@
             @method('put')
             <div>
                 <x-input-label for="update_password_current_password" :value="__('Current Password')" />
-                <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
+                <x-text-input id="update_password_current_password" name="current_password" type="password" autocomplete="current-password" />
                 <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
             </div>
             <div>
                 <x-input-label for="update_password_password" :value="__('New Password')" />
-                <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+                <x-text-input id="update_password_password" name="password" type="password" autocomplete="new-password" />
                 <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
             </div>
             <div>
                 <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
-                <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+                <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" />
                 <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
             </div>
             <div class="flex items-center gap-4">

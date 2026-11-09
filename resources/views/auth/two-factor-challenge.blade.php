@@ -5,16 +5,17 @@
     </div>
     <form method="POST" action="{{ route('two-factor.verify') }}">
         @csrf
-        <div>
+        {{-- A code is short: the field is too (the recovery codes are ten characters). --}}
+        <div class="field-short">
             <x-input-label for="code" :value="__('Code')" />
-            <x-text-input id="code" class="block mt-1 w-full" type="text" name="code" required autofocus autocomplete="one-time-code" inputmode="numeric" />
+            <x-text-input id="code" type="text" name="code" required autofocus autocomplete="one-time-code" inputmode="numeric" />
             <x-input-error :messages="$errors->get('code')" class="mt-2" />
         </div>
-        <div class="flex items-center justify-between mt-4">
-            <button type="submit" form="two-factor-logout" class="underline text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 rounded-md focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-slate-800">
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-2">
+            <button type="submit" form="two-factor-logout" class="btn-link -ml-1.5">
                 {{ __('Use a different account') }}
             </button>
-            <x-primary-button class="ml-3">
+            <x-primary-button>
                 {{ __('Verify') }}
             </x-primary-button>
         </div>

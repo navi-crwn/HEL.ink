@@ -55,6 +55,33 @@
         --accent: 99 102 241;         /* indigo-500 */
         --accent-2: 139 92 246;       /* violet-500 */
         --shadow: 15 23 42;
+
+        /*
+        | HOP control standard (hop-ops docs/15-standar-kontrol-ui-2026-11-09): the same token names in
+        | every HOP app. One radius and one height per row for inputs, selects, textareas, search
+        | fields and buttons; fields are capped in width; pills are for chips only.
+        */
+        --hop-ctl-radius: 8px;          /* inputs, selects, textareas, buttons, search */
+        --hop-ctl-radius-sm: 6px;       /* checkboxes, small chips */
+        --hop-card-radius: 14px;        /* cards and panels */
+        --hop-ctl-h: 36px;              /* default control height */
+        --hop-ctl-h-sm: 32px;           /* dense rows and cards */
+        --hop-ctl-h-lg: 40px;           /* the main action of a page or an auth form */
+        --hop-ctl-px: 12px;
+        --hop-ctl-font: 14px;           /* inputs are 16px under 640px, see below */
+        --hop-ring: 3px;
+        --hop-field-max: 28rem;         /* text, URL, select */
+        --hop-field-max-narrow: 24rem;  /* password, email, username, token name */
+        --hop-field-max-short: 11rem;   /* date, time, number, code */
+        --hop-field-max-xs: 6rem;       /* quantity, percent, small numbers */
+        --hop-search-max: 20rem;
+        /* The hub's colours for them, light and dark through the tokens above. */
+        --hop-accent: rgb(var(--accent));
+        --hop-line: rgb(var(--muted) / 0.3);
+        --hop-surface: rgb(var(--glass) / 0.7);
+        --hop-fill: rgb(var(--muted) / 0.14);
+        --hop-text: rgb(var(--ink));
+        --hop-danger: #e11d48;
     }
     .dark {
         --bg: 8 11 24;
@@ -94,14 +121,14 @@
 
 @layer components {
     /* Surfaces */
-    .glass, .glass-card, .glass-strong, .btn-soft, .stat {
+    .glass, .glass-card, .glass-strong, .stat {
         background-color: rgb(var(--glass) / var(--glass-alpha));
         border: 1px solid rgb(var(--glass-border) / var(--glass-border-alpha));
         box-shadow: 0 1px 0 rgb(255 255 255 / 0.35) inset, 0 8px 32px -12px rgb(var(--shadow) / 0.18);
         -webkit-backdrop-filter: blur(18px) saturate(160%);
         backdrop-filter: blur(18px) saturate(160%);
     }
-    .dark :is(.glass, .glass-card, .glass-strong, .btn-soft, .stat) { box-shadow: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 8px 32px -12px rgb(0 0 0 / 0.6); }
+    .dark :is(.glass, .glass-card, .glass-strong, .stat) { box-shadow: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 8px 32px -12px rgb(0 0 0 / 0.6); }
     .glass-card { @apply rounded-2xl p-4 sm:p-5; }
     .glass-strong { background-color: rgb(var(--glass) / 0.85); }
     .glass-inset {
@@ -119,50 +146,114 @@
     .page-title { @apply text-xl font-semibold tracking-tight sm:text-2xl; color: rgb(var(--ink)); }
     .section-title { @apply text-sm font-semibold; color: rgb(var(--ink)); }
 
-    /* Buttons */
-    .btn {
-        @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl px-4 py-2 text-sm font-semibold
-               transition duration-150 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400/60
-               disabled:cursor-not-allowed disabled:opacity-50;
+    /*
+    | Buttons (HOP control standard). As wide as their text, never wrapping or shrinking; one radius;
+    | 36 px, 32 px (.btn-sm: cards and dense rows) or 40 px (.btn-lg: the main action of a page or an
+    | auth form). Variants: primary (one per view), secondary, outline (.btn-soft is its older name),
+    | ghost, danger, danger-outline, link. A full-width button is .btn-block, only for the action of
+    | an auth card; .form-actions stacks its buttons full width under 640 px.
+    */
+    .btn, .btn-primary, .btn-secondary, .btn-outline, .btn-soft, .btn-ghost, .btn-danger, .btn-danger-outline, .btn-link {
+        display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex-shrink: 0; width: auto;
+        height: var(--hop-ctl-h); padding: 0 14px; border: 1px solid transparent; border-radius: var(--hop-ctl-radius);
+        font-size: var(--hop-ctl-font); font-weight: 600; line-height: 1; white-space: nowrap; text-decoration: none; cursor: pointer;
+        transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
     }
-    .btn-sm { @apply rounded-lg px-3 py-1.5 text-xs; }
-    /* The variants below include .btn after .btn-sm, as applying .btn did with Tailwind 3,
-       so .btn-sm does not shrink them. */
-    .btn-primary, .btn-ghost, .btn-soft, .btn-danger {
-        @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl px-4 py-2 text-sm font-semibold
-               transition duration-150 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-400/60
-               disabled:cursor-not-allowed disabled:opacity-50;
+    :is(.btn, .btn-primary, .btn-secondary, .btn-outline, .btn-soft, .btn-ghost, .btn-danger, .btn-danger-outline, .btn-link):active { transform: scale(0.97); }
+    :is(.btn, .btn-primary, .btn-secondary, .btn-outline, .btn-soft, .btn-ghost, .btn-danger, .btn-danger-outline, .btn-link, .icon-btn):focus-visible {
+        outline: none; box-shadow: 0 0 0 var(--hop-ring) color-mix(in srgb, var(--hop-accent) 35%, transparent);
     }
-    /* Neutral solid primary (ink on light, white on dark); the accent is kept for links/active states. */
-    .btn-primary {
-        @apply bg-slate-900 text-white shadow-xs hover:bg-slate-800 active:scale-[0.98]
-               dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100;
+    :is(.btn, .btn-primary, .btn-secondary, .btn-outline, .btn-soft, .btn-ghost, .btn-danger, .btn-danger-outline, .btn-link):is(:disabled, [aria-disabled='true']) {
+        opacity: 0.64; cursor: not-allowed;
     }
-    .btn-ghost { @apply hover:bg-slate-900/5 dark:hover:bg-white/10; color: rgb(var(--ink)); }
-    .btn-soft { color: rgb(var(--ink)); }
-    .btn-soft:hover { background-color: rgb(var(--glass) / 0.9); }
-    .btn-danger { @apply bg-rose-500/90 text-white hover:bg-rose-500; }
-    .icon-btn {
-        @apply inline-flex h-9 w-9 items-center justify-center rounded-xl transition hover:bg-slate-900/5 dark:hover:bg-white/10;
-        color: rgb(var(--muted));
+    /* Neutral solid primary (ink on light, white on dark); the accent is kept for links, focus and active states. */
+    .btn-primary { background-color: rgb(15 23 42); color: #fff; }
+    .btn-primary:hover { background-color: rgb(30 41 59); }
+    .dark .btn-primary { background-color: #fff; color: rgb(15 23 42); }
+    .dark .btn-primary:hover { background-color: rgb(226 232 240); }
+    .btn-secondary { background-color: var(--hop-fill); color: var(--hop-text); }
+    .btn-secondary:hover { background-color: rgb(var(--muted) / 0.22); }
+    .btn-outline, .btn-soft { background-color: var(--hop-surface); border-color: var(--hop-line); color: var(--hop-text); }
+    .btn-outline:hover, .btn-soft:hover { background-color: rgb(var(--glass) / 0.95); }
+    .btn-ghost { background-color: transparent; color: var(--hop-text); }
+    .btn-ghost:hover { background-color: rgb(var(--muted) / 0.12); }
+    .btn-danger { background-color: var(--hop-danger); color: #fff; }
+    .btn-danger:hover { background-color: #be123c; }
+    .btn-danger-outline { background-color: var(--hop-surface); border-color: rgb(225 29 72 / 0.4); color: var(--hop-danger); }
+    .btn-danger-outline:hover { background-color: rgb(225 29 72 / 0.08); }
+    .dark .btn-danger-outline { color: #fb7185; }
+    .btn-link { padding: 0 6px; background-color: transparent; color: rgb(79 70 229); }
+    .btn-link:hover { text-decoration: underline; }
+    .dark .btn-link { color: rgb(165 180 252); }
+    /* Sizes come after the variants so they win. */
+    .btn-sm { height: var(--hop-ctl-h-sm); padding: 0 12px; font-size: 13px; }
+    .btn-lg { height: var(--hop-ctl-h-lg); padding: 0 16px; }
+    .btn-link.btn-sm { padding: 0 6px; }
+    .btn-block { width: 100%; }
+    .icon-btn, .btn-icon {
+        display: inline-flex; flex: none; align-items: center; justify-content: center; width: var(--hop-ctl-h); height: var(--hop-ctl-h); padding: 0;
+        border-radius: var(--hop-ctl-radius); color: rgb(var(--muted)); transition: background-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
     }
-    .icon-btn:hover { color: rgb(var(--ink)); }
+    .icon-btn:hover, .btn-icon:hover { color: rgb(var(--ink)); background-color: rgb(var(--muted) / 0.12); }
 
-    /* Form controls */
+    /*
+    | Form controls. An input fills its field; the field is what is capped (.field, .field-narrow,
+    | .field-short, .field-xs), so a password never spans the page. .input-lg is for auth forms.
+    */
     .input {
-        @apply block w-full rounded-xl border px-3.5 py-2.5 text-sm shadow-none outline-hidden transition
-               placeholder:text-slate-400 focus:ring-2 focus:ring-indigo-400/40;
-        color: rgb(var(--ink));
-        background-color: rgb(var(--glass) / 0.6);
-        border-color: rgb(var(--muted) / 0.25);
+        display: block; box-sizing: border-box; width: 100%; min-width: 0; height: var(--hop-ctl-h); padding: 0 var(--hop-ctl-px);
+        border: 1px solid var(--hop-line); border-radius: var(--hop-ctl-radius); background-color: var(--hop-surface); color: var(--hop-text);
+        font-size: var(--hop-ctl-font); line-height: 1.25; box-shadow: none; outline: none;
+        transition: border-color 150ms ease, box-shadow 150ms ease;
     }
-    .input:focus { border-color: rgb(var(--accent) / 0.6); }
+    .input::placeholder { color: rgb(var(--muted) / 0.8); }
+    textarea.input { height: auto; min-height: 88px; padding: 8px var(--hop-ctl-px); line-height: 1.5; }
     /* Keep room for the select chevron that @tailwindcss/forms draws. */
     select.input { padding-right: 2.25rem; }
-    .label { @apply mb-1.5 block text-xs font-medium; color: rgb(var(--muted)); }
+    .input-sm { height: var(--hop-ctl-h-sm); }
+    .input-lg { height: var(--hop-ctl-h-lg); }
+    .input:focus, .input:focus-visible {
+        outline: none; border-color: var(--hop-accent); box-shadow: 0 0 0 var(--hop-ring) color-mix(in srgb, var(--hop-accent) 28%, transparent);
+    }
+    .input[aria-invalid='true'] { border-color: var(--hop-danger); box-shadow: 0 0 0 var(--hop-ring) rgb(225 29 72 / 0.16); }
+    .input:disabled { opacity: 0.64; cursor: not-allowed; }
+    input[type='checkbox'] { border-radius: var(--hop-ctl-radius-sm); }
+    .label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 500; line-height: 1.3; color: rgb(var(--muted)); }
+    .help { margin-top: 6px; font-size: 13px; line-height: 1.4; color: rgb(var(--muted)); }
+    .help-error { margin-top: 6px; font-size: 13px; line-height: 1.4; color: var(--hop-danger); }
+    .dark .help-error { color: #fb7185; }
+    .field, .field-narrow, .field-short, .field-xs, .field-wide { display: block; width: 100%; max-width: var(--hop-field-max); }
+    .field-narrow { max-width: var(--hop-field-max-narrow); }
+    .field-short { max-width: var(--hop-field-max-short); }
+    .field-xs { max-width: var(--hop-field-max-xs); }
+    .field-wide { max-width: 40rem; }            /* a long text in a full-width editor row */
+    .field-datetime { display: block; width: 100%; max-width: 14rem; }  /* date and time in one control need more than a date */
+    .search { position: relative; width: 100%; }
+    .search > .input { padding-left: 34px; }
+    .search > svg { position: absolute; left: 10px; top: 50%; width: 16px; height: 16px; transform: translateY(-50%); color: rgb(var(--muted)); pointer-events: none; }
+    .form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    @media (min-width: 640px) { .search { max-width: var(--hop-search-max); } }
+    @media (max-width: 639px) {
+        /* 16 px keeps iOS from zooming into a field. */
+        .input { font-size: 16px; }
+        .form-actions { flex-direction: column-reverse; align-items: stretch; }
+        .form-actions > :is(.btn, .btn-primary, .btn-secondary, .btn-outline, .btn-soft, .btn-ghost, .btn-danger, .btn-danger-outline) { width: 100%; }
+    }
+    /* Touch: every control is a 44 px target. */
+    @media (pointer: coarse) {
+        .input:not(textarea), .btn, .btn-primary, .btn-secondary, .btn-outline, .btn-soft, .btn-ghost, .btn-danger, .btn-danger-outline, .btn-link { min-height: 44px; }
+        .icon-btn, .btn-icon { min-width: 44px; min-height: 44px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .input, .icon-btn, .btn-icon, .btn, .btn-primary, .btn-secondary, .btn-outline, .btn-soft, .btn-ghost, .btn-danger, .btn-danger-outline, .btn-link { transition: none; }
+        :is(.btn, .btn-primary, .btn-secondary, .btn-outline, .btn-soft, .btn-ghost, .btn-danger, .btn-danger-outline, .btn-link):active { transform: none; }
+    }
 
-    /* Chips / badges */
-    .chip, .chip-green, .chip-gray, .chip-red, .chip-blue, .chip-amber { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold; }
+    /* Chips / badges: the only pills, 22 px high, never a button or a link. */
+    .chip, .chip-green, .chip-gray, .chip-red, .chip-blue, .chip-amber {
+        display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px; border-radius: 9999px;
+        font-size: 11px; font-weight: 600; line-height: 1; white-space: nowrap;
+    }
     .chip-green { @apply bg-emerald-500/15 text-emerald-700 dark:text-emerald-300; }
     .chip-gray { @apply bg-slate-500/15 text-slate-600 dark:text-slate-300; }
     .chip-red { @apply bg-rose-500/15 text-rose-700 dark:text-rose-300; }
@@ -181,10 +272,9 @@
         box-shadow: 0 4px 14px -8px rgb(var(--shadow) / 0.35), inset 0 0 0 1px rgb(var(--glass-border) / var(--glass-border-alpha));
     }
     .nav-item-active svg { color: rgb(var(--accent)); }
-    /* Below lg the sidebar is a drawer used by touch: its rows and the icon buttons are 44 px targets. */
-    @media (width < 64rem) {
+    /* Touch: the sidebar rows are 44 px targets (the icon buttons get theirs with the other controls). */
+    @media (pointer: coarse) {
         .nav-item { min-height: 2.75rem; }
-        .icon-btn { height: 2.75rem; width: 2.75rem; }
     }
     .nav-sub { @apply block rounded-lg px-3 py-1.5 text-[13px] transition; color: rgb(var(--muted)); }
     .nav-sub:hover, .nav-sub-active { color: rgb(var(--ink)); }
@@ -300,9 +390,9 @@ html.drawer-open { overflow: hidden; }
 .auth-card :is(.text-gray-900, .dark\:text-gray-100, .dark\:text-white) { color: rgb(var(--ink)); }
 .auth-card :is(.bg-white, .dark\:bg-gray-800, .dark\:bg-gray-900):not(input) { background-color: rgb(var(--glass) / 0.6) !important; }
 .auth-card .relative > .relative > span[class*="px-"] { background-color: rgb(var(--glass)) !important; border-radius: 9999px; }
-.auth-card :is(.rounded-md) { border-radius: 0.75rem; }
+.auth-card :is(.rounded-md) { border-radius: var(--hop-ctl-radius); }
 .auth-card :is(.border-gray-300, .dark\:border-gray-600, .dark\:border-gray-700) { border-color: rgb(var(--muted) / 0.25) !important; }
-.auth-card input[type=checkbox] { @apply rounded-sm border-slate-400/50 text-indigo-500; }
+.auth-card input[type=checkbox] { @apply border-slate-400/50 text-indigo-500; border-radius: var(--hop-ctl-radius-sm); }
 .auth-card input[type=checkbox]:not(:checked) { @apply bg-transparent; }
 .auth-card input[type=checkbox]:checked { background-color: rgb(99 102 241) !important; border-color: rgb(99 102 241) !important; }
 
@@ -415,13 +505,14 @@ html.drawer-open { overflow: hidden; }
    purpose: the shared sheet is not layered, and a layered rule would lose to it. */
 .remind-card { position: relative; }
 .remind-hide {
-    position: absolute; top: 6px; right: 6px; display: inline-grid; place-items: center; width: 44px; height: 44px;
-    border-radius: 12px; font-size: 20px; line-height: 1; color: rgb(var(--muted));
-    transition: background-color 150ms ease-out, color 150ms ease-out, transform 150ms ease-out;
+    position: absolute; top: 8px; right: 8px; display: inline-grid; place-items: center; width: var(--hop-ctl-h); height: var(--hop-ctl-h);
+    border-radius: var(--hop-ctl-radius); font-size: 20px; line-height: 1; color: rgb(var(--muted));
+    transition: background-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
 }
-.remind-hide:hover { color: rgb(var(--ink)); background-color: rgb(var(--glass) / 0.6); }
+.remind-hide:hover { color: rgb(var(--ink)); background-color: rgb(var(--muted) / 0.12); }
 .remind-hide:active { transform: scale(0.97); }
-.remind-hide:focus-visible { outline: 2px solid #6366f1; outline-offset: 2px; }
+.remind-hide:focus-visible { outline: none; box-shadow: 0 0 0 var(--hop-ring) color-mix(in srgb, var(--hop-accent) 35%, transparent); }
+@media (pointer: coarse) { .remind-hide { top: 4px; right: 4px; width: 44px; height: 44px; } }
 @media (prefers-reduced-motion: reduce) {
     .remind-hide { transition: none; }
     .remind-hide:active { transform: none; }
@@ -429,3 +520,18 @@ html.drawer-open { overflow: hidden; }
 /* In a narrow column the shared button keeps to its ×, as it does on a phone, and the card keeps its own padding. */
 .hop-remind.remind-compact[data-hop-remind] { padding-right: 1.25rem; }
 .remind-compact .hop-remind__txt { display: none; }
+
+/*
+| The language menu and the account menu come from hop/ui with their own inline styles (12 px radius,
+| 36 and 40 px buttons). On the hub they follow the control standard: the same 36 px, 8 px radius icon
+| button as the theme toggle next to them, 44 px on touch, and menu rows a finger can hit. Outside a
+| layer and one class (.hub-chrome, on the dashboard and sign-in layouts) more specific, so they win over the component's own <style>.
+*/
+.hub-chrome .hop-switcher > summary { width: var(--hop-ctl-h); height: var(--hop-ctl-h); border-radius: var(--hop-ctl-radius); }
+.hub-chrome .hop-account > summary .hop-avatar { width: 28px; height: 28px; border-radius: var(--hop-ctl-radius-sm); font-size: 13px; }
+.hub-chrome .hop-switcher-panel > a, .hub-chrome .hop-account-panel form button { border-radius: var(--hop-ctl-radius); }
+.hub-chrome .hop-switcher :focus-visible { outline: none; box-shadow: 0 0 0 var(--hop-ring) color-mix(in srgb, var(--hop-accent) 35%, transparent); }
+@media (pointer: coarse) {
+    .hub-chrome .hop-switcher > summary { width: 44px; height: 44px; }
+    .hub-chrome .hop-switcher-panel > a, .hub-chrome .hop-account-panel form button { min-height: 44px; }
+}

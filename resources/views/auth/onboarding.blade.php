@@ -27,20 +27,20 @@
                     </p>
                     <form method="POST" action="{{ route('onboarding.set-password') }}" class="mt-4 space-y-3">
                         @csrf
-                        <div x-data="{ showPass: false }">
+                        <div x-data="{ showPass: false }" class="field-narrow">
                             <label class="block text-xs font-medium text-blue-900 dark:text-blue-100 mb-1">Password <span class="text-red-600">*</span></label>
                             <div class="relative">
                                 <input 
                                     :type="showPass ? 'text' : 'password'"
                                     name="password" 
                                     required
-                                    class="w-full rounded-lg border border-blue-200 dark:border-blue-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm pr-10"
+                                    class="input pr-20"
                                     placeholder="Enter password (min. 8 characters)"
                                 />
                                 <button 
                                     type="button"
                                     @click="showPass = !showPass"
-                                    class="absolute inset-y-0 right-0 flex items-center pr-3 text-xs text-blue-600 dark:text-blue-400"
+                                    class="absolute inset-y-0 right-0 flex items-center px-3 text-xs font-medium text-muted hover:text-ink"
                                 >
                                     <span x-show="!showPass">Show</span>
                                     <span x-show="showPass" x-cloak>Hide</span>
@@ -50,20 +50,20 @@
                                 <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
                             @enderror
                         </div>
-                        <div x-data="{ showConf: false }">
+                        <div x-data="{ showConf: false }" class="field-narrow">
                             <label class="block text-xs font-medium text-blue-900 dark:text-blue-100 mb-1">Confirm Password <span class="text-red-600">*</span></label>
                             <div class="relative">
                                 <input 
                                     :type="showConf ? 'text' : 'password'"
                                     name="password_confirmation" 
                                     required
-                                    class="w-full rounded-lg border border-blue-200 dark:border-blue-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm pr-10"
+                                    class="input pr-20"
                                     placeholder="Confirm password"
                                 />
                                 <button 
                                     type="button"
                                     @click="showConf = !showConf"
-                                    class="absolute inset-y-0 right-0 flex items-center pr-3 text-xs text-blue-600 dark:text-blue-400"
+                                    class="absolute inset-y-0 right-0 flex items-center px-3 text-xs font-medium text-muted hover:text-ink"
                                 >
                                     <span x-show="!showConf">Show</span>
                                     <span x-show="showConf" x-cloak>Hide</span>
@@ -72,7 +72,7 @@
                         </div>
                         <button 
                             type="submit"
-                            class="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-500 flex items-center justify-center gap-2"
+                            class="btn-primary w-full sm:w-auto"
                         >
                             <span>Save and Continue to Dashboard</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,7 +86,7 @@
         @endif
         <div class="mt-8">
             <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Quick Start Guide</h2>
-            <div class="grid gap-4 sm:grid-cols-2">
+            <div class="grid gap-3">
                 <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-700 dark:bg-slate-800">
                     <div class="flex items-center gap-2">
                         <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-lg dark:bg-blue-900/30">
@@ -137,20 +137,20 @@
             @if(auth()->user()->google_id && session('google_user_needs_password'))
                 <p class="text-sm text-slate-600 dark:text-slate-400">Please create your password to continue</p>
             @elseif($ssoApp = \App\Http\Controllers\SsoController::cameFrom(request()))
-                <a href="{{ \App\Http\Controllers\SsoController::continueUrl($ssoApp) }}" class="w-full sm:w-auto inline-flex items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition hover:bg-blue-500">
+                <a href="{{ \App\Http\Controllers\SsoController::continueUrl($ssoApp) }}" class="btn-primary w-full sm:w-auto">
                     Continue to {{ $ssoApp->name }}
                 </a>
-                <a href="{{ route('dashboard') }}" class="w-full sm:w-auto inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-xs transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700">
+                <a href="{{ route('dashboard') }}" class="btn-outline w-full sm:w-auto">
                     Go to {{ config('app.name') }} dashboard
                 </a>
             @else
-                <a href="{{ route('dashboard') }}" class="w-full sm:w-auto inline-flex items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-xs transition hover:bg-blue-500">
+                <a href="{{ route('dashboard') }}" class="btn-primary w-full sm:w-auto">
                     Go to Dashboard
                 </a>
                 @if(!auth()->user()->google_id)
                     <form method="POST" action="{{ route('onboarding.skip') }}" class="w-full sm:w-auto">
                         @csrf
-                        <button type="submit" class="w-full inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-xs transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700">
+                        <button type="submit" class="btn-outline w-full sm:w-auto">
                             Skip
                         </button>
                     </form>

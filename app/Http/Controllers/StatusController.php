@@ -15,11 +15,11 @@ class StatusController extends Controller
     {
         // The page that says whether things are up must answer while the database is down: no numbers, no history.
         try {
-            return view('status', ['status' => $watchdog->summary(), 'history' => $watchdog->history()]);
+            return view('status', ['status' => $watchdog->summary(), 'failures' => $watchdog->failures()]);
         } catch (QueryException $e) {
             report($e);
 
-            return view('status', ['status' => $watchdog->emptySummary(), 'history' => new Collection]);
+            return view('status', ['status' => $watchdog->emptySummary(), 'failures' => new Collection]);
         }
     }
 

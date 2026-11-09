@@ -4,6 +4,10 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ## [Unreleased]
 
+### Fixed
+
+- The `/changelog` snapshot stopped at 2026-11-04 because `scripts/build-changelog.py` read the checkout's stale `origin/main` and never fetched. It now fetches first, and `scripts/build-changelog.py --repo HEL.ink --check` fails when merged pull requests are missing from `resources/changelog.json` (run it at release time, after rebuilding the snapshot). Snapshot regenerated.
+
 ## [1.1.0] - 2026-11-10
 
 ### Added

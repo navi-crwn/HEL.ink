@@ -40,13 +40,17 @@
             this.$nextTick(() => {
                 const row = this.$refs.tabs, active = row && row.querySelector('[aria-selected=true]');
                 if (active && row.scrollWidth > row.clientWidth) {
-                    row.scrollTo({ left: active.offsetLeft - (row.clientWidth - active.offsetWidth) / 2, behavior: 'smooth' });
+                    // From the rectangles, not offsetLeft: the row is not the tab's offset parent.
+                    const a = active.getBoundingClientRect(), r = row.getBoundingClientRect();
+                    row.scrollLeft += a.left - r.left - (r.width - a.width) / 2;
                 }
             });
         },
         init() {
             this.fromHash();
             this.reveal();
+            // The row gets wider when the web font arrives, which moves the tabs: place it again then.
+            document.fonts?.ready.then(() => this.reveal());
             this.$watch('tab', value => { history.replaceState(null, '', '#' + value); this.reveal(); });
         }
     }" @tab-changed.window="tab = $event.detail" @hashchange.window="fromHash()">

@@ -181,6 +181,11 @@
         box-shadow: 0 4px 14px -8px rgb(var(--shadow) / 0.35), inset 0 0 0 1px rgb(var(--glass-border) / var(--glass-border-alpha));
     }
     .nav-item-active svg { color: rgb(var(--accent)); }
+    /* Below lg the sidebar is a drawer used by touch: its rows and the icon buttons are 44 px targets. */
+    @media (width < 64rem) {
+        .nav-item { min-height: 2.75rem; }
+        .icon-btn { height: 2.75rem; width: 2.75rem; }
+    }
     .nav-sub { @apply block rounded-lg px-3 py-1.5 text-[13px] transition; color: rgb(var(--muted)); }
     .nav-sub:hover, .nav-sub-active { color: rgb(var(--ink)); }
     .nav-sub-active { @apply font-semibold; }

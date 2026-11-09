@@ -42,6 +42,8 @@ Portail central de comptes, authentification unique HOP ID et répertoire de la 
 - **Lanceur d'applications unifié**: Passez de LinkHop à BioHop, PixelHop, NoteHop et FileHop en un clic depuis n'importe où.
 - **Base de données partagée**: Une base MySQL ou SQLite stocke les identités avec des tables de migration dédiées par application.
 - **Sécurité robuste des comptes**: Hachage Argon2id, 2FA TOTP, protection Cloudflare Turnstile et vérification des e-mails.
+- **Passerelle SSO, CSP et UI partagée**: chaque page est servie avec une Content-Security-Policy (avec nonce sur les pages de l'app), le transfert SSO est signé et vérifié par les apps, et les boîtes de dialogue ainsi que les menus de langue et de compte viennent du paquet partagé HopUI.
+- **Un standard de contrôles**: champs, sélecteurs et boutons partagent un rayon et une hauteur (jetons `--hop-ctl-*`), texte de 16 px et cibles tactiles de 44 px sur mobile, et une mise en page statique avec mouvement réduit.
 - **Surveillance des services en direct**: Vérifications de santé automatisées et suivi de la latence sans exposition de secrets.
 - **Ressources centrales de la famille**: Logos officiels, polices et cartes 3D flottantes servis depuis hel.ink avec hachages SRI.
 - **Jetons d'API avec permissions ciblées**: Générez des jetons pour la communication inter-applications et l'automatisation des développeurs.

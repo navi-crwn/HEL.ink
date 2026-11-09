@@ -47,6 +47,8 @@ Repositori ini bertindak sebagai **pusat ekosistem**:
 - **Single Sign-On (HOP ID)**: Satu akun untuk masuk ke LinkHop, BioHop, PixelHop, NoteHop, dan FileHop dengan tiket bertanda tangan dan pemutusan sesi berantai.
 - **Peluncur Aplikasi Terpadu**: Bilah navigasi atas terintegrasi untuk berpindah cepat antar-aplikasi keluarga HOP.
 - **Keamanan Akun Tangguh**: Hashing Argon2id, autentikasi 2FA TOTP, proteksi bot Cloudflare Turnstile, dan verifikasi email.
+- **Gerbang SSO, CSP, dan UI bersama**: setiap halaman dikirim dengan Content-Security-Policy (memakai nonce di halaman aplikasi), serah terima SSO ditandatangani dan diverifikasi oleh aplikasi, dan dialog serta menu bahasa dan akun berasal dari paket bersama HopUI.
+- **Satu standar kontrol**: kolom isian, pilihan, dan tombol memakai satu radius dan tinggi (token `--hop-ctl-*`), teks 16 px dan target sentuh 44 px di ponsel, serta tata letak statis saat gerak dikurangi.
 - **Basis Data Bersama**: Satu basis data identitas dengan tabel migrasi terisolasi per aplikasi (`migrations_hub`, `migrations_bio`, dsb.).
 - **Pengawas Layanan Langsung**: Pemeriksaan kesehatan otomatis dan pemantauan latensi tanpa kebocoran data rahasia.
 - **Aset Keluarga Terpusat**: Logo resmi, font keluarga (Syne, Plus Jakarta Sans), dan tile 3D dengan hash integritas SRI.

@@ -1,6 +1,6 @@
 {
-  "version": "v4",
-  "base": "https://hel.ink/hop-assets/v4/",
+  "version": "v5",
+  "base": "https://hel.ink/hop-assets/v5/",
   "assets": {
     "fonts_css": "fonts-amnesia.css",
     "float_css": "hop-float.css",
@@ -9,6 +9,8 @@
     "hero3d_js": "hop-hero3d.js",
     "motion_js": "hop-motion.js",
     "home_js": "hop-home.js",
+    "ui_css": "hop-ui.css",
+    "ui_js": "hop-ui.js",
     "hero_hub_light": "home/hub-light.webp",
     "hero_hub_dark": "home/hub-dark.webp",
     "hero_linkhop_light": "home/linkhop-light.webp",
@@ -23,19 +25,117 @@
     "hero_filehop_dark": "home/filehop-dark.webp"
   },
   "apps": [
-    {"slug": "hub", "name": "HOP ID", "tagline": "One account for every HOP app.", "url": "https://hel.ink", "account_url": "https://hub.hel.ink", "color": "#6366f1", "public": true, "repo": "https://github.com/navi-crwn/HEL.ink",
-      "icons": {"mark": "apps/hub/rabbit-mark.png", "wordmark": "apps/hub/rabbit-wordmark.svg", "favicon": "apps/hub/rabbit-favicon.png", "logo": "apps/hub/rabbit-mark.png", "logo_dark": "apps/hub/rabbit-mark.png"}},
-    {"slug": "linkhop", "name": "LinkHop", "tagline": "Short links, QR codes and click analytics.", "url": "https://link.hel.ink", "public_prefix": "https://hel.ink/l/", "color": "#6366f1", "public": true, "repo": "https://github.com/navi-crwn/LinkHop",
-     "icons": {"mark": "apps/linkhop/mark.svg", "mark_white": "apps/linkhop/mark-white.svg", "wordmark": "apps/linkhop/wordmark.svg", "wordmark_white": "apps/linkhop/wordmark-white.svg", "favicon": "apps/linkhop/favicon.png", "logo": "apps/linkhop/logo.png", "logo_dark": "apps/linkhop/logo-dark.png"}},
-    {"slug": "biohop", "name": "BioHop", "tagline": "One link-in-bio page for everything you do.", "url": "https://bio.hel.ink", "public_prefix": "https://hel.ink/b/", "color": "#a855f7", "public": true, "repo": "https://github.com/navi-crwn/BioHop",
-     "icons": {"mark": "apps/biohop/mark.svg", "wordmark": "apps/biohop/wordmark.svg", "favicon": "apps/biohop/mark.svg"}},
-    {"slug": "pixelhop", "name": "PixelHop", "tagline": "Image hosting with albums and direct links.", "url": "https://pixel.hel.ink", "public_prefix": "https://p.hel.ink/", "color": "#22d3ee", "public": true, "repo": "https://github.com/navi-crwn/PixelHop",
-     "icons": {"mark": "apps/pixelhop/mark.svg", "favicon": "apps/pixelhop/mark.svg", "icon_192": "apps/pixelhop/icon-192.png", "icon_512": "apps/pixelhop/icon-512.png", "apple_touch": "apps/pixelhop/apple-touch-icon.png"}},
-    {"slug": "notehop", "name": "NoteHop", "tagline": "Encrypted notes you share with a link.", "url": "https://note.hel.ink", "public_prefix": "https://n.hel.ink/", "color": "#10b981", "public": true, "repo": "https://github.com/navi-crwn/NoteHop",
-     "icons": {"mark": "apps/notehop/mark.svg", "favicon": "apps/notehop/mark.svg", "icon_192": "apps/notehop/icon-192.png", "icon_512": "apps/notehop/icon-512.png"}},
-    {"slug": "filehop", "name": "FileHop", "tagline": "Convert files in your browser; nothing is uploaded.", "url": "https://file.hel.ink", "color": "#f59e0b", "public": true, "repo": "https://github.com/navi-crwn/FileHop",
-     "icons": {"mark": "apps/filehop/mark.svg", "favicon": "apps/filehop/mark.svg", "icon_192": "apps/filehop/icon-192.png", "icon_512": "apps/filehop/icon-512.png", "apple_touch": "apps/filehop/apple-touch-icon.png"}},
-    {"slug": "imperium", "name": "Imperium", "tagline": "The HOP control panel.", "url": "", "color": "#f472b6", "public": false, "repo": "",
-     "icons": {"mark": "apps/imperium/mark.svg"}}
+    {
+      "slug": "hub",
+      "name": "HOP ID",
+      "tagline": "One account for every HOP app.",
+      "url": "https://hel.ink",
+      "account_url": "https://hub.hel.ink",
+      "color": "#6366f1",
+      "public": true,
+      "repo": "https://github.com/navi-crwn/HEL.ink",
+      "icons": {
+        "mark": "apps/hub/rabbit-mark.png",
+        "wordmark": "apps/hub/rabbit-wordmark.svg",
+        "favicon": "apps/hub/rabbit-favicon.png",
+        "logo": "apps/hub/rabbit-mark.png",
+        "logo_dark": "apps/hub/rabbit-mark.png"
+      }
+    },
+    {
+      "slug": "linkhop",
+      "name": "LinkHop",
+      "tagline": "Short links, QR codes and click analytics.",
+      "url": "https://link.hel.ink",
+      "public_prefix": "https://hel.ink/l/",
+      "color": "#6366f1",
+      "public": true,
+      "repo": "https://github.com/navi-crwn/LinkHop",
+      "icons": {
+        "mark": "apps/linkhop/mark.svg",
+        "mark_white": "apps/linkhop/mark-white.svg",
+        "wordmark": "apps/linkhop/wordmark.svg",
+        "wordmark_white": "apps/linkhop/wordmark-white.svg",
+        "favicon": "apps/linkhop/favicon.png",
+        "logo": "apps/linkhop/logo.png",
+        "logo_dark": "apps/linkhop/logo-dark.png"
+      }
+    },
+    {
+      "slug": "biohop",
+      "name": "BioHop",
+      "tagline": "One link-in-bio page for everything you do.",
+      "url": "https://bio.hel.ink",
+      "public_prefix": "https://hel.ink/b/",
+      "color": "#a855f7",
+      "public": true,
+      "repo": "https://github.com/navi-crwn/BioHop",
+      "icons": {
+        "mark": "apps/biohop/mark.svg",
+        "wordmark": "apps/biohop/wordmark.svg",
+        "favicon": "apps/biohop/mark.svg"
+      }
+    },
+    {
+      "slug": "pixelhop",
+      "name": "PixelHop",
+      "tagline": "Image hosting with albums and direct links.",
+      "url": "https://pixel.hel.ink",
+      "public_prefix": "https://p.hel.ink/",
+      "color": "#22d3ee",
+      "public": true,
+      "repo": "https://github.com/navi-crwn/PixelHop",
+      "icons": {
+        "mark": "apps/pixelhop/mark.svg",
+        "favicon": "apps/pixelhop/mark.svg",
+        "icon_192": "apps/pixelhop/icon-192.png",
+        "icon_512": "apps/pixelhop/icon-512.png",
+        "apple_touch": "apps/pixelhop/apple-touch-icon.png"
+      }
+    },
+    {
+      "slug": "notehop",
+      "name": "NoteHop",
+      "tagline": "Encrypted notes you share with a link.",
+      "url": "https://note.hel.ink",
+      "public_prefix": "https://n.hel.ink/",
+      "color": "#10b981",
+      "public": true,
+      "repo": "https://github.com/navi-crwn/NoteHop",
+      "icons": {
+        "mark": "apps/notehop/mark.svg",
+        "favicon": "apps/notehop/mark.svg",
+        "icon_192": "apps/notehop/icon-192.png",
+        "icon_512": "apps/notehop/icon-512.png"
+      }
+    },
+    {
+      "slug": "filehop",
+      "name": "FileHop",
+      "tagline": "Convert files in your browser; nothing is uploaded.",
+      "url": "https://file.hel.ink",
+      "color": "#f59e0b",
+      "public": true,
+      "repo": "https://github.com/navi-crwn/FileHop",
+      "icons": {
+        "mark": "apps/filehop/mark.svg",
+        "favicon": "apps/filehop/mark.svg",
+        "icon_192": "apps/filehop/icon-192.png",
+        "icon_512": "apps/filehop/icon-512.png",
+        "apple_touch": "apps/filehop/apple-touch-icon.png"
+      }
+    },
+    {
+      "slug": "imperium",
+      "name": "Imperium",
+      "tagline": "The HOP control panel.",
+      "url": "",
+      "color": "#f472b6",
+      "public": false,
+      "repo": "",
+      "icons": {
+        "mark": "apps/imperium/mark.svg"
+      }
+    }
   ]
 }

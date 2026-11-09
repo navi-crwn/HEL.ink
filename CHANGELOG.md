@@ -4,6 +4,10 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ## [Unreleased]
 
+### Added
+
+- hop-assets v5: `hop-ui.js` and `hop-ui.css`, shared dialogs (`HopUI.alert/confirm/prompt`) that replace the browser's own `alert`, `confirm` and `prompt` in every HOP app, and the "Hide · Shows again next week" button for reminder cards (`[data-hop-remind]`). Nine languages, keyboard first, a red button that names what is deleted, light or dark after the page, no motion under reduced motion. Laravel apps include it with `<x-hop::ui />`. v4 is unchanged.
+
 ### Changed
 
 - Controls: the hub follows the HOP control standard (`--hop-ctl-*` tokens): one radius and one height for inputs, selects, buttons and search, capped field widths, 16 px text and 44 px touch targets on phones, no motion transforms under reduced motion. Applies to the dashboard, Settings, sign-in pages and admin.

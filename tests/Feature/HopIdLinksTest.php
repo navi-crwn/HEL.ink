@@ -28,7 +28,8 @@ test('only "Visit site" opens a new tab and only it is marked with the arrow', f
     $this->actingAs(User::factory()->create());
 
     $html = $this->get('/dashboard')->assertOk()->getContent();
-    preg_match_all('#<a href="[^"]*/apps/[a-z]+"[^>]*>(.*?)</a>#s', $html, $open);
+    // The cards' "Open" buttons (the sidebar's family links go to other apps and keep their arrow).
+    preg_match_all('#<a href="[^"]*/apps/[a-z]+" class="btn-primary[^>]*>(.*?)</a>#s', $html, $open);
     preg_match_all('#<a href="https://[a-z.]+"[^>]*target="_blank"[^>]*>(.*?)</a>#s', $html, $visit);
 
     expect($open[0])->not->toBeEmpty()->and($visit[0])->not->toBeEmpty();

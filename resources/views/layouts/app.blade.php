@@ -12,6 +12,7 @@
             (function () {
                 try {
                     var t = localStorage.getItem('helink-theme');
+                    if (/(?:^|; )hop_ui=clean(?:;|$)/.test(document.cookie)) document.documentElement.dataset.ui = 'clean';
                     if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                         document.documentElement.classList.add('dark');
                     }
@@ -120,6 +121,15 @@
             </div>
         @endauth
         <script nonce="{{ Vite::cspNonce() }}">
+            // "Interface style" (HOP / Clean): one cookie on .hel.ink, read by the early script above in every app.
+            window.setHopUi = function (v) {
+                var d = /(^|\.)hel\.ink$/.test(location.hostname) ? '; domain=.hel.ink; Secure' : '';
+                v = v === 'clean' ? 'clean' : 'hop';
+                document.cookie = 'hop_ui=' + v + '; path=/; max-age=31536000; SameSite=Lax' + d;
+                if (v === 'clean') document.documentElement.dataset.ui = 'clean'; else document.documentElement.removeAttribute('data-ui');
+                document.querySelectorAll('[data-ui-choice]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.uiChoice === v ? 'true' : 'false'); });
+            };
+            document.querySelectorAll('[data-ui-choice]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.uiChoice === (document.documentElement.dataset.ui === 'clean' ? 'clean' : 'hop') ? 'true' : 'false'); });
             window.toggleTheme = function () {
                 const isDark = document.documentElement.classList.toggle('dark');
                 try { localStorage.setItem('helink-theme', isDark ? 'dark' : 'light'); } catch (e) {}

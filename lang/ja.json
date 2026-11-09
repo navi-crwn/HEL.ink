@@ -1012,5 +1012,8 @@
     "Times in :zone": "時刻は :zone",
     "Shows again next week": "来週また表示されます",
     "Each code works once. Make new ones before you need them.": "各コードは 1 回だけ使えます。必要になる前に新しいコードを作ってください。",
-    "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} 復旧コードが残っていません|{1} 復旧コードは残り :count 個です|[2,*] 復旧コードは残り :count 個です"
+    "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} 復旧コードが残っていません|{1} 復旧コードは残り :count 個です|[2,*] 復旧コードは残り :count 個です",
+    "Interface style": "インターフェースのスタイル",
+    "Clean": "クリーン",
+    "Applies to every HOP app on this browser.": "このブラウザーのすべての HOP アプリに適用されます。"
 }

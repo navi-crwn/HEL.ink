@@ -202,6 +202,18 @@
                             </div>
                         </form>
                     </section>
+                    <section class="grid gap-4 p-5 md:grid-cols-3 md:gap-8">
+                        <div>
+                            <h3 class="section-title">{{ __('Interface style') }}</h3>
+                            <p class="mt-1 text-xs text-muted">{{ __('Applies to every HOP app on this browser.') }}</p>
+                        </div>
+                        <div class="md:col-span-2">
+                            <div class="form-actions" role="group" aria-label="{{ __('Interface style') }}">
+                                <button type="button" class="btn-outline" data-ui-choice="hop" aria-pressed="true" data-call="setHopUi" data-args='["hop"]'>HOP</button>
+                                <button type="button" class="btn-outline" data-ui-choice="clean" aria-pressed="false" data-call="setHopUi" data-args='["clean"]'>{{ __('Clean') }}</button>
+                            </div>
+                        </div>
+                    </section>
                     @unless($u->isSuperAdmin())
                         <section class="grid gap-4 p-5 md:grid-cols-3 md:gap-8" x-data="{
                             showModal: false,

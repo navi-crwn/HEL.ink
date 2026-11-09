@@ -1012,5 +1012,8 @@
     "Times in :zone": "Zeiten in :zone",
     "Shows again next week": "Erscheint nächste Woche wieder",
     "Each code works once. Make new ones before you need them.": "Jeder Code funktioniert einmal. Erstelle neue, bevor du sie brauchst.",
-    "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} Du hast keine Wiederherstellungscodes mehr|{1} Du hast noch :count Wiederherstellungscode|[2,*] Du hast noch :count Wiederherstellungscodes"
+    "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} Du hast keine Wiederherstellungscodes mehr|{1} Du hast noch :count Wiederherstellungscode|[2,*] Du hast noch :count Wiederherstellungscodes",
+    "Interface style": "Oberflächenstil",
+    "Clean": "Schlicht",
+    "Applies to every HOP app on this browser.": "Gilt für alle HOP-Apps in diesem Browser."
 }

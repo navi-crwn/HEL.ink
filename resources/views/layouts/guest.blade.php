@@ -12,6 +12,7 @@
             (function () {
                 try {
                     var t = localStorage.getItem('helink-theme');
+                    if (/(?:^|; )hop_ui=clean(?:;|$)/.test(document.cookie)) document.documentElement.dataset.ui = 'clean';
                     if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                         document.documentElement.classList.add('dark');
                     }

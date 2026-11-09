@@ -4,7 +4,7 @@
 | border and a barely-there shadow, a flat sidebar and top bar, quiet tabs and tables. Tokens only change
 | values the glass system already reads (--bg, --glass, --glass-alpha, --glass-border*), so every page follows.
 */
-:root {
+:root[data-ui="clean"] {
     --bg: 247 247 248;
     --glass: 255 255 255;
     --glass-alpha: 1;
@@ -18,7 +18,7 @@
     --hop-surface: #fff;
     --hop-line: rgb(0 0 0 / 0.14);
 }
-.dark {
+:root[data-ui="clean"].dark {
     --bg: 10 10 12;
     --glass: 20 20 24;
     --glass-alpha: 1;
@@ -32,86 +32,85 @@
 }
 
 /* App background: flat, no gradient. */
-.app-bg, .dark .app-bg { background-image: none; background-color: rgb(var(--bg)); }
-body.bg-slate-50 { background-color: rgb(var(--bg)); }
-.dark body.bg-slate-50, .dark body[class*='dark:bg-'] { background-color: rgb(var(--bg)); }
+:root[data-ui="clean"] .app-bg, :root[data-ui="clean"].dark .app-bg { background-image: none; background-color: rgb(var(--bg)); }
+:root[data-ui="clean"] body.bg-slate-50 { background-color: rgb(var(--bg)); }
+:root[data-ui="clean"].dark body.bg-slate-50, :root[data-ui="clean"].dark body[class*='dark:bg-'] { background-color: rgb(var(--bg)); }
 
 /* Surfaces: solid, bordered, no blur. */
-.glass, .glass-card, .glass-strong, .stat,
-.app-shell :is(.rounded-xl, .rounded-2xl, .rounded-3xl):is(.bg-white, .bg-slate-50, .bg-gray-50):not(.no-skin, input, select, textarea, button) {
+:root[data-ui="clean"] .glass, :root[data-ui="clean"] .glass-card, :root[data-ui="clean"] .glass-strong, :root[data-ui="clean"] .stat, :root[data-ui="clean"] .app-shell :is(.rounded-xl, .rounded-2xl, .rounded-3xl):is(.bg-white, .bg-slate-50, .bg-gray-50):not(.no-skin, input, select, textarea, button) {
     background-color: rgb(var(--glass)) !important;
     border: 1px solid rgb(var(--glass-border) / var(--glass-border-alpha)) !important;
     box-shadow: var(--coss-card-shadow) !important;
     -webkit-backdrop-filter: none; backdrop-filter: none;
 }
-.glass-card, .stat, .glass-strong, .app-shell .glass { border-radius: var(--hop-card-radius); }
-.app-shell :is(.rounded-xl, .rounded-2xl, .rounded-3xl):not(button, input, select, textarea, .rounded-full) { border-radius: var(--hop-card-radius); }
-.glass-inset { background-color: var(--coss-frame); border-color: rgb(var(--glass-border) / var(--glass-border-alpha)); border-radius: 10px; }
-.auth-card.glass-strong { border-radius: 16px; border-top-width: 1px; box-shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 12px 32px -16px rgb(0 0 0 / 0.12) !important; }
-.auth-card :is(.bg-white, .dark\:bg-gray-800, .dark\:bg-gray-900):not(input) { background-color: transparent !important; }
+:root[data-ui="clean"] .glass-card, :root[data-ui="clean"] .stat, :root[data-ui="clean"] .glass-strong, :root[data-ui="clean"] .app-shell .glass { border-radius: var(--hop-card-radius); }
+:root[data-ui="clean"] .app-shell :is(.rounded-xl, .rounded-2xl, .rounded-3xl):not(button, input, select, textarea, .rounded-full) { border-radius: var(--hop-card-radius); }
+:root[data-ui="clean"] .glass-inset { background-color: var(--coss-frame); border-color: rgb(var(--glass-border) / var(--glass-border-alpha)); border-radius: 10px; }
+:root[data-ui="clean"] .auth-card.glass-strong { border-radius: 16px; border-top-width: 1px; box-shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 12px 32px -16px rgb(0 0 0 / 0.12) !important; }
+:root[data-ui="clean"] .auth-card :is(.bg-white, .dark\:bg-gray-800, .dark\:bg-gray-900):not(input) { background-color: transparent !important; }
 
 /* Sidebar and top bar: flat, divided by a hairline. */
-.hub-chrome aside { padding: 0; }
-.hub-chrome aside > .glass { border-radius: 0 !important; border-width: 0 1px 0 0 !important; background-color: rgb(var(--bg)) !important; box-shadow: none !important; }
-.hub-chrome header.sticky { padding: 0; }
-.hub-chrome header.sticky > .glass {
+:root[data-ui="clean"] .hub-chrome aside { padding: 0; }
+:root[data-ui="clean"] .hub-chrome aside > .glass { border-radius: 0 !important; border-width: 0 1px 0 0 !important; background-color: rgb(var(--bg)) !important; box-shadow: none !important; }
+:root[data-ui="clean"] .hub-chrome header.sticky { padding: 0; }
+:root[data-ui="clean"] .hub-chrome header.sticky > .glass {
     height: 56px; border-radius: 0 !important; border-width: 0 0 1px 0 !important;
     background-color: rgb(var(--bg)) !important; box-shadow: none !important;
 }
-.hub-chrome header.sticky > .glass { padding-inline: 16px; }
-.nav-item { border-radius: 8px; padding: 7px 10px; font-size: 14px; font-weight: 500; gap: 10px; }
-.nav-item:hover { background-color: rgb(var(--muted) / 0.1); }
-.nav-item-active { background-color: rgb(var(--muted) / 0.14); box-shadow: none; }
-.nav-item-active svg { color: rgb(var(--accent)); }
-.nav-sub { border-radius: 8px; }
+:root[data-ui="clean"] .hub-chrome header.sticky > .glass { padding-inline: 16px; }
+:root[data-ui="clean"] .nav-item { border-radius: 8px; padding: 7px 10px; font-size: 14px; font-weight: 500; gap: 10px; }
+:root[data-ui="clean"] .nav-item:hover { background-color: rgb(var(--muted) / 0.1); }
+:root[data-ui="clean"] .nav-item-active { background-color: rgb(var(--muted) / 0.14); box-shadow: none; }
+:root[data-ui="clean"] .nav-item-active svg { color: rgb(var(--accent)); }
+:root[data-ui="clean"] .nav-sub { border-radius: 8px; }
 
 /* Type: sentence case, no tracking, one quiet secondary colour. */
-.eyebrow, .stat-label, .table-glass thead th { text-transform: none; letter-spacing: 0; font-size: 12px; font-weight: 500; color: rgb(var(--muted)); }
-.hub-chrome h1, .hub-chrome h2, .hub-chrome h3 { font-family: var(--font-sans); letter-spacing: -0.015em; }
-.page-title { font-weight: 600; letter-spacing: -0.02em; }
-.stat-value { font-variant-numeric: tabular-nums; }
+:root[data-ui="clean"] .eyebrow, :root[data-ui="clean"] .stat-label, :root[data-ui="clean"] .table-glass thead th { text-transform: none; letter-spacing: 0; font-size: 12px; font-weight: 500; color: rgb(var(--muted)); }
+:root[data-ui="clean"] .hub-chrome h1, :root[data-ui="clean"] .hub-chrome h2, :root[data-ui="clean"] .hub-chrome h3 { font-family: var(--font-sans); letter-spacing: -0.015em; }
+:root[data-ui="clean"] .page-title { font-weight: 600; letter-spacing: -0.02em; }
+:root[data-ui="clean"] .stat-value { font-variant-numeric: tabular-nums; }
 
 /* Badges: 6 px radius, for real status only. */
-.chip, .chip-green, .chip-gray, .chip-red, .chip-blue, .chip-amber { border-radius: 6px; height: 20px; padding: 0 7px; font-size: 12px; font-weight: 500; }
+:root[data-ui="clean"] .chip, :root[data-ui="clean"] .chip-green, :root[data-ui="clean"] .chip-gray, :root[data-ui="clean"] .chip-red, :root[data-ui="clean"] .chip-blue, :root[data-ui="clean"] .chip-amber { border-radius: 6px; height: 20px; padding: 0 7px; font-size: 12px; font-weight: 500; }
 
 /* Tables: muted head row, row hover. */
-.table-glass thead tr { background-color: var(--coss-frame); }
-.table-glass thead th { padding-block: 9px; }
-.table-glass tbody tr:hover { background-color: var(--coss-frame); }
-.list-row:hover { background-color: var(--coss-frame); }
-.divide-glass > * + * { border-top-color: rgb(var(--glass-border) / calc(var(--glass-border-alpha) * 0.8)); }
+:root[data-ui="clean"] .table-glass thead tr { background-color: var(--coss-frame); }
+:root[data-ui="clean"] .table-glass thead th { padding-block: 9px; }
+:root[data-ui="clean"] .table-glass tbody tr:hover { background-color: var(--coss-frame); }
+:root[data-ui="clean"] .list-row:hover { background-color: var(--coss-frame); }
+:root[data-ui="clean"] .divide-glass > * + * { border-top-color: rgb(var(--glass-border) / calc(var(--glass-border-alpha) * 0.8)); }
 
 /* Controls on solid cards read as inputs, not glass. */
-.input, .app-shell :is(input[type=text], input[type=email], input[type=url], input[type=password], input[type=search], input[type=number], select, textarea):not(.no-skin) {
+:root[data-ui="clean"] .input, :root[data-ui="clean"] .app-shell :is(input[type=text], input[type=email], input[type=url], input[type=password], input[type=search], input[type=number], select, textarea):not(.no-skin) {
     background-color: var(--hop-surface) !important; border-color: var(--hop-line); box-shadow: 0 1px 1px rgb(0 0 0 / 0.03);
 }
-.btn-outline, .btn-soft, .btn-danger-outline { background-color: var(--hop-surface); box-shadow: 0 1px 1px rgb(0 0 0 / 0.04); }
-.btn-outline:hover, .btn-soft:hover { background-color: rgb(var(--muted) / 0.1); }
-.btn-primary, .btn-danger { font-weight: 500; }
-.btn, .btn-primary, .btn-secondary, .btn-outline, .btn-soft, .btn-ghost, .btn-danger, .btn-danger-outline, .btn-link { font-weight: 500; }
+:root[data-ui="clean"] .btn-outline, :root[data-ui="clean"] .btn-soft, :root[data-ui="clean"] .btn-danger-outline { background-color: var(--hop-surface); box-shadow: 0 1px 1px rgb(0 0 0 / 0.04); }
+:root[data-ui="clean"] .btn-outline:hover, :root[data-ui="clean"] .btn-soft:hover { background-color: rgb(var(--muted) / 0.1); }
+:root[data-ui="clean"] .btn-primary, :root[data-ui="clean"] .btn-danger { font-weight: 500; }
+:root[data-ui="clean"] .btn, :root[data-ui="clean"] .btn-primary, :root[data-ui="clean"] .btn-secondary, :root[data-ui="clean"] .btn-outline, :root[data-ui="clean"] .btn-soft, :root[data-ui="clean"] .btn-ghost, :root[data-ui="clean"] .btn-danger, :root[data-ui="clean"] .btn-danger-outline, :root[data-ui="clean"] .btn-link { font-weight: 500; }
 
 /* Marketing header: flat bar with a hairline, like the dashboard. */
-.marketing-nav { padding: 0; border-bottom: 1px solid rgb(0 0 0 / 0.08); background-color: rgb(var(--bg)); }
-.dark .marketing-nav { border-bottom-color: rgb(255 255 255 / 0.09); }
-.marketing-nav > nav { max-width: 1180px; height: 60px; border: 0; border-radius: 0; background: transparent; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
-.marketing-nav > nav a:not(.marketing-primary) { border-radius: 8px; }
-.marketing-icon-btn { border-radius: 8px; }
-.marketing-primary { min-height: 36px; border-radius: 8px; font-weight: 500; }
-@media (pointer: coarse) { .marketing-nav .marketing-primary { min-height: 44px; } }
+:root[data-ui="clean"] .marketing-nav { padding: 0; border-bottom: 1px solid rgb(0 0 0 / 0.08); background-color: rgb(var(--bg)); }
+:root[data-ui="clean"].dark .marketing-nav { border-bottom-color: rgb(255 255 255 / 0.09); }
+:root[data-ui="clean"] .marketing-nav > nav { max-width: 1180px; height: 60px; border: 0; border-radius: 0; background: transparent; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+:root[data-ui="clean"] .marketing-nav > nav a:not(.marketing-primary) { border-radius: 8px; }
+:root[data-ui="clean"] .marketing-icon-btn { border-radius: 8px; }
+:root[data-ui="clean"] .marketing-primary { min-height: 36px; border-radius: 8px; font-weight: 500; }
+@media (pointer: coarse) { :root[data-ui="clean"] .marketing-nav .marketing-primary { min-height: 44px; } }
 
 /* HOP ID wordmark with the family phrase underneath (owner decision 2026-11-09). */
 .wordmark-text { display: inline-flex; flex-direction: column; line-height: 1.1; }
 .wordmark-sub { margin-top: 2px; font-size: 11px; font-weight: 500; letter-spacing: 0; color: rgb(var(--muted)); white-space: nowrap; }
-@media (max-width: 419px) { .marketing-brand > span > span.wordmark-text { display: none; } }
+@media (max-width: 419px) { :root[data-ui="clean"] .marketing-brand > span > span.wordmark-text { display: none; } }
 
 /* Family footer strip: logo + "Hop Easy Link". */
 .coss-footer-brand { display: flex; align-items: center; gap: 10px; max-width: 1180px; margin: 24px auto 0; padding: 16px 24px 0; font-size: 14px; color: rgb(var(--muted)); }
 .coss-footer-brand img { width: 28px; height: 28px; }
 .coss-footer-brand b { color: rgb(var(--ink)); font-weight: 600; }
 
-@media (prefers-reduced-motion: reduce) { .marketing-nav, .glass { transition: none; } }
+@media (prefers-reduced-motion: reduce) { :root[data-ui="clean"] .marketing-nav, :root[data-ui="clean"] .glass { transition: none; } }
 
 /* Admin and legacy tables, sidebar section labels: sentence case like the rest. */
-.app-shell thead th, .hub-chrome aside nav .uppercase { text-transform: none; letter-spacing: 0; }
-.app-shell thead th { font-size: 12px; font-weight: 500; }
-.hub-chrome aside nav .uppercase { font-size: 12px; font-weight: 500; }
+:root[data-ui="clean"] .app-shell thead th, :root[data-ui="clean"] .hub-chrome aside nav .uppercase { text-transform: none; letter-spacing: 0; }
+:root[data-ui="clean"] .app-shell thead th { font-size: 12px; font-weight: 500; }
+:root[data-ui="clean"] .hub-chrome aside nav .uppercase { font-size: 12px; font-weight: 500; }

@@ -1012,5 +1012,8 @@
     "Times in :zone": "时间为 :zone",
     "Shows again next week": "下周再次显示",
     "Each code works once. Make new ones before you need them.": "每个恢复码只能用一次。请在需要之前生成新的。",
-    "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} 你已没有恢复码|{1} 你还剩 :count 个恢复码|[2,*] 你还剩 :count 个恢复码"
+    "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} 你已没有恢复码|{1} 你还剩 :count 个恢复码|[2,*] 你还剩 :count 个恢复码",
+    "Interface style": "界面样式",
+    "Clean": "简洁",
+    "Applies to every HOP app on this browser.": "适用于此浏览器中的所有 HOP 应用。"
 }

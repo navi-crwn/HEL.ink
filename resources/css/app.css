@@ -295,6 +295,9 @@
     .table-glass tbody td { @apply px-4 py-3; }
     .table-glass tbody tr:hover { background-color: rgb(var(--glass) / 0.45); }
 
+    /* A two-option choice (Settings, Interface style). */
+    .btn-outline[aria-pressed='true'] { border-color: var(--hop-accent); box-shadow: 0 0 0 1px var(--hop-accent) inset; }
+
     .progress { @apply h-1.5 overflow-hidden rounded-full bg-slate-900/10 dark:bg-white/10; }
     .progress > span { @apply block h-full rounded-full; }
 }

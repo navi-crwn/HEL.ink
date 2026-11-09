@@ -2,25 +2,25 @@
 | Pilot override for hop-assets/v4/hop-home.css (immutable). Loaded after it. Production needs a new
 | hop-assets version carrying these rules; until then this file is the diff. Hero art is untouched.
 */
-.hop-home { --home-panel: #fff; --home-line: rgb(0 0 0 / 0.1); --home-muted: #5b6475; --coss-bg: #f7f7f8; }
-.dark .hop-home, [data-theme=dark] .hop-home { --home-panel: #141418; --home-line: rgb(255 255 255 / 0.11); --home-muted: #a1a9b8; }
+:root[data-ui="clean"] .hop-home { --home-panel: #fff; --home-line: rgb(0 0 0 / 0.1); --home-muted: #5b6475; --coss-bg: #f7f7f8; }
+:root[data-ui="clean"].dark .hop-home, :root[data-ui="clean"] [data-theme=dark] .hop-home { --home-panel: #141418; --home-line: rgb(255 255 255 / 0.11); --home-muted: #a1a9b8; }
 
 /* Hero: calmer type, one solid dark action, one outline action. The accent phrase stays serif italic. */
-.hop-home .h-hero { padding-top: 72px; }
-.hop-home .h-hero h1 { font-weight: 600; letter-spacing: -0.035em; margin-block: 16px 18px; }
-.hop-home .h-chip { padding: 0; border: 0; border-radius: 0; font: 500 14px var(--h-sans); color: var(--home-muted); }
-.hop-home .h-lead { font-size: 18px; line-height: 1.6; color: var(--home-muted); max-width: 34rem; }
-.hop-home .h-pill { min-height: 40px; padding: 0 16px; border-radius: 8px; font-size: 14px; font-weight: 500; box-shadow: 0 1px 1px rgb(0 0 0 / 0.04); }
-.hop-home .h-pill:focus-visible { outline: none; box-shadow: 0 0 0 3px rgb(99 102 241 / 0.35); }
-.hop-home .h-pill.dark { box-shadow: none; }
-@media (pointer: coarse) { .hop-home .h-pill { min-height: 44px; } }
+:root[data-ui="clean"] .hop-home .h-hero { padding-top: 72px; }
+:root[data-ui="clean"] .hop-home .h-hero h1 { font-weight: 600; letter-spacing: -0.035em; margin-block: 16px 18px; }
+:root[data-ui="clean"] .hop-home .h-chip { padding: 0; border: 0; border-radius: 0; font: 500 14px var(--h-sans); color: var(--home-muted); }
+:root[data-ui="clean"] .hop-home .h-lead { font-size: 18px; line-height: 1.6; color: var(--home-muted); max-width: 34rem; }
+:root[data-ui="clean"] .hop-home .h-pill { min-height: 40px; padding: 0 16px; border-radius: 8px; font-size: 14px; font-weight: 500; box-shadow: 0 1px 1px rgb(0 0 0 / 0.04); }
+:root[data-ui="clean"] .hop-home .h-pill:focus-visible { outline: none; box-shadow: 0 0 0 3px rgb(99 102 241 / 0.35); }
+:root[data-ui="clean"] .hop-home .h-pill.dark { box-shadow: none; }
+@media (pointer: coarse) { :root[data-ui="clean"] .hop-home .h-pill { min-height: 44px; } }
 
 /* Running line and numbers: quiet, in a card; no uppercase mono, no gradient digits. */
-.hop-home .hx-marq > div { font: 500 14px var(--h-sans); letter-spacing: 0; text-transform: none; }
-.hop-home .hx-marq span::after { content: "·"; font-size: 14px; color: var(--home-muted); }
-.hop-home .hx-nums { border-radius: 14px; box-shadow: 0 1px 2px rgb(0 0 0 / 0.04); }
-.hop-home .hx-nums b { font-weight: 600; background: none; color: var(--home-text); -webkit-text-fill-color: currentColor; }
-.hop-home .hx-nums span { font-size: 14px; }
+:root[data-ui="clean"] .hop-home .hx-marq > div { font: 500 14px var(--h-sans); letter-spacing: 0; text-transform: none; }
+:root[data-ui="clean"] .hop-home .hx-marq span::after { content: "·"; font-size: 14px; color: var(--home-muted); }
+:root[data-ui="clean"] .hop-home .hx-nums { border-radius: 14px; box-shadow: 0 1px 2px rgb(0 0 0 / 0.04); }
+:root[data-ui="clean"] .hop-home .hx-nums b { font-weight: 600; background: none; color: var(--home-text); -webkit-text-fill-color: currentColor; }
+:root[data-ui="clean"] .hop-home .hx-nums span { font-size: 14px; }
 
 /* App list: one bordered card, a row per app. */
 .hop-home .coss-apps { margin-top: 72px; scroll-margin-top: 90px; }

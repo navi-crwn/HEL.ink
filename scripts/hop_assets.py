@@ -39,7 +39,7 @@ def entry(folder: pathlib.Path, base: str, rel: str) -> dict:
 
 
 def build() -> str:
-    src = json.loads(SRC.read_text())
+    src = json.loads(SRC.read_text(encoding="utf-8"))
     version, base = src["version"], src["base"]
     folder = ROOT / "public" / "hop-assets" / version
     out = {"version": version, "base": base, "assets": {}, "apps": []}
@@ -60,7 +60,7 @@ def build() -> str:
 
 def family_table() -> str:
     """The canonical README table, from the same source as the manifest."""
-    src = json.loads(SRC.read_text())
+    src = json.loads(SRC.read_text(encoding="utf-8"))
     rows = [
         "<!-- hop-family:start -->",
         "<!-- Generated from HEL.ink resources/hop-assets/apps.source.json; edit there, then run scripts/hop_assets.py build. -->",
@@ -92,7 +92,7 @@ def css_errors() -> list[str]:
     errors = []
     for css in sorted((ROOT / "public" / "hop-assets").rglob("*.css")):
         depth = 0
-        for ch in re.sub(r"/\*.*?\*/", "", css.read_text(), flags=re.S):
+        for ch in re.sub(r"/\*.*?\*/", "", css.read_text(encoding="utf-8"), flags=re.S):
             depth += {"{": 1, "}": -1}.get(ch, 0)
             if depth < 0:
                 break
@@ -105,13 +105,13 @@ def main() -> None:
     mode = sys.argv[1] if len(sys.argv) > 1 else "check"
     text = build()
     if mode == "build":
-        OUT.write_text(text)
+        OUT.write_text(text, encoding="utf-8", newline="\n")
         print(f"wrote {OUT.relative_to(ROOT)}")
-        FAMILY.write_text(family_table())
+        FAMILY.write_text(family_table(), encoding="utf-8", newline="\n")
         print(f"wrote {FAMILY.relative_to(ROOT)}")
         bundled = ROOT / "packages" / "ui" / "resources" / "hop-assets" / "apps.json"
         if bundled.parent.is_dir():
-            bundled.write_text(text)
+            bundled.write_text(text, encoding="utf-8", newline="\n")
             print(f"wrote {bundled.relative_to(ROOT)}")
     elif mode == "check":
         hero = ROOT / "public/hop-assets/v2/hop-hero3d.js"
@@ -122,12 +122,12 @@ def main() -> None:
                 raise SystemExit(f"{image.name} exceeds 60 KiB")
         if errors := css_errors():
             raise SystemExit("\n".join(errors))
-        if not FAMILY.is_file() or FAMILY.read_text() != family_table():
+        if not FAMILY.is_file() or FAMILY.read_text(encoding="utf-8") != family_table():
             raise SystemExit("docs/hop-family.md is stale: run python3 scripts/hop_assets.py build")
-        if not OUT.is_file() or OUT.read_text() != text:
+        if not OUT.is_file() or OUT.read_text(encoding="utf-8") != text:
             raise SystemExit("public/hop-assets/apps.json is stale: run python3 scripts/hop_assets.py build")
         bundled = ROOT / "packages" / "ui" / "resources" / "hop-assets" / "apps.json"
-        if bundled.is_file() and bundled.read_text() != text:
+        if bundled.is_file() and bundled.read_text(encoding="utf-8") != text:
             raise SystemExit("packages/ui/resources/hop-assets/apps.json differs: run python3 scripts/hop_assets.py build")
         print("hop-assets manifest OK")
     else:

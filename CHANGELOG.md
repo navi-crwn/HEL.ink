@@ -4,6 +4,8 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-11-10
+
 ### Added
 
 - hop-assets v5: `hop-ui.js` and `hop-ui.css`, shared dialogs (`HopUI.alert/confirm/prompt`) that replace the browser's own `alert`, `confirm` and `prompt` in every HOP app, and the "Hide · Shows again next week" button for reminder cards (`[data-hop-remind]`). Nine languages, keyboard first, a red button that names what is deleted, light or dark after the page, no motion under reduced motion. Laravel apps include it with `<x-hop::ui />`. v4 is unchanged.

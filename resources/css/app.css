@@ -380,7 +380,6 @@ html.drawer-open { overflow: hidden; }
     .marketing-nav .hop-switcher-panel > a, .marketing-nav .hop-langmenu .hop-switcher-panel > a { padding-block: 0.75rem; }
     .hop-footer ul > li + li { margin-top: 0; }
     .hop-footer ul a, .hop-footer ul span[aria-current] { display: block; padding-block: 0.75rem; line-height: 1.25rem; }
-    .hop-footer div.text-xs > a { display: inline-block; padding: 0.5rem 0.25rem; font-size: 0.8125rem; }
 }
 
 

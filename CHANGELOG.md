@@ -6,6 +6,7 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ### Fixed
 
+- Footer: the HOP brand strip is the first row inside the footer, below the top border and aligned with the first column; the language row is gone from the footer (the language menu is in the top bar) and the copyright line is right-aligned on desktop, centred on phones. `<x-hop::footer>` takes the strip as a `brand` slot and ignores `:languages`.
 - The `/changelog` snapshot stopped at 2026-11-04 because `scripts/build-changelog.py` read the checkout's stale `origin/main` and never fetched. It now fetches first, and `scripts/build-changelog.py --repo HEL.ink --check` fails when merged pull requests are missing from `resources/changelog.json` (run it at release time, after rebuilding the snapshot). Snapshot regenerated.
 
 ## [1.1.0] - 2026-11-10

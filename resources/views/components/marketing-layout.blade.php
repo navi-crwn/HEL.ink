@@ -39,7 +39,7 @@
             @endforeach
         @endif
         <x-hop::fonts />
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/css/coss.css', 'resources/js/app.js'])
         @stack('head')
     </head>
     @if ($themed)

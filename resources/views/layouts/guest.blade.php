@@ -20,7 +20,7 @@
         </script>
         <x-hop::fonts />
         @include('partials.hop-ui')
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/css/coss.css', 'resources/js/app.js'])
     </head>
     <body class="app-bg hub-chrome min-h-screen">
         <x-session-expired-notice />

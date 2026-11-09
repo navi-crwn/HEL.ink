@@ -21,7 +21,7 @@
         <x-hop::fonts />
         @include('partials.hop-ui')
         @stack('scripts-head')
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/css/coss.css', 'resources/js/app.js'])
         @stack('styles')
     </head>
     <body class="app-bg hub-chrome min-h-screen">

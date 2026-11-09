@@ -27,7 +27,7 @@
 <header class="marketing-nav sticky top-0 z-40 px-3 pt-3 sm:px-5" x-data="{ open: false }" @keydown.escape.window="open = false" x-effect="document.documentElement.classList.toggle('drawer-open', open); if (open) $nextTick(() => $refs.close && $refs.close.focus())">
     <nav class="mx-auto flex h-14 max-w-6xl items-center justify-between gap-2 rounded-2xl border border-slate-200/80 bg-white/70 px-2 shadow-xs shadow-slate-900/5 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/50 dark:shadow-none sm:px-4">
         <a href="{{ route('home') }}" aria-label="HOP ID" class="marketing-brand flex min-w-0 items-center gap-2.5 text-slate-900 dark:text-white">
-            <x-wordmark class="h-10 w-auto" />
+            <x-wordmark class="h-10 w-auto" :sub="request()->routeIs('home')" />
         </a>
         <div class="hidden items-center gap-1 text-sm text-slate-600 xl:flex dark:text-white/70">
             @foreach ($marketingLinks as $item)

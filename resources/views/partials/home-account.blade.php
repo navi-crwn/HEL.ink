@@ -27,7 +27,7 @@
             <div class="hx-hub"><img src="{{ $hubMark }}" alt="" width="56" height="56"><b>HOP ID</b><span class="hx-code" data-hx-code dir="ltr">482 913</span></div>
             @foreach ($ring as $i => $app)
                 @php [$x, $y] = $spot($i); @endphp
-                <div class="hx-node" style="--cx: {{ $x }}; --cy: {{ $y }}" data-hx-node><img src="{{ $app['mark'] }}" alt="" width="44" height="44"><b>{{ $app['name'] }}</b><i class="st" data-hx-st>{{ __('Signed in') }} ✓</i></div>
+                <div class="hx-node" style="--cx: {{ $x }}; --cy: {{ $y }}" data-hx-node><img src="{{ $app['mark'] }}" alt="" width="44" height="44"><b class="hop-name hop-name-{{ $app['slug'] }}">{{ $app['name'] }}</b><i class="st" data-hx-st>{{ __('Signed in') }} ✓</i></div>
             @endforeach
             <div class="hx-ticket" data-hx-ticket><small>{{ __('ticket') }}</small><b dir="ltr">30 s</b></div>
             <p class="hx-note" data-hx-note>{{ __('Signed in once. Every app knows you.') }}</p>

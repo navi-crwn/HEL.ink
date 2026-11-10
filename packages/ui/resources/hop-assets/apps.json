@@ -24,7 +24,11 @@
     },
     "motion_js": {
       "url": "https://hel.ink/hop-assets/v7/hop-motion.js",
-      "integrity": "sha384-EMpdhd93e7jm+ryg7XQhX23z2BAbL6CdFzDDRPAHyfZ8E5yH/rNXZTWwVMGl7fDx"
+      "integrity": "sha384-DvY+PIyNGgi1uLrJx/yTA/iSEC0iua7i0bxfSYTR3wize3FGuJHh7uVyiybCgIy9"
+    },
+    "bento_css": {
+      "url": "https://hel.ink/hop-assets/v7/hop-bento.css",
+      "integrity": "sha384-1cGPEDcc81ZrdS6FYBdROmUXkLOlW3w2whkrPv8RlFe0PYR+bZlWMMdXwei9XTPB"
     },
     "home_js": {
       "url": "https://hel.ink/hop-assets/v7/hop-home.js",

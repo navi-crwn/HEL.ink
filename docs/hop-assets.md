@@ -54,7 +54,15 @@ sha384 hashes; `check` (run in CI) fails when the manifest is stale or a file is
   visible scenes (`.slice(0, 4)`), so a page with five family tiles (the LinkHop and BioHop homes) never drew
   the fifth and it never settled. Now every visible scene that has not settled keeps drawing until it has; the cap
   of four applies only to settled scenes that keep floating, so per-frame work stays bounded. Reduced motion still
-  goes straight to the final shape. Everything else is v6 copied unchanged; v6 stays as it was.
+  goes straight to the final shape.
+  v7 also adds the shared bento (owner, Round 3): `hop-bento.css` (`bento_css` in the manifest) is a 6-column
+  `.hop-bento` grid whose spans depend on the box count, so 2 to 9 boxes always fill whole rows (2: 4+2; 3: 3+3 / 6;
+  4: 4+2 / 2+4; 5: 3+3 / 2+2+2; 6: 4+2 / 2+2+2 / 6; 7: 3+3 / 2+2+2 / 3+3; 8: 3+3 / 2+2+2 / 2+2+2;
+  9: 3+3 / 2+2+2 / 2+2+2 / 6; `data-span="3|4|6"` overrides; tablet 2 columns, phone 1), and `hop-motion.js` gains,
+  with its old API unchanged, the box reveal (40 ms stagger, once; `[data-rv-load]` for dashboards), the pointer
+  spotlight (`data-spot`) and `is-live` on `[data-scene]` only while on screen; reduced motion shows the final state.
+  Markup: `<div class="hop-bento"><article data-spot data-scene>…</article>…</div>`; the contract is documented at the
+  top of `hop-bento.css`. Everything else is v6 copied unchanged; v6 stays as it was.
 
 FileHop sends `Cross-Origin-Embedder-Policy: require-corp`, so anything it loads from
 hel.ink must carry `Cross-Origin-Resource-Policy: cross-origin` (already in

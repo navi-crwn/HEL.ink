@@ -2,10 +2,10 @@
     $stories = \App\Support\FamilyStory::all();
 @endphp
 @push('head')
-    <link rel="stylesheet" href="{{ asset('hop-assets/v6/hop-home.css') }}">
-    <script src="{{ asset('hop-assets/v6/hop-hero3d.js') }}" defer></script>
-    <script src="{{ asset('hop-assets/v6/hop-motion.js') }}" defer></script>
-    <script src="{{ asset('hop-assets/v6/hop-home.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ asset('hop-assets/v7/hop-home.css') }}">
+    <script src="{{ asset('hop-assets/v7/hop-hero3d.js') }}" defer></script>
+    <script src="{{ asset('hop-assets/v7/hop-motion.js') }}" defer></script>
+    <script src="{{ asset('hop-assets/v7/hop-home.js') }}" defer></script>
     @vite(['resources/css/home.css', 'resources/css/coss-home.css', 'resources/js/home.js'])
 @endpush
 <x-marketing-layout :title="'HEL.ink · '.__('One account. Every HOP app.')" :themed="true" :back="false" :alternates="true">

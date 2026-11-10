@@ -36,3 +36,9 @@ test('the changelog builder PUBLIC list matches the public apps', function () {
 
     expect($listed)->toBe($expected);
 });
+
+test('English copy never spells out how many apps there are', function () {
+    $en = file_get_contents(base_path('lang/en.json'));
+
+    expect(preg_match('/\b(two|three|four|five|six|seven|eight)\s+(independent\s+|open-source\s+|web\s+)*(apps|applications|services)\b|family of (two|three|four|five|six|seven|eight)\b|all (two|three|four|five|six|seven|eight) apps/i', $en))->toBe(0);
+});

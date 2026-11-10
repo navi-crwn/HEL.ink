@@ -4,6 +4,8 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-11-11
+
 ### Added
 
 - PayHop (pay.hel.ink), the seventh HOP app. Registry: `apps.payhop`, `event_apps.payhop` (admin API, events), `registry_taglines`, `registry_repos`, `registry_logout`, `export_notes`, `PAYHOP_*` settings in `.env.example`, `phpunit.xml`, the seeder and the app factory; `github.repos`; the reserved names `pay`, `payhop` and `payhop-`. Pages: `/apps/payhop`, a home section with its 3D tile and a bill-split demo, the products and sitemap entries, FAQ, help guide, how-it-works, security, privacy and terms cards, in all nine languages. Its card on the dashboard shows no numbers (no `Stored: 0 B` line: it keeps saved payment methods for people who choose to save them).
@@ -123,5 +125,7 @@ The first stable release. HEL.ink's first pull request was merged on 2026-10-28;
 
 - The 2026-11-04 audit fixes are included: error pages in the visitor's language, a language cookie that works with `SESSION_DOMAIN`, and `HopAppsSeeder`, which adds the `events` rows for the four apps without changing an existing row.
 
-[Unreleased]: https://github.com/navi-crwn/HEL.ink/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/navi-crwn/HEL.ink/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/navi-crwn/HEL.ink/releases/tag/v1.2.0
+[1.1.0]: https://github.com/navi-crwn/HEL.ink/releases/tag/v1.1.0
 [1.0.0]: https://github.com/navi-crwn/HEL.ink/releases/tag/v1.0.0

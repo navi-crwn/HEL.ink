@@ -51,3 +51,14 @@ test('without prompt=none a guest is sent to sign in and returns to the ticket s
     expect(session('url.intended'))->toContain('/sso/filehop');
     $this->get(silentUrl(['prompt' => 'login']))->assertRedirect(route('login'));
 });
+
+test('over the throttle prompt=none answers temporarily_unavailable at the callback, without it the 429 stays', function () {
+    for ($i = 0; $i < 30; $i++) {
+        $this->get(silentUrl(['prompt' => 'none']));
+    }
+    $res = $this->get(silentUrl(['prompt' => 'none']));
+    expect($res->headers->get('Location'))->toBe('https://file.example.com/auth/sso/callback?error=temporarily_unavailable&state='.SILENT_STATE);
+    // A bad return_to gets no silent answer even over the limit.
+    $this->get('/sso/filehop?'.http_build_query(['state' => SILENT_STATE, 'prompt' => 'none', 'return_to' => 'https://evil.example/cb']))->assertStatus(429);
+    $this->get(silentUrl())->assertStatus(429);
+});

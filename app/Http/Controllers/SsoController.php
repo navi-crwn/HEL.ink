@@ -41,7 +41,7 @@ class SsoController extends Controller
         $silent = $request->query('prompt') === 'none';
         $needsCode = $user && $user->two_factor_secret && $user->two_factor_confirmed_at && ! $request->session()->get('2fa_verified', false);
         if ($silent && (! $user || $needsCode || $user->isSuspended())) {
-            return redirect()->away($hopApp->callbackUrl().'?'.http_build_query(['error' => 'login_required', 'state' => $state]));
+            return self::silentReply($request, 'login_required');
         }
         if (! $user) {
             return redirect()->guest(route('login'));
@@ -62,6 +62,22 @@ class SsoController extends Controller
         app(LoginRecorder::class)->record($user, $request->ip(), $request->userAgent(), $hopApp->name);
 
         return redirect()->away($returnTo.'?'.http_build_query(['ticket' => $ticket]));
+    }
+
+    /**
+     * The silent answer `<registered callback>?error=<code>&state=<state>`, or null when the app, the state or the
+     * return address do not check out (then the normal error applies). Used for login_required and, over the
+     * throttle, temporarily_unavailable.
+     */
+    public static function silentReply(Request $request, string $error): ?RedirectResponse
+    {
+        $app = HopApps::find((string) $request->route('app'));
+        $state = Input::text($request->query('state'));
+        if (! $app || ! $app->isConfigured() || preg_match('/^[A-Za-z0-9_-]{16,128}$/', $state) !== 1 || Input::text($request->query('return_to')) !== $app->callbackUrl()) {
+            return null;
+        }
+
+        return redirect()->away($app->callbackUrl().'?'.http_build_query(['error' => $error, 'state' => $state]));
     }
 
     /**

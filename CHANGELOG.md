@@ -9,7 +9,7 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 - `php artisan hop:reset-2fa {email}`: the official way back in when an authenticator is lost. It clears the two-factor secret, recovery codes and confirmation of that account, refuses an unknown email, and writes an activity-log row without any secret.
 - "Open Imperium" in the top bar for every account that holds a role (address from `HOP_IMPERIUM_URL`, then `HOP_CONTROL_URL`, default `https://imperium.hel.ink`; nine languages).
 - The FileHop card shows "Uploads: Never" and "Stored: 0 B", so it is as tall as the other cards.
-- Silent SSO check: `GET /sso/{app}` accepts `prompt=none`. With a hub session it issues the normal ticket; without one (or suspended, or a two-factor check open) it answers `302 <registered callback>?error=login_required&state=<state>` and shows no page. Without `prompt=none` nothing changes (docs/hop-family.md).
+- Silent SSO check: `GET /sso/{app}` accepts `prompt=none`. With a hub session it issues the normal ticket; without one (or suspended, or a two-factor check open) it answers `302 <registered callback>?error=login_required&state=<state>` and shows no page; over the throttle it answers `error=temporarily_unavailable` the same way. Without `prompt=none` nothing changes (docs/hop-family.md).
 
 ### Changed
 

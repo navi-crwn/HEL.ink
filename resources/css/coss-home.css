@@ -21,19 +21,3 @@
 :root[data-ui="clean"] .hop-home .hx-nums { border-radius: 14px; box-shadow: 0 1px 2px rgb(0 0 0 / 0.04); }
 :root[data-ui="clean"] .hop-home .hx-nums b { font-weight: 600; background: none; color: var(--home-text); -webkit-text-fill-color: currentColor; }
 :root[data-ui="clean"] .hop-home .hx-nums span { font-size: 14px; }
-
-/* App list: one bordered card, a row per app. */
-.hop-home .coss-apps { margin-top: 72px; scroll-margin-top: 90px; }
-.hop-home .coss-apps h2 { margin: 0 0 4px; font-size: 24px; font-weight: 600; letter-spacing: -0.02em; }
-.hop-home .coss-apps > p { margin: 0 0 20px; color: var(--home-muted); font-size: 15px; }
-.hop-home .coss-apps ul { list-style: none; margin: 0; padding: 0; border: 1px solid var(--home-line); border-radius: 14px; background: var(--home-panel); box-shadow: 0 1px 2px rgb(0 0 0 / 0.04); overflow: hidden; }
-.hop-home .coss-apps li { display: flex; align-items: center; gap: 14px; padding: 14px 18px; }
-.hop-home .coss-apps li + li { border-top: 1px solid var(--home-line); }
-.hop-home .coss-apps li:hover { background: rgb(128 128 140 / 0.07); }
-.hop-home .coss-apps li img { width: 36px; height: 36px; flex: none; }
-.hop-home .coss-apps li > div { min-width: 0; flex: 1; }
-.hop-home .coss-apps li b { display: block; font-size: 15px; font-weight: 600; color: var(--home-text); }
-.hop-home .coss-apps li span { display: block; font-size: 14px; color: var(--home-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.hop-home .coss-apps li code { font: 500 13px var(--h-mono); color: var(--home-muted); }
-.hop-home .coss-apps .h-pill { min-height: 32px; padding: 0 12px; font-size: 13px; flex: none; }
-@media (max-width: 640px) { .hop-home .coss-apps li { flex-wrap: wrap; } .hop-home .coss-apps li code { display: none; } .hop-home .coss-apps .h-pill { min-height: 44px; } }

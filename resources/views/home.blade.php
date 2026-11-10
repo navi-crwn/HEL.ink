@@ -2,9 +2,9 @@
     $stories = \App\Support\FamilyStory::all();
 @endphp
 @push('head')
-    <link rel="stylesheet" href="{{ asset('hop-assets/v7/hop-home.css') }}">
-    <script src="{{ asset('hop-assets/v7/hop-hero3d.js') }}" defer></script>
-    <script src="{{ asset('hop-assets/v7/hop-home.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ asset('hop-assets/v8/hop-home.css') }}">
+    <script src="{{ asset('hop-assets/v8/hop-hero3d.js') }}" defer></script>
+    <script src="{{ asset('hop-assets/v8/hop-home.js') }}" defer></script>
     @vite(['resources/css/home.css', 'resources/css/coss-home.css', 'resources/js/home.js'])
 @endpush
 <x-marketing-layout :title="'HEL.ink · '.__('One account. Every HOP app.')" :themed="true" :back="false" :alternates="true">
@@ -21,7 +21,7 @@
         $repoCount = count((array) config('hop.github.repos', []));
     @endphp
     <div class="hx-marq" data-hx-marq aria-label="{{ __('What you get') }}"><div>@foreach (['One free account', 'Five apps', 'Short links', 'Link in bio', 'Image hosting', 'Private notes', 'File conversion', 'No ads', 'No trackers', 'Open source', 'Self-host if you like'] as $t)<span>{{ __($t) }}</span>@endforeach</div></div>
-    <div class="hx-nums hop-bento" data-hx-nums>
+    <div class="hx-nums hop-bento" data-tiles data-hx-nums>
         <div data-spot><b data-count="{{ count($stories) }}">{{ count($stories) }}</b><span>{{ __('apps') }}</span></div>
         <div data-spot><b data-count="{{ count(\Hop\Ui\Locales::codes()) }}">{{ count(\Hop\Ui\Locales::codes()) }}</b><span>{{ __('languages') }}</span></div>
         <div data-spot><b data-count="0">0</b><span>{{ __('ads and trackers') }}</span></div>
@@ -32,10 +32,6 @@
         @endif
     </div>
     @include('partials.home-account')
-    <div id="apps-list" class="coss-apps" role="region" aria-labelledby="apps-list-title">
-        <h2 id="apps-list-title">{{ __('The HOP apps') }}</h2>
-        <ul>@foreach ($stories as $slug => $app)<li><img src="{{ $app['mark'] }}" alt="" width="36" height="36"><div><b>{{ $app['name'] }}</b><span>{{ $app['kicker'] }}</span></div><code>{{ parse_url($app['url'], PHP_URL_HOST) }}</code><a class="h-pill" href="{{ $app['url'] }}">{{ __('Open :app', ['app' => $app['name']]) }}</a></li>@endforeach</ul>
-    </div>
     <span id="apps" aria-hidden="true"></span>
     @foreach ($stories as $slug => $app)
     <section id="{{ $slug }}" class="h-sec h-app" style="--app-accent: {{ $app['color'] }}" aria-labelledby="{{ $slug }}-title" data-app-section="{{ $slug }}">

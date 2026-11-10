@@ -73,3 +73,24 @@
   .hop-home .ho-weeks { gap:2px; height:72px; }
 }
 @media (max-width:420px) { .hop-home .ho-weeks { gap:1px; } .hop-home .ho-strip { gap:1px; } }
+
+/* apps and uptime in one bento row */
+.hop-home .ho-row { margin-top: 18px; }
+.hop-home .ho-row > .ho-box { margin-top: 0; }
+.hop-home .ho-apps ul { list-style: none; margin: 0; padding: 0; }
+.hop-home .ho-apps li { display: flex; align-items: center; gap: 12px; padding: 9px 0; }
+.hop-home .ho-apps li + li { border-top: 1px solid var(--home-line); }
+.hop-home .ho-apps li img { width: 32px; height: 32px; flex: none; }
+.hop-home .ho-apps li > div { min-width: 0; flex: 1; }
+.hop-home .ho-apps li b { display: block; font-size: 15px; font-weight: 600; color: var(--home-text); }
+.hop-home .ho-apps li span { display: block; font-size: 13px; color: var(--home-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hop-home .ho-apps li code { font: 500 12px var(--h-mono); color: var(--home-muted); }
+.hop-home .ho-apps .h-pill { min-height: 36px; padding: 0 14px; font-size: 13px; flex: none; }
+@media (max-width: 1024px) {
+    .hop-home .ho-row { grid-template-columns: minmax(0, 1fr); }
+    .hop-home .ho-row > .ho-box { grid-column: 1 / -1 !important; }
+}
+@media (max-width: 640px) { .hop-home .ho-apps li code { display: none; } .hop-home .ho-apps .h-pill { min-height: 44px; } }
+/* the uptime rows spread over the height the apps list sets, so both halves end together */
+.hop-home .ho-row .ho-uptime { display: flex; flex-direction: column; }
+.hop-home .ho-row .ho-up-list { flex: 1; align-content: space-evenly; }

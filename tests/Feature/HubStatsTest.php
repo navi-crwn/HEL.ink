@@ -2,6 +2,7 @@
 
 use App\Models\GithubStat;
 use App\Models\ServiceCheck;
+use App\Support\FamilyStory;
 use App\Support\GithubStats;
 use App\Support\HopApps;
 use App\Support\UptimeStats;
@@ -280,7 +281,9 @@ test('the home section renders on the server with the stored numbers and sends n
     // nothing is loaded from anywhere but this site; the script is deferred and has no inline code
     expect($page)->toMatch('#<script src="[^"]*/js/home-open\.js[^"]*" defer></script>#');
     expect($xpath->query('//script')->length)->toBe(0);   // the partial itself carries no script
-    expect($html)->not->toMatch('#(src|href)="https?://(?!github\.com|localhost)#');
+    // the only other addresses are the family apps the list links to and this site's own hop-assets (the marks)
+    $appHosts = collect(FamilyStory::all())->map(fn ($app) => preg_quote((string) parse_url($app['url'], PHP_URL_HOST), '#'))->implode('|');
+    expect($html)->not->toMatch('#(src|href)="https?://(?!github\.com|localhost|hel\.ink/hop-assets/|'.$appHosts.')#');
 });
 
 test('without any stored data the section shows a calm line, never zeros', function () {

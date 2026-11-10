@@ -2,6 +2,7 @@
      stored data (no network on a page view, no JavaScript needed); public/js/home-open.js only adds
      tab switching and an optional bar animation. Include inside .hop-home. --}}
 @php
+    $stories = $stories ?? \App\Support\FamilyStory::all();
     $gh = $githubStats ?? app(\App\Support\GithubStats::class)->all();
     $uptime = $uptimeStats ?? app(\App\Support\UptimeStats::class)->all();
     $repoData = collect($gh['repos'])->keyBy('repo');
@@ -74,24 +75,31 @@
         </div>
     @endif
 
-    <div class="ho-box ho-uptime" data-ho-uptime>
-        <h3>{{ __('Uptime, last 30 days') }}</h3>
-        @if (! $hasUptime)
-            <p class="ho-empty-line" data-ho-empty="uptime">{{ __('Uptime is measured every minute. The first numbers will show here soon.') }}</p>
-        @else
-            <ul class="ho-up-list">
-                @foreach ($uptime['apps'] as $a)
-                    <li>
-                        <span class="ho-up-name">{{ $a['name'] }}</span>
-                        <span class="ho-strip" role="img" aria-label="{{ __(':app: :percent uptime in the last 30 days', ['app' => $a['name'], 'percent' => $fmtPct($a['uptime'])]) }}" dir="ltr">
-                            @foreach ($a['days'] as $d)<i class="{{ $d['status'] }}" title="{{ $d['date'] }}: {{ $d['uptime'] === null ? __('No data') : $fmtPct($d['uptime']) }}"></i>@endforeach
-                        </span>
-                        <b class="ho-up-pct" dir="ltr">{{ $fmtPct($a['uptime']) }}</b>
-                    </li>
-                @endforeach
-            </ul>
-            @if ($measured < $uptime['days'])<p class="h-small">{{ __(':days of :total days measured so far.', ['days' => $measured, 'total' => $uptime['days']]) }}</p>@endif
-        @endif
+    {{-- The apps and the uptime share one row (half and half); one column up to 1024 px. --}}
+    <div class="hop-bento ho-row">
+        <div id="apps-list" class="ho-box ho-apps" role="region" aria-labelledby="apps-list-title" data-spot>
+            <h3 id="apps-list-title">{{ __('The HOP apps') }}</h3>
+            <ul>@foreach ($stories as $slug => $app)<li><img src="{{ $app['mark'] }}" alt="" width="36" height="36"><div><b>{{ $app['name'] }}</b><span>{{ $app['kicker'] }}</span></div><code>{{ parse_url($app['url'], PHP_URL_HOST) }}</code><a class="h-pill" href="{{ $app['url'] }}">{{ __('Open :app', ['app' => $app['name']]) }}</a></li>@endforeach</ul>
+        </div>
+        <div class="ho-box ho-uptime" data-ho-uptime data-spot>
+            <h3>{{ __('Uptime, last 30 days') }}</h3>
+            @if (! $hasUptime)
+                <p class="ho-empty-line" data-ho-empty="uptime">{{ __('Uptime is measured every minute. The first numbers will show here soon.') }}</p>
+            @else
+                <ul class="ho-up-list">
+                    @foreach ($uptime['apps'] as $a)
+                        <li>
+                            <span class="ho-up-name">{{ $a['name'] }}</span>
+                            <span class="ho-strip" role="img" aria-label="{{ __(':app: :percent uptime in the last 30 days', ['app' => $a['name'], 'percent' => $fmtPct($a['uptime'])]) }}" dir="ltr">
+                                @foreach ($a['days'] as $d)<i class="{{ $d['status'] }}" title="{{ $d['date'] }}: {{ $d['uptime'] === null ? __('No data') : $fmtPct($d['uptime']) }}"></i>@endforeach
+                            </span>
+                            <b class="ho-up-pct" dir="ltr">{{ $fmtPct($a['uptime']) }}</b>
+                        </li>
+                    @endforeach
+                </ul>
+                @if ($measured < $uptime['days'])<p class="h-small">{{ __(':days of :total days measured so far.', ['days' => $measured, 'total' => $uptime['days']]) }}</p>@endif
+            @endif
+        </div>
     </div>
 
     <div class="ho-cards">

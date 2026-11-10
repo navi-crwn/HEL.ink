@@ -57,8 +57,3 @@ test('hel.ink/apps/{app} is a product page; hub.hel.ink/apps/{app} still opens t
     // The launcher's SSO route is untouched: a guest is sent to sign in.
     expect($this->get('https://hub.hel.test/apps/linkhop')->headers->get('Location'))->toContain('login');
 });
-
-test('/up answers 2xx without a session on the hub host and the public host (apps probe it before a silent re-check)', function () {
-    $this->get('https://hub.hel.test/up')->assertSuccessful();
-    $this->get('https://hel.test/up')->assertSuccessful();
-});

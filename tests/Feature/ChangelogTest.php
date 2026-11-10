@@ -8,10 +8,10 @@ use Tests\TestCase;
 
 class ChangelogTest extends TestCase
 {
-    public function test_history_contains_all_five_apps_in_chronological_order(): void
+    public function test_history_contains_every_public_app_in_chronological_order(): void
     {
         $history = json_decode(file_get_contents(resource_path('changelog.json')), true, flags: JSON_THROW_ON_ERROR);
-        $this->assertEqualsCanonicalizing(['HEL.ink', 'LinkHop', 'BioHop', 'PixelHop', 'NoteHop'], array_keys($history['sources']));
+        $this->assertEqualsCanonicalizing(['HEL.ink', 'LinkHop', 'BioHop', 'PixelHop', 'NoteHop', 'FileHop'], array_keys($history['sources']));
         $previous = PHP_INT_MAX;
         $urls = [];
         foreach ($history['entries'] as $entry) {

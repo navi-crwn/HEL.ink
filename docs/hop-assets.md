@@ -67,6 +67,10 @@ sha384 hashes; `check` (run in CI) fails when the manifest is stale or a file is
   v7 logo rule (owner, 2026-11-10): one logo, no text, for every app. The `wordmark` and `wordmark_white` files of
   LinkHop and BioHop are now the same pixel mark as `mark` (kept so existing keys do not break); never draw the app
   name inside an image. Footers and headers show the mark image plus the name as real page text next to it.
+  App names in their own typeface (owner, 2026-11-10): `hop-brand.css` (`brand_css`) with ASCII-subset fonts in
+  `fonts/brand/` and their OFL licences: LinkHop Pixelify Sans, BioHop Space Grotesk, PixelHop Silkscreen,
+  NoteHop Caveat, FileHop Sora, HOP ID Syne (already in v7). Use `<span class="hop-name hop-name-linkhop">LinkHop</span>`
+  next to the mark image; the name stays real text.
 
 FileHop sends `Cross-Origin-Embedder-Policy: require-corp`, so anything it loads from
 hel.ink must carry `Cross-Origin-Resource-Policy: cross-origin` (already in

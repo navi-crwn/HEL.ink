@@ -30,6 +30,10 @@
       "url": "https://hel.ink/hop-assets/v7/hop-bento.css",
       "integrity": "sha384-TM9TeCB0nSXTrjGeJpPiD92LM8OIy3VuxTn8MeGzHtzYobIbmsKCw+D6BE+hsG3J"
     },
+    "brand_css": {
+      "url": "https://hel.ink/hop-assets/v7/hop-brand.css",
+      "integrity": "sha384-Oa0tnHfXJAtgFGyvqL2RKpFlLlw2Q9n03Jyjs7QpMBGZngNQ110SCRyu0bwjgJeY"
+    },
     "home_js": {
       "url": "https://hel.ink/hop-assets/v7/hop-home.js",
       "integrity": "sha384-NcA+gjsyOv9tMf7l4bbyWL7nHMGYW+CKtJrVAqMUQc6qzY1fRph5/QkyOSiMnVg7"

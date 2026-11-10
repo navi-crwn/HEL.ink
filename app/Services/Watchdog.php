@@ -7,6 +7,7 @@ use App\Models\ServiceCheck;
 use App\Support\HopApp;
 use App\Support\HopApps;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -147,5 +148,27 @@ class Watchdog
     public function history(int $limit = 50)
     {
         return ServiceCheck::where('ok', false)->where('checked_at', '>=', now()->subDay())->latest('checked_at')->limit($limit)->get();
+    }
+
+    /**
+     * Failed probes of the last 24 hours, one entry per app: the count, the last failure and a
+     * 24-cell hourly strip (index 0 is the oldest hour, 23 the current one). Newest failure first.
+     *
+     * @return Collection<string, array{app: ?HopApp, slug: string, count: int, last: Carbon, error: ?string, hours: list<int>}>
+     */
+    public function failures(): Collection
+    {
+        $now = now();
+        $out = [];
+        $rows = ServiceCheck::where('ok', false)->where('checked_at', '>=', $now->copy()->subDay())->orderByDesc('checked_at')->get(['app_slug', 'checked_at', 'error']);
+        foreach ($rows as $row) {
+            $e = &$out[$row->app_slug];
+            $e ??= ['app' => HopApps::find($row->app_slug), 'slug' => $row->app_slug, 'count' => 0, 'last' => $row->checked_at, 'error' => $row->error, 'hours' => array_fill(0, 24, 0)];
+            $e['count']++;
+            $e['hours'][max(0, 23 - intdiv((int) abs($now->diffInSeconds($row->checked_at, false)), 3600))]++;
+            unset($e);
+        }
+
+        return collect($out)->sortByDesc(fn ($e) => $e['last']->getTimestamp());
     }
 }

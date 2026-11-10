@@ -18,8 +18,8 @@ test('the bundled manifest lists the public HOP apps with their marks', function
 test('fonts and floating tiles load from hel.ink with SRI', function () {
     $html = Blade::render('<x-hop::fonts /><x-hop::float mode="section" />');
 
-    expect($html)->toContain('https://hel.ink/hop-assets/v5/fonts-amnesia.css')
-        ->toContain('https://hel.ink/hop-assets/v5/hop-float.js')
+    expect($html)->toContain('https://hel.ink/hop-assets/v6/fonts-amnesia.css')
+        ->toContain('https://hel.ink/hop-assets/v6/hop-float.js')
         ->toContain('integrity="sha384-')
         ->toContain('crossorigin="anonymous"')
         ->toContain('data-hop-float="section"');
@@ -28,8 +28,8 @@ test('fonts and floating tiles load from hel.ink with SRI', function () {
 test('the dialogs and reminder cards load from hel.ink with SRI', function () {
     $html = Blade::render('<x-hop::ui />');
 
-    expect($html)->toContain('https://hel.ink/hop-assets/v5/hop-ui.css')
-        ->toContain('https://hel.ink/hop-assets/v5/hop-ui.js')
+    expect($html)->toContain('https://hel.ink/hop-assets/v6/hop-ui.css')
+        ->toContain('https://hel.ink/hop-assets/v6/hop-ui.js')
         ->toContain('integrity="sha384-')
         ->toContain('crossorigin="anonymous"');
 });

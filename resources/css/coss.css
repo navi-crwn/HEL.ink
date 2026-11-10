@@ -104,7 +104,7 @@
 @media (max-width: 419px) { :root[data-ui="clean"] .marketing-brand > span > span.wordmark-text { display: none; } }
 
 /* Family footer strip: logo + "Hop Easy Link". */
-.coss-footer-brand { display: flex; align-items: center; gap: 10px; max-width: 1180px; margin: 24px auto 0; padding: 16px 24px 0; font-size: 14px; color: rgb(var(--muted)); }
+.coss-footer-brand { display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgb(var(--muted)); }
 .coss-footer-brand img { width: 28px; height: 28px; }
 .coss-footer-brand b { color: rgb(var(--ink)); font-weight: 600; }
 

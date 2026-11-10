@@ -4,6 +4,13 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ## [Unreleased]
 
+### Fixed
+
+- Status: "Failures in the last 24 hours" is one row per app with a status dot, the failure count, the last failure as relative time (full date on hover) and a 24-hour strip; a quiet empty state when there are none.
+- Sign-out: `GET /logout` and `POST /logout` accept `return=<app home URL>` and end the chained logout there when its origin belongs to a configured family app (exact scheme, host and port); anything else falls back to the hub home. Apps send `{hub}/logout?return=<their home>` to end on the app the person left.
+- Footer: the HOP brand strip is the first row inside the footer, below the top border and aligned with the first column; the language row is gone from the footer (the language menu is in the top bar) and the copyright line is right-aligned on desktop, centred on phones. `<x-hop::footer>` takes the strip as a `brand` slot and ignores `:languages`.
+- The `/changelog` snapshot stopped at 2026-11-04 because `scripts/build-changelog.py` read the checkout's stale `origin/main` and never fetched. It now fetches first, and `scripts/build-changelog.py --repo HEL.ink --check` fails when merged pull requests are missing from `resources/changelog.json` (run it at release time, after rebuilding the snapshot). Snapshot regenerated.
+
 ## [1.1.0] - 2026-11-10
 
 ### Added

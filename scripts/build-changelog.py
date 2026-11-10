@@ -4,6 +4,8 @@
 Run from a checkout: python3 scripts/build-changelog.py --repo HEL.ink
 Use --family /path/to/checkouts in the hub to aggregate the five public apps.
 Requires git and authenticated gh with read access. Never reads working files.
+The script fetches origin first: a stale origin/main in the checkout is why the
+snapshot stopped at 2026-11-04. Release step: build, then run with --check.
 """
 import argparse
 import datetime
@@ -27,6 +29,7 @@ def display_title(title):
 
 
 def history(root, repo):
+    command(["git", "fetch", "--quiet", "--tags", "--prune", "origin"], root)
     revision = command(["git", "rev-parse", "origin/main"], root).strip()
     raw = command(["git", "log", "origin/main", "--format=%H%x1f%cI%x1f%s%x1e"], root)
     commits = []
@@ -61,12 +64,30 @@ def history(root, repo):
     return revision, entries
 
 
+def check(root, repos):
+    """Fail when a merged PR is missing, except the newest per repo (usually the snapshot's own PR)."""
+    have = {(e["repo"], e["id"]) for e in json.loads((root / "resources/changelog.json").read_text())["entries"] if e["kind"] == "pr"}
+    missing = []
+    for repo in repos:
+        jq = '.[] | select(.merged_at != null and .base.ref == "main") | {merged_at,number} | @json'
+        raw = command(["gh", "api", "--paginate", "--jq", jq, f"repos/navi-crwn/{repo}/pulls?state=closed&base=main&per_page=100"], root)
+        merged = sorted((r["merged_at"], f'#{r["number"]}') for r in map(json.loads, raw.splitlines()))
+        # ponytail: tolerates exactly one missing newest PR per repo; compare by sha if that ever hides a real gap
+        missing += [f"{repo} {num} ({at})" for at, num in merged[:-1] if (repo, num) not in have]
+    if missing:
+        raise SystemExit("changelog snapshot is stale, missing merged PRs: " + ", ".join(missing) + ". Run scripts/build-changelog.py --repo HEL.ink --family <checkouts>")
+    print("changelog snapshot is current")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repo", choices=PUBLIC, required=True)
     parser.add_argument("--family", type=pathlib.Path)
+    parser.add_argument("--check", action="store_true", help="verify resources/changelog.json against GitHub, write nothing")
     args = parser.parse_args()
     root = pathlib.Path(__file__).resolve().parents[1]
+    if args.check:
+        return check(root, PUBLIC)
     repos = PUBLIC if args.family else {args.repo: PUBLIC[args.repo]}
     revisions, entries = {}, []
     for repo in repos:

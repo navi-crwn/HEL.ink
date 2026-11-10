@@ -93,7 +93,7 @@ class SsoController extends Controller
             self::revokeAppSessions((string) $userId);
         }
 
-        return redirect()->to(self::logoutChain(route('home')));
+        return redirect()->to(self::logoutChain(self::returnTarget($request)));
     }
 
     /**
@@ -109,6 +109,27 @@ class SsoController extends Controller
             // A queue that cannot take the job must not break signing out.
             report($e);
         }
+    }
+
+    /**
+     * Where signing out ends: the `return` address an app sent (its home URL), but only when
+     * its origin is a configured family app; anything else (other hosts, userinfo tricks,
+     * relative or scheme-less values) falls back to the hub home. Never an open redirect.
+     */
+    public static function returnTarget(Request $request): string
+    {
+        $return = $request->input('return');
+        if (is_string($return) && $return !== '' && strlen($return) <= 2048 && ! str_contains($return, "\x5c") && preg_match('/[[:cntrl:][:space:]]/', $return) !== 1) {
+            $p = parse_url($return);
+            if ($p && in_array($p['scheme'] ?? '', ['http', 'https'], true) && isset($p['host']) && ! isset($p['user']) && ! isset($p['pass'])) {
+                $origin = $p['scheme'].'://'.$p['host'].(isset($p['port']) ? ':'.$p['port'] : '');
+                if (in_array(strtolower($origin), array_map('strtolower', HopApps::origins()), true)) {
+                    return $return;
+                }
+            }
+        }
+
+        return route('home');
     }
 
     /** The first URL of the chained logout, ending at $finally. */

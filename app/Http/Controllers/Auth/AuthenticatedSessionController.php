@@ -60,6 +60,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
         $request->session()->forget('2fa_verified');
 
-        return redirect()->to(SsoController::logoutChain(route('home')));
+        return redirect()->to(SsoController::logoutChain(SsoController::returnTarget($request)));
     }
 }

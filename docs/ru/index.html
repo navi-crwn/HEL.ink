@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>HEL.ink · Хаб семейства HOP и HOP ID</title>
-  <meta name="description" content="Центральный портал аккаунтов, единый вход HOP ID и каталог семейства: LinkHop, BioHop, PixelHop и NoteHop.">
+  <meta name="description" content="Центральный портал аккаунтов, единый вход HOP ID и каталог семейства: LinkHop, BioHop, PixelHop, NoteHop и FileHop.">
   <link rel="canonical" href="https://navi-crwn.github.io/HEL.ink/ru/">
   <link rel="icon" href="../assets/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/styles.css">
@@ -23,7 +23,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="HEL.ink">
   <meta property="og:title" content="HEL.ink · Хаб семейства HOP">
-  <meta property="og:description" content="Центральный портал аккаунтов, единый вход HOP ID и каталог семейства: LinkHop, BioHop, PixelHop и NoteHop.">
+  <meta property="og:description" content="Центральный портал аккаунтов, единый вход HOP ID и каталог семейства: LinkHop, BioHop, PixelHop, NoteHop и FileHop.">
   <meta property="og:url" content="https://navi-crwn.github.io/HEL.ink/ru/">
   <meta property="og:image" content="https://navi-crwn.github.io/HEL.ink/og.png">
   <meta property="og:image:width" content="1200">
@@ -66,7 +66,7 @@
       <div>
         <p class="kicker">HOP &middot; Хаб семейства и портал аккаунтов</p>
         <h1>Один аккаунт HOP для каждого приложения.</h1>
-        <p class="lede">HEL.ink — портал аккаунтов и каталог семейства HOP. Войдите один раз с помощью HOP ID и свободно переходите между LinkHop, BioHop, PixelHop и NoteHop.</p>
+        <p class="lede">HEL.ink — портал аккаунтов и каталог семейства HOP. Войдите один раз с помощью HOP ID и свободно переходите между LinkHop, BioHop, PixelHop, NoteHop и FileHop.</p>
         <div class="cta-row">
           <a class="btn primary" href="https://hel.ink">Открыть hel.ink</a>
           <a class="btn" href="https://hub.hel.ink">Открыть хаб</a>
@@ -81,7 +81,7 @@
       <span class="section-number" aria-hidden="true">01</span><h2 id="features-h">Возможности</h2>
       <ul class="features">
         <li><strong>Единый вход (HOP ID)</strong><p>Один вход действует во всех приложениях HOP. Подписанные билеты и цепной выход поддерживают согласованность всех сеансов.</p></li>
-        <li><strong>Единый запуск приложений</strong><p>Переключайтесь между LinkHop, BioHop, PixelHop и NoteHop одним щелчком откуда угодно.</p></li>
+        <li><strong>Единый запуск приложений</strong><p>Переключайтесь между LinkHop, BioHop, PixelHop, NoteHop и FileHop одним щелчком откуда угодно.</p></li>
         <li><strong>Общая архитектура базы данных</strong><p>Одна база MySQL или SQLite хранит все учётные данные, у каждого приложения — своя таблица миграций.</p></li>
         <li><strong>Надёжная защита аккаунта</strong><p>Хеширование Argon2id, двухфакторная аутентификация TOTP, защита от ботов Cloudflare Turnstile и подтверждение адреса почты.</p></li>
         <li><strong>Наблюдение за сервисами в реальном времени</strong><p>Автоматические проверки состояния и мониторинг задержек во всех приложениях без раскрытия секретов.</p></li>
@@ -105,7 +105,7 @@
       <h2 id="faq-h">Частые вопросы</h2>
       <details>
         <summary>Что такое HOP ID?</summary>
-        <p>HOP ID — центральная служба аутентификации семейства HOP. Один аккаунт позволяет входить в LinkHop, BioHop, PixelHop и NoteHop.</p>
+        <p>HOP ID — центральная служба аутентификации семейства HOP. Один аккаунт позволяет входить в LinkHop, BioHop, PixelHop, NoteHop и FileHop.</p>
       </details>
       <details>
         <summary>Можно ли запустить хаб без других приложений?</summary>
@@ -135,6 +135,7 @@
             <tr><td><strong>BioHop</strong></td><td>Страницы «ссылки в профиле» и темы</td><td><code>bio.hel.ink</code> <span class="live">&middot; <code>hel.ink/b/{slug}</code></span></td><td><a href="https://github.com/navi-crwn/BioHop">navi-crwn/BioHop</a></td></tr>
             <tr><td><strong>PixelHop</strong></td><td>Хостинг изображений и медиа</td><td><code>pixel.hel.ink</code> <span class="live">&middot; <code>p.hel.ink</code></span></td><td><a href="https://github.com/navi-crwn/PixelHop">navi-crwn/PixelHop</a></td></tr>
             <tr><td><strong>NoteHop</strong></td><td>Приватные заметки с шифрованием на стороне клиента</td><td><code>note.hel.ink</code> <span class="live">&middot; <code>n.hel.ink</code></span></td><td><a href="https://github.com/navi-crwn/NoteHop">navi-crwn/NoteHop</a></td></tr>
+            <tr><td><strong>FileHop</strong></td><td>Конвертация файлов в браузере</td><td><code>file.hel.ink</code></td><td><a href="https://github.com/navi-crwn/FileHop">navi-crwn/FileHop</a></td></tr>
           </tbody>
         </table>
       </div>

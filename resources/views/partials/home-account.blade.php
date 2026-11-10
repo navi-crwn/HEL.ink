@@ -14,7 +14,7 @@
 <section id="connects" class="hx hx-acct" aria-labelledby="connects-title" data-hx-acct>
     <div class="hx-wrap hx-grid">
         <div class="hx-copy">
-            <div class="hx-head"><p class="h-label"><span class="n">01</span> · <span>HOP ID</span></p><h2 id="connects-title"><span>{{ __('One account.') }} <em>{{ __('Connected by design.') }}</em></span></h2></div>
+            <div class="hx-head"><h2 id="connects-title"><span>{{ __('One account.') }} <em>{{ __('Connected by design.') }}</em></span></h2></div>
             <ol class="hx-steps" data-hx-steps>
                 <li><b>{{ __('Sign in once') }}</b><span>{{ __('One free account, one password. Add two-factor protection when you want it.') }}</span></li>
                 <li><b>{{ __('Open any app') }}</b><span>{{ __('The hub hands the app a short-lived ticket. Your password never leaves the hub.') }}</span></li>

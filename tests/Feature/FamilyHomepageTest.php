@@ -31,7 +31,7 @@ test('FileHop has its own home section, 3D tile and demo', function () {
     $html = $this->get('/')->assertOk()->getContent();
 
     expect($html)->toContain('data-app-section="filehop"')->toContain('data-home-demo="filehop"')
-        ->toContain('data-hop-hero="filehop"')->toContain('https://file.hel.ink')->toContain('Five apps');
+        ->toContain('data-hop-hero="filehop"')->toContain('https://file.hel.ink')->toContain('A family of apps');
 });
 
 test('the home page has the HOP sections and no back link', function () {

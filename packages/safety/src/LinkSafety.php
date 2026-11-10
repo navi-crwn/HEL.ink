@@ -21,6 +21,12 @@ class LinkSafety
 
     private const DANGEROUS_SCHEMES = ['javascript', 'data', 'vbscript', 'file', 'blob'];
 
+    /** Domains the package blocks on its own, in the domain_blacklist table's row format. */
+    public const BUNDLED_BLACKLIST = __DIR__.'/../resources/domain_blacklist.json';
+
+    /** Second-level labels that are public suffixes under a country code (co.uk, com.au, co.id, or.id). */
+    private const PUBLIC_SECOND_LEVELS = ['co', 'com', 'net', 'org', 'gov', 'edu', 'ac', 'or', 'go', 'web', 'my', 'biz', 'sch', 'mil', 'info', 'ne', 'id', 'in'];
+
     /** @var array{exact: array<string, string|null>, wildcard: array<int, array{0: string, 1: string|null}>}|null */
     private ?array $blacklist = null;
 
@@ -28,6 +34,8 @@ class LinkSafety
     private ?array $feeds = null;
 
     private ?EncryptedNoteLink $notes = null;
+
+    private ?SafeBrowsing $browsing = null;
 
     /** Knows the address of an encrypted NoteHop note (its key is in the #fragment). Override to add hosts. */
     protected function notes(): EncryptedNoteLink
@@ -74,7 +82,9 @@ class LinkSafety
     public function assess(?string $url, string $text = '', bool $remote = false): array
     {
         $signals = [];
-        $haystack = trim($text.' '.$url);
+        // The address is matched as typed and as a person reads it (path and query decoded), so a phrase hidden as
+        // /account-security-compliance or ?t=yes%2C+it+was+me is seen the same way as in a page title.
+        $haystack = trim($text.' '.$url.' '.$this->readableUrl((string) $url));
         foreach (config('safety.patterns', []) as $category => $pattern) {
             if ($haystack !== '' && preg_match($pattern, $haystack)) {
                 $signals[] = $category;
@@ -105,9 +115,17 @@ class LinkSafety
                 if ($this->hostInList($host, config('safety.file_hosts', []))) {
                     $signals[] = 'file_host';
                 }
-                $tld = substr((string) strrchr($host, '.'), 1);
-                if (in_array($tld, config('safety.risky_tlds', []), true)) {
+                if ($this->hasRiskyTld($host)) {
                     $signals[] = 'risky_tld';
+                }
+                if ($this->hostInList($host, config('safety.tunnel_hosts', []))) {
+                    $signals[] = 'tunnel_host';
+                }
+                if ($this->spoofsBrand($host, $url)) {
+                    $signals[] = 'brand_spoof';
+                }
+                if ($this->hasRandomSubdomain($host)) {
+                    $signals[] = 'random_subdomain';
                 }
                 $category = $this->blacklistCategory($host);
                 if ($category !== false) {
@@ -123,7 +141,7 @@ class LinkSafety
             if ($category = $this->feedCategory($url)) {
                 $signals[] = $category;
             }
-            if (preg_match('/\.(apk|exe|scr|msi|bat|cmd|vbs|jar)(\?|#|$)/i', $url)) {
+            if (preg_match('/\.(apk|exe|scr|msi|bat|cmd|ps1|vbs|jar)(\?|#|$)/i', $url)) {
                 $signals[] = 'executable_download';
             }
         }
@@ -132,6 +150,117 @@ class LinkSafety
         $score = array_sum(array_map(fn ($s) => (int) ($weights[$s] ?? 0), $signals));
 
         return ['score' => $score, 'signals' => $signals];
+    }
+
+    /**
+     * The path, query and fragment of an address the way a browser shows them: percent-decoded, '+' as a space.
+     */
+    private function readableUrl(string $url): string
+    {
+        $parts = parse_url(trim($url));
+        if (! is_array($parts)) {
+            return '';
+        }
+
+        return urldecode(trim(($parts['path'] ?? '').' '.($parts['query'] ?? '').' '.($parts['fragment'] ?? '')));
+    }
+
+    /**
+     * True when the host ends in one of safety.risky_tlds, which may be a public suffix of more than one label
+     * (my.id). A label of the same name elsewhere in the host (xyz.example.com) does not count.
+     */
+    private function hasRiskyTld(string $host): bool
+    {
+        foreach (config('safety.risky_tlds', []) as $tld) {
+            if (str_ends_with($host, '.'.$tld)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * True when the host or the path carries the name of an Indonesian bank, wallet or institution
+     * (safety.brand_keywords) and the host is not that institution's domain or one of its subdomains
+     * (safety.official_domains). Labels and segments are compared whole; a name of seven characters or more also
+     * matches inside one (bankmandiri-login), a shorter one never does (bandana is not dana).
+     */
+    private function spoofsBrand(string $host, string $url): bool
+    {
+        $keywords = config('safety.brand_keywords', []);
+        if ($keywords === [] || $this->hostInList($host, config('safety.official_domains', []))) {
+            return false;
+        }
+        $path = parse_url($url, PHP_URL_PATH);
+        $tokens = preg_split('/[^a-z0-9]+/', strtolower($host.'/'.urldecode(is_string($path) ? $path : '')), -1, PREG_SPLIT_NO_EMPTY) ?: [];
+        foreach ($keywords as $keyword) {
+            $keyword = strtolower($keyword);
+            foreach ($tokens as $token) {
+                if ($token === $keyword || (strlen($keyword) >= 7 && str_contains($token, $keyword))) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * True when a label left of the registrable domain looks machine-generated: phishing kits put every victim on a
+     * throwaway subdomain (mjdgdqgk.example.com). Domains where such labels are normal (CDNs, object storage, the
+     * HOP family) are listed in safety.known_domains and never count.
+     */
+    private function hasRandomSubdomain(string $host): bool
+    {
+        if (filter_var($host, FILTER_VALIDATE_IP) || $this->hostInList($host, config('safety.known_domains', []))) {
+            return false;
+        }
+        $labels = explode('.', $host);
+        $keep = $this->registrableLabels($labels);
+        foreach (array_slice($labels, 0, max(0, count($labels) - $keep)) as $label) {
+            if ($this->looksRandom($label)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * How many trailing labels make up the registrable domain: two (example.com), three under a public second-level
+     * suffix of a country code (example.co.uk, example.co.id).
+     *
+     * @param  array<int, string>  $labels
+     */
+    private function registrableLabels(array $labels): int
+    {
+        $n = count($labels);
+        if ($n < 3) {
+            return $n;
+        }
+        $tld = $labels[$n - 1];
+        $second = $labels[$n - 2];
+
+        return strlen($tld) === 2 && in_array($second, self::PUBLIC_SECOND_LEVELS, true) ? 3 : 2;
+    }
+
+    /**
+     * A label of seven or more letters and digits whose letters are almost all consonants (at most one vowel in
+     * five) reads as random: mjdgdqgk, xkpqtrvza, f3b9c2d7e1. Words, short labels and numbers do not; the odd
+     * consonant-only word (strengths) does, which only adds the signal's weight.
+     */
+    private function looksRandom(string $label): bool
+    {
+        $label = strtolower($label);
+        $alnum = preg_replace('/[^a-z0-9]/', '', $label) ?? '';
+        $letters = preg_replace('/[^a-z]/', '', $alnum) ?? '';
+        if (strlen($alnum) < 7 || strlen($letters) < 5) {
+            return false;
+        }
+        $vowels = preg_match_all('/[aeiouy]/', $letters);
+
+        return $vowels / strlen($letters) <= 0.2;
     }
 
     private function holdsNoteKey(?string $url, string $text): bool
@@ -198,13 +327,17 @@ class LinkSafety
         $this->blacklist = null;
     }
 
+    /**
+     * The bundled list (resources/domain_blacklist.json) plus the shared domain_blacklist table, when the app has it.
+     */
     private function loadBlacklist(): array
     {
         $list = ['exact' => [], 'wildcard' => []];
-        if (! Schema::hasTable('domain_blacklist')) {
-            return $list;
+        $rows = $this->bundledBlacklist();
+        if (Schema::hasTable('domain_blacklist')) {
+            $rows = array_merge($rows, DB::table('domain_blacklist')->get(['domain', 'match_type', 'category'])->all());
         }
-        foreach (DB::table('domain_blacklist')->get(['domain', 'match_type', 'category']) as $row) {
+        foreach ($rows as $row) {
             $domain = preg_replace('/^www\./', '', strtolower(trim($row->domain)));
             if ($row->match_type === 'wildcard') {
                 $pattern = '/^'.str_replace(['.', '*'], ['\.', '.*'], $domain).'$/i';
@@ -218,6 +351,25 @@ class LinkSafety
     }
 
     /**
+     * Rows shipped with the package, in the table's shape (domain, match_type, category). A broken file is logged and
+     * ignored rather than taking every app down.
+     *
+     * @return array<int, object>
+     */
+    private function bundledBlacklist(): array
+    {
+        try {
+            $rows = json_decode((string) file_get_contents(self::BUNDLED_BLACKLIST), flags: JSON_THROW_ON_ERROR);
+        } catch (\Throwable $e) {
+            Log::error('hop/safety: bundled domain blacklist is unreadable', ['error' => $e->getMessage()]);
+
+            return [];
+        }
+
+        return array_values(array_filter((array) $rows, fn ($row) => is_object($row) && isset($row->domain, $row->match_type)));
+    }
+
+    /**
      * Google Safe Browsing + URLhaus. Fails open: provider errors never block.
      */
     private function isKnownMalicious(string $url, string $host): bool
@@ -227,9 +379,33 @@ class LinkSafety
             return false;
         }
 
-        return Cache::remember('abuse:remote:'.sha1($url), now()->addHours((int) ($cfg['cache_hours'] ?? 12)), function () use ($url, $host, $cfg) {
-            return $this->spamhausHit($host, $cfg) || $this->safeBrowsingHit($url, $cfg) || $this->urlhausHit($host, $cfg);
+        // Each provider keeps its own answer and its own cache (Safe Browsing inside Hop\Safety\SafeBrowsing, the
+        // other two here on the host), so a failed lookup at one provider never hides what another one knows.
+        if ($this->spamhausHit($host, $cfg) || $this->safeBrowsingHit($url)) {
+            return true;
+        }
+
+        return Cache::remember('abuse:remote:urlhaus:'.sha1($host), now()->addHours((int) ($cfg['cache_hours'] ?? 12)), function () use ($host, $cfg) {
+            return $this->urlhausHit($host, $cfg);
         });
+    }
+
+    /**
+     * What the outside providers said about this address, for a caller that must tell "nothing known" from "could not
+     * ask": safe_browsing (blocked/clean/unknown), urlhaus (hit/miss/unknown) and spamhaus (hit/miss/unknown).
+     *
+     * @return array{safe_browsing: string, urlhaus: string, spamhaus: string}
+     */
+    public function providerStatus(?string $url): array
+    {
+        $cfg = (array) config('safety.providers', []);
+        $url = trim((string) $url);
+        $host = $this->host($url) ?? '';
+        $sb = $this->browsing()->check($url)['status'];
+        $urlhaus = empty($cfg['urlhaus_auth_key']) ? 'unknown' : ($this->urlhausHit($host, $cfg) ? 'hit' : 'miss');
+        $spamhaus = (($cfg['spamhaus_dbl'] ?? false) && $host !== '') ? ($this->spamhausHit($host, $cfg) ? 'hit' : 'miss') : 'unknown';
+
+        return ['safe_browsing' => $sb, 'urlhaus' => $urlhaus, 'spamhaus' => $spamhaus];
     }
 
     /**
@@ -274,31 +450,16 @@ class LinkSafety
         return null;
     }
 
-    private function safeBrowsingHit(string $url, array $cfg): bool
+    /** Safe Browsing: v5 hashes:search, one instance so its answers are read once per request. */
+    public function browsing(): SafeBrowsing
     {
-        if (empty($cfg['safe_browsing_key'])) {
-            return false;
-        }
-        try {
-            $response = Http::timeout($cfg['timeout'] ?? 5)->post(
-                'https://safebrowsing.googleapis.com/v4/threatMatches:find?key='.$cfg['safe_browsing_key'],
-                [
-                    'client' => ['clientId' => 'hel.ink', 'clientVersion' => '2.1'],
-                    'threatInfo' => [
-                        'threatTypes' => ['MALWARE', 'SOCIAL_ENGINEERING', 'UNWANTED_SOFTWARE', 'POTENTIALLY_HARMFUL_APPLICATION'],
-                        'platformTypes' => ['ANY_PLATFORM'],
-                        'threatEntryTypes' => ['URL'],
-                        'threatEntries' => [['url' => $url]],
-                    ],
-                ]
-            );
+        return $this->browsing ??= new SafeBrowsing;
+    }
 
-            return $response->ok() && ! empty($response->json('matches'));
-        } catch (\Throwable $e) {
-            Log::warning('Safe Browsing lookup failed', ['error' => $e->getMessage()]);
-
-            return false;
-        }
+    /** True only when the provider answered and matched; an unknown answer is not a hit and not a clean bill either. */
+    private function safeBrowsingHit(string $url): bool
+    {
+        return $this->browsing()->check($url)['status'] === SafeBrowsing::STATUS_BLOCKED;
     }
 
     private function urlhausHit(string $host, array $cfg): bool

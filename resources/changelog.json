@@ -1,13 +1,868 @@
 {
   "schema": 1,
   "sources": {
-    "HEL.ink": "09dd46d0ebc631bc656909daaa61ccaa4bbc344f",
-    "LinkHop": "86fb14a860b8b147af7350e200c79d03d59c1be2",
-    "BioHop": "ff891cce785589bfe98fb8c04efe9600eafb2985",
-    "PixelHop": "b480ca6eab020d32cbc43059c8f2c1c7df890873",
-    "NoteHop": "7e706d1653cf99d6c65225039baa37d5c3ff77b5"
+    "HEL.ink": "1de15f8ca6b9e980a0d12cb2e128dd7aacdf81b4",
+    "LinkHop": "e8ee6bef43615a744755e7d91ed6e5a93c3c20ec",
+    "BioHop": "63a9f68e8a2cd082c1575c0f4848a5d85b31c76d",
+    "PixelHop": "6d5b0eba93c3ddc4a782470f2671a41a9621d159",
+    "NoteHop": "1f20de0d9ad4c6baf5f092d85b38a3f3c4f2f334"
   },
   "entries": [
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:15:28+07:00",
+      "title": "Merge pull request #54: Round 4: Try a demo, proportional family tiles, drop the repeated feature section",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/1f20de0d9ad4c6baf5f092d85b38a3f3c4f2f334",
+      "id": "1f20de0d",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T07:15:28Z",
+      "title": "Round 4: Try a demo, proportional family tiles, drop the repeated feature section",
+      "url": "https://github.com/navi-crwn/NoteHop/pull/54",
+      "id": "#54",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T07:15:25Z",
+      "title": "Round 4: proportional family tiles, family footer list",
+      "url": "https://github.com/navi-crwn/PixelHop/pull/46",
+      "id": "#46",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:15:24+07:00",
+      "title": "Merge pull request #46: Round 4: proportional family tiles, family footer list",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/6d5b0eba93c3ddc4a782470f2671a41a9621d159",
+      "id": "6d5b0eba",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T07:15:21Z",
+      "title": "Proportional home boxes on hop-assets v8",
+      "url": "https://github.com/navi-crwn/BioHop/pull/71",
+      "id": "#71",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:15:20+07:00",
+      "title": "Merge pull request #71: Proportional home boxes on hop-assets v8",
+      "url": "https://github.com/navi-crwn/BioHop/commit/63a9f68e8a2cd082c1575c0f4848a5d85b31c76d",
+      "id": "63a9f68e",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:15:17+07:00",
+      "title": "Merge pull request #120: Proportional home boxes on hop-assets v8",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/e8ee6bef43615a744755e7d91ed6e5a93c3c20ec",
+      "id": "e8ee6bef",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T07:15:17Z",
+      "title": "Proportional home boxes on hop-assets v8",
+      "url": "https://github.com/navi-crwn/LinkHop/pull/120",
+      "id": "#120",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:15:14+07:00",
+      "title": "Merge pull request #118: Guest form: tidy layout, room for the Turnstile check, and tests for the widget",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/7301092e8360628ae03d41725614656e344ced60",
+      "id": "7301092e",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T07:15:14Z",
+      "title": "Guest form: tidy layout, room for the Turnstile check, and tests for the widget",
+      "url": "https://github.com/navi-crwn/LinkHop/pull/118",
+      "id": "#118",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:15:10+07:00",
+      "title": "Merge pull request #63: hop-assets v8: proportional bento and a pixel BioHop mark",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/1de15f8ca6b9e980a0d12cb2e128dd7aacdf81b4",
+      "id": "1de15f8c",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T07:15:10Z",
+      "title": "hop-assets v8: proportional bento and a pixel BioHop mark",
+      "url": "https://github.com/navi-crwn/HEL.ink/pull/63",
+      "id": "#63",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T07:58:42+01:00",
+      "title": "Use the hop-assets v8 bento and 3D engine",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/beb4ef6a6b01ee4a03888dc05d8fedbf2a9a2dec",
+      "id": "beb4ef6a",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T07:58:40+01:00",
+      "title": "Use the hop-assets v8 bento and 3D engine",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/793fc7c292968b3840273af3bd2470f6a0b8ca04",
+      "id": "793fc7c2",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T07:58:26+01:00",
+      "title": "Home: the apps list and the uptime share one bento row",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/09ac75b494c1e6afeb251531499872038b1ecd54",
+      "id": "09ac75b4",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T07:53:22+01:00",
+      "title": "Turnstile check: run the CI server with process env, not duplicate .env keys",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/dc15eab6010fc70362bc52cec6ac1755ed931295",
+      "id": "dc15eab6",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T07:45:14+01:00",
+      "title": "Use the v8 BioHop WebP fallbacks",
+      "url": "https://github.com/navi-crwn/BioHop/commit/6be65a8037449d483557070ff570e0165529076f",
+      "id": "6be65a80",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T07:45:10+01:00",
+      "title": "Use the v8 BioHop WebP fallbacks",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/36bd640335f72c16088c745c85d8e9765355f3e6",
+      "id": "36bd6403",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T07:44:20+01:00",
+      "title": "Proportional home boxes on hop-assets v8; capped media; new BioHop mark",
+      "url": "https://github.com/navi-crwn/BioHop/commit/94386fb681ba4c170445aa42100bd7c737c5a264",
+      "id": "94386fb6",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T07:44:16+01:00",
+      "title": "Proportional home boxes on hop-assets v8; capped media; new BioHop mark",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/e865b6da322a18ad78734c5902fdfd2105013ef0",
+      "id": "e865b6da",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T07:43:48+01:00",
+      "title": "Proportional family tiles and the family footer list",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/65c2f734cb83760a54cee224781f66767d7f99b4",
+      "id": "65c2f734",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T07:43:48+01:00",
+      "title": "Try a demo as the main action, proportional family tiles, no repeated feature section",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/75764f3e8d30cf20511e728cb493443448c11d39",
+      "id": "75764f3e",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T07:25:42+01:00",
+      "title": "hop-assets v8: proportional bento and a pixel BioHop mark",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/c19bdab68f552704414e140b7f58a272c7a5b955",
+      "id": "c19bdab6",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T07:24:48+01:00",
+      "title": "Guest form: tidy layout with a row for the Turnstile check, tests and a browser check for the widget",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/f4c731c93d7db3041e08e85bf0ff78b3e73a2793",
+      "id": "f4c731c9",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "tag",
+      "date": "2026-11-10T13:04:19+07:00",
+      "title": "v1.1.0",
+      "url": "https://github.com/navi-crwn/NoteHop/releases/tag/v1.1.0",
+      "id": "v1.1.0",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T13:04:19+07:00",
+      "title": "Merge pull request #50: Release 1.1.0",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/469801651f0be840240dd3f5968b71be6d9867e6",
+      "id": "46980165",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T06:04:19Z",
+      "title": "Release 1.1.0",
+      "url": "https://github.com/navi-crwn/NoteHop/pull/50",
+      "id": "#50",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "tag",
+      "date": "2026-11-10T13:04:16+07:00",
+      "title": "v3.9.0",
+      "url": "https://github.com/navi-crwn/PixelHop/releases/tag/v3.9.0",
+      "id": "v3.9.0",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T13:04:16+07:00",
+      "title": "Merge pull request #42: Release 3.9.0",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/e3c483fd049827b0e37e032e6a636c8d559f2643",
+      "id": "e3c483fd",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T06:04:16Z",
+      "title": "Release 3.9.0",
+      "url": "https://github.com/navi-crwn/PixelHop/pull/42",
+      "id": "#42",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T05:53:41Z",
+      "title": "Family section: shared 3D tiles, equal heights",
+      "url": "https://github.com/navi-crwn/NoteHop/pull/52",
+      "id": "#52",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T12:53:40+07:00",
+      "title": "Merge pull request #52: Family section: shared 3D tiles, equal heights",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/ddf0d91a38e8ed5efbe88290970b9ece33473b8b",
+      "id": "ddf0d91a",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T12:53:37+07:00",
+      "title": "Merge pull request #44: Family section: shared 3D tiles, no lonely last tile",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/faa83f896ec9c2360c3b5e5cc4b62c32763c47f5",
+      "id": "faa83f89",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T05:53:37Z",
+      "title": "Family section: shared 3D tiles, no lonely last tile",
+      "url": "https://github.com/navi-crwn/PixelHop/pull/44",
+      "id": "#44",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T12:53:34+07:00",
+      "title": "Merge pull request #69: Family section on the v6 engine, and grids without a lonely last item",
+      "url": "https://github.com/navi-crwn/BioHop/commit/e0b144b391f3e52675d80da1393d585959cf3b70",
+      "id": "e0b144b3",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T05:53:34Z",
+      "title": "Family section on the v6 engine, and grids without a lonely last item",
+      "url": "https://github.com/navi-crwn/BioHop/pull/69",
+      "id": "#69",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T05:53:31Z",
+      "title": "Family section on the v6 engine, and grids without a lonely last item",
+      "url": "https://github.com/navi-crwn/LinkHop/pull/117",
+      "id": "#117",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T12:53:30+07:00",
+      "title": "Merge pull request #117: Family section on the v6 engine, and grids without a lonely last item",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/c65119dea1092321a4d5d4dffb1254d619c0ebc8",
+      "id": "c65119de",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T12:48:13+07:00",
+      "title": "Merge pull request #62: hop-assets v7: hero scenes always settle",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/afafa1dec6738490668ebf40f502196cf8e610b9",
+      "id": "afafa1de",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T05:48:13Z",
+      "title": "hop-assets v7: hero scenes always settle",
+      "url": "https://github.com/navi-crwn/HEL.ink/pull/62",
+      "id": "#62",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T06:38:48+01:00",
+      "title": "Logo without text, and the app name as real text in its own typeface",
+      "url": "https://github.com/navi-crwn/BioHop/commit/bebf044b1beb2e87b0ac5b116293c3d867627776",
+      "id": "bebf044b",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T06:38:46+01:00",
+      "title": "Logo without text, and the app name as real text in its own typeface",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/24d27b966261a2ecb31b176e465a1ae40d073617",
+      "id": "24d27b96",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T06:30:02+01:00",
+      "title": "Home boxes on the shared hop-bento grid (hop-assets v7) with reveal, spotlight and scenes",
+      "url": "https://github.com/navi-crwn/BioHop/commit/7d96e9e1fe1a35f11165dbfb998afe61b2d0cb6d",
+      "id": "7d96e9e1",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T06:29:59+01:00",
+      "title": "Home boxes on the shared hop-bento grid (hop-assets v7) with reveal, spotlight and scenes",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/bec5256aa0ead3a70d71d58561ff7080aaa55d70",
+      "id": "bec5256a",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T06:28:26+01:00",
+      "title": "Show the app name as text in its own typeface next to the mark",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/0c08900f589e4881400bcb5ef0ee757f63d8fb54",
+      "id": "0c08900f",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T06:28:24+01:00",
+      "title": "Show the app name as text in its own typeface next to the mark",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/35811eee6dabf59c0d3395f4af53f086010ec79f",
+      "id": "35811eee",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T06:16:09+01:00",
+      "title": "Use the hop-assets v7 engine and motion script",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/21232b255f04772f3939dd5b4854763935507ecf",
+      "id": "21232b25",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T06:16:09+01:00",
+      "title": "Use hop-assets v7 and one bento for the home boxes",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/e9ad83a6c30f37d71a40feddad8b648013f94aa6",
+      "id": "e9ad83a6",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T06:08:06+01:00",
+      "title": "hop-assets v7: each app name in its own typeface",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/6d889e27259557dbd4a632cb5b40008fea653b80",
+      "id": "6d889e27",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T05:58:36+01:00",
+      "title": "hop-assets v7: one logo without text for every app",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/b78f61d58d3ee98230f844c0eed8abe68e71ff74",
+      "id": "b78f61d5",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T05:54:18+01:00",
+      "title": "hop-assets v7: LinkHop wordmark is the pixel head alone, no text",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/657d903c88a9e8aaa79ab35c3582d0d02c2785e5",
+      "id": "657d903c",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T05:52:43+01:00",
+      "title": "hop-assets v7: LinkHop wordmark with the new pixel head",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/97e224815e50ed06c1571a0d7f267a35c500d464",
+      "id": "97e22481",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T05:48:54+01:00",
+      "title": "Draw the family section with the shared 3D tiles",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/42f0a7ce1a7c8d1653e6cd80ef236db2528e1b75",
+      "id": "42f0a7ce",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T05:48:52+01:00",
+      "title": "Draw the family section with the shared 3D tiles",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/6ad2f38bb2198156af9c0758dd41afd6035a2626",
+      "id": "6ad2f38b",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T05:45:42+01:00",
+      "title": "Hub: bento grids with box motion and small scenes on home and marketing pages",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/126f9d8397c7da040bd16e40bdca72af8ca41903",
+      "id": "126f9d83",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T05:45:24+01:00",
+      "title": "Family section: v6 engine and fallbacks, no section number, grids without a lonely last item",
+      "url": "https://github.com/navi-crwn/BioHop/commit/38c68d31adde513aa2c69e2e0cb7e4a280d17d9d",
+      "id": "38c68d31",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T05:45:19+01:00",
+      "title": "Family section: v6 engine and fallbacks, no section number, grids without a lonely last item",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/5684fea578b1fbcae3682354e090fd584b5e60ad",
+      "id": "5684fea5",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T05:35:22+01:00",
+      "title": "hop-assets v7: shared bento grid, box reveal, pointer spotlight and live scenes",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/e541405671f787e7abc4d72dadec269d4b25a550",
+      "id": "e5414056",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T05:27:12+01:00",
+      "title": "hop-assets v7: keep unsettled scenes drawing until they settle",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/0d3c5e3dca250b8c8a2264442a1ab3df8b39ede4",
+      "id": "0d3c5e3d",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T04:05:26Z",
+      "title": "Post-release fixes: changelog snapshot, footer language row, sign-out return",
+      "url": "https://github.com/navi-crwn/NoteHop/pull/51",
+      "id": "#51",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T11:05:25+07:00",
+      "title": "Merge pull request #51: Post-release fixes: changelog snapshot, footer language row, sign-out return",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/802383a5e822a1ff6266c9bba3c4b6d85e556b91",
+      "id": "802383a5",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T11:05:22+07:00",
+      "title": "Merge pull request #43: Post-release fixes: changelog snapshot, footer language row, sign-out return",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/faf349c9bab0e0af5c9109d579dd5c4642fc4769",
+      "id": "faf349c9",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T04:05:22Z",
+      "title": "Post-release fixes: changelog snapshot, footer language row, sign-out return",
+      "url": "https://github.com/navi-crwn/PixelHop/pull/43",
+      "id": "#43",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T11:05:19+07:00",
+      "title": "Merge pull request #68: Post-release fixes: changelog snapshot, footer family row, sign-out return",
+      "url": "https://github.com/navi-crwn/BioHop/commit/58fa5ad9a26b36e74628848e6beee6e0e8f4d139",
+      "id": "58fa5ad9",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T04:05:19Z",
+      "title": "Post-release fixes: changelog snapshot, footer family row, sign-out return",
+      "url": "https://github.com/navi-crwn/BioHop/pull/68",
+      "id": "#68",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T11:05:15+07:00",
+      "title": "Merge pull request #116: Post-release fixes: changelog snapshot, footer family row, sign-out return",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/df356f16b2a6a0ec7e30ce1a3b58f2d724a1ea42",
+      "id": "df356f16",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T04:05:15Z",
+      "title": "Post-release fixes: changelog snapshot, footer family row, sign-out return",
+      "url": "https://github.com/navi-crwn/LinkHop/pull/116",
+      "id": "#116",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T10:59:19+07:00",
+      "title": "Merge pull request #61: Hub post-release fixes: changelog snapshot, footer, sign-out return, status failures",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/6ebfcfe42a1af2f6003a09d76e8b2901e2c0f20b",
+      "id": "6ebfcfe4",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T03:59:19Z",
+      "title": "Hub post-release fixes: changelog snapshot, footer, sign-out return, status failures",
+      "url": "https://github.com/navi-crwn/HEL.ink/pull/61",
+      "id": "#61",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T04:46:58+01:00",
+      "title": "Use the new LinkHop and BioHop marks from hop-assets v6",
+      "url": "https://github.com/navi-crwn/BioHop/commit/4de95786c52b8e65d8ca7802ef795e7b6fb0b805",
+      "id": "4de95786",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T04:46:56+01:00",
+      "title": "Use the new LinkHop and BioHop marks from hop-assets v6",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/6bd2926e5f0575da8894a1a6be0dd5bf80198728",
+      "id": "6bd2926e",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T04:43:34+01:00",
+      "title": "Sync the HOP assets to v6 (new LinkHop and BioHop marks)",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/20cf6f59dfb036b0a85850795a2a4b67d104af4b",
+      "id": "20cf6f59",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T04:43:34+01:00",
+      "title": "Sync the HOP assets to v6 (new LinkHop and BioHop marks)",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/0a8679cde07b17f95cf5aed3ce1d5b931a1b5329",
+      "id": "0a8679cd",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T04:39:23+01:00",
+      "title": "hop-assets v6: pixel marks for LinkHop (8x8) and BioHop (9x9)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/ae42e009324d6b799964362dc6f1b9b3b585e691",
+      "id": "ae42e009",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:55:15+01:00",
+      "title": "Remove the internal report from the app repository",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/32dd28607f52bd3d3564329c1d44987314e3ff89",
+      "id": "32dd2860",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:49:08+01:00",
+      "title": "Show \"Part of Hop Easy Link\" as the first footer row",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/ffb4d2db7e21323a64589a5b2f93522e1b3518e8",
+      "id": "ffb4d2db",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:49:08+01:00",
+      "title": "Show \"Part of Hop Easy Link\" as the first footer row",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/3c07439dfd57ddf9961a2ef3adf0f8a6653eee58",
+      "id": "3c07439d",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:38:30+01:00",
+      "title": "Show the family row in the footer and drop the footer language row",
+      "url": "https://github.com/navi-crwn/BioHop/commit/95f7c1274f8aa20c4cfa1305e3fb58c0bcfbee33",
+      "id": "95f7c127",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:38:30+01:00",
+      "title": "Ask the hub to return to this app after sign-out",
+      "url": "https://github.com/navi-crwn/BioHop/commit/23ae0497718b42762b8e406e959a4739690a2ef1",
+      "id": "23ae0497",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:38:28+01:00",
+      "title": "Show the family row in the footer and drop the footer language row",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/0e2e8d0ba038ea94c8d577f4891d71dd92e490d0",
+      "id": "0e2e8d0b",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:38:28+01:00",
+      "title": "Ask the hub to return to this app after sign-out",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/05c26f67f38fe7a1e0c1234b44c5f1c1dbc82c26",
+      "id": "05c26f67",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:38:05+01:00",
+      "title": "Add the hub report",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/49df43d4f1703a14a3801c60eaf70285dd7728c0",
+      "id": "49df43d4",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:37:39+01:00",
+      "title": "Status: one row per app for failures, with an hourly strip and an empty state",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/20cb1861fff20ebc6027506eca698b17d1a111a2",
+      "id": "20cb1861",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:35:48+01:00",
+      "title": "Return to the app after signing out through HOP ID",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/1ac433abdb2376521055192583998f89788e3dbc",
+      "id": "1ac433ab",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:35:46+01:00",
+      "title": "Return to the app after signing out through HOP ID",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/40d6eb5e898eb1587c8abe07d9c113a014212e3d",
+      "id": "40d6eb5e",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:32:02+01:00",
+      "title": "Remove the language row from the footer",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/ba0e8b75bbe714329db3f3875e41383f6e569324",
+      "id": "ba0e8b75",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:32:01+01:00",
+      "title": "Remove the language row from the footer",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/5c663f8bdfa120f8562c3900a4b04d427cb8a3d6",
+      "id": "5c663f8b",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:32:01+01:00",
+      "title": "Refresh the changelog snapshot and fetch before building it",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/1ccf2678d14c6ff78516212b470dd291fa6b46e1",
+      "id": "1ccf2678",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:32:01+01:00",
+      "title": "Refresh the changelog snapshot and fetch before building it",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/7cd830632cca2be16168f135a4a0f831c5f20e38",
+      "id": "7cd83063",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:30:57+01:00",
+      "title": "Sign-out: honour a return address that belongs to a family app",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/c9cea199a430586591e2699507164649b2fb84c8",
+      "id": "c9cea199",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:29:04+01:00",
+      "title": "Footer: brand strip inside the footer, no language row, copyright right-aligned",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/12c9419ffb514593f32033a9d82954c134969058",
+      "id": "12c9419f",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:28:08+01:00",
+      "title": "Fix the stale changelog snapshot: fetch before reading, add a --check mode, regenerate",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/3fae028c7b6ec11b4943ab1a50498a83ed4ad536",
+      "id": "3fae028c",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:26:49+01:00",
+      "title": "Rebuild the changelog snapshot and fail release branches when it is stale",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/efc985a4e2fccc81085e00e11078fd3d2cf558eb",
+      "id": "efc985a4",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:26:49+01:00",
+      "title": "Rebuild the changelog snapshot and fail release branches when it is stale",
+      "url": "https://github.com/navi-crwn/BioHop/commit/cfa3afed7345f5b45697d901435710b6890b236e",
+      "id": "cfa3afed",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "tag",
+      "date": "2026-11-10T04:23:14+07:00",
+      "title": "v1.1.0",
+      "url": "https://github.com/navi-crwn/BioHop/releases/tag/v1.1.0",
+      "id": "v1.1.0",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
     {
       "kind": "commit",
       "date": "2026-11-10T04:23:14+07:00",
@@ -79,6 +934,24 @@
       "id": "09dd46d0",
       "app": "HOP ID",
       "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:12:52+01:00",
+      "title": "Release 1.1.0",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/364a77f2936aed3de61868fea26302fa4efd6db1",
+      "id": "364a77f2",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:12:48+01:00",
+      "title": "Release 3.9.0",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/4940e7b2db8e355d504a406b1549321edd4b60f7",
+      "id": "4940e7b2",
+      "app": "PixelHop",
+      "repo": "PixelHop"
     },
     {
       "kind": "commit",

@@ -60,9 +60,9 @@
                     @foreach ($family as $fapp)
                         <li>
                             @if ($fapp['current'])
-                                <span class="font-medium text-slate-900 dark:text-white" aria-current="page">{{ $fapp['name'] }}</span>
+                                <span class="inline-flex items-center gap-2 font-medium text-slate-900 dark:text-white" aria-current="page">@if (! empty($fapp['icons']['mark']['url']))<img src="{{ $fapp['icons']['mark']['url'] }}" alt="" width="16" height="16" loading="lazy" class="h-4 w-4 shrink-0 rounded">@endif{{ $fapp['name'] }}</span>
                             @else
-                                <a href="{{ $fapp['url'] }}" class="transition hover:text-slate-900 dark:hover:text-white">{{ $fapp['name'] }}</a>
+                                <a href="{{ $fapp['url'] }}" class="inline-flex items-center gap-2 transition hover:text-slate-900 dark:hover:text-white">@if (! empty($fapp['icons']['mark']['url']))<img src="{{ $fapp['icons']['mark']['url'] }}" alt="" width="16" height="16" loading="lazy" class="h-4 w-4 shrink-0 rounded">@endif{{ $fapp['name'] }}</a>
                             @endif
                         </li>
                     @endforeach

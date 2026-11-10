@@ -1,98 +1,106 @@
 {
-  "version": "v8",
-  "base": "https://hel.ink/hop-assets/v8/",
+  "version": "v9",
+  "base": "https://hel.ink/hop-assets/v9/",
   "assets": {
     "fonts_css": {
-      "url": "https://hel.ink/hop-assets/v8/fonts-amnesia.css",
+      "url": "https://hel.ink/hop-assets/v9/fonts-amnesia.css",
       "integrity": "sha384-750KEkFNx2ykcIsUyi1pZ0JC/Z6jfrK7OJtntqOzB8HKfEpjeostGTWJGAxh/5Zi"
     },
     "float_css": {
-      "url": "https://hel.ink/hop-assets/v8/hop-float.css",
-      "integrity": "sha384-RSNL4INB2gFASph26ONv6qEJnx8m70VToOUb77o9v+N4cQZF5fEAx1IUxJSEzJSI"
+      "url": "https://hel.ink/hop-assets/v9/hop-float.css",
+      "integrity": "sha384-xhdXwzz10aXNw1VGuVlZrMRcqgBBl7a0GuwJYMdNIW8zrCbhxmQIki2MCmfNU+qh"
     },
     "float_js": {
-      "url": "https://hel.ink/hop-assets/v8/hop-float.js",
-      "integrity": "sha384-wxxmrGBTHYgo6HbBbZ5fzxTqc3Y09xnyiDUW03EWVgTaI7lEkFc6qx+tminHvgkC"
+      "url": "https://hel.ink/hop-assets/v9/hop-float.js",
+      "integrity": "sha384-SQ/l+C2t2yO9j2/0N+8L9k9wYL3/0RKxKXgzoUBK7qaRREUdLWOdt1CWQfdKKSeN"
     },
     "home_css": {
-      "url": "https://hel.ink/hop-assets/v8/hop-home.css",
+      "url": "https://hel.ink/hop-assets/v9/hop-home.css",
       "integrity": "sha384-ba89Y0sIyxd6iUZ95IfRGK1sRFiNZJfZkjNQfdAfDXLWa1PgZMtzYf8sM9CMnfDf"
     },
     "hero3d_js": {
-      "url": "https://hel.ink/hop-assets/v8/hop-hero3d.js",
-      "integrity": "sha384-RRLiZqwHOXD8DslGjTvcOrBoULsadQxNqK/ma5MnPdv3stM7ua+5Dwnty9FurCZ2"
+      "url": "https://hel.ink/hop-assets/v9/hop-hero3d.js",
+      "integrity": "sha384-jks46eMaYf6sn1ojXScKsHuZ0e72rUS/LYgeG92ch4dSS4L98cXZQa2mwZCxqwZd"
     },
     "motion_js": {
-      "url": "https://hel.ink/hop-assets/v8/hop-motion.js",
+      "url": "https://hel.ink/hop-assets/v9/hop-motion.js",
       "integrity": "sha384-DvY+PIyNGgi1uLrJx/yTA/iSEC0iua7i0bxfSYTR3wize3FGuJHh7uVyiybCgIy9"
     },
     "bento_css": {
-      "url": "https://hel.ink/hop-assets/v8/hop-bento.css",
+      "url": "https://hel.ink/hop-assets/v9/hop-bento.css",
       "integrity": "sha384-bOrjStz51JNLCO3KWDRGFaSmFeaHih/n8b6zHe2Zap67oZNC8vUVLLBJwUTjKFJi"
     },
     "brand_css": {
-      "url": "https://hel.ink/hop-assets/v8/hop-brand.css",
-      "integrity": "sha384-Oa0tnHfXJAtgFGyvqL2RKpFlLlw2Q9n03Jyjs7QpMBGZngNQ110SCRyu0bwjgJeY"
+      "url": "https://hel.ink/hop-assets/v9/hop-brand.css",
+      "integrity": "sha384-ZlfcOPrd3O4mr3oM1oUKlm8jXGfSqy6eAg/f5MkNG1YigTXRJXi5gpSTO5MZYcvS"
     },
     "home_js": {
-      "url": "https://hel.ink/hop-assets/v8/hop-home.js",
-      "integrity": "sha384-NcA+gjsyOv9tMf7l4bbyWL7nHMGYW+CKtJrVAqMUQc6qzY1fRph5/QkyOSiMnVg7"
+      "url": "https://hel.ink/hop-assets/v9/hop-home.js",
+      "integrity": "sha384-EySZIRjbi0orj1X1b/Iitgw6/990cDk82k7itxXMlmZZU28YVSv13blW9JCvlfxT"
     },
     "ui_css": {
-      "url": "https://hel.ink/hop-assets/v8/hop-ui.css",
+      "url": "https://hel.ink/hop-assets/v9/hop-ui.css",
       "integrity": "sha384-wfq/3oTQ0jQYJQZHY7wgY3KoulTamoM2OHTwsb4boVF+dUy7JdPUurlLswZEXSt1"
     },
     "ui_js": {
-      "url": "https://hel.ink/hop-assets/v8/hop-ui.js",
+      "url": "https://hel.ink/hop-assets/v9/hop-ui.js",
       "integrity": "sha384-IDcwQXxUXNwfC3GDCIJqMuOMHaY/SCZUaezF7ZhL4Els1pk5yrUMyml00NObV0fq"
     },
     "hero_hub_light": {
-      "url": "https://hel.ink/hop-assets/v8/home/hub-light.webp",
+      "url": "https://hel.ink/hop-assets/v9/home/hub-light.webp",
       "integrity": "sha384-QSYgWOu8OfK22JIiofBQuTEj+K8HmtJ7QWZlcVxqgin5VRbj9KXzAztQgbZg9SSz"
     },
     "hero_hub_dark": {
-      "url": "https://hel.ink/hop-assets/v8/home/hub-dark.webp",
+      "url": "https://hel.ink/hop-assets/v9/home/hub-dark.webp",
       "integrity": "sha384-M6xlpB5PkvtLbA0j/5OwoGCgyX1lVAxIdw6d1ejNNv4TekRhHr6ZAVJqbwpUrJe/"
     },
     "hero_linkhop_light": {
-      "url": "https://hel.ink/hop-assets/v8/home/linkhop-light.webp",
+      "url": "https://hel.ink/hop-assets/v9/home/linkhop-light.webp",
       "integrity": "sha384-+z2W5MkOy32C1ECpzM7zOhTYWVJyHZAbAGZaltLb7t5Je4RqJyJW4XiMSRKKA/Xn"
     },
     "hero_linkhop_dark": {
-      "url": "https://hel.ink/hop-assets/v8/home/linkhop-dark.webp",
+      "url": "https://hel.ink/hop-assets/v9/home/linkhop-dark.webp",
       "integrity": "sha384-toImQtZdI2A4lxwQs7270FtvZS3GSlnlAtAVLeptFa8CtZ31OO9zjpIXxocJ/uJd"
     },
     "hero_biohop_light": {
-      "url": "https://hel.ink/hop-assets/v8/home/biohop-light.webp",
+      "url": "https://hel.ink/hop-assets/v9/home/biohop-light.webp",
       "integrity": "sha384-x9D8FUfH5A9aSc1868khQbFnYvE5Kxx62gWgZjz9hHnt1+0IRJlC5ikqnPILSARs"
     },
     "hero_biohop_dark": {
-      "url": "https://hel.ink/hop-assets/v8/home/biohop-dark.webp",
+      "url": "https://hel.ink/hop-assets/v9/home/biohop-dark.webp",
       "integrity": "sha384-qkMYyncjZ4YfCyb4+yJPkdgKAuFXuTBQCXuHDLF0RCo92YCubf6F1MPY8fAAsX9x"
     },
     "hero_pixelhop_light": {
-      "url": "https://hel.ink/hop-assets/v8/home/pixelhop-light.webp",
+      "url": "https://hel.ink/hop-assets/v9/home/pixelhop-light.webp",
       "integrity": "sha384-tzhqas5I2aYEO/4pi18ENCaYdQms4/X/uqevPYAga0tYGQlwxTebePhdYVY8EDJp"
     },
     "hero_pixelhop_dark": {
-      "url": "https://hel.ink/hop-assets/v8/home/pixelhop-dark.webp",
+      "url": "https://hel.ink/hop-assets/v9/home/pixelhop-dark.webp",
       "integrity": "sha384-+eVKnFJP2DCcMK1sB6PcOlhMr9FezsLtvliUSmzgP0zsN9UhT6idy6QUHXtKe9o7"
     },
     "hero_notehop_light": {
-      "url": "https://hel.ink/hop-assets/v8/home/notehop-light.webp",
+      "url": "https://hel.ink/hop-assets/v9/home/notehop-light.webp",
       "integrity": "sha384-cCI0/WGi0NDkPJlVVplwL4fjagJc6KXbfZUxrX7vNG26bvlbDBO7ZeLvJNBuIqPo"
     },
     "hero_notehop_dark": {
-      "url": "https://hel.ink/hop-assets/v8/home/notehop-dark.webp",
+      "url": "https://hel.ink/hop-assets/v9/home/notehop-dark.webp",
       "integrity": "sha384-HFxKgTNDlV3xSBnDVzvIOilgwYL2R/5oy7mfZDWzN0t3oDjYRgz3KapLKouolzbG"
     },
     "hero_filehop_light": {
-      "url": "https://hel.ink/hop-assets/v8/home/filehop-light.webp",
+      "url": "https://hel.ink/hop-assets/v9/home/filehop-light.webp",
       "integrity": "sha384-sQehmbNpKfXLEGZzV7HP5pGrrBefreVGKLT68qTKsyqhvFd6cYRq0YyG8fj8bMbS"
     },
     "hero_filehop_dark": {
-      "url": "https://hel.ink/hop-assets/v8/home/filehop-dark.webp",
+      "url": "https://hel.ink/hop-assets/v9/home/filehop-dark.webp",
       "integrity": "sha384-sQehmbNpKfXLEGZzV7HP5pGrrBefreVGKLT68qTKsyqhvFd6cYRq0YyG8fj8bMbS"
+    },
+    "hero_payhop_light": {
+      "url": "https://hel.ink/hop-assets/v9/home/payhop-light.webp",
+      "integrity": "sha384-cfqxnE24QqH0ptbKmWp0gZQjwGrXe9BNNVzHcljqSvDbkQVRdpcUeZRC766NBnPh"
+    },
+    "hero_payhop_dark": {
+      "url": "https://hel.ink/hop-assets/v9/home/payhop-dark.webp",
+      "integrity": "sha384-cfqxnE24QqH0ptbKmWp0gZQjwGrXe9BNNVzHcljqSvDbkQVRdpcUeZRC766NBnPh"
     }
   },
   "apps": [
@@ -107,23 +115,23 @@
       "repo": "https://github.com/navi-crwn/HEL.ink",
       "icons": {
         "mark": {
-          "url": "https://hel.ink/hop-assets/v8/apps/hub/rabbit-mark.png",
+          "url": "https://hel.ink/hop-assets/v9/apps/hub/rabbit-mark.png",
           "integrity": "sha384-9OvX+M4VRqeDqTTYN8mKl08cRv9Q4uCOwaH7SY19xhrfnpQMDHta/khUph51rpPT"
         },
         "wordmark": {
-          "url": "https://hel.ink/hop-assets/v8/apps/hub/rabbit-wordmark.svg",
+          "url": "https://hel.ink/hop-assets/v9/apps/hub/rabbit-wordmark.svg",
           "integrity": "sha384-ocrxNTJwkM5Gn44L+6nDCE9sGq7TQ/hjix5EnXEepx/SuyyPpCTqy0moQJNbg1D4"
         },
         "favicon": {
-          "url": "https://hel.ink/hop-assets/v8/apps/hub/rabbit-favicon.png",
+          "url": "https://hel.ink/hop-assets/v9/apps/hub/rabbit-favicon.png",
           "integrity": "sha384-9OvX+M4VRqeDqTTYN8mKl08cRv9Q4uCOwaH7SY19xhrfnpQMDHta/khUph51rpPT"
         },
         "logo": {
-          "url": "https://hel.ink/hop-assets/v8/apps/hub/rabbit-mark.png",
+          "url": "https://hel.ink/hop-assets/v9/apps/hub/rabbit-mark.png",
           "integrity": "sha384-9OvX+M4VRqeDqTTYN8mKl08cRv9Q4uCOwaH7SY19xhrfnpQMDHta/khUph51rpPT"
         },
         "logo_dark": {
-          "url": "https://hel.ink/hop-assets/v8/apps/hub/rabbit-mark.png",
+          "url": "https://hel.ink/hop-assets/v9/apps/hub/rabbit-mark.png",
           "integrity": "sha384-9OvX+M4VRqeDqTTYN8mKl08cRv9Q4uCOwaH7SY19xhrfnpQMDHta/khUph51rpPT"
         }
       }
@@ -139,31 +147,31 @@
       "repo": "https://github.com/navi-crwn/LinkHop",
       "icons": {
         "mark": {
-          "url": "https://hel.ink/hop-assets/v8/apps/linkhop/mark.svg",
+          "url": "https://hel.ink/hop-assets/v9/apps/linkhop/mark.svg",
           "integrity": "sha384-G3PICoeymzjl1WeZ1kQpijqIB1ccKqYwF1j9xeFJI8OBHsNhjIW7o8yiBbXiCbXl"
         },
         "mark_white": {
-          "url": "https://hel.ink/hop-assets/v8/apps/linkhop/mark-white.svg",
+          "url": "https://hel.ink/hop-assets/v9/apps/linkhop/mark-white.svg",
           "integrity": "sha384-i24U6U02sJRjyIin30e/yKrIA5cMSxeZTqX5Oon1xLd8gm8ITp0b3BDZXEHAlNtP"
         },
         "wordmark": {
-          "url": "https://hel.ink/hop-assets/v8/apps/linkhop/wordmark.svg",
+          "url": "https://hel.ink/hop-assets/v9/apps/linkhop/wordmark.svg",
           "integrity": "sha384-G3PICoeymzjl1WeZ1kQpijqIB1ccKqYwF1j9xeFJI8OBHsNhjIW7o8yiBbXiCbXl"
         },
         "wordmark_white": {
-          "url": "https://hel.ink/hop-assets/v8/apps/linkhop/wordmark-white.svg",
+          "url": "https://hel.ink/hop-assets/v9/apps/linkhop/wordmark-white.svg",
           "integrity": "sha384-i24U6U02sJRjyIin30e/yKrIA5cMSxeZTqX5Oon1xLd8gm8ITp0b3BDZXEHAlNtP"
         },
         "favicon": {
-          "url": "https://hel.ink/hop-assets/v8/apps/linkhop/favicon.png",
+          "url": "https://hel.ink/hop-assets/v9/apps/linkhop/favicon.png",
           "integrity": "sha384-xboVwFWRWdBCjTNkX9ey9O5mTR998wp2G/TMG59Jt+LEnD5kJJPL3l073iQWtAvf"
         },
         "logo": {
-          "url": "https://hel.ink/hop-assets/v8/apps/linkhop/logo.png",
+          "url": "https://hel.ink/hop-assets/v9/apps/linkhop/logo.png",
           "integrity": "sha384-7egD02ma54GbU6+SIAL3D5Erom1h+ipb8AafxSEs2knppc8ZkKnpIKZTbgoOCFHh"
         },
         "logo_dark": {
-          "url": "https://hel.ink/hop-assets/v8/apps/linkhop/logo-dark.png",
+          "url": "https://hel.ink/hop-assets/v9/apps/linkhop/logo-dark.png",
           "integrity": "sha384-NUsqwJ5fzVF+OhRtoZUzFhwyKKitluBQXFM/2/+Xs4OkXDeMEd629/0ZvR+0LxC9"
         }
       }
@@ -179,19 +187,19 @@
       "repo": "https://github.com/navi-crwn/BioHop",
       "icons": {
         "mark": {
-          "url": "https://hel.ink/hop-assets/v8/apps/biohop/mark.svg",
+          "url": "https://hel.ink/hop-assets/v9/apps/biohop/mark.svg",
           "integrity": "sha384-xx1AnszhkLr4qKDx1Lg7+y3FFQ80DLh6hpH5xrgLioylYHBC1l1skWN/ZCw/VH0B"
         },
         "mark_white": {
-          "url": "https://hel.ink/hop-assets/v8/apps/biohop/mark-white.svg",
+          "url": "https://hel.ink/hop-assets/v9/apps/biohop/mark-white.svg",
           "integrity": "sha384-YsfOXfM4jCpeKzLAGklKE4i/Dk/pOKE9CvPDWKh+xBgxbnEkbiBDe/yMi6FwWhFQ"
         },
         "wordmark": {
-          "url": "https://hel.ink/hop-assets/v8/apps/biohop/wordmark.svg",
+          "url": "https://hel.ink/hop-assets/v9/apps/biohop/wordmark.svg",
           "integrity": "sha384-xx1AnszhkLr4qKDx1Lg7+y3FFQ80DLh6hpH5xrgLioylYHBC1l1skWN/ZCw/VH0B"
         },
         "favicon": {
-          "url": "https://hel.ink/hop-assets/v8/apps/biohop/mark.svg",
+          "url": "https://hel.ink/hop-assets/v9/apps/biohop/mark.svg",
           "integrity": "sha384-xx1AnszhkLr4qKDx1Lg7+y3FFQ80DLh6hpH5xrgLioylYHBC1l1skWN/ZCw/VH0B"
         }
       }
@@ -207,23 +215,23 @@
       "repo": "https://github.com/navi-crwn/PixelHop",
       "icons": {
         "mark": {
-          "url": "https://hel.ink/hop-assets/v8/apps/pixelhop/mark.svg",
+          "url": "https://hel.ink/hop-assets/v9/apps/pixelhop/mark.svg",
           "integrity": "sha384-04cHVKRaGJKrCFbZ2aXbrKPbDwrHS1/PTVkcx8bhDJq33CCLal2QfE9FBRkgDgWS"
         },
         "favicon": {
-          "url": "https://hel.ink/hop-assets/v8/apps/pixelhop/mark.svg",
+          "url": "https://hel.ink/hop-assets/v9/apps/pixelhop/mark.svg",
           "integrity": "sha384-04cHVKRaGJKrCFbZ2aXbrKPbDwrHS1/PTVkcx8bhDJq33CCLal2QfE9FBRkgDgWS"
         },
         "icon_192": {
-          "url": "https://hel.ink/hop-assets/v8/apps/pixelhop/icon-192.png",
+          "url": "https://hel.ink/hop-assets/v9/apps/pixelhop/icon-192.png",
           "integrity": "sha384-Xrjc+OOVuNslYKbCfQYEEXX3/jxBce09Wwyg/D4X0R2gmhb/E4lMfmJpW0kO/TV6"
         },
         "icon_512": {
-          "url": "https://hel.ink/hop-assets/v8/apps/pixelhop/icon-512.png",
+          "url": "https://hel.ink/hop-assets/v9/apps/pixelhop/icon-512.png",
           "integrity": "sha384-lT//aoFsEdeEnSizPwGrg0o+5PVUN61+5y66qFmylQsH0kdueYLr5qoXpNh/TXog"
         },
         "apple_touch": {
-          "url": "https://hel.ink/hop-assets/v8/apps/pixelhop/apple-touch-icon.png",
+          "url": "https://hel.ink/hop-assets/v9/apps/pixelhop/apple-touch-icon.png",
           "integrity": "sha384-rVIRJNm/whiT0E+nd58yi/+VcOTj3qYjfdWdaqEBl6+w2I1T3n8Kf8U0Snb1vm+A"
         }
       }
@@ -239,19 +247,19 @@
       "repo": "https://github.com/navi-crwn/NoteHop",
       "icons": {
         "mark": {
-          "url": "https://hel.ink/hop-assets/v8/apps/notehop/mark.svg",
+          "url": "https://hel.ink/hop-assets/v9/apps/notehop/mark.svg",
           "integrity": "sha384-xZz6Osg27E5LOWmgTzvKOMM7PFSeym02BKtKHviE7zYBgEGF8CDO5pxE2Obz/V08"
         },
         "favicon": {
-          "url": "https://hel.ink/hop-assets/v8/apps/notehop/mark.svg",
+          "url": "https://hel.ink/hop-assets/v9/apps/notehop/mark.svg",
           "integrity": "sha384-xZz6Osg27E5LOWmgTzvKOMM7PFSeym02BKtKHviE7zYBgEGF8CDO5pxE2Obz/V08"
         },
         "icon_192": {
-          "url": "https://hel.ink/hop-assets/v8/apps/notehop/icon-192.png",
+          "url": "https://hel.ink/hop-assets/v9/apps/notehop/icon-192.png",
           "integrity": "sha384-gvVXy03lzmfNQqe9ZP675HLoi1W5n6aHjf6NNIF7KVmZj1CUWLRjVQmoUuEv2nje"
         },
         "icon_512": {
-          "url": "https://hel.ink/hop-assets/v8/apps/notehop/icon-512.png",
+          "url": "https://hel.ink/hop-assets/v9/apps/notehop/icon-512.png",
           "integrity": "sha384-iyhH3LSV2gmPS5ZKdcjFdWPELcFWZEmJBRe3ob830OeQ0wffbFhUqmbpOLklG6kh"
         }
       }
@@ -266,24 +274,55 @@
       "repo": "https://github.com/navi-crwn/FileHop",
       "icons": {
         "mark": {
-          "url": "https://hel.ink/hop-assets/v8/apps/filehop/mark.svg",
+          "url": "https://hel.ink/hop-assets/v9/apps/filehop/mark.svg",
           "integrity": "sha384-dpxbxcrgj87UKG3d6a6XHmR3tM2AGs23ad87WrAyma4u0fuvwJr22/+vJI1KFuPz"
         },
         "favicon": {
-          "url": "https://hel.ink/hop-assets/v8/apps/filehop/mark.svg",
+          "url": "https://hel.ink/hop-assets/v9/apps/filehop/mark.svg",
           "integrity": "sha384-dpxbxcrgj87UKG3d6a6XHmR3tM2AGs23ad87WrAyma4u0fuvwJr22/+vJI1KFuPz"
         },
         "icon_192": {
-          "url": "https://hel.ink/hop-assets/v8/apps/filehop/icon-192.png",
+          "url": "https://hel.ink/hop-assets/v9/apps/filehop/icon-192.png",
           "integrity": "sha384-0kZc2dL5Oprovhqkw5mU+W5T5jEwiW5ctX86QYzPcXK67qj4LanFpILwrwNjSumb"
         },
         "icon_512": {
-          "url": "https://hel.ink/hop-assets/v8/apps/filehop/icon-512.png",
+          "url": "https://hel.ink/hop-assets/v9/apps/filehop/icon-512.png",
           "integrity": "sha384-hE/4ybwmRpVryLFUrCz7SKSl/fk7128piwKWn5RQWX04Ww1yFqul8s4wiPp09pKO"
         },
         "apple_touch": {
-          "url": "https://hel.ink/hop-assets/v8/apps/filehop/apple-touch-icon.png",
+          "url": "https://hel.ink/hop-assets/v9/apps/filehop/apple-touch-icon.png",
           "integrity": "sha384-eJiaeNLNgr4nHqF2f9koirWthuuaNqUXsxDKNMBE9/5uDmc3y6KoEaMUTpEUdqnV"
+        }
+      }
+    },
+    {
+      "slug": "payhop",
+      "name": "PayHop",
+      "tagline": "Make a payment QR and split a bill; nothing leaves your browser.",
+      "url": "https://pay.hel.ink",
+      "color": "#14b8a6",
+      "public": true,
+      "repo": "https://github.com/navi-crwn/PayHop",
+      "icons": {
+        "mark": {
+          "url": "https://hel.ink/hop-assets/v9/apps/payhop/mark.svg",
+          "integrity": "sha384-Lw8icfacv0vJn2/HwrxiiwRkfjcqAOzDux/TrWnpuMTuBlE8+1pBovaw/jFcPl1h"
+        },
+        "favicon": {
+          "url": "https://hel.ink/hop-assets/v9/apps/payhop/mark.svg",
+          "integrity": "sha384-Lw8icfacv0vJn2/HwrxiiwRkfjcqAOzDux/TrWnpuMTuBlE8+1pBovaw/jFcPl1h"
+        },
+        "icon_192": {
+          "url": "https://hel.ink/hop-assets/v9/apps/payhop/icon-192.png",
+          "integrity": "sha384-rDXuGew0PSru2LiNY4dLDf13DidyRmSWxnsx6Sv3tNm18XGhpSigd7HmjLfSTYmd"
+        },
+        "icon_512": {
+          "url": "https://hel.ink/hop-assets/v9/apps/payhop/icon-512.png",
+          "integrity": "sha384-FCksJr/AhTEQh5XnH4LLRnkUGYLl5EHerCbdNdh1bNeDo4dzaPaCNphXHPkSLAur"
+        },
+        "apple_touch": {
+          "url": "https://hel.ink/hop-assets/v9/apps/payhop/apple-touch-icon.png",
+          "integrity": "sha384-4/5LEa1aXbb+fw+lQmAPNZOsdz8LVK6nkdYH8FD0IRl5ztpXuCbdf0W8wbXZsamD"
         }
       }
     },
@@ -297,7 +336,7 @@
       "repo": "",
       "icons": {
         "mark": {
-          "url": "https://hel.ink/hop-assets/v8/apps/imperium/mark.svg",
+          "url": "https://hel.ink/hop-assets/v9/apps/imperium/mark.svg",
           "integrity": "sha384-pm3mUPVTXsoz5e+PtNaFVH5tDfgdCsYXcjuej0yVKnXBxEp7QAtu7Ut1zbcUmcCs"
         }
       }

@@ -20,7 +20,7 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ### Changed
 
-- `packages/ui` is the hop-ui `feat/manifest-v9` branch (footer with the family row and the brand slot, `Apps` with the `pay` icon, tests); `packages/auth` is the hop-auth `feat/pay-host-silent-recheck` branch (`pay.hel.ink` trusted, silent account re-check) plus one space in `AuthServiceProvider.php` that Pint asks for; the `packages/*/README.md` family tables list PayHop.
+- `packages/ui` is the hop-ui `feat/manifest-v9` branch (footer with the family row and the brand slot, `Apps` with the `pay` icon, tests); `packages/auth` is the hop-auth `feat/pay-host-silent-recheck` branch (`pay.hel.ink` trusted, silent account re-check); `pint.json` skips that one file because the hop-auth copy has a missing space Pint would change (fix it in hop-auth, then drop the entry); the `packages/*/README.md` family tables list PayHop.
 - Every `hop-assets/v8` reference (home, bento, account partial, tests, docs) is v9. The sentences that list the apps (FAQ, about, terms, open source, privacy) name PayHop, in nine languages; the nine READMEs list it (the German and Russian ones gained the family section), `install.sh`, `install-family.sh` (port 8105, Go and Node), `docs/self-hosting.md`, `docs/hop-assets.md` and `docs/adding-an-app.md` too.
 - The GitHub Pages site (`docs/`) lists seven apps in nine languages and loads its fonts from hop-assets v9 instead of v1.
 - The `/admin/users` pages stay: HOP ID's `set_roles` action and Imperium do not match them yet (Imperium lets any admin set roles and accepts `owner`; the hub page lets only the owner grant the four global roles and never `owner`, and refuses to suspend or delete the signed-in account).

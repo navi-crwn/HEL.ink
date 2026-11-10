@@ -57,16 +57,17 @@ test('an existing Imperium row is left exactly as it is', function () {
 });
 
 test('new app rows carry admin_api, so Imperium can manage them, and PixelHop and BioHop keep account_api', function () {
-    foreach (['pixelhop' => 'pixel', 'notehop' => 'note', 'filehop' => 'file', 'linkhop' => 'link', 'biohop' => 'bio'] as $slug => $host) {
+    foreach (['pixelhop' => 'pixel', 'notehop' => 'note', 'filehop' => 'file', 'payhop' => 'pay', 'linkhop' => 'link', 'biohop' => 'bio'] as $slug => $host) {
         config()->set("hop.apps.{$slug}.url", "https://{$host}.example.com");
         config()->set("hop.apps.{$slug}.enabled", true);
     }
     config()->set('hop.event_apps.notehop.secret', 'notehop-secret-that-is-long-enough-12345');
     config()->set('hop.event_apps.filehop.secret', 'filehop-secret-that-is-long-enough-12345');
+    config()->set('hop.event_apps.payhop.secret', 'payhop-secret-that-is-long-enough-12345');
 
     $this->seed(HopAppsSeeder::class);
 
-    foreach (['pixelhop', 'notehop', 'filehop', 'linkhop', 'biohop'] as $slug) {
+    foreach (['pixelhop', 'notehop', 'filehop', 'payhop', 'linkhop', 'biohop'] as $slug) {
         $row = HopApp::where('slug', $slug)->first();
         expect($row)->not->toBeNull()
             ->and($row->can('admin_api'))->toBeTrue()

@@ -70,7 +70,7 @@ test('PayHop has its mark, PWA icons, name font and home art in v9, and the 3D m
     expect(str_replace(["'", ' '], '', $map[1]))->toBe(implode(',', $grid));
 });
 
-test('hop-assets v9 only adds to v8: every v8 file is in v9 and unchanged unless PayHop needed it', function () {
+test('hop-assets v9 only adds to v8: every v8 file is in v9 and unchanged unless PayHop needed it, or v9 names itself', function () {
     $changed = [];
     $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(public_path('hop-assets/v8'), FilesystemIterator::SKIP_DOTS));
     foreach ($it as $file) {
@@ -82,7 +82,7 @@ test('hop-assets v9 only adds to v8: every v8 file is in v9 and unchanged unless
         }
     }
     sort($changed);
-    expect($changed)->toBe(['hop-brand.css', 'hop-float.css', 'hop-float.js', 'hop-hero3d.js', 'hop-home.js']);
+    expect($changed)->toBe(['hop-bento.css', 'hop-brand.css', 'hop-float.css', 'hop-float.js', 'hop-hero3d.js', 'hop-home.js']);
 });
 
 test('BioHop uses its official purple document mark everywhere', function () {

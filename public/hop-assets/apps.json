@@ -144,11 +144,11 @@
         },
         "wordmark": {
           "url": "https://hel.ink/hop-assets/v7/apps/linkhop/wordmark.svg",
-          "integrity": "sha384-CEv/V9Rv7mxCA31Dbp8fh5S2kR2TE6giQtF5PPPUqrz7K2s7pKv9QP7SOfMzm1OI"
+          "integrity": "sha384-Mbvjh1fBALsEEpCuoUFn2ZWj6xgPHPgkk7uOjK9BxVZDM0IGBtOkiMT+Y8+lPA44"
         },
         "wordmark_white": {
           "url": "https://hel.ink/hop-assets/v7/apps/linkhop/wordmark-white.svg",
-          "integrity": "sha384-EnqoAgZ30Rwjgr6h4lTOzBj95/06EsuCyOyVA4Xmso4QWucgvd8VDKKUtf158Tli"
+          "integrity": "sha384-PvA83dIvfIqHx/3X5K2+X1pg0YIUw9vYOrD+3iBHT6YeJNgTS4uXjhH+dfF6elXf"
         },
         "favicon": {
           "url": "https://hel.ink/hop-assets/v7/apps/linkhop/favicon.png",

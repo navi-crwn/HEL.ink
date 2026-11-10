@@ -70,15 +70,18 @@ test('"Open" on the FileHop card goes to the app dashboard through SSO, not to t
     config()->set('hop.apps.filehop.open_path', '/somewhere-else');
     expect($this->get('/apps/filehop')->headers->get('Location'))->toContain('next=%2Fsomewhere-else');
 
-    config()->set('hop.apps.filehop.open_path', 'https://evil.example/x');   // not a plain path: ignored
-    expect($this->get('/apps/filehop')->headers->get('Location'))->not->toContain('evil');
+    foreach (['https://evil.example/x', '//evil.example', '//evil.example/x', '/\evil.example', '\evil.example', 'evil.example', '/a//b', '/a?x=1', ''] as $bad) {
+        config()->set('hop.apps.filehop.open_path', $bad);   // not one absolute path: ignored, the registry page is used
+        $location = $this->get('/apps/filehop')->headers->get('Location');
+        expect($location)->toStartWith('https://file.example.com/auth/sso')->not->toContain('evil')->toContain('next=%2F');
+        expect($location)->not->toContain('next=%2F%2F');
+    }
 });
 
 test('the FileHop card carries a fixed honest line in the number area', function () {
     HopApp::factory()->filehop()->create();
     $html = dashboardFor(hubUser());
-    expect($html)->toContain('Uploads')->toContain('Never')->toContain('Languages');
-    expect($html)->toContain('>'.count(glob(lang_path('*.json'))).'<');
+    expect($html)->toContain('Uploads')->toContain('Never')->toContain('Stored')->toContain('0 B')->not->toContain('Languages');
 });
 
 test('the dashboard cards get a token frame, also in the bare bento grids and in the Clean style', function () {

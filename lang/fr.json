@@ -1022,5 +1022,7 @@
     "Two-factor stays on for this account. If the authenticator is lost, the server owner can reset it with the hop:reset-2fa command.": "La double authentification reste active sur ce compte. Si l'authentificateur est perdu, le propriétaire du serveur peut la réinitialiser avec la commande hop:reset-2fa.",
     "Open Imperium": "Ouvrir Imperium",
     "Uploads": "Envois",
-    "Never": "Jamais"
+    "Never": "Jamais",
+    "Two-factor is already on for this account.": "La double authentification est déjà active sur ce compte.",
+    "Stored": "Stocké"
 }

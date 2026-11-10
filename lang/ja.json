@@ -1022,5 +1022,7 @@
     "Two-factor stays on for this account. If the authenticator is lost, the server owner can reset it with the hop:reset-2fa command.": "このアカウントでは2段階認証は有効のままです。認証アプリを紛失した場合は、サーバーの管理者が hop:reset-2fa コマンドでリセットできます。",
     "Open Imperium": "Imperium を開く",
     "Uploads": "アップロード",
-    "Never": "なし"
+    "Never": "なし",
+    "Two-factor is already on for this account.": "このアカウントでは2段階認証はすでに有効です。",
+    "Stored": "保存済み"
 }

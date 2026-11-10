@@ -1022,5 +1022,7 @@
     "Two-factor stays on for this account. If the authenticator is lost, the server owner can reset it with the hop:reset-2fa command.": "Verifikasi dua langkah tetap aktif untuk akun ini. Jika aplikasi authenticator hilang, pemilik server dapat meresetnya dengan perintah hop:reset-2fa.",
     "Open Imperium": "Buka Imperium",
     "Uploads": "Unggahan",
-    "Never": "Tidak pernah"
+    "Never": "Tidak pernah",
+    "Two-factor is already on for this account.": "Verifikasi dua langkah sudah aktif untuk akun ini.",
+    "Stored": "Tersimpan"
 }

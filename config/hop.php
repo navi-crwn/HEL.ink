@@ -212,7 +212,7 @@ return [
         'notehop' => ['auth' => 'hop', 'path' => '/hop/users/{id}', 'fields' => ['notes' => 'Notes', 'notes_public' => 'Basic notes']],
     ],
 
-    // Apps that store nothing: their card shows "Uploads: Never" and the number of languages instead of counts.
+    // Apps that store nothing: their card shows "Uploads: Never" and "Stored: 0 B" instead of counts.
     'card_facts' => ['filehop'],
 
     // Watchdog (hop:watch): alert after this many failures in a row.

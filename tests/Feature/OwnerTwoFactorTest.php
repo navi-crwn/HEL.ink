@@ -92,3 +92,21 @@ test('hop:reset-2fa clears the three columns, logs without secrets and refuses u
     $this->artisan('hop:reset-2fa', ['email' => 'nobody@example.test'])->assertFailed();
     expect(ActivityLog::where('action', 'two_factor_reset')->count())->toBe(1);
 });
+
+test('enable is refused once 2FA is confirmed, for the owner and for everyone, and an unconfirmed setup may be repeated', function () {
+    $secret = encrypt('JBSWY3DPEHPK3PXP');
+    $codes = encrypt(json_encode(['AAAAAAAAAA']));
+    $confirmed = ['two_factor_secret' => $secret, 'two_factor_recovery_codes' => $codes, 'two_factor_confirmed_at' => now()];
+    foreach ([ownerAccount($confirmed), User::factory()->create($confirmed)] as $account) {
+        $this->actingAs($account)->withSession(['2fa_verified' => true]);
+        $this->post('/settings/2fa/enable', ['password' => 'password'])->assertSessionHasErrors('password');
+        $fresh = $account->fresh();
+        expect($fresh->two_factor_secret)->toBe($secret);
+        expect($fresh->two_factor_recovery_codes)->toBe($codes);
+        expect($fresh->two_factor_confirmed_at)->not->toBeNull();
+    }
+    $pending = ownerAccount(['two_factor_secret' => $secret, 'two_factor_recovery_codes' => $codes]);
+    $this->actingAs($pending)->withSession(['2fa_verified' => true]);
+    $this->post('/settings/2fa/enable', ['password' => 'password'])->assertSessionHasNoErrors();
+    expect($pending->fresh()->two_factor_secret)->not->toBe($secret);
+});

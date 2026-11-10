@@ -1022,5 +1022,7 @@
     "Two-factor stays on for this account. If the authenticator is lost, the server owner can reset it with the hop:reset-2fa command.": "A verificação em duas etapas permanece ativa nesta conta. Se o autenticador for perdido, o dono do servidor pode redefini-la com o comando hop:reset-2fa.",
     "Open Imperium": "Abrir o Imperium",
     "Uploads": "Envios",
-    "Never": "Nunca"
+    "Never": "Nunca",
+    "Two-factor is already on for this account.": "A verificação em duas etapas já está ativa nesta conta.",
+    "Stored": "Armazenado"
 }

@@ -23,13 +23,34 @@ use Illuminate\Support\Facades\Auth;
  */
 class SsoController extends Controller
 {
-    /** GET /sso/{app}: sign the current user in to the app. */
+    /**
+     * GET /sso/{app}: sign the current user in to the app.
+     *
+     * `prompt=none` (silent re-check, never shows a page): with a hub session this is exactly the normal
+     * ticket; without one (none, a suspended account, or a two-factor check still open) the visitor is sent
+     * 302 to the app's registered callback with `error=login_required` and the same `state`, and nothing is
+     * kept as the intended URL. Without `prompt=none` a guest is sent to sign in, as before. The route is
+     * outside the auth group so this controller decides, in this order, the same things auth and 2fa did.
+     */
     public function ticket(Request $request, string $app): RedirectResponse
     {
         [$hopApp, $state, $returnTo] = $this->checked($request, $app);
 
-        /** @var User $user */
+        /** @var User|null $user */
         $user = $request->user();
+        $silent = $request->query('prompt') === 'none';
+        $needsCode = $user && $user->two_factor_secret && $user->two_factor_confirmed_at && ! $request->session()->get('2fa_verified', false);
+        if ($silent && (! $user || $needsCode || $user->isSuspended())) {
+            return redirect()->away($hopApp->callbackUrl().'?'.http_build_query(['error' => 'login_required', 'state' => $state]));
+        }
+        if (! $user) {
+            return redirect()->guest(route('login'));
+        }
+        if ($needsCode) {
+            $request->session()->put('url.intended', $request->fullUrl());
+
+            return redirect()->route('two-factor.show');
+        }
         if ($user->isSuspended()) {
             return redirect()->route('suspended');
         }

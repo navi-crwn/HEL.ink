@@ -1022,5 +1022,7 @@
     "Two-factor stays on for this account. If the authenticator is lost, the server owner can reset it with the hop:reset-2fa command.": "Двухфакторная защита для этого аккаунта остаётся включённой. Если аутентификатор утерян, владелец сервера может сбросить её командой hop:reset-2fa.",
     "Open Imperium": "Открыть Imperium",
     "Uploads": "Загрузки",
-    "Never": "Никогда"
+    "Never": "Никогда",
+    "Two-factor is already on for this account.": "Двухфакторная защита для этого аккаунта уже включена.",
+    "Stored": "Хранится"
 }

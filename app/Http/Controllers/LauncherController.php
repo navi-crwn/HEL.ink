@@ -46,7 +46,7 @@ class LauncherController extends Controller
     {
         $rows = [
             ['label' => 'Uploads', 'value' => __('Never')],
-            ['label' => 'Languages', 'value' => (string) count(glob(lang_path('*.json')) ?: [])],
+            ['label' => 'Stored', 'value' => '0 B'],
         ];
 
         return array_fill_keys((array) config('hop.card_facts', []), $rows);

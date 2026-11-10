@@ -1022,5 +1022,7 @@
     "Two-factor stays on for this account. If the authenticator is lost, the server owner can reset it with the hop:reset-2fa command.": "Two-factor stays on for this account. If the authenticator is lost, the server owner can reset it with the hop:reset-2fa command.",
     "Open Imperium": "Open Imperium",
     "Uploads": "Uploads",
-    "Never": "Never"
+    "Never": "Never",
+    "Two-factor is already on for this account.": "Two-factor is already on for this account.",
+    "Stored": "Stored"
 }

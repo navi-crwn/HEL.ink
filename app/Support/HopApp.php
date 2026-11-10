@@ -75,10 +75,10 @@ final class HopApp implements \JsonSerializable
         );
     }
 
-    /** A path on the app's own host ("/dashboard"), or null when the config value is empty or not a plain path. */
+    /** One absolute path on the app's own host ("/dashboard"); null for anything else (empty, "//host", backslashes, a URL). */
     private static function openPath(mixed $path): ?string
     {
-        return is_string($path) && preg_match('#^/[A-Za-z0-9/_-]*$#', $path) === 1 ? $path : null;
+        return is_string($path) && preg_match('#^/(?:[A-Za-z0-9_-]+(?:/[A-Za-z0-9_-]+)*/?)?$#', $path) === 1 ? $path : null;
     }
 
     /** An app from the registry table; its own secret, no logout or export endpoint known. */

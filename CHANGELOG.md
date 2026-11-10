@@ -4,6 +4,14 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ## [Unreleased]
 
+### Changed
+
+- hop-assets v6: new LinkHop and BioHop marks (LinkHop is the 8x8 pixel mark, BioHop the 9x9 one); `hop-float.js` and `hop-hero3d.js` draw both as pixel paths and the `home/linkhop-*.webp` art is re-rendered. The manifest, the hub pages and the tests point at it. v5 stays as it was.
+- hop-assets v7: every visible hero scene that has not settled keeps drawing until it has (the scheduler drew only the four most visible, so a page with five family tiles never settled the fifth). Reduced motion still draws the final shape at once. v6 stays as it was.
+- hop-assets v7 adds the shared bento: `hop-bento.css`, a six-column `.hop-bento` grid whose spans follow the box count so two to nine boxes always fill whole rows, and `hop-motion.js` with the staggered box reveal, the pointer spotlight and `is-live` on scenes only while they are on screen. The hub's home stats, FAQ, products, about, plans, help, contact and per-app pages use it, with small CSS scenes, and the dashboard grids use the same layout.
+- hop-assets v7 logo rule: one logo, no text, for every app. The LinkHop and BioHop `wordmark` files are the same pixel mark as `mark`; the app name is real page text next to the mark.
+- hop-assets v7 `hop-brand.css`: each app name in its own typeface, as ASCII-subset fonts with their OFL licences (HOP ID Syne, LinkHop Pixelify Sans, BioHop Space Grotesk, PixelHop Silkscreen, NoteHop Caveat, FileHop Sora).
+
 ### Fixed
 
 - Status: "Failures in the last 24 hours" is one row per app with a status dot, the failure count, the last failure as relative time (full date on hover) and a 24-hour strip; a quiet empty state when there are none.

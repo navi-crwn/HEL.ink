@@ -1,6 +1,6 @@
 {
-  "version": "v7",
-  "base": "https://hel.ink/hop-assets/v7/",
+  "version": "v8",
+  "base": "https://hel.ink/hop-assets/v8/",
   "assets": {
     "fonts_css": "fonts-amnesia.css",
     "float_css": "hop-float.css",
@@ -74,6 +74,7 @@
       "repo": "https://github.com/navi-crwn/BioHop",
       "icons": {
         "mark": "apps/biohop/mark.svg",
+        "mark_white": "apps/biohop/mark-white.svg",
         "wordmark": "apps/biohop/wordmark.svg",
         "favicon": "apps/biohop/mark.svg"
       }

@@ -71,9 +71,9 @@
             <h2 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl dark:text-white">{{ __('Bento Feature Highlights') }}</h2>
         </div>
 
-        <div class="mt-8 grid gap-4 sm:grid-cols-2">
+        <div class="hop-bento mt-8">
             @foreach ($app['features'] as $idx => $feature)
-                <div class="{{ $card }} flex items-start gap-4 transition hover:border-slate-300 dark:hover:border-white/20">
+                <div class="flex items-start gap-4" data-spot>
                     <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl text-white font-bold text-sm shadow-sm" style="background-color: {{ $app['color'] }}">
                         0{{ $idx + 1 }}
                     </span>
@@ -95,9 +95,9 @@
                 <span class="text-xs font-bold uppercase tracking-wider" style="color: {{ $app['color'] }}">{{ __('Workflow') }}</span>
                 <h2 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl dark:text-white">{{ __('How It Works in 3 Steps') }}</h2>
             </div>
-            <div class="mt-8 grid gap-6 sm:grid-cols-3">
+            <div class="hop-bento mt-8">
                 @foreach ($app['steps'] as $idx => $step)
-                    <div class="{{ $card }} space-y-3">
+                    <div class="space-y-3" data-spot>
                         <span class="flex h-8 w-8 items-center justify-center rounded-xl bg-slate-900/5 font-mono text-xs font-bold text-slate-700 dark:bg-white/10 dark:text-slate-200">
                             {{ $idx + 1 }}
                         </span>

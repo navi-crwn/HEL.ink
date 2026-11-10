@@ -26,7 +26,8 @@
  * boxes span 2 and grid-auto-flow:dense fills the gaps, so pick spans whose rows add up to 6.
  * Tablet (up to 1024 px): 2 columns, and when the count is odd the last box spans both.
  * Phone (up to 640 px): 1 column.
- * Rows share one height (grid stretch, boxes are flex columns).
+ * Rows share one height (grid stretch). Boxes keep their own display, so a box can be a flex row or a grid.
+ * data-bare on the grid: layout only (no panel, border, padding or clipping), for boxes that bring their own card style.
  *
  * Tokens (all overridable on .hop-bento or any ancestor; light and dark follow .dark / [data-theme=dark]):
  *   --hb-accent  spotlight and scene colour, default HOP indigo (apps pass their own, e.g. --hop-accent)
@@ -47,7 +48,7 @@
     --hb-gap: 14px;
     --hb-shadow: 0 24px 60px -48px rgb(49 46 129 / .5);
     display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); grid-auto-flow: dense;
-    gap: var(--hb-gap); margin: 0; padding: 0; list-style: none;
+    gap: var(--hb-gap); padding: 0; list-style: none;
 }
 .dark .hop-bento, [data-theme=dark] .hop-bento {
     --hb-panel: var(--home-panel, #151c2d);
@@ -58,13 +59,14 @@
 }
 .hop-bento > * {
     position: relative; isolation: isolate; overflow: hidden; min-width: 0;
-    display: flex; flex-direction: column; gap: 10px; padding: 22px;
+    padding: 22px;
     grid-column: span 2;
     color: var(--hb-text); background: var(--hb-panel);
     border: 1px solid var(--hb-line); border-radius: var(--hb-radius); box-shadow: var(--hb-shadow);
 }
-.hop-bento > * > :where(h2, h3, h4) { margin: 0; font-size: 17px; line-height: 1.25; letter-spacing: -.01em; }
-.hop-bento > * > :where(p) { margin: 0; color: var(--hb-muted); font-size: 14.5px; line-height: 1.6; }
+
+/* Layout only: boxes that bring their own card style. */
+.hop-bento[data-bare] > * { padding: 0; overflow: visible; background: none; border: 0; border-radius: 0; box-shadow: none; }
 
 /* A box on its own, and every box when the grid has more than nine. */
 .hop-bento:has(> :first-child:last-child) > * { grid-column: 1 / -1; }
@@ -106,7 +108,7 @@
 @media (hover: hover) and (pointer: fine) { [data-spot]:hover::before { opacity: 1; } }
 
 /* Reveal: boxes fade and rise once when they scroll into view (hop-motion.js adds .mo to <html> and .in per box). */
-.mo .hop-bento > [data-rv], .mo .hop-home .hop-bento > [data-rv] { opacity: 0; transform: translateY(14px); transition: opacity .36s ease-out, transform .36s ease-out; }
+.mo .hop-bento > [data-rv], .mo .hop-home .hop-bento > [data-rv] { opacity: 0; transform: translateY(14px); transition: opacity .36s cubic-bezier(.23, 1, .32, 1), transform .36s cubic-bezier(.23, 1, .32, 1); }
 .mo .hop-bento > [data-rv].in, .mo .hop-home .hop-bento > [data-rv].in { opacity: 1; transform: none; }
 
 /* Scenes run only while the box is on screen; the resting style is the final frame. */

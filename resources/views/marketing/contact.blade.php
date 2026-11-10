@@ -22,9 +22,9 @@
             </p>
         </div>
 
-        <div class="mt-10 grid gap-6 sm:grid-cols-2">
+        <div class="hop-bento mt-10">
             {{-- Primary Channel: GitHub Issues --}}
-            <div class="{{ $card }} sm:col-span-2 border-indigo-300/60 bg-indigo-50/40 dark:border-indigo-500/20 dark:bg-indigo-950/20">
+            <div class="border-indigo-300/60 bg-indigo-50/40 dark:border-indigo-500/20 dark:bg-indigo-950/20" data-spot data-span="6">
                 <div class="flex items-center gap-3">
                     <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-md">
                         <svg class="h-5 w-5"><use href="#i-github"/></svg>
@@ -45,7 +45,7 @@
             </div>
 
             {{-- General Support Email --}}
-            <div class="{{ $card }}">
+            <div data-spot data-span="3">
                 <div class="flex items-center gap-3">
                     <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 dark:bg-white/10 dark:text-slate-200">
                         <svg class="h-5 w-5"><use href="#i-mail"/></svg>
@@ -66,7 +66,7 @@
             </div>
 
             {{-- Security & Vulnerabilities --}}
-            <div class="{{ $card }}">
+            <div data-spot data-span="3">
                 <div class="flex items-center gap-3">
                     <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-rose-500/10 text-rose-600 dark:text-rose-400">
                         <svg class="h-5 w-5"><use href="#i-shield-alert"/></svg>
@@ -90,7 +90,7 @@
             </div>
 
             {{-- Abuse & Malware Reports --}}
-            <div class="{{ $card }}">
+            <div data-spot data-span="3">
                 <div class="flex items-center gap-3">
                     <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400">
                         <svg class="h-5 w-5"><use href="#i-flag"/></svg>
@@ -114,7 +114,7 @@
             </div>
 
             {{-- Feedback & Ideas --}}
-            <div class="{{ $card }}">
+            <div data-spot data-span="3">
                 <div class="flex items-center gap-3">
                     <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
                         <svg class="h-5 w-5"><use href="#i-mail"/></svg>

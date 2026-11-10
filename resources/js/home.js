@@ -50,7 +50,6 @@ function marquee() {
     }
     const nums = $('[data-hx-nums]');
     if (!nums) return;
-    gsap.from($$('div', nums), { y: 24, opacity: 0, duration: .7, stagger: .08, ease: 'power3.out', scrollTrigger: once(nums, 'top 88%') });
     $$('[data-count]', nums).forEach((el) => {
         const end = Number(el.dataset.count), o = { v: 0 };
         el.textContent = '0';
@@ -120,7 +119,6 @@ function account() {
 }
 
 function faq() {
-    $$('[data-hx-faq] .hx-cell').forEach((c, i) => gsap.from(c, { y: 34, opacity: 0, duration: .7, ease: 'power3.out', delay: (i % 3) * .08, scrollTrigger: once(c, 'top 92%') }));
 }
 
 if (!reduced && document.querySelector('.hop-home')) {

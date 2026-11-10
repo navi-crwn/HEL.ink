@@ -1,0 +1,54 @@
+/*
+ * Small scenes for the bento boxes of the hub (hop-assets v7 contract: [data-scene] is .is-live only while on screen).
+ * Every scene is a 56 px strip at the top of a box. The resting style is the final frame, so with reduced motion
+ * (or before the box is on screen) the strip is complete and still. Only transform and opacity move.
+ * Colour comes from --sc (set per box, default HOP indigo).
+ */
+.sc { --sc: #6366f1; position: relative; display: flex; align-items: center; justify-content: center; gap: 6px; height: 56px; margin-bottom: 14px; overflow: hidden; border-radius: 14px; background: color-mix(in srgb, var(--sc) 9%, transparent); color: var(--sc); }
+.sc i, .sc b { display: block; flex: none; font-style: normal; }
+.sc, .sc * { animation-play-state: var(--scene-play, paused); }
+@keyframes sc-in { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+@keyframes sc-pop { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: none; } }
+@keyframes sc-grow { from { transform: scaleY(.3); } to { transform: none; } }
+@keyframes sc-swap-out { 0%, 35% { opacity: 1; } 55%, 100% { opacity: 0; } }
+@keyframes sc-swap-in { 0%, 35% { opacity: 0; transform: translateY(4px); } 55%, 100% { opacity: 1; transform: none; } }
+@keyframes sc-fade { 0%, 30% { opacity: 1; } 70%, 100% { opacity: .22; } }
+@keyframes sc-ring { 0%, 100% { transform: none; opacity: .55; } 50% { transform: scale(1.25); opacity: 0; } }
+
+/* LinkHop: a long link becomes a short one */
+.sc-link .a { width: 96px; height: 8px; border-radius: 4px; background: currentColor; opacity: .28; }
+.sc-link .b { width: 34px; height: 12px; border-radius: 6px; background: currentColor; transform-origin: left center; animation: sc-pop 4.8s cubic-bezier(.23, 1, .32, 1) infinite both; }
+/* BioHop: blocks slide into a page */
+.sc-bio { flex-direction: column; gap: 5px; }
+.sc-bio i { height: 8px; border-radius: 4px; background: currentColor; }
+.sc-bio i:nth-child(1) { width: 96px; animation: sc-in 4.8s cubic-bezier(.23, 1, .32, 1) infinite both; }
+.sc-bio i:nth-child(2) { width: 96px; opacity: .65; animation: sc-in 4.8s cubic-bezier(.23, 1, .32, 1) .15s infinite both; }
+.sc-bio i:nth-child(3) { width: 58px; opacity: .4; animation: sc-in 4.8s cubic-bezier(.23, 1, .32, 1) .3s infinite both; }
+/* PixelHop: thumbnails slide into a stack */
+.sc-pixel i { width: 26px; height: 26px; border-radius: 6px; background: currentColor; margin-inline: -6px; box-shadow: 0 0 0 2px color-mix(in srgb, var(--sc) 9%, #fff); }
+.sc-pixel i:nth-child(1) { opacity: .45; animation: sc-in 4.8s cubic-bezier(.23, 1, .32, 1) infinite both; }
+.sc-pixel i:nth-child(2) { opacity: .7; animation: sc-in 4.8s cubic-bezier(.23, 1, .32, 1) .2s infinite both; }
+.sc-pixel i:nth-child(3) { animation: sc-in 4.8s cubic-bezier(.23, 1, .32, 1) .4s infinite both; }
+/* NoteHop: read once, then it fades */
+.sc-note { flex-direction: column; gap: 5px; }
+.sc-note i { width: 88px; height: 7px; border-radius: 4px; background: currentColor; opacity: .22; animation: sc-fade 5s ease-in-out infinite; }
+.sc-note i:nth-child(2) { width: 70px; animation-delay: .2s; } .sc-note i:nth-child(3) { width: 44px; animation-delay: .4s; }
+/* FileHop: PNG turns into WEBP */
+.sc-file { font: 700 12px/1 'JetBrains Mono', ui-monospace, monospace; }
+.sc-file b { padding: 6px 9px; border-radius: 8px; border: 1.5px solid currentColor; }
+.sc-file b:last-child { animation: sc-swap-in 4.8s cubic-bezier(.23, 1, .32, 1) infinite both; }
+.sc-file b:first-child { opacity: .35; animation: sc-swap-out 4.8s ease-in-out infinite; }
+/* HOP ID: one account reaches every app */
+.sc-id i { width: 10px; height: 10px; border-radius: 50%; background: currentColor; opacity: .5; }
+.sc-id i:nth-child(2) { width: 16px; height: 16px; opacity: 1; position: relative; }
+.sc-id i:nth-child(2)::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 1.5px solid currentColor; animation: sc-ring 3.2s ease-out infinite; }
+/* bars: numbers and fair-use limits */
+.sc-bars { align-items: flex-end; padding-bottom: 12px; }
+.sc-bars i { width: 12px; border-radius: 3px 3px 0 0; background: currentColor; transform-origin: bottom; animation: sc-grow 4s cubic-bezier(.23, 1, .32, 1) infinite alternate both; }
+.sc-bars i:nth-child(1) { height: 14px; } .sc-bars i:nth-child(2) { height: 22px; animation-delay: .1s; } .sc-bars i:nth-child(3) { height: 18px; animation-delay: .2s; } .sc-bars i:nth-child(4) { height: 30px; animation-delay: .3s; }
+/* ticks: lists of what is included */
+.sc-ticks { flex-direction: column; align-items: flex-start; padding-inline: 18px; gap: 7px; }
+.sc-ticks i { width: 70%; height: 6px; border-radius: 3px; background: currentColor; opacity: .5; animation: sc-in 4.8s cubic-bezier(.23, 1, .32, 1) infinite both; }
+.sc-ticks i:nth-child(2) { width: 52%; animation-delay: .15s; } .sc-ticks i:nth-child(3) { width: 62%; animation-delay: .3s; }
+
+@media (prefers-reduced-motion: reduce) { .sc, .sc * { animation: none !important; } }

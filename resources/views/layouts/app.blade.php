@@ -22,6 +22,7 @@
         <x-hop::fonts />
         @include('partials.hop-ui')
         @stack('scripts-head')
+        @include('partials.hop-bento')
         @vite(['resources/css/app.css', 'resources/css/coss.css', 'resources/js/app.js'])
         @stack('styles')
     </head>

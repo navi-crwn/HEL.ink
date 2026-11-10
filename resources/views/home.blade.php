@@ -4,7 +4,6 @@
 @push('head')
     <link rel="stylesheet" href="{{ asset('hop-assets/v7/hop-home.css') }}">
     <script src="{{ asset('hop-assets/v7/hop-hero3d.js') }}" defer></script>
-    <script src="{{ asset('hop-assets/v7/hop-motion.js') }}" defer></script>
     <script src="{{ asset('hop-assets/v7/hop-home.js') }}" defer></script>
     @vite(['resources/css/home.css', 'resources/css/coss-home.css', 'resources/js/home.js'])
 @endpush
@@ -22,14 +21,14 @@
         $repoCount = count((array) config('hop.github.repos', []));
     @endphp
     <div class="hx-marq" data-hx-marq aria-label="{{ __('What you get') }}"><div>@foreach (['One free account', 'Five apps', 'Short links', 'Link in bio', 'Image hosting', 'Private notes', 'File conversion', 'No ads', 'No trackers', 'Open source', 'Self-host if you like'] as $t)<span>{{ __($t) }}</span>@endforeach</div></div>
-    <div class="hx-nums" data-hx-nums>
-        <div><b data-count="{{ count($stories) }}">{{ count($stories) }}</b><span>{{ __('apps') }}</span></div>
-        <div><b data-count="{{ count(\Hop\Ui\Locales::codes()) }}">{{ count(\Hop\Ui\Locales::codes()) }}</b><span>{{ __('languages') }}</span></div>
-        <div><b data-count="0">0</b><span>{{ __('ads and trackers') }}</span></div>
+    <div class="hx-nums hop-bento" data-hx-nums>
+        <div data-spot><b data-count="{{ count($stories) }}">{{ count($stories) }}</b><span>{{ __('apps') }}</span></div>
+        <div data-spot><b data-count="{{ count(\Hop\Ui\Locales::codes()) }}">{{ count(\Hop\Ui\Locales::codes()) }}</b><span>{{ __('languages') }}</span></div>
+        <div data-spot><b data-count="0">0</b><span>{{ __('ads and trackers') }}</span></div>
         @if ($commits > 0)
-            <div><b data-count="{{ $commits }}">{{ number_format($commits) }}</b><span>{{ __('commits in the open') }}</span></div>
+            <div data-spot><b data-count="{{ $commits }}">{{ number_format($commits) }}</b><span>{{ __('commits in the open') }}</span></div>
         @else
-            <div><b data-count="{{ $repoCount }}">{{ $repoCount }}</b><span>{{ __('open source repositories') }}</span></div>
+            <div data-spot><b data-count="{{ $repoCount }}">{{ $repoCount }}</b><span>{{ __('open source repositories') }}</span></div>
         @endif
     </div>
     @include('partials.home-account')

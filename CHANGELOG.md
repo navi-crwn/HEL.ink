@@ -4,7 +4,18 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ## [Unreleased]
 
+### Added
+
+- `php artisan hop:reset-2fa {email}`: the official way back in when an authenticator is lost. It clears the two-factor secret, recovery codes and confirmation of that account, refuses an unknown email, and writes an activity-log row without any secret.
+- "Open Imperium" in the top bar for every account that holds a role (address from `HOP_IMPERIUM_URL`, then `HOP_CONTROL_URL`, default `https://imperium.hel.ink`; nine languages).
+- The FileHop card shows "Uploads: Never" and the number of languages, so it is as tall as the other cards.
+
 ### Changed
+
+- **Security rule change (owner account, made on 2026-11-01):** the owner account may now turn on two-factor, confirm it and renew its recovery codes for itself (`settings.2fa.enable`, `.confirm`, `.recovery-codes`), because Imperium refuses an account without it. Turning it off stays blocked for the owner, and every other read-only rule of the owner account is unchanged. Another account or an admin still cannot touch the owner's two-factor.
+- The hub is for people and Imperium for admins: signing in always lands on the dashboard, the "Admin" chip and the sidebar "Admin" section (Accounts, Manage announcements) are gone, and an account with a role gets the same dashboard plus the one shortcut. The `/admin/*` pages, `Api/HopAdminController` and the `/hop/*` and `/api/hop/*` routes stay; the pages are simply no longer linked.
+- Dashboard frames: every card, panel and box inside the hub layout has a 1 px line in the new `--hop-frame` token (the muted ink at 80% in light, 55% in dark, 3:1 or better against the page) and a more opaque surface; the bare bento grids of the dashboard no longer strip it; the app cards sit in equal columns and every gap is 16 px. The Clean style (`hop_ui`) uses the same token.
+- "Open" on the FileHop card goes to the FileHop dashboard (`FILEHOP_OPEN_PATH`, default `/dashboard`) instead of the public page.
 
 - hop-assets v6: new LinkHop and BioHop marks (LinkHop is the 8x8 pixel mark, BioHop the 9x9 one); `hop-float.js` and `hop-hero3d.js` draw both as pixel paths and the `home/linkhop-*.webp` art is re-rendered. The manifest, the hub pages and the tests point at it. v5 stays as it was.
 - hop-assets v7: every visible hero scene that has not settled keeps drawing until it has (the scheduler drew only the four most visible, so a page with five family tiles never settled the fifth). Reduced motion still draws the final shape at once. v6 stays as it was.

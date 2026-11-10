@@ -48,7 +48,7 @@
     :root {
         --bg: 241 245 249;            /* slate-100 */
         --glass: 255 255 255;
-        --glass-alpha: 0.62;
+        --glass-alpha: 0.88;
         --glass-border: 255 255 255;
         --glass-border-alpha: 0.7;
         --ink: 15 23 42;              /* slate-900 */
@@ -56,6 +56,9 @@
         --accent: 99 102 241;         /* indigo-500 */
         --accent-2: 139 92 246;       /* violet-500 */
         --shadow: 15 23 42;
+        /* Frame of a card or panel: the muted ink at 80% (3.05:1 on the page in light, 3.0:1 at 55% in dark). */
+        --hop-frame-a: 0.8;
+        --hop-frame: rgb(var(--muted) / var(--hop-frame-a));
 
         /*
         | HOP control standard (hop-ops docs/15-standar-kontrol-ui-2026-11-09): the same token names in
@@ -87,7 +90,8 @@
     .dark {
         --bg: 8 11 24;
         --glass: 22 27 48;
-        --glass-alpha: 0.55;
+        --glass-alpha: 0.8;
+        --hop-frame-a: 0.55;
         --glass-border: 255 255 255;
         --glass-border-alpha: 0.08;
         --ink: 241 245 249;
@@ -538,3 +542,23 @@ html.drawer-open { overflow: hidden; }
     .hub-chrome .hop-switcher > summary { width: 44px; height: 44px; }
     .hub-chrome .hop-switcher-panel > a, .hub-chrome .hop-account-panel form button { min-height: 44px; }
 }
+
+/*
+| Frames (H1, 2026-11-10). A card, panel or box on the dashboard and every page inside the hub layout has a
+| 1 px line in --hop-frame (the muted ink at 80% in light, 55% in dark: 3:1 or better against the page) and a
+| surface that is more opaque than the page. Outside a layer, so it also wins over hop-bento.css, whose
+| data-bare grids strip the box of the cards they hold. Gap between cards: 16 px everywhere (.dash-grid).
+*/
+.hub-chrome :is(.glass, .glass-card, .glass-strong, .stat):not([class*="border-"]) { border-color: var(--hop-frame); }
+.hub-chrome .glass-inset { border-color: rgb(var(--muted) / 0.35); }
+.hop-bento[data-bare] > :is(.glass, .glass-card) {
+    padding: 1rem; overflow: visible; border-radius: var(--hop-card-radius);
+    background-color: rgb(var(--glass) / var(--glass-alpha)); border: 1px solid var(--hop-frame);
+    box-shadow: 0 1px 0 rgb(255 255 255 / 0.35) inset, 0 8px 32px -12px rgb(var(--shadow) / 0.18);
+}
+.dark .hop-bento[data-bare] > :is(.glass, .glass-card) { box-shadow: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 8px 32px -12px rgb(0 0 0 / 0.6); }
+@media (min-width: 640px) { .hop-bento[data-bare] > .glass-card { padding: 1.25rem; } }
+.dash-grid { --hb-gap: 16px; gap: 16px; }
+/* The app cards: equal columns (three on a wide screen), so five apps are 3 + 2 of the same width. */
+.dash-apps { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17.5rem), 1fr)); }
+.dash-apps > * { min-width: 0; }

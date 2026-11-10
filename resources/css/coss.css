@@ -39,23 +39,23 @@
 /* Surfaces: solid, bordered, no blur. */
 :root[data-ui="clean"] .glass, :root[data-ui="clean"] .glass-card, :root[data-ui="clean"] .glass-strong, :root[data-ui="clean"] .stat, :root[data-ui="clean"] .app-shell :is(.rounded-xl, .rounded-2xl, .rounded-3xl):is(.bg-white, .bg-slate-50, .bg-gray-50):not(.no-skin, input, select, textarea, button) {
     background-color: rgb(var(--glass)) !important;
-    border: 1px solid rgb(var(--glass-border) / var(--glass-border-alpha)) !important;
+    border: 1px solid var(--hop-frame) !important;
     box-shadow: var(--coss-card-shadow) !important;
     -webkit-backdrop-filter: none; backdrop-filter: none;
 }
 :root[data-ui="clean"] .glass-card, :root[data-ui="clean"] .stat, :root[data-ui="clean"] .glass-strong, :root[data-ui="clean"] .app-shell .glass { border-radius: var(--hop-card-radius); }
 :root[data-ui="clean"] .app-shell :is(.rounded-xl, .rounded-2xl, .rounded-3xl):not(button, input, select, textarea, .rounded-full) { border-radius: var(--hop-card-radius); }
-:root[data-ui="clean"] .glass-inset { background-color: var(--coss-frame); border-color: rgb(var(--glass-border) / var(--glass-border-alpha)); border-radius: 10px; }
+:root[data-ui="clean"] .glass-inset { background-color: var(--coss-frame); border-color: rgb(var(--muted) / 0.35); border-radius: 10px; }
 :root[data-ui="clean"] .auth-card.glass-strong { border-radius: 16px; border-top-width: 1px; box-shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 12px 32px -16px rgb(0 0 0 / 0.12) !important; }
 :root[data-ui="clean"] .auth-card :is(.bg-white, .dark\:bg-gray-800, .dark\:bg-gray-900):not(input) { background-color: transparent !important; }
 
 /* Sidebar and top bar: flat, divided by a hairline. */
 :root[data-ui="clean"] .hub-chrome aside { padding: 0; }
-:root[data-ui="clean"] .hub-chrome aside > .glass { border-radius: 0 !important; border-width: 0 1px 0 0 !important; background-color: rgb(var(--bg)) !important; box-shadow: none !important; }
+:root[data-ui="clean"] .hub-chrome aside > .glass { border-radius: 0 !important; border-width: 0 1px 0 0 !important; background-color: rgb(var(--bg)) !important; box-shadow: none !important; border-color: rgb(var(--glass-border) / var(--glass-border-alpha)) !important; }
 :root[data-ui="clean"] .hub-chrome header.sticky { padding: 0; }
 :root[data-ui="clean"] .hub-chrome header.sticky > .glass {
     height: 56px; border-radius: 0 !important; border-width: 0 0 1px 0 !important;
-    background-color: rgb(var(--bg)) !important; box-shadow: none !important;
+    background-color: rgb(var(--bg)) !important; box-shadow: none !important; border-color: rgb(var(--glass-border) / var(--glass-border-alpha)) !important;
 }
 :root[data-ui="clean"] .hub-chrome header.sticky > .glass { padding-inline: 16px; }
 :root[data-ui="clean"] .nav-item { border-radius: 8px; padding: 7px 10px; font-size: 14px; font-weight: 500; gap: 10px; }

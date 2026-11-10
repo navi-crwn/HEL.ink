@@ -1018,5 +1018,9 @@
     "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} Kode pemulihanmu sudah habis|{1} Kode pemulihanmu tinggal :count|[2,*] Kode pemulihanmu tinggal :count",
     "Interface style": "Gaya tampilan",
     "Clean": "Bersih",
-    "Applies to every HOP app on this browser.": "Berlaku untuk semua aplikasi HOP di peramban ini."
+    "Applies to every HOP app on this browser.": "Berlaku untuk semua aplikasi HOP di peramban ini.",
+    "Two-factor stays on for this account. If the authenticator is lost, the server owner can reset it with the hop:reset-2fa command.": "Verifikasi dua langkah tetap aktif untuk akun ini. Jika aplikasi authenticator hilang, pemilik server dapat meresetnya dengan perintah hop:reset-2fa.",
+    "Open Imperium": "Buka Imperium",
+    "Uploads": "Unggahan",
+    "Never": "Tidak pernah"
 }

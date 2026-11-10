@@ -1018,5 +1018,9 @@
     "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} 復旧コードが残っていません|{1} 復旧コードは残り :count 個です|[2,*] 復旧コードは残り :count 個です",
     "Interface style": "インターフェースのスタイル",
     "Clean": "クリーン",
-    "Applies to every HOP app on this browser.": "このブラウザーのすべての HOP アプリに適用されます。"
+    "Applies to every HOP app on this browser.": "このブラウザーのすべての HOP アプリに適用されます。",
+    "Two-factor stays on for this account. If the authenticator is lost, the server owner can reset it with the hop:reset-2fa command.": "このアカウントでは2段階認証は有効のままです。認証アプリを紛失した場合は、サーバーの管理者が hop:reset-2fa コマンドでリセットできます。",
+    "Open Imperium": "Imperium を開く",
+    "Uploads": "アップロード",
+    "Never": "なし"
 }

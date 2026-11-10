@@ -1018,5 +1018,9 @@
     "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} Il ne vous reste aucun code de récupération|{1} Il vous reste :count code de récupération|[2,*] Il vous reste :count codes de récupération",
     "Interface style": "Style de l’interface",
     "Clean": "Épuré",
-    "Applies to every HOP app on this browser.": "S’applique à toutes les apps HOP sur ce navigateur."
+    "Applies to every HOP app on this browser.": "S’applique à toutes les apps HOP sur ce navigateur.",
+    "Two-factor stays on for this account. If the authenticator is lost, the server owner can reset it with the hop:reset-2fa command.": "La double authentification reste active sur ce compte. Si l'authentificateur est perdu, le propriétaire du serveur peut la réinitialiser avec la commande hop:reset-2fa.",
+    "Open Imperium": "Ouvrir Imperium",
+    "Uploads": "Envois",
+    "Never": "Jamais"
 }

@@ -1018,5 +1018,9 @@
     "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} No te quedan códigos de recuperación|{1} Te queda :count código de recuperación|[2,*] Te quedan :count códigos de recuperación",
     "Interface style": "Estilo de la interfaz",
     "Clean": "Limpio",
-    "Applies to every HOP app on this browser.": "Se aplica a todas las apps de HOP en este navegador."
+    "Applies to every HOP app on this browser.": "Se aplica a todas las apps de HOP en este navegador.",
+    "Two-factor stays on for this account. If the authenticator is lost, the server owner can reset it with the hop:reset-2fa command.": "La verificación en dos pasos permanece activa en esta cuenta. Si se pierde el autenticador, el propietario del servidor puede restablecerla con el comando hop:reset-2fa.",
+    "Open Imperium": "Abrir Imperium",
+    "Uploads": "Subidas",
+    "Never": "Nunca"
 }

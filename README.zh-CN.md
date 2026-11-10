@@ -9,7 +9,7 @@
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/readme/hero-en-dark.webp"><img src="docs/readme/hero-en-light.webp" alt="HEL.ink · HOP 家族中心" width="100%"></picture></p>
 
-<p align="center"><b>HEL.ink 是 HOP 的账户门户和家族目录。只需使用 HOP ID 登录一次，即可在 LinkHop、BioHop、PixelHop、NoteHop 和 FileHop 之间无缝切换。</b></p>
+<p align="center"><b>HEL.ink 是 HOP 的账户门户和家族目录。只需使用 HOP ID 登录一次，即可在 LinkHop、BioHop、PixelHop、NoteHop、FileHop 和 PayHop 之间无缝切换。</b></p>
 
 <p align="center">
   <a href="https://hel.ink">hel.ink</a> ·
@@ -32,14 +32,14 @@ curl -fsSL https://raw.githubusercontent.com/navi-crwn/HEL.ink/main/install.sh |
 
 ## 家族中心与账户门户
 
-适用于 LinkHop、BioHop、PixelHop、NoteHop 和 FileHop 的中心账户门户、HOP ID 单点登录和家族目录。
+适用于 LinkHop、BioHop、PixelHop、NoteHop、FileHop 和 PayHop 的中心账户门户、HOP ID 单点登录和家族目录。
 
 <a id="features"></a>
 
 ## 功能特性
 
 - **单点登录 (HOP ID)**: 一次登录覆盖所有 HOP 应用。签名凭证与链式登出确保会话一致。
-- **统一应用启动器**: 随时随地一键在 LinkHop、BioHop、PixelHop、NoteHop 和 FileHop 间切换。
+- **统一应用启动器**: 随时随地一键在 LinkHop、BioHop、PixelHop、NoteHop、FileHop 和 PayHop 间切换。
 - **共享数据库架构**: 共享单个 MySQL 或 SQLite 数据库存储身份，各应用独立的迁移账本避免冲突。
 - **严格的安全防护**: Argon2id 哈希、TOTP 双重认证、Cloudflare Turnstile 防护与邮箱验证。
 - **SSO 网关、CSP 与共享界面**: 每个页面都带有 Content-Security-Policy（应用页面使用 nonce），SSO 交接经过签名并由各应用验证，对话框以及语言和账号菜单来自共享的 HopUI 包。
@@ -96,7 +96,7 @@ HEL.ink 所需的一切都在公开仓库中：不需要私有仓库、令牌或
 | 家族字体与浮动图块 | 无需安装：从 `hel.ink/hop-assets` 加载 | 无法访问 hel.ink 时：使用系统字体，没有浮动图块 |
 
 - **安装顺序**：先装本中心，再装各应用，需要时最后装 Imperium。用 `php artisan db:seed --class='Database\Seeders\HopAppsSeeder' --force` 登记各应用。[`install-family.sh`](install-family.sh) 可一次完成全部步骤。
-- **最少设置**：`APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `FILEHOP_URL` (每个应用一个); 使用 Imperium 时: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`。
+- **最少设置**：`APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `PAYHOP_URL` (每个应用一个); 使用 Imperium 时: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`。
 - **单独运行或加入家族**：单独的中心即可提供账户、登录与启动器；各应用的 README 会说明还需要什么。
 - **没有 Imperium 时**：中心保留自己的账户管理页面（`/admin`）；Imperium 另外提供各应用的内容、举报和健康状态。
 <!-- self-hosting:end -->
@@ -113,6 +113,7 @@ HEL.ink 是注重隐私的开源应用家族中心。
 | **PixelHop** | `pixel.hel.ink` · `p.hel.ink/…` | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | 图片与媒体存储托管 |
 | **NoteHop** | `note.hel.ink` · `n.hel.ink/…` | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | 客户端加密的私密便签 |
 | **FileHop** | `file.hel.ink` | [navi-crwn/FileHop](https://github.com/navi-crwn/FileHop) | 在浏览器中转换文件，无需上传 |
+| **PayHop** | `pay.hel.ink` | [navi-crwn/PayHop](https://github.com/navi-crwn/PayHop) | 生成支付二维码并分摊账单；任何内容都不会离开你的浏览器。 |
 
 ## 更新日志
 

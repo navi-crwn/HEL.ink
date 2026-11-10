@@ -1,0 +1,14 @@
+{
+  "_comment": "Hosts of the HOP family manifest (hop-assets apps.json): slug, url, account_url. Trimmed copy. When the manifest changes, replace the apps below; tests/Feature/TrustedHostsManifestTest.php names the host that trusted_hosts is missing.",
+  "version": "v8 + payhop (replace with the v9 manifest apps)",
+  "apps": [
+    { "slug": "hub", "url": "https://hel.ink", "account_url": "https://hub.hel.ink" },
+    { "slug": "linkhop", "url": "https://link.hel.ink" },
+    { "slug": "biohop", "url": "https://bio.hel.ink" },
+    { "slug": "pixelhop", "url": "https://pixel.hel.ink" },
+    { "slug": "notehop", "url": "https://note.hel.ink" },
+    { "slug": "filehop", "url": "https://file.hel.ink" },
+    { "slug": "imperium" },
+    { "slug": "payhop", "url": "https://pay.hel.ink" }
+  ]
+}

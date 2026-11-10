@@ -1,10 +1,12 @@
 # Adding an app to the HOP family
 
 Every place that has to change when a new app (call it `NewHop`, slug `newhop`, host
-`new.hel.ink`) joins the family. Written after FileHop joined (November 2026), when several of
-these were missed at first: the HOP ID diagram on the home page, the terms and privacy pages,
+`new.hel.ink`) joins the family. Written after FileHop joined (November 2026), and checked again when
+PayHop joined (hop-assets v9), when several of these were missed at first: the HOP ID diagram on the home page, the terms and privacy pages,
 the app's PWA icons and the GitHub numbers. Work top to bottom; each repository gets its own
-pull request against `main`.
+pull request against `main`. A new app needs a new hop-assets version (copy the last one, add the app's mark, icons,
+block map, floating tile and theme, name font and home art, and a home demo if it has one), because a deployed
+version never changes.
 
 ## 0. Decide first
 

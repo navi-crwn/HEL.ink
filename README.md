@@ -31,7 +31,7 @@ curl -fsSL https://raw.githubusercontent.com/navi-crwn/HEL.ink/main/install.sh |
 
 From a clone: `./install.sh` · update: `./update.sh` · remove: `./uninstall.sh`. Add `--yes` to take every default; `--help` lists the options.
 
-Everything at once (the hub plus any of LinkHop, BioHop, NoteHop, PixelHop and FileHop, already connected):
+Everything at once (the hub plus any of LinkHop, BioHop, NoteHop, PixelHop, FileHop and PayHop, already connected):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/navi-crwn/HEL.ink/main/install-family.sh | bash
@@ -50,7 +50,7 @@ This repository serves as the **ecosystem hub**:
 
 ## Features
 
-- **🔐 Single Sign-On (HOP ID)**: One account signs you into LinkHop, BioHop, PixelHop, NoteHop, and FileHop without repetitive credentials. Signed cryptographic tickets and chained session termination.
+- **🔐 Single Sign-On (HOP ID)**: One account signs you into LinkHop, BioHop, PixelHop, NoteHop, FileHop, and PayHop without repetitive credentials. Signed cryptographic tickets and chained session termination.
 - **🚀 Unified App Launcher**: An integrated top-level switcher letting users jump between all family apps seamlessly.
 - **🛡️ Comprehensive Account Security**: Argon2id password hashing, TOTP two-factor authentication, Cloudflare Turnstile anti-bot verification, and secure email verification.
 - **🧱 SSO gate, CSP and shared UI**: Every page is served with a Content-Security-Policy (nonce-based on the app pages), the SSO hand-off is signed and verified by the apps, and dialogs and the language and account menus come from the shared HopUI package.
@@ -99,7 +99,7 @@ php artisan test
 ## FAQ
 
 **What is HOP ID?**
-HOP ID is the central identity provider for the HOP family. Creating one account lets you sign into LinkHop, BioHop, PixelHop, NoteHop, and FileHop with zero friction.
+HOP ID is the central identity provider for the HOP family. Creating one account lets you sign into LinkHop, BioHop, PixelHop, NoteHop, FileHop, and PayHop with zero friction.
 
 **Can I run the hub without other apps?**
 Yes. You can run the hub standalone as a directory and user account portal, but it shines best when powering member apps.
@@ -125,7 +125,7 @@ Everything HEL.ink needs is in public repositories: no private repository, no to
 | Family fonts and tiles | Nothing to install: loaded from `hel.ink/hop-assets` | Without hel.ink: system fonts, no floating tiles |
 
 - **Install order**: this hub first, then the apps, then Imperium if you want it. Register the apps with `php artisan db:seed --class='Database\Seeders\HopAppsSeeder' --force`. [`install-family.sh`](install-family.sh) does all of it in one go.
-- **Minimum settings**: `APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `FILEHOP_URL` (one per app); with Imperium: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`.
+- **Minimum settings**: `APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `PAYHOP_URL` (one per app); with Imperium: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`.
 - **Alone or in the family**: the hub alone gives accounts, sign-in and the launcher; each app's README says what else it needs.
 - **Without Imperium**: the hub keeps its own admin pages for accounts (`/admin`); Imperium adds the apps' content, reports and health.
 <!-- self-hosting:end -->

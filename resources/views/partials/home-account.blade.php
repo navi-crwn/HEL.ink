@@ -2,7 +2,7 @@
      (resources/js/home.js adds the motion; the finished picture is complete as plain HTML and CSS.) --}}
 @php
     $family = collect(\Hop\Ui\Assets::family())->keyBy('slug');
-    $hubMark = $family['hub']['icons']['mark']['url'] ?? asset('hop-assets/v8/apps/hub/rabbit-mark.png');
+    $hubMark = $family['hub']['icons']['mark']['url'] ?? asset('hop-assets/v9/apps/hub/rabbit-mark.png');
     // Every public app sits on a ring around HOP ID, the first one on top; positions follow the
     // number of apps, so a new app appears here without a CSS change.
     $ring = collect($stories)->values();

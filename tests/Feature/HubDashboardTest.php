@@ -224,9 +224,9 @@ test('the status line follows the watchdog', function () {
     $apps = HopApps::all();
     $summary = fn (array $oks) => collect($apps)->values()->mapWithKeys(fn ($a, $i) => [$a->slug => ['app' => $a, 'ok' => $oks[$i] ?? null]])->all();
 
-    expect(HubDashboard::status($summary([null, null, null, null, null]))['state'])->toBe('unknown');
-    expect(HubDashboard::status($summary([true, true, true, true, true])))->toMatchArray(['state' => 'ok', 'up' => count($apps), 'down' => []]);
-    $down = HubDashboard::status($summary([true, false, true, true, true]));
+    expect(HubDashboard::status($summary([]))['state'])->toBe('unknown');
+    expect(HubDashboard::status($summary(array_fill(0, count($apps), true))))->toMatchArray(['state' => 'ok', 'up' => count($apps), 'down' => []]);
+    $down = HubDashboard::status($summary([true, false] + array_fill(0, count($apps), true)));
     expect($down['state'])->toBe('problem')->and($down['down'])->toBe([$apps[1]->name]);
 
     signIn();

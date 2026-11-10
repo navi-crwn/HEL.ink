@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>HEL.ink · HOP ファミリーハブ & HOP ID</title>
-  <meta name="description" content="LinkHop、BioHop、PixelHop、NoteHop、FileHop のための中央アカウントポータル、HOP ID シングルサインオン、ファミリーディレクトリ。">
+  <meta name="description" content="LinkHop、BioHop、PixelHop、NoteHop、FileHop、PayHop のための中央アカウントポータル、HOP ID シングルサインオン、ファミリーディレクトリ。">
   <link rel="canonical" href="https://navi-crwn.github.io/HEL.ink/ja/">
   <link rel="icon" href="../assets/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/styles.css">
   <link rel="stylesheet" href="../assets/product.css">
-  <link rel="stylesheet" href="https://hel.ink/hop-assets/v1/fonts-amnesia.css" integrity="sha384-750KEkFNx2ykcIsUyi1pZ0JC/Z6jfrK7OJtntqOzB8HKfEpjeostGTWJGAxh/5Zi" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://hel.ink/hop-assets/v9/fonts-amnesia.css" integrity="sha384-750KEkFNx2ykcIsUyi1pZ0JC/Z6jfrK7OJtntqOzB8HKfEpjeostGTWJGAxh/5Zi" crossorigin="anonymous">
   <link rel="alternate" hreflang="x-default" href="https://navi-crwn.github.io/HEL.ink/">
   <link rel="alternate" hreflang="en" href="https://navi-crwn.github.io/HEL.ink/en/">
   <link rel="alternate" hreflang="zh-CN" href="https://navi-crwn.github.io/HEL.ink/zh-CN/">
@@ -23,7 +23,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="HEL.ink">
   <meta property="og:title" content="HEL.ink · HOP ファミリーハブ">
-  <meta property="og:description" content="LinkHop、BioHop、PixelHop、NoteHop、FileHop のための中央アカウントポータル、HOP ID シングルサインオン、ファミリーディレクトリ。">
+  <meta property="og:description" content="LinkHop、BioHop、PixelHop、NoteHop、FileHop、PayHop のための中央アカウントポータル、HOP ID シングルサインオン、ファミリーディレクトリ。">
   <meta property="og:url" content="https://navi-crwn.github.io/HEL.ink/ja/">
   <meta property="og:image" content="https://navi-crwn.github.io/HEL.ink/og.png">
   <meta property="og:image:width" content="1200">
@@ -66,7 +66,7 @@
       <div>
         <p class="kicker">HOP &middot; ファミリーハブ & アカウントポータル</p>
         <h1>すべてのアプリに、ひとつの HOP アカウント。</h1>
-        <p class="lede">HEL.ink は HOP のアカウントポータルおよびディレクトリです。HOP ID で一度ログインすれば、LinkHop、BioHop、PixelHop、NoteHop、FileHop をシームレスに利用できます。</p>
+        <p class="lede">HEL.ink は HOP のアカウントポータルおよびディレクトリです。HOP ID で一度ログインすれば、LinkHop、BioHop、PixelHop、NoteHop、FileHop、PayHop をシームレスに利用できます。</p>
         <div class="cta-row">
           <a class="btn primary" href="https://hel.ink">hel.ink を訪問</a>
           <a class="btn" href="https://hub.hel.ink">Hub を開く</a>
@@ -81,7 +81,7 @@
       <span class="section-number" aria-hidden="true">01</span><h2 id="features-h">主な機能</h2>
       <ul class="features">
         <li><strong>シングルサインオン (HOP ID)</strong><p>1 回のログインですべての HOP アプリに対応。署名付きチケットと連鎖ログアウトで安全を維持。</p></li>
-        <li><strong>統合アプリランチャー</strong><p>どこからでもワンクリックで LinkHop、BioHop、PixelHop、NoteHop、FileHop を行き来できます。</p></li>
+        <li><strong>統合アプリランチャー</strong><p>どこからでもワンクリックで LinkHop、BioHop、PixelHop、NoteHop、FileHop、PayHop を行き来できます。</p></li>
         <li><strong>共有データベース構造</strong><p>1 つの MySQL または SQLite でアカウントを保持し、アプリ別のマイグレーション台帳で競合を防止。</p></li>
         <li><strong>堅牢なアカウントセキュリティ</strong><p>Argon2id ハッシュ、TOTP 二要素認証、Cloudflare Turnstile 保護、メール確認に対応。</p></li>
         <li><strong>ライブサービスウォッチドッグ</strong><p>秘密情報を漏らすことなく、ファミリーアプリ全体の稼働状況と応答速度を自動監視。</p></li>
@@ -136,6 +136,7 @@
             <tr><td><strong>PixelHop</strong></td><td>画像およびメディア配信</td><td><code>pixel.hel.ink</code> <span class="live">&middot; <code>p.hel.ink</code></span></td><td><a href="https://github.com/navi-crwn/PixelHop">navi-crwn/PixelHop</a></td></tr>
             <tr><td><strong>NoteHop</strong></td><td>クライアント暗号化プライベートノート</td><td><code>note.hel.ink</code> <span class="live">&middot; <code>n.hel.ink</code></span></td><td><a href="https://github.com/navi-crwn/NoteHop">navi-crwn/NoteHop</a></td></tr>
             <tr><td><strong>FileHop</strong></td><td>ブラウザ内でのファイル変換</td><td><code>file.hel.ink</code></td><td><a href="https://github.com/navi-crwn/FileHop">navi-crwn/FileHop</a></td></tr>
+            <tr><td><strong>PayHop</strong></td><td>ブラウザ内での支払いQRコード作成と割り勘</td><td><code>pay.hel.ink</code></td><td><a href="https://github.com/navi-crwn/PayHop">navi-crwn/PayHop</a></td></tr>
           </tbody>
         </table>
       </div>

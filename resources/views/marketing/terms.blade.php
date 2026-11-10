@@ -18,7 +18,7 @@
         <div class="{{ $card }}">
             <h2 class="text-base font-bold text-slate-900 dark:text-white">{{ __('The HOP Family & Single Account') }}</h2>
             <p class="mt-2 text-sm leading-relaxed {{ $muted }}">
-                {{ __('Your HOP ID is a unified account providing authenticated access to all member apps: LinkHop, BioHop, PixelHop, NoteHop, and FileHop. These Master Terms form a single binding agreement across the entire ecosystem. Suspension or deletion of your HOP ID applies universally across every connected service.') }}
+                {{ __('Your HOP ID is a unified account providing authenticated access to all member apps: LinkHop, BioHop, PixelHop, NoteHop, FileHop, and PayHop. These Master Terms form a single binding agreement across the entire ecosystem. Suspension or deletion of your HOP ID applies universally across every connected service.') }}
             </p>
         </div>
 
@@ -129,6 +129,19 @@
                         <li>&bull; {{ __('Files are converted in your browser, on your own device. They are never uploaded, so HOP cannot see, recover or restore a file or a result: keep your originals.') }}</li>
                         <li>&bull; {{ __('Use FileHop only on files you have the right to use and convert.') }}</li>
                         <li>&bull; {{ __('Results are provided as they are. Check an important result before you rely on it.') }}</li>
+                    </ul>
+                </div>
+
+                {{-- PayHop --}}
+                <div class="{{ $card }}">
+                    <div class="flex items-center gap-2.5">
+                        <span class="h-2.5 w-2.5 rounded-full bg-teal-500"></span>
+                        <h3 class="font-bold text-slate-900 dark:text-white">PayHop (pay.hel.ink)</h3>
+                    </div>
+                    <ul class="mt-3 space-y-2 text-xs text-slate-600 dark:text-slate-400">
+                        <li>&bull; {{ __('PayHop only makes QR codes. It never sends, holds or moves money, so HOP cannot reverse, recover or refund a payment you make with one.') }}</li>
+                        <li>&bull; {{ __('Check who a code pays, and how much, before you share it or pay it. A code is only as right as what you typed, and formats marked "not tested yet" have not been scanned by a real wallet.') }}</li>
+                        <li>&bull; {{ __('Use PayHop only to request payments you are entitled to, and never to mislead anyone about who is being paid.') }}</li>
                     </ul>
                 </div>
             </div>

@@ -52,5 +52,7 @@
         <server name="NOTEHOP_URL" value="https://note.hel.ink" force="true"/>
         <env name="FILEHOP_URL" value="https://file.hel.ink" force="true"/>
         <server name="FILEHOP_URL" value="https://file.hel.ink" force="true"/>
+        <env name="PAYHOP_URL" value="https://pay.hel.ink" force="true"/>
+        <server name="PAYHOP_URL" value="https://pay.hel.ink" force="true"/>
                                     </php>
 </phpunit>

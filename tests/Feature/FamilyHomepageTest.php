@@ -42,7 +42,7 @@ test('the home page has the HOP sections and no back link', function () {
     }
     expect($html)->not->toContain('Back to HOP');
     expect($html)->not->toContain('id="status"');
-    expect(substr_count($html, '<section '))->toBe(10);
+    expect(substr_count($html, '<section '))->toBe(5 + count(FamilyStory::APPS));
 });
 
 test('the home page is English by default and speaks nine languages', function () {

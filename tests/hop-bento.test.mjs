@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
-const version = process.env.HOP_ASSETS_VERSION || 'v8';
+const version = process.env.HOP_ASSETS_VERSION || 'v9';
 const css = fs.readFileSync(new URL(`../public/hop-assets/${version}/hop-bento.css`, import.meta.url), 'utf8');
 
 // Read the span of every box, per box count, from the count rules of one media block.

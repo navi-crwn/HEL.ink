@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Queue;
 const EVENT_PIXEL_SECRET = 'pixel-secret-that-is-long-enough-1234567890';
 const EVENT_NOTE_SECRET = 'notehop-secret-that-is-long-enough-12345';
 const EVENT_FILE_SECRET = 'filehop-secret-that-is-long-enough-12345';
+const EVENT_PAY_SECRET = 'payhop-secret-that-is-long-enough-12345';
 const EVENT_LINK_SECRET = 'linkhop-secret-that-is-long-enough-1234567';
 const EVENT_BIO_SECRET = 'biohop-secret-that-is-long-enough-123456789';
 
@@ -32,6 +33,8 @@ function eventEnv(): void
     config()->set('hop.event_apps.notehop.secret', EVENT_NOTE_SECRET);
     config()->set('hop.apps.filehop.url', 'https://file.example.com');
     config()->set('hop.event_apps.filehop.secret', EVENT_FILE_SECRET);
+    config()->set('hop.apps.payhop.url', 'https://pay.example.com');
+    config()->set('hop.event_apps.payhop.secret', EVENT_PAY_SECRET);
     config()->set('hop.apps.linkhop.url', 'https://link.example.com');
     config()->set('hop.apps.linkhop.secret', EVENT_LINK_SECRET);
     config()->set('hop.apps.biohop.url', 'https://bio.example.com');
@@ -72,6 +75,23 @@ test('the seeder adds filehop like notehop: its own secret, the sso callback, th
         ->and($file->capabilities)->toEqualCanonicalizing(['admin_api', 'events', 'zero_knowledge']);
 });
 
+test('the seeder adds payhop like filehop: its own secret, the sso callback, the events capability', function () {
+    eventEnv();
+
+    $this->seed(HopAppsSeeder::class);
+
+    $pay = HopApp::where('slug', 'payhop')->first();
+    expect($pay)->not->toBeNull()
+        ->and($pay->can('events'))->toBeTrue()
+        ->and($pay->secret)->toBe(EVENT_PAY_SECRET)
+        ->and($pay->url)->toBe('https://pay.example.com')
+        ->and($pay->callback_path)->toBe('/auth/sso/callback')
+        ->and($pay->start_path)->toBe('/auth/sso')
+        ->and($pay->menu_label)->toBe('Payments')
+        ->and($pay->can('admin_api'))->toBeTrue()
+        ->and($pay->capabilities)->toEqualCanonicalizing(['admin_api', 'events', 'zero_knowledge']);
+});
+
 test('running the seeder again, or on a database that has the rows, changes nothing', function () {
     eventEnv();
     $existing = HopApp::factory()->notehop('already-there-secret-that-is-long-enough-123')->create(['capabilities' => ['account_api'], 'url' => 'https://note.hel.example']);
@@ -98,12 +118,13 @@ test('the seeder does not invent a secret: without one in the environment no row
 
 test('a configured event app with no row, or a row without events, is a warning; a good row is not', function () {
     eventEnv();
-    expect(EventRegistry::warnings())->toHaveCount(5)
+    expect(EventRegistry::warnings())->toHaveCount(count(config('hop.event_apps')))
         ->and(EventRegistry::warnings()[0])->toContain('pixelhop')->toContain('no row');
 
     HopApp::factory()->pixelhop(EVENT_PIXEL_SECRET)->create(['capabilities' => ['account_api']]);
     HopApp::factory()->notehop(EVENT_NOTE_SECRET)->create(['capabilities' => ['events']]);
     HopApp::factory()->filehop(EVENT_FILE_SECRET)->create();
+    HopApp::factory()->payhop(EVENT_PAY_SECRET)->create();
     HopApp::factory()->create(['slug' => 'linkhop', 'url' => 'https://link.example.com', 'secret' => EVENT_LINK_SECRET, 'capabilities' => ['events']]);
     HopApp::factory()->create(['slug' => 'biohop', 'url' => 'https://bio.example.com', 'secret' => EVENT_BIO_SECRET, 'capabilities' => ['events']]);
     $warnings = EventRegistry::warnings();
@@ -114,7 +135,7 @@ test('a configured event app with no row, or a row without events, is a warning;
 
 test('a disabled event app is not expected to have a row', function () {
     eventEnv();
-    foreach (['pixelhop', 'notehop', 'filehop', 'linkhop', 'biohop'] as $slug) {
+    foreach (array_keys(config('hop.event_apps')) as $slug) {
         config()->set("hop.apps.{$slug}.enabled", false);
     }
 
@@ -192,7 +213,7 @@ test('without linkhop and biohop rows the warning names them and says what to ru
     expect($text)->toContain('linkhop: no row')->toContain('biohop: no row')->toContain('HopAppsSeeder');
 });
 
-test('after seeding, one sign-out at the hub queues session.revoked for all five apps', function () {
+test('after seeding, one sign-out at the hub queues session.revoked for every event app', function () {
     eventEnv();
     $this->seed(HopAppsSeeder::class);
     Queue::fake();
@@ -200,8 +221,8 @@ test('after seeding, one sign-out at the hub queues session.revoked for all five
 
     $this->actingAs($user)->post('/logout')->assertRedirect();
 
-    Queue::assertPushed(SendHopEvent::class, 5);
-    foreach (['pixelhop', 'notehop', 'filehop', 'linkhop', 'biohop'] as $slug) {
+    Queue::assertPushed(SendHopEvent::class, count(config('hop.event_apps')));
+    foreach (array_keys(config('hop.event_apps')) as $slug) {
         $id = HopApp::where('slug', $slug)->value('id');
         Queue::assertPushed(SendHopEvent::class, fn ($j) => $j->appId === $id && $j->type === 'session.revoked');
     }

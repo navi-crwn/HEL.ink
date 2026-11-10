@@ -35,8 +35,24 @@ return [
     // Self-hosted family on your own domain: set HOP_TRUSTED_HOSTS to a comma-separated list.
     'trusted_hosts' => array_values(array_filter(array_map('trim', explode(',', (string) env(
         'HOP_TRUSTED_HOSTS',
-        'hel.ink,www.hel.ink,hub.hel.ink,link.hel.ink,bio.hel.ink,note.hel.ink,pixel.hel.ink,file.hel.ink'
+        'hel.ink,www.hel.ink,hub.hel.ink,link.hel.ink,bio.hel.ink,note.hel.ink,pixel.hel.ink,file.hel.ink,pay.hel.ink'
     ))))),
+
+    // Silent account re-check: after `max_age` seconds without the hub vouching for this session, a page load (GET,
+    // not XHR, not a prefetch) makes one `prompt=none` round trip to the hub. Same account: carry on unseen. Another
+    // account: switch to it. `login_required`: sign out here. Nothing in the database: the timestamps are in the session.
+    'recheck' => [
+        'enabled' => filter_var(env('HOP_RECHECK', true), FILTER_VALIDATE_BOOLEAN),
+        // Seconds a session counts as fresh; 0 turns the check off.
+        'max_age' => (int) env('HOP_RECHECK_MAX_AGE', 300),
+        // At most one attempt per this many seconds in a session (no loops).
+        'cooldown' => 30,
+        // Seconds to wait after the hub answered with an error (e.g. temporarily_unavailable).
+        'retry_after' => 300,
+        // Do not redirect to a hub that does not accept a TCP connection within probe_timeout seconds.
+        'probe' => true,
+        'probe_timeout' => 1.5,
+    ],
 
     // Account events from the hub (POST /hop/events: session.revoked, account.status, account.deleted, profile.updated).
     'events' => [

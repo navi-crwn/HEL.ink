@@ -117,6 +117,23 @@
                     <a href="https://file.hel.ink" class="text-xs font-semibold text-amber-700 underline hover:text-amber-800 dark:text-amber-400">{{ __('Open FileHop') }} &rarr;</a>
                 </div>
             </div>
+
+            {{-- PayHop Guide --}}
+            <div class="space-y-3" data-spot>
+                <div class="flex items-center gap-3">
+                    <span class="h-3 w-3 rounded-full bg-teal-500"></span>
+                    <h2 class="text-base font-bold text-slate-900 dark:text-white">PayHop User Guide</h2>
+                </div>
+                <ul class="space-y-2 text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+                    <li>&bull; <strong>{{ __('Making a Code:') }}</strong> {{ __('Pick a format on pay.hel.ink, fill in the details, check who the code pays, then download the QR.') }}</li>
+                    <li>&bull; <strong>{{ __('Splitting a Bill:') }}</strong> {{ __('Add people and items, set tax and tip, and get each person\'s share with a QR code of their own.') }}</li>
+                    <li>&bull; <strong>{{ __('Private by Design:') }}</strong> {{ __('Codes are made inside your browser tab, so what you type is not sent to a server. Saving a payment method is optional and needs a HOP ID.') }}</li>
+                    <li>&bull; <strong>{{ __('Not Tested Yet:') }}</strong> {{ __('Each format says so until a real wallet has scanned it. Pay a small amount first before you rely on a code.') }}</li>
+                </ul>
+                <div class="pt-2 border-t border-slate-200/60 dark:border-white/10">
+                    <a href="https://pay.hel.ink" class="text-xs font-semibold text-teal-700 underline hover:text-teal-800 dark:text-teal-400">{{ __('Open PayHop') }} &rarr;</a>
+                </div>
+            </div>
         </div>
 
         {{-- Troubleshooting & Support --}}

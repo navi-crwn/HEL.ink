@@ -1,20 +1,17 @@
 <?php
 
-use App\Models\User;
 use Hop\Ui\Apps;
 
 test('the app list comes from config/hop.php with the current app marked', function () {
-    config()->set('hop.apps.biohop.enabled', false);
-    config()->set('hop.apps.notehop.enabled', false);
-    config()->set('hop.apps.filehop.enabled', false);
+    config()->set('hop.current', 'hub');
+    config()->set('hop.hub_url', 'https://hub.hel.ink');
+    config()->set('hop.apps', [
+        'linkhop' => ['url' => 'https://link.hel.ink'],
+        'biohop' => ['url' => 'https://bio.hel.ink', 'enabled' => false],
+        'pixelhop' => ['url' => 'https://pixel.hel.ink'],
+    ]);
     $apps = Apps::all();
     expect(array_column($apps, 'slug'))->toBe(['hub', 'linkhop', 'pixelhop']);
     expect($apps[0]['current'])->toBeTrue();
-    expect($apps[1]['open'])->toBe(rtrim(config('hop.hub_url'), '/').'/apps/linkhop');
-});
-
-test('the hub sidebar lists the apps once (no second switcher in the top bar)', function () {
-    $user = User::factory()->create();
-    $this->withoutVite()->actingAs($user)->withSession(['2fa_verified' => true])->get('/dashboard')
-        ->assertOk()->assertDontSee('hop-pill')->assertSee('PixelHop')->assertSee('NoteHop');
+    expect($apps[1]['open'])->toBe('https://hub.hel.ink/apps/linkhop');
 });

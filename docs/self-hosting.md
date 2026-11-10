@@ -20,6 +20,7 @@ It installs the hub and the apps you pick, each in its own folder, already conne
 | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | Image hosting | Go 1.27, or Docker, or a release binary |
 | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | Encrypted notes | Go 1.27, or Docker |
 | [navi-crwn/FileHop](https://github.com/navi-crwn/FileHop) | File conversion in the browser | Go 1.27 and Node 20.19+, or Docker |
+| [navi-crwn/PayHop](https://github.com/navi-crwn/PayHop) | Payment QR codes and bill splitting in the browser | Go 1.27 and Node 20.19+, or Docker |
 | [navi-crwn/Imperium](https://github.com/navi-crwn/Imperium) | The admin panel for the whole family (optional) | Go 1.27 |
 | [navi-crwn/hop-auth](https://github.com/navi-crwn/hop-auth), [hop-ui](https://github.com/navi-crwn/hop-ui), [hop-safety](https://github.com/navi-crwn/hop-safety) | Shared PHP packages for the Laravel apps | Composer installs them for you |
 
@@ -33,6 +34,7 @@ It installs the hub and the apps you pick, each in its own folder, already conne
 | PixelHop | optional: "Sign in with HOP ID" | its own SQLite | optional, but its admin pages live there; needs the hub | yes, with its own accounts |
 | NoteHop | optional: "Sign in with HOP ID" | its own SQLite | optional; needs the hub | yes, with its own accounts |
 | FileHop | optional: "Sign in with HOP ID" | its own SQLite | optional; needs the hub | yes, with no accounts at all |
+| PayHop | optional: "Sign in with HOP ID" (saved payment methods and history need it) | its own SQLite | optional; needs the hub | yes, with no accounts at all |
 | Imperium | **required**: sign-in and the list of apps come from the hub | its own SQLite | is the admin panel | no |
 
 LinkHop and BioHop share the hub's database: the hub owns the account tables (`users`, `api_tokens`, …), and each app runs only its own migrations, each with its own migrations table (`DB_MIGRATIONS_TABLE`).
@@ -47,7 +49,7 @@ LinkHop and BioHop share the hub's database: the hub owns the account tables (`u
 
 1. **The hub.** `install.sh` in HEL.ink, or by hand: `composer install`, `.env`, `php artisan key:generate`, `php artisan migrate`, `npm ci && npm run build`. Then `php artisan hop:owner you@example.org`: that address becomes the owner when it signs up.
 2. **The apps.** Each repository has an `install.sh` that can connect to your hub (`--hub existing --hub-url … --hub-secret …`) or install one next to it (`--hub new`).
-3. **Register the apps at the hub.** Set each app's address in the hub's `.env` (`LINKHOP_URL`, `BIOHOP_URL`, `PIXELHOP_URL`, `NOTEHOP_URL`, `FILEHOP_URL`), then run `php artisan optimize` and `php artisan db:seed --class='Database\Seeders\HopAppsSeeder' --force` in the hub. That adds a registry row for every app, with the capabilities it needs: account events, its own sign-in form, the admin API for Imperium. It never changes a row that exists. `install-family.sh` does this for you.
+3. **Register the apps at the hub.** Set each app's address in the hub's `.env` (`LINKHOP_URL`, `BIOHOP_URL`, `PIXELHOP_URL`, `NOTEHOP_URL`, `FILEHOP_URL`, `PAYHOP_URL`), then run `php artisan optimize` and `php artisan db:seed --class='Database\Seeders\HopAppsSeeder' --force` in the hub. That adds a registry row for every app, with the capabilities it needs: account events, its own sign-in form, the admin API for Imperium. It never changes a row that exists. `install-family.sh` does this for you.
 4. **Imperium (optional).** See below.
 
 ## The minimum settings
@@ -67,8 +69,10 @@ BIOHOP_URL=https://bio.example.org
 PIXELHOP_URL=https://pixel.example.org
 NOTEHOP_URL=https://note.example.org
 FILEHOP_URL=https://file.example.org
+PAYHOP_URL=https://pay.example.org
 HOP_SSO_SECRET_NOTEHOP=<NoteHop's NOTEHOP_SSO_SECRET>
 HOP_SSO_SECRET_FILEHOP=<FileHop's FILEHOP_SSO_SECRET>
+HOP_SSO_SECRET_PAYHOP=<PayHop's PAYHOP_SSO_SECRET>
 # Only with Imperium:
 HOP_CONTROL_URL=https://imperium.example.org
 HOP_SSO_SECRET_IMPERIUM=<Imperium's HOP_SSO_SECRET>
@@ -90,7 +94,7 @@ HOP_CONTROL_URL=https://imperium.example.org   # only with Imperium
 
 `HOP_TRUSTED_HOSTS` matters on your own domain: by default hop/auth trusts only the hel.ink hosts for the sign-out chain.
 
-**PixelHop, NoteHop, FileHop (environment)**
+**PixelHop, NoteHop, FileHop, PayHop (environment)**
 
 ```ini
 PIXELHOP_BASE_URL=https://pixel.example.org
@@ -102,6 +106,9 @@ NOTEHOP_BASE_URL=https://note.example.org
 
 FILEHOP_BASE_URL=https://file.example.org
 # with the hub: FILEHOP_SSO_URL=https://hub.example.org, FILEHOP_SSO_CLIENT=filehop, FILEHOP_SSO_SECRET=<HOP_SSO_SECRET_FILEHOP>
+
+PAYHOP_BASE_URL=https://pay.example.org
+# with the hub: PAYHOP_SSO_URL=https://hub.example.org, PAYHOP_SSO_CLIENT=payhop, PAYHOP_SSO_SECRET=<HOP_SSO_SECRET_PAYHOP>
 ```
 
 Each app's README and `.env.example` (or `deploy/*.env.example`) list every other setting.
@@ -133,6 +140,6 @@ Imperium is a control panel: keep it off the open internet (a VPN such as Tailsc
 
 ## Running one app, or the family
 
-- **One app.** NoteHop, PixelHop and FileHop run alone with `./install.sh` (the default is no hub). LinkHop and BioHop need a hub; `./install.sh --hub new` installs one next to them.
+- **One app.** NoteHop, PixelHop, FileHop and PayHop run alone with `./install.sh` (the default is no hub). LinkHop and BioHop need a hub; `./install.sh --hub new` installs one next to them.
 - **The family.** `install-family.sh` installs the hub and the apps you choose under one folder and writes `start-all.sh`. On a server, put each app behind your web server on its own host name, and use the same `HOP_SSO_SECRET` in the hub, LinkHop and BioHop.
 - **Updates.** Each app has `./update.sh`; the hub and the Laravel apps run their migrations on update.

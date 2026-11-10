@@ -10,11 +10,18 @@
 ])
 @php
     $family = \Hop\Ui\Assets::family($app);
+    $hopMark = collect(\Hop\Ui\Assets::manifest()['apps'] ?? [])->firstWhere('slug', 'hub')['icons']['mark']['url'] ?? null;
 @endphp
 <footer {{ $attributes->merge(['class' => 'hop-footer border-t border-slate-200/80 bg-slate-50/50 py-12 text-sm dark:border-white/10 dark:bg-slate-950/40']) }}>
     <div class="mx-auto max-w-6xl px-4 sm:px-6">
         @isset($brand)
             <div class="hop-footer-brand mb-8">{{ $brand }}</div>
+        @else
+            {{-- Family row, first inside the footer: HOP ID mark + "Part of Hop Easy Link", for everyone. --}}
+            <a href="https://hel.ink" class="mb-8 flex w-fit items-center gap-2.5 text-[13px] text-slate-500 dark:text-slate-400">
+                @if ($hopMark)<img src="{{ $hopMark }}" alt="" width="20" height="20" class="h-5 w-5 rounded">@endif
+                <span>{!! __('Part of :name', ['name' => '<b class="font-medium text-slate-900 dark:text-white">Hop Easy Link</b>']) !!}</span>
+            </a>
         @endisset
         <div class="grid grid-cols-2 gap-8 md:grid-cols-4 lg:gap-12">
             {{-- Column 1: App --}}
@@ -70,9 +77,9 @@
             </div>
         </div>
 
-        {{-- Bottom row: copyright, right-aligned on desktop, centred on phones --}}
-        <div class="mt-12 border-t border-slate-200/80 pt-8 dark:border-white/10">
-            <p class="text-center font-mono sm:text-right text-xs text-slate-500 dark:text-slate-400">
+        {{-- Bottom row: licence, right-aligned on desktop and centred on phones --}}
+        <div class="mt-12 flex flex-col items-center gap-4 border-t border-slate-200/80 pt-8 sm:flex-row sm:justify-end dark:border-white/10">
+            <p class="text-center font-mono text-xs sm:text-right text-slate-500 dark:text-slate-400">
                 &copy; {{ date('Y') }} navi-crwn · {{ __('Open source under MIT License') }}
             </p>
         </div>

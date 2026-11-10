@@ -48,6 +48,14 @@ class HopAppFactory extends Factory
             'capabilities' => ['admin_api', 'events', 'zero_knowledge']]);
     }
 
+    public function payhop(string $secret = 'payhop-secret-that-is-long-enough-12345'): static
+    {
+        return $this->state(['slug' => 'payhop', 'name' => 'PayHop', 'menu_label' => 'Payments', 'icon' => 'pay', 'color' => 'teal',
+            'url' => 'https://pay.example.com', 'callback_path' => '/auth/sso/callback', 'start_path' => '/auth/sso',
+            'pages' => ['default' => '/'], 'continue_page' => 'default', 'secret' => $secret, 'sort_order' => 60,
+            'capabilities' => ['admin_api', 'events', 'zero_knowledge']]);
+    }
+
     /** The control center: hidden from menus, allowed to use the admin API. */
     public function imperium(string $secret = 'imperium-secret-that-is-long-enough-1234'): static
     {

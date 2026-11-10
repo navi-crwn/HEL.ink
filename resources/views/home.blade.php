@@ -32,10 +32,6 @@
         @endif
     </div>
     @include('partials.home-account')
-    <div id="apps-list" class="coss-apps" role="region" aria-labelledby="apps-list-title">
-        <h2 id="apps-list-title">{{ __('The HOP apps') }}</h2>
-        <ul>@foreach ($stories as $slug => $app)<li><img src="{{ $app['mark'] }}" alt="" width="36" height="36"><div><b>{{ $app['name'] }}</b><span>{{ $app['kicker'] }}</span></div><code>{{ parse_url($app['url'], PHP_URL_HOST) }}</code><a class="h-pill" href="{{ $app['url'] }}">{{ __('Open :app', ['app' => $app['name']]) }}</a></li>@endforeach</ul>
-    </div>
     <span id="apps" aria-hidden="true"></span>
     @foreach ($stories as $slug => $app)
     <section id="{{ $slug }}" class="h-sec h-app" style="--app-accent: {{ $app['color'] }}" aria-labelledby="{{ $slug }}-title" data-app-section="{{ $slug }}">

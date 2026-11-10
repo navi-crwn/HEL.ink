@@ -11,6 +11,8 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 - hop-assets v7 adds the shared bento: `hop-bento.css`, a six-column `.hop-bento` grid whose spans follow the box count so two to nine boxes always fill whole rows, and `hop-motion.js` with the staggered box reveal, the pointer spotlight and `is-live` on scenes only while they are on screen. The hub's home stats, FAQ, products, about, plans, help, contact and per-app pages use it, with small CSS scenes, and the dashboard grids use the same layout.
 - hop-assets v7 logo rule: one logo, no text, for every app. The LinkHop and BioHop `wordmark` files are the same pixel mark as `mark`; the app name is real page text next to the mark.
 - hop-assets v7 `hop-brand.css`: each app name in its own typeface, as ASCII-subset fonts with their OFL licences (HOP ID Syne, LinkHop Pixelify Sans, BioHop Space Grotesk, PixelHop Silkscreen, NoteHop Caveat, FileHop Sora).
+- hop-assets v8: the bento is proportional. `hop-bento.css` has 60 desktop columns so five tiles share one row from 1100 px (`data-tiles`), no box is alone on a row or wider than half of it unless it is the only box or `data-span` asks for it, and media is capped (`[data-media]` 160-200 px, `[data-scene]` 140 px). Pattern tables for two to nine boxes are at the top of the file and `tests/hop-bento.test.mjs` checks them. The hub's home, products, about, help, plans and contact pages use it. v7 stays as it was.
+- hop-assets v8: BioHop has a new mark, an 8x8 page with three lines, a stepped top-right corner and a cut bottom-left cell (`mark.svg`, `mark-white.svg`, the mark-only `wordmark.svg`, the 3D map and the floating tile). The manifest key `mark_white` is new.
 
 ### Fixed
 

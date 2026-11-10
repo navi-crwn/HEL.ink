@@ -64,6 +64,10 @@ sha384 hashes; `check` (run in CI) fails when the manifest is stale or a file is
   Markup: `<div class="hop-bento"><article data-spot data-scene>…</article>…</div>`; the contract is documented at the
   top of `hop-bento.css`. Everything else is v6 copied unchanged; v6 stays as it was.
 
+  v7 logo rule (owner, 2026-11-10): one logo, no text, for every app. The `wordmark` and `wordmark_white` files of
+  LinkHop and BioHop are now the same pixel mark as `mark` (kept so existing keys do not break); never draw the app
+  name inside an image. Footers and headers show the mark image plus the name as real page text next to it.
+
 FileHop sends `Cross-Origin-Embedder-Policy: require-corp`, so anything it loads from
 hel.ink must carry `Cross-Origin-Resource-Policy: cross-origin` (already in
 `deploy/nginx/hop-assets.conf`; check the live vhost has it before FileHop uses v3 or v4).

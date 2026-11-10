@@ -62,6 +62,11 @@ kept next to the font files.
 - JetBrains Mono, by The JetBrains Mono Project Authors
 - Plus Jakarta Sans, by The Plus Jakarta Sans Project Authors
 - Syne, by The Syne Project Authors
+- Pixelify Sans, by The Pixelify Sans Project Authors
+- Space Grotesk, by The Space Grotesk Project Authors
+- Silkscreen, by The Silkscreen Project Authors
+- Caveat, by The Caveat Project Authors
+- Sora, by The Sora Project Authors
 
 ## Artwork
 

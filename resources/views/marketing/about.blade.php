@@ -45,10 +45,11 @@
         {{-- The Family Apps from Manifest --}}
         <div class="mt-12 space-y-6">
             <h2 class="text-xl font-bold text-slate-900 dark:text-white">{{ __('The HOP Family Apps') }}</h2>
-            <div class="grid gap-6 sm:grid-cols-2">
+            <div class="hop-bento">
                 @foreach ($stories as $slug => $app)
-                    <div class="{{ $card }} flex flex-col justify-between">
+                    <div class="flex flex-col justify-between" data-spot>
                         <div>
+                            <x-bento-scene :slug="$slug" :color="$app['color']" />
                             <div class="flex items-center gap-3">
                                 <img src="{{ $app['mark'] }}" alt="" width="36" height="36" class="h-9 w-9 rounded-xl">
                                 <div>

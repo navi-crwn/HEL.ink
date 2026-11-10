@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 
-const source = fs.readFileSync(new URL('../public/hop-assets/v6/hop-hero3d.js', import.meta.url), 'utf8');
+const source = fs.readFileSync(new URL(`../public/hop-assets/${process.env.HOP_ASSETS_VERSION || 'v7'}/hop-hero3d.js`, import.meta.url), 'utf8');
 function fixture({reduce = false, webgl = true, mobile = false, instanced = false} = {}) {
     const frames = new Map(), observers = [], canvases = [], calls = [];
     let sequence = 0;
@@ -58,11 +58,17 @@ test('the four most visible scenes animate together, a fifth waits; hidden docum
     first.destroy(); second.destroy(); f.frame(); assert.equal(f.frames.size, 0);
 });
 
-test('with more than four scenes on screen only the four most visible animate', () => {
-    const f = fixture(), cs = [1, .9, .8, .7, .6].map(() => f.canvas());
+test('with more than four scenes on screen, every scene that has not settled keeps animating until it has', () => {
+    const f = fixture(), cs = [1, .9, .8, .7, .6, .5].map(() => f.canvas());
     const apis = cs.map(c => f.api.mount(c));
-    cs.forEach((c, i) => f.visible(c, 1 - i * .1)); f.frame();
-    assert.deepEqual(cs.map(c => c.dataset.animating), ['true', 'true', 'true', 'true', 'false']);
+    cs.forEach((c, i) => f.visible(c, 1 - i * .1)); f.frame(1000);
+    assert.deepEqual(cs.map(c => c.dataset.animating), ['true', 'true', 'true', 'true', 'true', 'true']);
+    for (let i = 0; i < 400 && !cs.every(c => c.dataset.settled === 'true'); i++) f.frame(1000 + i * 50);
+    assert.deepEqual(cs.map(c => c.dataset.settled), Array(6).fill('true'));
+    apis.forEach(api => assert.equal(api.settled(), true));
+    // once settled, only the four most visible keep floating; the loop stays bounded
+    f.frame(30000);
+    assert.equal(cs.filter(c => c.dataset.animating === 'true').length, 4);
     assert.equal(f.frames.size, 1);
     apis.forEach(api => api.destroy());
 });

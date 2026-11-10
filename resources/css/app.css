@@ -4,6 +4,7 @@
     .marketing-brand > span > span { display: none; }
 }
 @import './identity-hero.css';
+@import './bento-scenes.css';
 @import './home-product.css';
 
 @plugin '@tailwindcss/forms';

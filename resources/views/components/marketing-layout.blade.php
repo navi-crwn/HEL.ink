@@ -41,6 +41,7 @@
         @endif
         <x-hop::fonts />
         @vite(['resources/css/app.css', 'resources/css/coss.css', 'resources/js/app.js'])
+        @include('partials.hop-bento')
         @stack('head')
     </head>
     @if ($themed)

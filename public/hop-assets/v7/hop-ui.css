@@ -1,0 +1,127 @@
+/*
+ * HOP dialogs and reminder cards, one copy for every HOP app (served from hel.ink/hop-assets).
+ * Use with hop-ui.js. Colours follow the page: light by default, dark under .dark,
+ * [data-theme="dark"], or the system scheme when the page sets neither. An app can tune
+ * --hop-accent (buttons), --hop-ui-surface and --hop-ui-text on :root.
+ */
+:root {
+  --hop-ui-surface: #ffffff;
+  --hop-ui-text: #0f1117;
+  --hop-ui-muted: #5b6170;
+  --hop-ui-line: rgb(15 17 23 / 0.1);
+  --hop-ui-field: #ffffff;
+  --hop-ui-ghost: rgb(15 17 23 / 0.06);
+  --hop-ui-ghost-hover: rgb(15 17 23 / 0.1);
+  --hop-ui-backdrop: rgb(10 11 16 / 0.45);
+  --hop-ui-shadow: 0 24px 60px -24px rgb(10 11 16 / 0.45), 0 1px 0 rgb(255 255 255 / 0.6) inset;
+  --hop-ui-danger: #e11d48;
+  --hop-ui-danger-hover: #be123c;
+  --hop-ui-radius: 16px;
+  --hop-ui-font: var(--hop-font-body, 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif);
+}
+/* hop-ui.js adds .hop-ui--dark to a dialog or card when the page is dark: an explicit marker
+   (.dark, [data-theme="dark"]) or, without one, the page background's own luminance. */
+.hop-ui--dark {
+  --hop-ui-surface: #15171f;
+  --hop-ui-text: #eef0f6;
+  --hop-ui-muted: #a0a6b8;
+  --hop-ui-line: rgb(255 255 255 / 0.1);
+  --hop-ui-field: #0f1117;
+  --hop-ui-ghost: rgb(255 255 255 / 0.08);
+  --hop-ui-ghost-hover: rgb(255 255 255 / 0.13);
+  --hop-ui-backdrop: rgb(0 0 0 / 0.6);
+  --hop-ui-shadow: 0 24px 60px -20px rgb(0 0 0 / 0.7), 0 1px 0 rgb(255 255 255 / 0.06) inset;
+}
+
+/* ---- dialog ---------------------------------------------------------------------------- */
+.hop-dialog {
+  position: fixed; inset: 0; margin: auto; padding: 0; border: 0; background: transparent;
+  width: min(calc(100vw - 32px), 420px); max-width: none; max-height: calc(100dvh - 32px);
+  color: var(--hop-ui-text); font-family: var(--hop-ui-font); font-size: 15px; line-height: 1.5;
+  overflow: visible;
+}
+.hop-dialog::backdrop { background: var(--hop-ui-backdrop); animation: hop-fade .18s ease-out; }
+.hop-dialog--fallback { z-index: 2147483000; }
+.hop-dialog__box {
+  background: var(--hop-ui-surface); color: var(--hop-ui-text);
+  border-radius: var(--hop-ui-radius); box-shadow: var(--hop-ui-shadow);
+  border: 1px solid var(--hop-ui-line);
+  transform-origin: 50% 50%;
+  animation: hop-pop .18s cubic-bezier(.2, .8, .2, 1);
+}
+.hop-dialog--anchored .hop-dialog__box {
+  /* from the control that opened it: the origin is that point, relative to the box */
+  transform-origin: calc(var(--hop-ox) - (100vw - min(calc(100vw - 32px), 420px)) / 2) calc(var(--hop-oy) - 50vh + 50%);
+}
+.hop-dialog.is-closing .hop-dialog__box { animation: hop-pop-out .14s ease-in forwards; }
+.hop-dialog.is-closing::backdrop { animation: hop-fade-out .14s ease-in forwards; }
+.hop-dialog__body { padding: 22px 22px 18px; }
+.hop-dialog__title { margin: 0 0 6px; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; text-wrap: balance; }
+.hop-dialog__msg { margin: 0; color: var(--hop-ui-muted); text-wrap: pretty; overflow-wrap: anywhere; }
+.hop-dialog__form { margin: 0; }
+.hop-dialog__field { display: block; margin-top: 14px; }
+.hop-dialog__label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; color: var(--hop-ui-text); }
+.hop-dialog__input {
+  display: block; width: 100%; box-sizing: border-box; height: 44px; padding: 0 12px;
+  font: inherit; font-size: 16px; color: var(--hop-ui-text); background: var(--hop-ui-field);
+  border: 1px solid var(--hop-ui-line); border-radius: calc(var(--hop-ui-radius) - 6px);
+  outline: none; transition: border-color .15s ease, box-shadow .15s ease;
+}
+.hop-dialog__input:focus-visible { border-color: var(--hop-accent, #6366f1); box-shadow: 0 0 0 3px color-mix(in srgb, var(--hop-accent, #6366f1) 25%, transparent); }
+.hop-dialog__input[aria-invalid="true"] { border-color: var(--hop-ui-danger); }
+.hop-dialog__error { margin: 6px 0 0; font-size: 13px; color: var(--hop-ui-danger); }
+.hop-dialog__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+@media (max-width: 420px) {
+  .hop-dialog__actions { flex-direction: column-reverse; }
+  .hop-dialog__actions .hop-btn { width: 100%; }
+}
+
+.hop-btn {
+  appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 44px; padding: 0 16px; border-radius: calc(var(--hop-ui-radius) - 6px); border: 1px solid transparent;
+  font: inherit; font-size: 15px; font-weight: 600; letter-spacing: -0.005em; cursor: pointer;
+  white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis;
+  transition: background-color .15s ease, color .15s ease, transform .12s ease, box-shadow .15s ease;
+}
+.hop-btn:active { transform: scale(.97); }
+.hop-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--hop-accent, #6366f1) 35%, transparent); }
+.hop-btn--primary { background: var(--hop-accent, #6366f1); color: #fff; }
+.hop-btn--primary:hover { filter: brightness(1.08); }
+.hop-btn--danger { background: var(--hop-ui-danger); color: #fff; white-space: normal; text-align: center; line-height: 1.3; padding-top: 10px; padding-bottom: 10px; overflow-wrap: anywhere; }
+.hop-btn--danger:hover { background: var(--hop-ui-danger-hover); }
+.hop-btn--danger:focus-visible { box-shadow: 0 0 0 3px rgb(225 29 72 / 0.35); }
+.hop-btn--ghost { background: var(--hop-ui-ghost); color: var(--hop-ui-text); }
+.hop-btn--ghost:hover { background: var(--hop-ui-ghost-hover); }
+
+/* ---- reminder card --------------------------------------------------------------------- */
+.hop-remind { position: relative; overflow: hidden; transition: height .22s ease-in, opacity .18s ease-in, margin .22s ease-in, padding .22s ease-in; }
+.hop-remind.is-hiding { opacity: 0; margin-top: 0 !important; margin-bottom: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important; border-width: 0 !important; }
+.hop-remind__hide {
+  appearance: none; position: absolute; top: 8px; right: 8px; z-index: 1;
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; min-width: 44px; padding: 6px 8px;
+  border: 0; border-radius: 10px; background: transparent; color: var(--hop-ui-muted);
+  font: inherit; font-family: var(--hop-ui-font); font-size: 12px; line-height: 1.2; text-align: left; cursor: pointer;
+  transition: background-color .15s ease, color .15s ease, transform .12s ease;
+}
+.hop-remind__hide:hover { background: var(--hop-ui-ghost); color: var(--hop-ui-text); }
+.hop-remind__hide:active { transform: scale(.97); }
+.hop-remind__hide:focus-visible { outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--hop-accent, #6366f1) 35%, transparent); }
+.hop-remind__x { font-size: 20px; line-height: 1; width: 20px; text-align: center; }
+.hop-remind__txt { display: none; flex-direction: column; }
+.hop-remind__txt strong { font-weight: 600; }
+.hop-remind__txt small { font-size: 11px; opacity: .8; }
+.hop-remind__hide:hover .hop-remind__txt, .hop-remind__hide:focus-visible .hop-remind__txt { display: flex; }
+@media (min-width: 640px) { .hop-remind__txt { display: flex; } }
+.hop-remind[data-hop-remind] { padding-right: max(var(--hop-remind-pad, 20px), 56px); }
+@media (min-width: 640px) { .hop-remind[data-hop-remind] { padding-right: 220px; } }
+
+@keyframes hop-pop { from { opacity: 0; transform: scale(.95); } to { opacity: 1; transform: none; } }
+@keyframes hop-pop-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: scale(.96); } }
+@keyframes hop-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes hop-fade-out { from { opacity: 1; } to { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hop-dialog__box, .hop-dialog::backdrop, .hop-dialog.is-closing .hop-dialog__box, .hop-dialog.is-closing::backdrop { animation: none; }
+  .hop-btn, .hop-remind, .hop-remind__hide, .hop-dialog__input { transition: none; }
+  .hop-btn:active, .hop-remind__hide:active { transform: none; }
+}

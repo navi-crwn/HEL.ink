@@ -7,12 +7,12 @@ hub from `https://hel.ink/hop-assets/`.
 | Path | What | Cache |
 |---|---|---|
 | `/hop-assets/apps.json` | Manifest: version, asset URLs with SRI hashes, and every app (name, tagline, URL, colour, icons, public or not) | 5 minutes |
-| `/hop-assets/v6/fonts.css` | Syne (display), Plus Jakarta Sans (body), JetBrains Mono (code), self-hosted woff2, plus `--hop-font-display`, `--hop-font-body`, `--hop-font-mono` | 1 year |
-| `/hop-assets/v6/hop-float.css`, `hop-float.js` | The floating tiles; the script draws all seven tiles itself | 1 year |
-| `/hop-assets/v6/hop-ui.css`, `hop-ui.js` | `HopUI.alert/confirm/prompt` dialogs that replace the browser's own, and the "Hide, shows again next week" button on reminder cards (`[data-hop-remind]`) | 1 year |
-| `/hop-assets/v6/apps/<slug>/…` | Official marks, wordmarks, favicons and icons per app | 1 year |
+| `/hop-assets/v7/fonts.css` | Syne (display), Plus Jakarta Sans (body), JetBrains Mono (code), self-hosted woff2, plus `--hop-font-display`, `--hop-font-body`, `--hop-font-mono` | 1 year |
+| `/hop-assets/v7/hop-float.css`, `hop-float.js` | The floating tiles; the script draws all seven tiles itself | 1 year |
+| `/hop-assets/v7/hop-ui.css`, `hop-ui.js` | `HopUI.alert/confirm/prompt` dialogs that replace the browser's own, and the "Hide, shows again next week" button on reminder cards (`[data-hop-remind]`) | 1 year |
+| `/hop-assets/v7/apps/<slug>/…` | Official marks, wordmarks, favicons and icons per app | 1 year |
 
-Sources: `public/hop-assets/v6/` (the files) and `resources/hop-assets/apps.source.json`
+Sources: `public/hop-assets/v7/` (the files) and `resources/hop-assets/apps.source.json`
 (the app list). `python3 scripts/hop_assets.py build` writes `apps.json` with URLs and
 sha384 hashes; `check` (run in CI) fails when the manifest is stale or a file is missing.
 
@@ -50,6 +50,28 @@ sha384 hashes; `check` (run in CI) fails when the manifest is stale or a file is
   as pixel paths (no more `<img>` for LinkHop) and `hop-hero3d.js` uses the 8x8 LinkHop map. `home/linkhop-*.webp`
   (the fallback image under the 3D canvas) is re-rendered from the v6 engine; the other hero images are v5 copies (BioHop's 3D map was already this pixel mark). Everything else is v5 copied unchanged; v5 stays as it was.
 
+- **v7** (2026-11-10): one engine fix in `hop-hero3d.js`. The scheduler used to animate only the four most
+  visible scenes (`.slice(0, 4)`), so a page with five family tiles (the LinkHop and BioHop homes) never drew
+  the fifth and it never settled. Now every visible scene that has not settled keeps drawing until it has; the cap
+  of four applies only to settled scenes that keep floating, so per-frame work stays bounded. Reduced motion still
+  goes straight to the final shape.
+  v7 also adds the shared bento (owner, Round 3): `hop-bento.css` (`bento_css` in the manifest) is a 6-column
+  `.hop-bento` grid whose spans depend on the box count, so 2 to 9 boxes always fill whole rows (2: 4+2; 3: 3+3 / 6;
+  4: 4+2 / 2+4; 5: 3+3 / 2+2+2; 6: 4+2 / 2+2+2 / 6; 7: 3+3 / 2+2+2 / 3+3; 8: 3+3 / 2+2+2 / 2+2+2;
+  9: 3+3 / 2+2+2 / 2+2+2 / 6; `data-span="3|4|6"` overrides; tablet 2 columns, phone 1), and `hop-motion.js` gains,
+  with its old API unchanged, the box reveal (40 ms stagger, once; `[data-rv-load]` for dashboards), the pointer
+  spotlight (`data-spot`) and `is-live` on `[data-scene]` only while on screen; reduced motion shows the final state.
+  Markup: `<div class="hop-bento"><article data-spot data-scene>…</article>…</div>`; the contract is documented at the
+  top of `hop-bento.css`. Everything else is v6 copied unchanged; v6 stays as it was.
+
+  v7 logo rule (owner, 2026-11-10): one logo, no text, for every app. The `wordmark` and `wordmark_white` files of
+  LinkHop and BioHop are now the same pixel mark as `mark` (kept so existing keys do not break); never draw the app
+  name inside an image. Footers and headers show the mark image plus the name as real page text next to it.
+  App names in their own typeface (owner, 2026-11-10): `hop-brand.css` (`brand_css`) with ASCII-subset fonts in
+  `fonts/brand/` and their OFL licences: LinkHop Pixelify Sans, BioHop Space Grotesk, PixelHop Silkscreen,
+  NoteHop Caveat, FileHop Sora, HOP ID Syne (already in v7). Use `<span class="hop-name hop-name-linkhop">LinkHop</span>`
+  next to the mark image; the name stays real text.
+
 FileHop sends `Cross-Origin-Embedder-Policy: require-corp`, so anything it loads from
 hel.ink must carry `Cross-Origin-Resource-Policy: cross-origin` (already in
 `deploy/nginx/hop-assets.conf`; check the live vhost has it before FileHop uses v3 or v4).
@@ -73,12 +95,12 @@ the live config, before `location /`, then `sudo nginx -t && sudo systemctl relo
 ## Using it in an app
 
 ```html
-<link rel="stylesheet" href="https://hel.ink/hop-assets/v6/fonts.css" crossorigin>
-<link rel="stylesheet" href="https://hel.ink/hop-assets/v6/hop-float.css" crossorigin>
+<link rel="stylesheet" href="https://hel.ink/hop-assets/v7/fonts.css" crossorigin>
+<link rel="stylesheet" href="https://hel.ink/hop-assets/v7/hop-float.css" crossorigin>
 <div data-hop-float></div>
-<script src="https://hel.ink/hop-assets/v6/hop-float.js" integrity="sha384-…" crossorigin defer></script>
-<link rel="stylesheet" href="https://hel.ink/hop-assets/v6/hop-ui.css" crossorigin>
-<script src="https://hel.ink/hop-assets/v6/hop-ui.js" integrity="sha384-…" crossorigin defer></script>
+<script src="https://hel.ink/hop-assets/v7/hop-float.js" integrity="sha384-…" crossorigin defer></script>
+<link rel="stylesheet" href="https://hel.ink/hop-assets/v7/hop-ui.css" crossorigin>
+<script src="https://hel.ink/hop-assets/v7/hop-ui.js" integrity="sha384-…" crossorigin defer></script>
 ```
 
 Dialogs, in place of `confirm()`:

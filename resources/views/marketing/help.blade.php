@@ -32,9 +32,9 @@
         </div>
 
         {{-- Guides Grid for Apps --}}
-        <div class="grid gap-6 sm:grid-cols-2">
+        <div class="hop-bento">
             {{-- LinkHop Guide --}}
-            <div class="{{ $card }} space-y-3">
+            <div class="space-y-3" data-spot>
                 <div class="flex items-center gap-3">
                     <span class="h-3 w-3 rounded-full bg-indigo-500"></span>
                     <h2 class="text-base font-bold text-slate-900 dark:text-white">LinkHop User Guide</h2>
@@ -51,7 +51,7 @@
             </div>
 
             {{-- BioHop Guide --}}
-            <div class="{{ $card }} space-y-3">
+            <div class="space-y-3" data-spot>
                 <div class="flex items-center gap-3">
                     <span class="h-3 w-3 rounded-full bg-purple-500"></span>
                     <h2 class="text-base font-bold text-slate-900 dark:text-white">BioHop User Guide</h2>
@@ -68,7 +68,7 @@
             </div>
 
             {{-- PixelHop Guide --}}
-            <div class="{{ $card }} space-y-3">
+            <div class="space-y-3" data-spot>
                 <div class="flex items-center gap-3">
                     <span class="h-3 w-3 rounded-full bg-cyan-500"></span>
                     <h2 class="text-base font-bold text-slate-900 dark:text-white">PixelHop User Guide</h2>
@@ -85,7 +85,7 @@
             </div>
 
             {{-- NoteHop Guide --}}
-            <div class="{{ $card }} space-y-3">
+            <div class="space-y-3" data-spot>
                 <div class="flex items-center gap-3">
                     <span class="h-3 w-3 rounded-full bg-emerald-500"></span>
                     <h2 class="text-base font-bold text-slate-900 dark:text-white">NoteHop User Guide</h2>
@@ -102,7 +102,7 @@
             </div>
 
             {{-- FileHop Guide --}}
-            <div class="{{ $card }} space-y-3">
+            <div class="space-y-3" data-spot>
                 <div class="flex items-center gap-3">
                     <span class="h-3 w-3 rounded-full bg-amber-500"></span>
                     <h2 class="text-base font-bold text-slate-900 dark:text-white">FileHop User Guide</h2>

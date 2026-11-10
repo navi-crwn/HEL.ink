@@ -1,6 +1,6 @@
 {
-  "version": "v6",
-  "base": "https://hel.ink/hop-assets/v6/",
+  "version": "v7",
+  "base": "https://hel.ink/hop-assets/v7/",
   "assets": {
     "fonts_css": "fonts-amnesia.css",
     "float_css": "hop-float.css",
@@ -8,6 +8,8 @@
     "home_css": "hop-home.css",
     "hero3d_js": "hop-hero3d.js",
     "motion_js": "hop-motion.js",
+    "bento_css": "hop-bento.css",
+    "brand_css": "hop-brand.css",
     "home_js": "hop-home.js",
     "ui_css": "hop-ui.css",
     "ui_js": "hop-ui.js",

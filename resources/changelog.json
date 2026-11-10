@@ -1,14 +1,302 @@
 {
   "schema": 1,
   "sources": {
-    "HEL.ink": "32657829c346336fc676f09d16cc09cfef9abb4f",
-    "LinkHop": "7b8716e8d79dbd9b3b910602a8ee5612831fb06a",
-    "BioHop": "3b481f1db7b5cd71b1761b64b6ebc944f208b6a0",
-    "PixelHop": "51756d9c21a011da37eb2d3f4e2dd2e3f88a2249",
-    "NoteHop": "5613be00165a0a8bd6e731338cedb5ed633031a6",
-    "FileHop": "9487ae0f9491c6e08643a3d093acc31f4dfd2cac"
+    "HEL.ink": "1865ac4cd3b720e9c9b577a9f43ce25db2940ef1",
+    "LinkHop": "3e2eb8aacef820f661cfab2dafb4d04606690f3e",
+    "BioHop": "39cf2085fadca5e27c69f0f46bd7382f7ba902ca",
+    "PixelHop": "18acf1529fffa2640fb0f319d0515f43e870a13f",
+    "NoteHop": "ee8fa6fc2009c4f834405888382385eb6b3cc9b4",
+    "FileHop": "f5fa9bbb202d2b26b0592348c2521ee1ceb95110"
   },
   "entries": [
+    {
+      "kind": "pr",
+      "date": "2026-11-10T15:12:28Z",
+      "title": "Add an X button at the right end of every file row",
+      "url": "https://github.com/navi-crwn/FileHop/pull/13",
+      "id": "#13",
+      "app": "FileHop",
+      "repo": "FileHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T22:12:27+07:00",
+      "title": "Merge pull request #13: Add an X button at the right end of every file row",
+      "url": "https://github.com/navi-crwn/FileHop/commit/f5fa9bbb202d2b26b0592348c2521ee1ceb95110",
+      "id": "f5fa9bbb",
+      "app": "FileHop",
+      "repo": "FileHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T16:05:28+01:00",
+      "title": "Add an X button at the right end of every file row",
+      "url": "https://github.com/navi-crwn/FileHop/commit/e012401f0fe9f25fc0fc08329e3853d6945c0435",
+      "id": "e012401f",
+      "app": "FileHop",
+      "repo": "FileHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T14:51:09Z",
+      "title": "Add a real /changelog page, og:image, and remove the top bar app grid",
+      "url": "https://github.com/navi-crwn/FileHop/pull/12",
+      "id": "#12",
+      "app": "FileHop",
+      "repo": "FileHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T21:51:08+07:00",
+      "title": "Merge pull request #12: Add a real /changelog page, og:image, and remove the top bar app grid",
+      "url": "https://github.com/navi-crwn/FileHop/commit/8ed6cb7b27d52d0fbae257aec6d6979e26bc872b",
+      "id": "8ed6cb7b",
+      "app": "FileHop",
+      "repo": "FileHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T21:51:04+07:00",
+      "title": "Merge pull request #48: Expire new guest uploads after 30 days by default; remove home section labels",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/18acf1529fffa2640fb0f319d0515f43e870a13f",
+      "id": "18acf152",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T14:51:04Z",
+      "title": "Expire new guest uploads after 30 days by default; remove home section labels",
+      "url": "https://github.com/navi-crwn/PixelHop/pull/48",
+      "id": "#48",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T14:50:59Z",
+      "title": "Cap guest notes per address, reserve secret/embargo/send, drop Arabic from AI translate",
+      "url": "https://github.com/navi-crwn/NoteHop/pull/56",
+      "id": "#56",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T21:50:58+07:00",
+      "title": "Merge pull request #56: Cap guest notes per address, reserve secret/embargo/send, drop Arabic from AI translate",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/ee8fa6fc2009c4f834405888382385eb6b3cc9b4",
+      "id": "ee8fa6fc",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T21:50:50+07:00",
+      "title": "Merge pull request #73: Escape the vCard, translate the WhatsApp block, pin hop/auth and hop/safety",
+      "url": "https://github.com/navi-crwn/BioHop/commit/39cf2085fadca5e27c69f0f46bd7382f7ba902ca",
+      "id": "39cf2085",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T14:50:50Z",
+      "title": "Escape the vCard, translate the WhatsApp block, pin hop/auth and hop/safety",
+      "url": "https://github.com/navi-crwn/BioHop/pull/73",
+      "id": "#73",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T14:50:47Z",
+      "title": "Family look for the error pages, reserved words, translated move notice and dependency pins",
+      "url": "https://github.com/navi-crwn/LinkHop/pull/122",
+      "id": "#122",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T21:50:46+07:00",
+      "title": "Merge pull request #122: Family look for the error pages, reserved words, translated move notice and dependency pins",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/3e2eb8aacef820f661cfab2dafb4d04606690f3e",
+      "id": "3e2eb8aa",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T14:50:40Z",
+      "title": "Hub cleanup: drop home eyebrows and app counts, add sitemap, FileHop in docs, hop-safety v0.1.0",
+      "url": "https://github.com/navi-crwn/HEL.ink/pull/66",
+      "id": "#66",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T21:50:39+07:00",
+      "title": "Merge pull request #66: Hub cleanup: drop home eyebrows and app counts, add sitemap, FileHop in docs, hop-safety v0.1.0",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/1865ac4cd3b720e9c9b577a9f43ce25db2940ef1",
+      "id": "1865ac4c",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T15:11:59+01:00",
+      "title": "Update the lookup tests to the Safe Browsing v5 request and answer shapes",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/9b7c94bca87be0c3df50720b6fb980e23e58d95f",
+      "id": "9b7c94bc",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T15:07:44+01:00",
+      "title": "Fix code style in the error pages test",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/8061cb348e9f94930693bbfb24848ff9ac2a2854",
+      "id": "8061cb34",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T15:07:19+01:00",
+      "title": "Format the safety test copy with pint",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/fddd7c2e6f836d2e749dd4377f9180512aa48b03",
+      "id": "fddd7c2e",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T15:05:24+01:00",
+      "title": "Changelog page: family top bar and footer, no eyebrow label",
+      "url": "https://github.com/navi-crwn/FileHop/commit/ef27b89bbdd2f52cec4f8964dd37af0306c459ac",
+      "id": "ef27b89b",
+      "app": "FileHop",
+      "repo": "FileHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T15:00:53+01:00",
+      "title": "Drop the app count from the English FAQ text, fix de/zh-CN wording, add a guard test",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/c003aba969ccc6d696c727bc9898e697cf202933",
+      "id": "c003aba9",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:58:43+01:00",
+      "title": "Render the 429 countdown script inside the layout; test it; keep the sync guard reminder; cover the old /slug form",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/aa242ee24e8bb05ea918661e54ab2a9a5da0c5f7",
+      "id": "aa242ee2",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:51:11+01:00",
+      "title": "Changelog test: FileHop is a source of the public history",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/0effff422a5cf9c39202b043353627e187754ae7",
+      "id": "0effff42",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:50:09+01:00",
+      "title": "Add a real /changelog page, og:image, and drop the top bar app grid",
+      "url": "https://github.com/navi-crwn/FileHop/commit/623d01b240ae465ee2f6eab48e3144b5c3311973",
+      "id": "623d01b2",
+      "app": "FileHop",
+      "repo": "FileHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:49:30+01:00",
+      "title": "Hub cleanup: drop home eyebrows and app counts, sitemap, FileHop in docs and changelog sources, hop-safety v0.1.0",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/eda9d0734ac39c97cdc08fbffde8bffe48e0c114",
+      "id": "eda9d073",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:47:32+01:00",
+      "title": "Count SSH notes toward the guest cap, group IPv6 by /64, serve a static sitemap, document the proxy header rule",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/4872ac33b5a5dd0c024565242fb4d7e772c1bcbf",
+      "id": "4872ac33",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:47:10+01:00",
+      "title": "Offer guests only expiry choices the server honours; drop the CORP change",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/11fe40e69669d9ce194d594199315336aed7dad5",
+      "id": "11fe40e6",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:46:25+01:00",
+      "title": "Rebuild the changelog snapshot",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/aaa8ce3abd275db1f9adeade35910e1e327e034a",
+      "id": "aaa8ce3a",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:46:05+01:00",
+      "title": "Family look for the error pages, reserved words, translated move notice, pins and cleanup",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/5c87cdfedb59dea04d4b4b77ca50dc4e930bce99",
+      "id": "5c87cdfe",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:45:21+01:00",
+      "title": "Fall back to phone or e-mail for the vCard name; refuse malformed UTF-8",
+      "url": "https://github.com/navi-crwn/BioHop/commit/7235d0245b5853f9c6bbb5a41b28cf2a36e74d81",
+      "id": "7235d024",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:35:57+01:00",
+      "title": "Guest upload TTL, CORP on API responses, drop home eyebrows",
+      "url": "https://github.com/navi-crwn/PixelHop/commit/8679bd262fa715396c19b022ac801a4bfe665af4",
+      "id": "8679bd26",
+      "app": "PixelHop",
+      "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:34:54+01:00",
+      "title": "Escape the vCard, translate the WhatsApp block, pin hop/auth and hop/safety",
+      "url": "https://github.com/navi-crwn/BioHop/commit/2431fe6e80afdd4a89576f538cf05ac69fb6fe86",
+      "id": "2431fe6e",
+      "app": "BioHop",
+      "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T14:29:49+01:00",
+      "title": "Cap notes created without an account per address; reserve secret, embargo, send",
+      "url": "https://github.com/navi-crwn/NoteHop/commit/25c770daabc67b34500aba56934b9fd58140fcf0",
+      "id": "25c770da",
+      "app": "NoteHop",
+      "repo": "NoteHop"
+    },
     {
       "kind": "commit",
       "date": "2026-11-10T15:25:57+07:00",
@@ -24,6 +312,15 @@
       "title": "Footer: show each app's mark in the HOP Family column",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/65",
       "id": "#65",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T09:22:36+01:00",
+      "title": "Footer: show each app's mark in the HOP Family column (packages/ui, same as hop-ui #20)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/c5d711b076ece6edabef042dd52589a0f62c3a28",
+      "id": "c5d711b0",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -272,6 +569,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-10T14:39:52+07:00",
+      "title": "Merge pull request #64: Sync repository with what is live (2026-11-10)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/e2e84c64b8f362d10daf537df5b62edfa1540989",
+      "id": "e2e84c64",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-10T08:33:17+01:00",
       "title": "README screenshots: retake from current main",
       "url": "https://github.com/navi-crwn/NoteHop/commit/e07503f206e818b00189d9f424dbfc8acfcf1733",
@@ -310,10 +616,28 @@
       "kind": "commit",
       "date": "2026-11-10T08:29:34+01:00",
       "title": "README screenshots: retake from current main",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/b33acffd3057d99454cd153781c21faf71096051",
+      "id": "b33acffd",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T08:29:34+01:00",
+      "title": "README screenshots: retake from current main",
       "url": "https://github.com/navi-crwn/BioHop/commit/05b1d28b1df8675bcb6289cd8d3af3bc1531062b",
       "id": "05b1d28b",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T08:26:29+01:00",
+      "title": "Changelog snapshot: rebuild from fresh main",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/e211275664c907aa9893ebfd2c49885cb903a371",
+      "id": "e2112756",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -359,6 +683,24 @@
       "id": "2ce9fe8e",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T08:24:16+01:00",
+      "title": "Changelog: hop-assets v8 (proportional bento, BioHop mark)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/b91a2801199f8011c69424b514a537e462320e21",
+      "id": "b91a2801",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T08:23:59+01:00",
+      "title": "Changelog: hop-assets v6, v7, shared bento and brand fonts",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/b7a97110aabef16a347e10430feea4914bf099a6",
+      "id": "b7a97110",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -469,6 +811,15 @@
       "repo": "LinkHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-11-10T14:15:10+07:00",
+      "title": "Merge pull request #63: hop-assets v8: proportional bento and a pixel BioHop mark",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/1de15f8ca6b9e980a0d12cb2e128dd7aacdf81b4",
+      "id": "1de15f8c",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-10T07:15:10Z",
       "title": "hop-assets v8: proportional bento and a pixel BioHop mark",
@@ -512,6 +863,15 @@
       "id": "793fc7c2",
       "app": "PixelHop",
       "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T07:58:26+01:00",
+      "title": "Home: the apps list and the uptime share one bento row",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/09ac75b494c1e6afeb251531499872038b1ecd54",
+      "id": "09ac75b4",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -584,6 +944,15 @@
       "id": "1120d6d0",
       "app": "FileHop",
       "repo": "FileHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T07:25:42+01:00",
+      "title": "hop-assets v8: proportional bento and a pixel BioHop mark",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/c19bdab68f552704414e140b7f58a272c7a5b955",
+      "id": "c19bdab6",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -766,6 +1135,15 @@
       "repo": "LinkHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-11-10T12:48:13+07:00",
+      "title": "Merge pull request #62: hop-assets v7: hero scenes always settle",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/afafa1dec6738490668ebf40f502196cf8e610b9",
+      "id": "afafa1de",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-10T05:48:13Z",
       "title": "hop-assets v7: hero scenes always settle",
@@ -866,6 +1244,42 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-10T06:08:06+01:00",
+      "title": "hop-assets v7: each app name in its own typeface",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/6d889e27259557dbd4a632cb5b40008fea653b80",
+      "id": "6d889e27",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T05:58:36+01:00",
+      "title": "hop-assets v7: one logo without text for every app",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/b78f61d58d3ee98230f844c0eed8abe68e71ff74",
+      "id": "b78f61d5",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T05:54:18+01:00",
+      "title": "hop-assets v7: LinkHop wordmark is the pixel head alone, no text",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/657d903c88a9e8aaa79ab35c3582d0d02c2785e5",
+      "id": "657d903c",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T05:52:43+01:00",
+      "title": "hop-assets v7: LinkHop wordmark with the new pixel head",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/97e224815e50ed06c1571a0d7f267a35c500d464",
+      "id": "97e22481",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-10T05:48:57+01:00",
       "title": "Give FileHop the family footer and its own 3D hero mark",
       "url": "https://github.com/navi-crwn/FileHop/commit/962e8f5f20b5e6982b67708f53d6cc820ffffbca",
@@ -893,6 +1307,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-10T05:45:42+01:00",
+      "title": "Hub: bento grids with box motion and small scenes on home and marketing pages",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/126f9d8397c7da040bd16e40bdca72af8ca41903",
+      "id": "126f9d83",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-10T05:45:24+01:00",
       "title": "Family section: v6 engine and fallbacks, no section number, grids without a lonely last item",
       "url": "https://github.com/navi-crwn/BioHop/commit/38c68d31adde513aa2c69e2e0cb7e4a280d17d9d",
@@ -908,6 +1331,24 @@
       "id": "5684fea5",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T05:35:22+01:00",
+      "title": "hop-assets v7: shared bento grid, box reveal, pointer spotlight and live scenes",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/e541405671f787e7abc4d72dadec269d4b25a550",
+      "id": "e5414056",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T05:27:12+01:00",
+      "title": "hop-assets v7: keep unsettled scenes drawing until they settle",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/0d3c5e3dca250b8c8a2264442a1ab3df8b39ede4",
+      "id": "0d3c5e3d",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "pr",
@@ -1000,6 +1441,15 @@
       "repo": "LinkHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-11-10T10:59:19+07:00",
+      "title": "Merge pull request #61: Hub post-release fixes: changelog snapshot, footer, sign-out return, status failures",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/6ebfcfe42a1af2f6003a09d76e8b2901e2c0f20b",
+      "id": "6ebfcfe4",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-10T03:59:19Z",
       "title": "Hub post-release fixes: changelog snapshot, footer, sign-out return, status failures",
@@ -1043,6 +1493,24 @@
       "id": "0a8679cd",
       "app": "NoteHop",
       "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T04:39:23+01:00",
+      "title": "hop-assets v6: pixel marks for LinkHop (8x8) and BioHop (9x9)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/ae42e009324d6b799964362dc6f1b9b3b585e691",
+      "id": "ae42e009",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:55:15+01:00",
+      "title": "Remove the internal report from the app repository",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/32dd28607f52bd3d3564329c1d44987314e3ff89",
+      "id": "32dd2860",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -1109,6 +1577,24 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-09T22:38:05+01:00",
+      "title": "Add the hub report",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/49df43d4f1703a14a3801c60eaf70285dd7728c0",
+      "id": "49df43d4",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:37:39+01:00",
+      "title": "Status: one row per app for failures, with an hourly strip and an empty state",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/20cb1861fff20ebc6027506eca698b17d1a111a2",
+      "id": "20cb1861",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-09T22:35:50+01:00",
       "title": "Return to the app after signing out through HOP ID",
       "url": "https://github.com/navi-crwn/FileHop/commit/7506835c7992e79bdf1787553a7262e37f045e57",
@@ -1169,6 +1655,33 @@
       "id": "7cd83063",
       "app": "NoteHop",
       "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:30:57+01:00",
+      "title": "Sign-out: honour a return address that belongs to a family app",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/c9cea199a430586591e2699507164649b2fb84c8",
+      "id": "c9cea199",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:29:04+01:00",
+      "title": "Footer: brand strip inside the footer, no language row, copyright right-aligned",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/12c9419ffb514593f32033a9d82954c134969058",
+      "id": "12c9419f",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:28:08+01:00",
+      "title": "Fix the stale changelog snapshot: fetch before reading, add a --check mode, regenerate",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/3fae028c7b6ec11b4943ab1a50498a83ed4ad536",
+      "id": "3fae028c",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -1252,6 +1765,24 @@
       "repo": "HEL.ink"
     },
     {
+      "kind": "tag",
+      "date": "2026-11-10T04:22:55+07:00",
+      "title": "v1.1.0",
+      "url": "https://github.com/navi-crwn/HEL.ink/releases/tag/v1.1.0",
+      "id": "v1.1.0",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T04:22:55+07:00",
+      "title": "Merge pull request #60: Release 1.1.0",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/09dd46d0ebc631bc656909daaa61ccaa4bbc344f",
+      "id": "09dd46d0",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "commit",
       "date": "2026-11-09T22:12:56+01:00",
       "title": "Release 1.0.0",
@@ -1295,6 +1826,15 @@
       "id": "6a4df5d1",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T22:12:33+01:00",
+      "title": "Release 1.1.0",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/7469b47867b823670da7de1f31b6f0d5aae47da8",
+      "id": "7469b478",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -1441,6 +1981,15 @@
       "repo": "LinkHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-11-10T03:57:54+07:00",
+      "title": "Merge pull request #59: Hub dashboard: findings of the 2026-11-08 test round",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/cbe10ab1fd1235540d9c96316502da40aa08121d",
+      "id": "cbe10ab1",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-09T20:57:54Z",
       "title": "Hub dashboard: findings of the 2026-11-08 test round",
@@ -1450,11 +1999,38 @@
       "repo": "HEL.ink"
     },
     {
+      "kind": "commit",
+      "date": "2026-11-09T21:53:22+01:00",
+      "title": "Merge main into the feature branch",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/61bec9a1bfc8e1abf86791fe72271302f1bf3099",
+      "id": "61bec9a1",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T03:51:29+07:00",
+      "title": "Merge pull request #58: hop-assets v5: shared dialogs and reminder cards",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/a6b334090a4970b1b9cf32d501bdceec2d4173cc",
+      "id": "a6b33409",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-09T20:51:29Z",
       "title": "hop-assets v5: shared dialogs and reminder cards",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/58",
       "id": "#58",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T21:46:13+01:00",
+      "title": "README: features section in German and Russian (CSP, HopUI, control standard)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/6312180659308358f3b031dcb9b80783c52fdb42",
+      "id": "63121806",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -1505,6 +2081,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-09T21:39:53+01:00",
+      "title": "Docs: changelog for the control standard and Clean style, README features, five apps in the hub texts",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/eb07686a5b747ca392dc201edda6fe864a4a6bdf",
+      "id": "eb07686a",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-09T21:31:46+01:00",
       "title": "UI: make the coss surfaces an optional Clean style (cookie hop_ui)",
       "url": "https://github.com/navi-crwn/NoteHop/commit/008fdbcfa2e828a3f5efa9cd9c00481abd221056",
@@ -1550,12 +2135,30 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-09T21:11:38+01:00",
+      "title": "Hub UI: make the coss surfaces an optional Clean interface style",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/47c3f905a7d84d503bd4a1bb52cbfb3c154ca3fd",
+      "id": "47c3f905",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-09T20:25:37+01:00",
       "title": "Give the secondary button a hairline on solid cards",
       "url": "https://github.com/navi-crwn/LinkHop/commit/642ccce70a4457333e51112b674ec2bca8f62909",
       "id": "642ccce7",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T20:24:53+01:00",
+      "title": "Hub UI: layered flat surfaces on the home page, dashboard, Settings, auth and admin",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/0670fc5c346a70f4278bfff50262a577f50136cf",
+      "id": "0670fc5c",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -1649,6 +2252,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-09T13:59:50+01:00",
+      "title": "Controls: apply the HOP control standard to the hub (dashboard, Settings, auth, admin)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/139ff0ace551ae804da8dc812bf0959b8452281b",
+      "id": "139ff0ac",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-09T13:48:31+01:00",
       "title": "Apply the HOP control standard: one radius, one height per row, buttons as wide as their text",
       "url": "https://github.com/navi-crwn/FileHop/commit/f2bc27ce0291f5d7a4b2fb2196349c0fd010995c",
@@ -1718,6 +2330,24 @@
       "id": "f6d99bd8",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T13:27:18+01:00",
+      "title": "Tests: the feed size limit over a real connection",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/713a5bba2b7592a433ef0544b6f29611bd4a1179",
+      "id": "713a5bba",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T17:14:45+07:00",
+      "title": "fix: fail closed on unsupported feed transport and preserve UTF-8 assets",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/51c12cff4ba15f7ee8a43a79b4de3128c3352f89",
+      "id": "51c12cff",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -1820,6 +2450,24 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-09T05:01:17+01:00",
+      "title": "Settings: #security, #data and #tokens open the tab they mean",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/feb744fcfdd928b8d77884b144a69c59446da5d2",
+      "id": "feb744fc",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T04:59:55+01:00",
+      "title": "Phone layout: the active settings tab is really brought into view; 44 px drawer rows and icon buttons",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/fb8c1313fcbd72ea8fc1dce96f9e9be777e074ad",
+      "id": "fb8c1313",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-09T10:56:46+07:00",
       "title": "Let the setup checklist be hidden for a week",
       "url": "https://github.com/navi-crwn/BioHop/commit/f618dea9f269c750a5dbc55af1fed51f0d7e876c",
@@ -1838,12 +2486,30 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-09T04:55:39+01:00",
+      "title": "Tests: check the arrow on the cards' \"Open\" buttons only",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/3150651cc077f2f408254cf0ca67891679f57a54",
+      "id": "3150651c",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-09T04:55:32+01:00",
       "title": "Drawers and menus: Escape closes them and the focus comes back",
       "url": "https://github.com/navi-crwn/NoteHop/commit/2d425941b05a035999bc83913567b6c14f281e6b",
       "id": "2d425941",
       "app": "NoteHop",
       "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T04:55:09+01:00",
+      "title": "Dashboard: translated top bar title and \"Deleted\" badge, drawn arrow on \"Visit site\"",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/d455b31a7a7e2db925e7dec2435ab4ddbd2e65da",
+      "id": "d455b31a",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -1883,6 +2549,24 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-09T04:53:01+01:00",
+      "title": "Tests: the untranslated-text baseline is empty now",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/37a2d0a4e8cc361a10b4b7936a6b2e022952211f",
+      "id": "37a2d0a4",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T04:50:56+01:00",
+      "title": "Reminders: HOP ID's reminder cards can be hidden for a week",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/405f650639775beeb763ba0488867b131ebb6c86",
+      "id": "405f6506",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-09T10:50:19+07:00",
       "title": "Keep the mobile drawer closed until it is opened",
       "url": "https://github.com/navi-crwn/BioHop/commit/7be0ae9679d6136c3fcf9e76aa1d7c3c0409b47a",
@@ -1898,6 +2582,15 @@
       "id": "d438446a",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T04:45:52+01:00",
+      "title": "Dialogs: ask through the shared HOP dialog when it is on the page, the browser's own otherwise",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/daa0e25ba1a77244d22b6c9f81a9c15f53d005ba",
+      "id": "daa0e25b",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -2000,12 +2693,39 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-09T04:41:11+01:00",
+      "title": "nginx: send BioHop's theme fonts with CORS so they load on hel.ink/b/…",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/bbc95d84b8d136e2c4ecdf76d1367f2535d1d770",
+      "id": "bbc95d84",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-09T04:40:11+01:00",
       "title": "Hide the docs' side list on a phone, as the stylesheet meant to",
       "url": "https://github.com/navi-crwn/PixelHop/commit/d8ea6f11b221100ab5c09bb94f78ac3169dd0301",
       "id": "d8ea6f11",
       "app": "PixelHop",
       "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T04:39:58+01:00",
+      "title": "Registry: /api/hop/apps reports LinkHop's capabilities from its row, not from a list in the controller",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/53b85c7385273cfd6b1ffd2fa00a5866964f9136",
+      "id": "53b85c73",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-09T04:37:33+01:00",
+      "title": "Sign-in history: keep single sign-on hand-offs apart from real sign-ins",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/b85f5eeb6e299be23b692cd056e0131585b4dd26",
+      "id": "b85f5eeb",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -2024,6 +2744,24 @@
       "id": "85eb40b1",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-08T19:51:41+01:00",
+      "title": "Phone layout: token row wraps, 44 px touch targets, settings tabs reveal the active one, drawer locks the page",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/4c5c7f21df74e39eb33c4b7d2aca416a2b3a61ae",
+      "id": "4c5c7f21",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-08T19:48:43+01:00",
+      "title": "Translate Settings, the sidebar, the account chrome and the sign-in pages; language menu on auth pages",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/3530e59aa1d9f64911bcf67cc4f59969188cbfa6",
+      "id": "3530e59a",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -2189,12 +2927,30 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-08T19:34:42+01:00",
+      "title": "Dashboard chrome: wordmark opens the HOP ID dashboard, HOP family label, arrow only on links that open a new tab",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/f1d3d109afa683b84bb9eb014d52af762a82afcd",
+      "id": "f1d3d109",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-08T19:33:59+01:00",
       "title": "Make the sliders finger-sized and keep the phone header within 64 px",
       "url": "https://github.com/navi-crwn/FileHop/commit/49e02732c95ae7457ac822efc9f1fce78c5617ca",
       "id": "49e02732",
       "app": "FileHop",
       "repo": "FileHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-08T19:33:56+01:00",
+      "title": "hop-assets v5: shared dialogs and reminder cards",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/be08e18d082797d5793a0fceaa36a2f9a7e1b5ae",
+      "id": "be08e18d",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -2485,6 +3241,15 @@
       "repo": "NoteHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-11-08T17:07:09+07:00",
+      "title": "Merge pull request #57: hop-assets v4: FileHop pixel mark, every app in the HOP ID diagram, FileHop in privacy, terms and FAQ, translated help pages",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/27848394cc114135f7a742924f253f1782533aff",
+      "id": "27848394",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-08T10:07:09Z",
       "title": "hop-assets v4: FileHop pixel mark, every app in the HOP ID diagram, FileHop in privacy, terms and FAQ, translated help pages",
@@ -2503,11 +3268,38 @@
       "repo": "HEL.ink"
     },
     {
+      "kind": "commit",
+      "date": "2026-11-08T17:06:40+07:00",
+      "title": "Merge pull request #56: Let a self-hosted hub register Imperium; add the self-hosting guide",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/2d0c5998055ad678f11a51784a77741fbf7149eb",
+      "id": "2d0c5998",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-08T10:06:25Z",
       "title": "Open other HOP apps through the hub launcher from the family list",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/55",
       "id": "#55",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-08T17:06:24+07:00",
+      "title": "Merge pull request #55: Open other HOP apps through the hub launcher from the family list",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/9b76a2845544054cb810f6a2129b938dc3fbdc7a",
+      "id": "9b76a284",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-08T10:53:34+01:00",
+      "title": "Import FamilyStory in the home page test (Pint)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/3fbecc5504fea21e2b253c364e728f4c30ea4edc",
+      "id": "3fbecc55",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -2519,6 +3311,15 @@
       "id": "6a2d9622",
       "app": "FileHop",
       "repo": "FileHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-08T10:36:48+01:00",
+      "title": "Name the app, not its slug, in the 3D art's text alternative",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/4680cd50cbe562d64ef1021f7aeacc1d6304ea7a",
+      "id": "4680cd50",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -2551,6 +3352,15 @@
       "kind": "commit",
       "date": "2026-11-08T10:28:37+01:00",
       "title": "Add a Self-hosting section to every README",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/ba79e28d2e64a9e1656c14174b07c7f152506429",
+      "id": "ba79e28d",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-08T10:28:37+01:00",
+      "title": "Add a Self-hosting section to every README",
       "url": "https://github.com/navi-crwn/FileHop/commit/f2b39fca0983187d7c75ed880eb466ed2c426c81",
       "id": "f2b39fca",
       "app": "FileHop",
@@ -2564,6 +3374,15 @@
       "id": "17e2f4fb",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-08T10:26:56+01:00",
+      "title": "hop-assets v4 with FileHop's pixel mark, every app in the HOP ID diagram, FileHop in privacy, terms and FAQ",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/3be4cf7e4e305eb1911ac18eca1506db25842125",
+      "id": "3be4cf7e",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -2631,6 +3450,15 @@
     {
       "kind": "commit",
       "date": "2026-11-08T10:15:23+01:00",
+      "title": "Sync family-nav from hop-ui: open unconfigured apps via the launcher",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/66db9b41734f6d34960bd41197dc99d2ec75b0f6",
+      "id": "66db9b41",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-08T10:15:23+01:00",
       "title": "Open other HOP apps through the hub launcher from the family list",
       "url": "https://github.com/navi-crwn/FileHop/commit/2321f2aa58735cf935f0deb25137952fce81d2f2",
       "id": "2321f2aa",
@@ -2663,6 +3491,15 @@
       "id": "a9ec2ae8",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-08T10:13:35+01:00",
+      "title": "Let a self-hosted hub register Imperium and give new app rows their capabilities",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/13e76290d11c8dade6ff5c9e4cf3f591b59007db",
+      "id": "13e76290",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -2818,6 +3655,15 @@
       "repo": "LinkHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-11-08T14:45:29+07:00",
+      "title": "Merge pull request #54: hop-assets v3: amber FileHop tile, flat mark for apps without a 3D map",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/f5e692afac6d1fc143df12caf5fe47bdca621003",
+      "id": "f5e692af",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-08T07:45:29Z",
       "title": "hop-assets v3: amber FileHop tile, flat mark for apps without a 3D map",
@@ -2872,6 +3718,24 @@
       "repo": "NoteHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-11-08T08:34:21+01:00",
+      "title": "Rebuild the hop-assets manifest",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/63f7cf54a5b0dba45a87891dc55ebc399ae03d0c",
+      "id": "63f7cf54",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-08T14:34:14+07:00",
+      "title": "hop-assets v3: an amber tile for FileHop, and no NoteHop logo for apps without a map",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/7b94822125f6ed7865c9f2e312c0a3381640005f",
+      "id": "7b948221",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-08T07:25:55Z",
       "title": "Anchor #features for the hub's app page",
@@ -2897,6 +3761,15 @@
       "id": "7a4b541b",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-08T14:22:16+07:00",
+      "title": "Merge pull request #53: FileHop joins the family; hop-assets v3",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/74f5717db6d06839c6c52e5907a0e8ee4a945c88",
+      "id": "74f5717d",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "pr",
@@ -2960,6 +3833,42 @@
       "id": "56698b38",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-08T14:10:40+07:00",
+      "title": "Tests: count FileHop where the tests count the configured apps",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/d5d458042389fa7f64b807d6435d5e783f8edcd3",
+      "id": "d5d45804",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-08T14:06:42+07:00",
+      "title": "hop-assets v3: FileHop joins the family assets",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/1bad2a51bb07f5b68ebfbb6fbcd1b91867abffc3",
+      "id": "1bad2a51",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-08T14:03:05+07:00",
+      "title": "FileHop on hel.ink: app page, home section, FAQ, help, and five apps everywhere",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/f5d72607acede8fe036293e7b37193274121eede",
+      "id": "f5d72607",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-08T14:03:05+07:00",
+      "title": "Register FileHop with the hub",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/0b8976539408ed750d6f8a625b5478d749031c91",
+      "id": "0b897653",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -3431,6 +4340,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-08T11:07:05+07:00",
+      "title": "Merge pull request #52: Land app launches on the app dashboard",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/7919ffdd5c349910747e23e994f09f47b6db83be",
+      "id": "7919ffdd",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-07T20:47:32+01:00",
       "title": "Count guest links across days and hold a destination burst",
       "url": "https://github.com/navi-crwn/LinkHop/commit/a8095526dfad36352f4830cdbc5406f1e0aac38e",
@@ -3446,6 +4364,15 @@
       "id": "3cc5c77a",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-07T20:07:39+01:00",
+      "title": "Land app launches on the app dashboard",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/aa9dc8100a9d49763e8cfdf23b10542b01d0e562",
+      "id": "aa9dc810",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -3700,6 +4627,15 @@
       "repo": "PixelHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-11-06T01:13:21+07:00",
+      "title": "Merge pull request #51: Make the hub home phone-friendly: drawer menu, 44 px controls, still app art on small screens",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/8da35b513d05a5e326b2ec61a103f996161df1c1",
+      "id": "8da35b51",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-05T18:13:21Z",
       "title": "Make the hub home phone-friendly: drawer menu, 44 px controls, still app art on small screens",
@@ -3752,6 +4688,24 @@
       "id": "5ba39fe0",
       "app": "PixelHop",
       "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-05T22:06:50+07:00",
+      "title": "Add the phone and desktop screenshots of the home page before and after the mobile changes",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/90d62c847c45a8990ebeac6cd3ae6450c1a75786",
+      "id": "90d62c84",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-05T21:55:37+07:00",
+      "title": "Make the hub home phone-friendly: a drawer menu, 44 px controls and still app art on small screens",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/2e91b32d6636c1c79e52bd3eeefb83f22b33b26c",
+      "id": "2e91b32d",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -3826,6 +4780,15 @@
       "repo": "LinkHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-11-05T18:20:22+07:00",
+      "title": "Merge pull request #50: Update Symfony to 7.4.23 to clear composer audit advisories",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/85feed2416a38278363296cde0d2bae480015981",
+      "id": "85feed24",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-05T11:20:22Z",
       "title": "Update Symfony to 7.4.23 to clear composer audit advisories",
@@ -3851,6 +4814,15 @@
       "id": "c058844c",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-05T17:30:01+07:00",
+      "title": "Update Symfony components to 7.4.23 to clear composer audit advisories",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/c4769e4fd328eeb01a00dfdb14651e3abb14259b",
+      "id": "c4769e4f",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "pr",
@@ -3953,6 +4925,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-05T12:16:47+07:00",
+      "title": "Merge pull request #49: Fix audit findings: array values, error language, status, avatars",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/ab70c17372d5d5ea36914bc56b24f20c97ffc1aa",
+      "id": "ab70c173",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-05T03:59:35+01:00",
       "title": "Mail one address about a 500, once per kind of error per hour",
       "url": "https://github.com/navi-crwn/LinkHop/commit/1cba94afc7902a25cee1d7796c2d0cb92ed7dc77",
@@ -3968,6 +4949,15 @@
       "id": "e157ccac",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T18:13:29+01:00",
+      "title": "Go straight to Google from the consent page when no terms are required",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/1cde6783e2145189855d2f657ee6a88b2f388616",
+      "id": "1cde6783",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -4079,12 +5069,66 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-04T15:11:39+01:00",
+      "title": "State the session driver limit of the status page in the changelog",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/b5afef1870d0e87366689c268c4402b82808e4f4",
+      "id": "b5afef18",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T15:09:59+01:00",
+      "title": "Give the 429 page a title in the visitor's language",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/a8a5a06236e2a618b914765254b2fa0ddbb7dad9",
+      "id": "a8a5a062",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-04T15:09:09+01:00",
       "title": "Treat array-valued filters as not given on signed-in pages",
       "url": "https://github.com/navi-crwn/LinkHop/commit/f4739fae4d7e2a44982a500a3ed95b4904daeb8f",
       "id": "f4739fae",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T15:02:28+01:00",
+      "title": "Drop the last Syne declaration from the app stylesheets",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/a60a8fd0f6787f7a6fa0c6cc17d6220b128fdfec",
+      "id": "a60a8fd0",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T15:01:36+01:00",
+      "title": "Refuse oversized avatars before decoding and limit avatar uploads",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/0c66fab37ef871144c33fadcb20eb856bcef1adb",
+      "id": "0c66fab3",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T15:01:11+01:00",
+      "title": "Link only API documentation that exists on each app",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/53314095f9b86a423af1b259d3d9dbe00060313a",
+      "id": "53314095",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T15:01:05+01:00",
+      "title": "Keep the status page answering while the database is down",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/9c1693306d6308f03b0b55f84741388824a5688f",
+      "id": "9c169330",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -4103,6 +5147,15 @@
       "id": "456e6884",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T15:00:10+01:00",
+      "title": "Translate the goodbye page and stop calling it LinkHop",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/0bcdbb12d39f3f7d898923615a5bd059f15c6406",
+      "id": "0bcdbb12",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -4130,6 +5183,15 @@
       "id": "37fc4cd4",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T14:59:24+01:00",
+      "title": "Set the language before CSRF, throttle and route binding can fail",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/f3fa93c37bbea1de6b9c1c417837752b4762d27e",
+      "id": "f3fa93c3",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -4166,6 +5228,15 @@
       "id": "8875ea45",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T14:57:50+01:00",
+      "title": "Treat array request values as absent instead of failing with a 500",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/aaee506f86bb55abe02fbb64c8239d8d562eecbe",
+      "id": "aaee506f",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -4322,12 +5393,30 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-04T10:00:02+07:00",
+      "title": "Merge pull request #48: Rebuild the changelog snapshot after the 1.0.0 tags",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/074ad716666f14b1b31821ffe8e81bef28f21ab9",
+      "id": "074ad716",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-04T09:47:53+07:00",
       "title": "Rebuild the changelog snapshot after the 1.0.0 tag",
       "url": "https://github.com/navi-crwn/NoteHop/commit/859c6774e31397fabe4e7f644bb2a0bd82c2cb69",
       "id": "859c6774",
       "app": "NoteHop",
       "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T09:47:53+07:00",
+      "title": "Rebuild the changelog snapshot after the 1.0.0 tags",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/7db606c9d48807697bc0b46d5a85b0d294fe2fea",
+      "id": "7db606c9",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -4393,11 +5482,38 @@
       "repo": "BioHop"
     },
     {
+      "kind": "tag",
+      "date": "2026-11-04T09:37:12+07:00",
+      "title": "v1.0.0",
+      "url": "https://github.com/navi-crwn/HEL.ink/releases/tag/v1.0.0",
+      "id": "v1.0.0",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T09:37:12+07:00",
+      "title": "Merge pull request #47: Add a changelog and prepare the 1.0.0 release",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/1ec26e0474e894efe3cd3a86d247d5662e6bf4b5",
+      "id": "1ec26e04",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-04T02:37:12Z",
       "title": "Add a changelog and prepare the 1.0.0 release",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/47",
       "id": "#47",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T09:19:56+07:00",
+      "title": "Add a changelog and prepare the 1.0.0 release",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/76ba21f1c6d51660232da2832e4577412e556a9f",
+      "id": "76ba21f1",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -4418,6 +5534,15 @@
       "id": "9e153e6d",
       "app": "NoteHop",
       "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T08:54:10+07:00",
+      "title": "Merge pull request #46: Sync packages/auth with hop-auth v0.1.3",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/fbc331af186526029e148f779262f4802d70fb7b",
+      "id": "fbc331af",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "pr",
@@ -4463,6 +5588,15 @@
       "id": "#94",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T08:33:36+07:00",
+      "title": "Sync packages/auth with hop-auth caa26a3 (hub event receiver, array query parameters)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/cced5a0e89df5e42924a131ca5fada16eff7534a",
+      "id": "cced5a0e",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -4560,6 +5694,15 @@
       "title": "Audit fixes: onboarding auth, log pruning, backup wording, fonts, logout events, apps rows, safety sync",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/45",
       "id": "#45",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T07:33:32+07:00",
+      "title": "Merge pull request #45: Audit fixes: onboarding auth, log pruning, backup wording, fonts, logout events, apps rows, safety sync",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/ca02ba44b74bb2492bea4a6cd60b91de785d5700",
+      "id": "ca02ba44",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -4700,12 +5843,30 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-04T03:07:20+07:00",
+      "title": "Add a main landmark to the auth pages and the 404 page",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/d65c5a1bfe33d02b5986717b82172a789eb5e99b",
+      "id": "d65c5a1b",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-04T03:04:43+07:00",
       "title": "Close the remaining NoteHop audit findings",
       "url": "https://github.com/navi-crwn/NoteHop/commit/41f6c54753e34d768e8b639c467a02efdc20d04e",
       "id": "41f6c547",
       "app": "NoteHop",
       "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T03:04:19+07:00",
+      "title": "Fix the markup errors html-validate found in the hub views (dl/details, nested sign-out form, hidden CSRF autocomplete, titles, h1, og:title)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/4efaa4e02acfcceed3c525b5a27f95b215693c92",
+      "id": "4efaa4e0",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -4745,12 +5906,66 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-04T02:57:04+07:00",
+      "title": "Remove the cookie banner: it stored a choice nothing read, and only essential cookies exist",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/f8a99d6cc791417d1b91f911a3307526c06d57dc",
+      "id": "f8a99d6c",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T02:56:41+07:00",
+      "title": "Avatar form: state and enforce the upload limit PHP really allows",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/8b0773d5d1733e5c4ee6140b9e6bf1bf5ff91b24",
+      "id": "8b0773d5",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T02:55:49+07:00",
+      "title": "Settings: switch the tab when the hash changes on the open page",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/05fa25991ef258a1d719bd15c0792191e05ac9c7",
+      "id": "05fa2599",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T02:55:28+07:00",
+      "title": "Drop the robots.txt Sitemap line: the hub serves no sitemap.xml",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/2f96681cfe8bfaefbce1f429e72a19611e4cf855",
+      "id": "2f96681c",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T02:55:14+07:00",
+      "title": "Refuse a TOTP code that already opened a session; pin the app URLs in phpunit.xml",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/b612e9309168a5b8cbf8bf79bfda755696254157",
+      "id": "b612e930",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-04T02:54:07+07:00",
       "title": "Leave the legal banner translation to the UI sweep PR so the two PRs merge in either order",
       "url": "https://github.com/navi-crwn/NoteHop/commit/46b2541049d03f868a2be2c21c87d176be2dd818",
       "id": "46b25410",
       "app": "NoteHop",
       "repo": "NoteHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T02:40:06+07:00",
+      "title": "Seed the linkhop and biohop rows with the events capability and warn when they are missing",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/59809c1b6a6dafca6dc66536d2c7df5a12b3117b",
+      "id": "59809c1b",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -4817,6 +6032,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-04T02:02:16+07:00",
+      "title": "Sync packages/safety with hop-safety 5cdc07d (encrypted NoteHop link guard, single curl resolve entry)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/9b494e5b4c1956505979a0ba062d0ae568252823",
+      "id": "9b494e5b",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-04T02:01:40+07:00",
       "title": "Check the command name before creating the data folder",
       "url": "https://github.com/navi-crwn/PixelHop/commit/c7809bf45886990cc32e7e5eafac87ab45bc5018",
@@ -4871,6 +6095,24 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-04T01:58:46+07:00",
+      "title": "Queue session.revoked to every event-capable app when someone signs out at the hub",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/c2ccdd83fc5b8763df90b0b1af936f0b121db99c",
+      "id": "c2ccdd83",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T01:58:46+07:00",
+      "title": "Add an idempotent seeder for the pixelhop and notehop apps rows and warn when an event app has none",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/68cb9cdad8e51ddd6d237c66a9d44c99cd39e094",
+      "id": "68cb9cda",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-04T01:58:12+07:00",
       "title": "Refuse encrypted NoteHop links as a profile website and scrub them from report notes",
       "url": "https://github.com/navi-crwn/PixelHop/commit/14d0f823125f4fb28e2ddd7f64a666be1b14df2a",
@@ -4907,12 +6149,39 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-04T01:54:48+07:00",
+      "title": "Send no-store for signed-in pages and rotate the remember token on revoke_sessions",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/fae9243ad4cbc7e9d4e11d4d5f10f1c054a60a44",
+      "id": "fae9243a",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-04T01:54:24+07:00",
       "title": "Pin hop/safety to the encrypted-note-link guard (hop-safety #8)",
       "url": "https://github.com/navi-crwn/BioHop/commit/e7bcfe83503345075fb8258ccc8f753b9bb3a2d3",
       "id": "e7bcfe83",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T01:54:09+07:00",
+      "title": "Add error page and session message texts in the nine languages (needs native review)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/de33a81fb56fa670d8d00cbf24388e5084807b3b",
+      "id": "de33a81f",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-04T01:54:09+07:00",
+      "title": "Fix hub path, error page, locale cookie and settings markup defects found in the link/HTML audit",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/a7fc55dcc645ce8c5ae99d848417d02842926d08",
+      "id": "a7fc55dc",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -5168,6 +6437,24 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-03T18:47:46+07:00",
+      "title": "List all shipped fonts in LICENSE, matching CREDITS.md",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/16c2f80ef1b14f9d478942743bca06ba994289c1",
+      "id": "16c2f80e",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-03T18:47:46+07:00",
+      "title": "Make the privacy page backup sentence match what the backup script does",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/09e8f59efa505bca7db2cb3d8b254bce6902a78a",
+      "id": "09e8f59e",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-03T18:47:02+07:00",
       "title": "Stop claiming clean metadata on GIF pages",
       "url": "https://github.com/navi-crwn/PixelHop/commit/fa1fb29e496b06e42d9c71fd49f74e2ae26b3995",
@@ -5201,6 +6488,24 @@
       "id": "138049f4",
       "app": "PixelHop",
       "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-03T18:46:45+07:00",
+      "title": "Prune activity and sign-in records after 90 days",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/ef3c3e0ebbb7c44dc3c104ff25e0fa4776cbab95",
+      "id": "ef3c3e0e",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-03T18:46:45+07:00",
+      "title": "Require sign-in for the onboarding page and its form routes",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/cd4077840f117e29c787b0bb70176047bd39c976",
+      "id": "cd407784",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -5264,6 +6569,15 @@
       "id": "b4421c53",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-03T00:54:35+07:00",
+      "title": "Merge pull request #44: Correct hub privacy page wording and translate it into nine languages",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/eb9dfc098db635ead394ef5339743ace673610f5",
+      "id": "eb9dfc09",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "pr",
@@ -5447,6 +6761,24 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-03T00:00:34+07:00",
+      "title": "Update privacy text, add content-responsibility clause, translate terms and consent text",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/b6b7df01bac84a688728d0839a006e4d542f90eb",
+      "id": "b6b7df01",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T23:47:45+07:00",
+      "title": "Correct hub privacy page wording and translate it into all nine languages",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/9fd6a566d20568386af05c36ead93137e9f3ac77",
+      "id": "9fd6a566",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-02T23:44:18+07:00",
       "title": "Clarify privacy wording on pixels and data sharing",
       "url": "https://github.com/navi-crwn/BioHop/commit/486263ff088139755d1389d984d8157496c11ee3",
@@ -5496,6 +6828,15 @@
       "title": "Fix truncated Indonesian strings and stale welcome email tagline",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/43",
       "id": "#43",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T22:54:25+07:00",
+      "title": "Merge pull request #43: Fix truncated Indonesian strings and stale welcome email tagline",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/741a196f3282206cafe60d7305d6ef4013f83d1d",
+      "id": "741a196f",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -5570,6 +6911,15 @@
       "id": "d6f46bed",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T22:38:53+07:00",
+      "title": "Fix truncated Indonesian strings and drop stale email tagline",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/a72be4ef0b0be923dfd1399cf7bc47e65f36bba2",
+      "id": "a72be4ef",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -5716,6 +7066,15 @@
       "repo": "LinkHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-11-02T20:00:25+07:00",
+      "title": "Merge pull request #42: Check app purge on account deletion, harden installer scripts",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/7a52f61a54ac06fb90b81b6e053299cba8c03bcb",
+      "id": "7a52f61a",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-02T13:00:25Z",
       "title": "Check app purge on account deletion, harden installer scripts",
@@ -5759,6 +7118,42 @@
       "id": "b2207af8",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T16:17:23+07:00",
+      "title": "Sync shared packages: atomic API token rate limit, trusted logout hosts, pinnable UrlGuard resolution, bounded threat feed download",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/809caa7d9c164d9e8f1ee8c97e74653833891e84",
+      "id": "809caa7d",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T16:15:09+07:00",
+      "title": "Harden installer and updater scripts",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/786117aff93d800470758c58c40ae88e34f842b4",
+      "id": "786117af",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T16:15:09+07:00",
+      "title": "nginx: pass HTTPS to PHP-FPM, 404 for missing .php files; ignore .env backups; document optional rate limits",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/657f99ef9e9355b4f951f0a53ce0ac3cfc6f8620",
+      "id": "657f99ef",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T16:15:09+07:00",
+      "title": "Add database backup script with retention and example systemd timer",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/270982e7551b0af30fbd5418cd4fbfd726063207",
+      "id": "270982e7",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -5885,6 +7280,24 @@
       "id": "8005d723",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T16:05:30+07:00",
+      "title": "Add CREDITS.md referenced by LICENSE",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/732e74c8c68be5cd9fb88c7c64871b45fb0201df",
+      "id": "732e74c8",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T16:04:11+07:00",
+      "title": "Check app purge responses on account deletion and retry failures; drop dead PIN reset branch; keep IPs out of proxy detection logs",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/39c38c581f631c3de4642876a02ff00f83e08d0d",
+      "id": "39c38c58",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -6067,11 +7480,29 @@
       "repo": "BioHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-11-02T11:04:45+07:00",
+      "title": "Merge pull request #41: Installers, READMEs and documentation site in the nine languages",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/854e29a9ca5473c6c5b4e81f0b3382fe71209b0f",
+      "id": "854e29a9",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-02T04:04:45Z",
       "title": "Installers, READMEs and documentation site in the nine languages",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/41",
       "id": "#41",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T11:04:41+07:00",
+      "title": "Merge pull request #40: Nine languages: add de and ru, remove Arabic and RTL",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/4b47d6696ebe46b6be75986c041bee5239fdd57b",
+      "id": "4b47d669",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -6230,6 +7661,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-02T11:01:37+07:00",
+      "title": "Merge remote-tracking branch 'origin/main' into feat/nine-languages",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/9ecf6e8d5991054eafaf5e38a2877444120be739",
+      "id": "9ecf6e8d",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-02T11:01:23+07:00",
       "title": "Merge pull request #81: Open in the app: deep links for iOS and Android",
       "url": "https://github.com/navi-crwn/LinkHop/commit/8be01037198effd672f07008ae9d8783fc8896c0",
@@ -6283,6 +7723,15 @@
       "repo": "LinkHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-11-02T11:00:06+07:00",
+      "title": "Merge pull request #39: Show per-app numbers on the dashboard cards",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/6501ecb82d1febab8bce48159c026cab732d90ea",
+      "id": "6501ecb8",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-02T04:00:06Z",
       "title": "Show per-app numbers on the dashboard cards",
@@ -6299,6 +7748,15 @@
       "id": "5157d0e6",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T10:56:28+07:00",
+      "title": "Merge pull request #38: Country codes instead of flag pictures from another host",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/b246194075167d0406921cd01c4531845a29bdec",
+      "id": "b2461940",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "pr",
@@ -6446,6 +7904,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-02T09:28:22+07:00",
+      "title": "Documentation site in the nine languages: zh-CN, de, id, ja, pt-BR, es, fr, ru; Arabic removed",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/8bac2d969f0eec7b58622c1f3aaf2d67d8228edb",
+      "id": "8bac2d96",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-02T09:25:28+07:00",
       "title": "README: how the hub and the apps are installed together",
       "url": "https://github.com/navi-crwn/BioHop/commit/f17b3381fd0601c38f135ff979a849bc27d0af11",
@@ -6464,12 +7931,30 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-02T09:25:22+07:00",
+      "title": "README: how the hub and the apps are installed together",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/e5f8195fc070779ab974801d18f1ba4608af9031",
+      "id": "e5f8195f",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-02T09:23:07+07:00",
       "title": "Installer: hub-free mode explained; install-family.sh installs the hub and apps together",
       "url": "https://github.com/navi-crwn/LinkHop/commit/d8d05ae59118a970716383622e41f8e25c36ba82",
       "id": "d8d05ae5",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T09:23:07+07:00",
+      "title": "Installer: hub-free mode explained; install-family.sh installs the hub and apps together",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/c069d0482d70f3d72bc986034b4b4b01070996b8",
+      "id": "c069d048",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -6527,6 +8012,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-02T03:47:47+07:00",
+      "title": "One-command installer, update and uninstall scripts; READMEs in the nine languages",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/e98d3095665d35d83af80eed8a3b3ed73afe64db",
+      "id": "e98d3095",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-02T03:28:20+07:00",
       "title": "Nine languages: zh-CN, de, id, ja, pt-BR, es, fr, ru and English; Arabic and right-to-left removed",
       "url": "https://github.com/navi-crwn/NoteHop/commit/093d79b9fdc0b23b35e8c7d9f2be346a398a9276",
@@ -6554,6 +8048,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-02T03:14:29+07:00",
+      "title": "Nine languages: zh-CN, de, id, ja, pt-BR, es, fr, ru and English; Arabic and right-to-left removed",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/a2868f4d39e3e73a3c77788be15421e99cb85430",
+      "id": "a2868f4d",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-02T02:54:07+07:00",
       "title": "Merge remote-tracking branch 'origin/chore/hop-assets-v2' into feat/nine-languages",
       "url": "https://github.com/navi-crwn/NoteHop/commit/c9d453d3b8f3dc6efb66c007453420ee6dd88bd9",
@@ -6578,6 +8081,15 @@
       "id": "f84ac064",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T02:53:49+07:00",
+      "title": "Merge remote-tracking branch 'origin/fix/no-third-party-images' into feat/nine-languages",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/27d4325df2d88431c6236e0c8db2f5e0b442ba91",
+      "id": "27d4325d",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -6617,6 +8129,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-02T02:26:56+07:00",
+      "title": "Show per-app numbers on the dashboard cards",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/2d1a4b4553af58789471faf525ee1bd1898bcfbb",
+      "id": "2d1a4b45",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-02T02:24:12+07:00",
       "title": "Add a signed per-account summary endpoint for the hub dashboard",
       "url": "https://github.com/navi-crwn/BioHop/commit/2787ac0f82aa8a741fe29aebc6dbd01abc7b817d",
@@ -6632,6 +8153,15 @@
       "id": "33a8d9c1",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T02:20:30+07:00",
+      "title": "Country codes instead of flag pictures from another host",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/d8a10907e4b6ff314a3c181254c90d2c9258b6b6",
+      "id": "d8a10907",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -6760,11 +8290,38 @@
       "repo": "HEL.ink"
     },
     {
+      "kind": "commit",
+      "date": "2026-11-02T01:57:35+07:00",
+      "title": "Merge pull request #37: Hub: new home, dashboard and live repo statistics",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/21ca2dc55406350cb62a9f2034e1543237a2e4f2",
+      "id": "21ca2dc5",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T01:57:09+07:00",
+      "title": "Merge pull request #36: Media URLs: avatars are absolute addresses on the hub host",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/1ed5ada1c23c79fb6bddb9a7336cdf3122df421a",
+      "id": "1ed5ada1",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-01T18:57:09Z",
       "title": "Media URLs: avatars are absolute addresses on the hub host",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/36",
       "id": "#36",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T01:55:12+07:00",
+      "title": "Home: one-account scene, numbers, running line, question cards and closing call (GSAP and Lenis in our own bundle)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/f9ba4894c3eda5c83b885367c228e34084da278f",
+      "id": "f9ba4894",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -6785,6 +8342,33 @@
       "id": "685fee04",
       "app": "PixelHop",
       "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T01:41:07+07:00",
+      "title": "Merge hub dashboard",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/0826f8996a2fa40ec82b4f9cad7db763a67b0dfa",
+      "id": "0826f899",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T01:41:03+07:00",
+      "title": "Merge hub stats",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/cd1ceb81aaf4ff3a2d7e27812e2ce6a2a4f9edaf",
+      "id": "cd1ceb81",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T01:39:50+07:00",
+      "title": "Media URLs: avatars are absolute URLs on the hub host everywhere",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/5d69eea8571e4354506a7a6b029144bb7585efa9",
+      "id": "5d69eea8",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -6839,6 +8423,24 @@
       "id": "fc4f99e8",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T01:11:14+07:00",
+      "title": "Home: live repo statistics and 30-day uptime for the \"Built in the open\" section",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/d361ec0bbb3f6f074e17152744536358cab4ca1d",
+      "id": "d361ec0b",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-02T01:10:49+07:00",
+      "title": "Hub dashboard: greeting, app status, account health, security and activity",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/a5aba0eafc40f6c1c96ad005af3a1ef378b5f3bf",
+      "id": "a5aba0ea",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -7129,6 +8731,15 @@
       "repo": "PixelHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-11-01T22:49:50+07:00",
+      "title": "Merge pull request #35: Shared assets v2: engine files that changed after v1 went live, every app mark animates",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/4715c2ca61e936e1032e35593926d3ebe51497a4",
+      "id": "4715c2ca",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-01T15:49:50Z",
       "title": "Shared assets v2: engine files that changed after v1 went live, every app mark animates",
@@ -7181,6 +8792,15 @@
       "id": "3e50006b",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-01T22:46:19+07:00",
+      "title": "Shared assets v2: the files changed after v1 went live, and every app mark animates",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/a98db9483a2fdb5f52c1d9d3899c48801c495bfc",
+      "id": "a98db948",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -7273,6 +8893,24 @@
       "repo": "HEL.ink"
     },
     {
+      "kind": "commit",
+      "date": "2026-11-01T22:32:55+07:00",
+      "title": "Merge pull request #34: Shared home engine: LinkHop logo map, hero cycle stops on the live page, counter fix, LinkHop tiles",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/1228644c6b150a541fbdbdc5a30734f1e1341d53",
+      "id": "1228644c",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-01T22:32:52+07:00",
+      "title": "Merge pull request #33: Dashboard chrome: apps in the sidebar, settings in the top bar",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/ceefc500c11bbc77ff4111bf59b2d50ea4d712b7",
+      "id": "ceefc500",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-11-01T15:32:52Z",
       "title": "Dashboard chrome: apps in the sidebar, settings in the top bar",
@@ -7334,6 +8972,15 @@
       "id": "4a08407e",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-01T22:07:30+07:00",
+      "title": "Settings: account initial is a whole letter for non-Latin names",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/b7377c1b671f621c24ed89e568af9bb1d3878187",
+      "id": "b7377c1b",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -7742,6 +9389,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-01T16:13:04+07:00",
+      "title": "Shared home engine: the BIO cycle stops on the live page until the stage leaves the screen",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/74c5b8e0ae154473c08ceed6953b57869a0d1cf9",
+      "id": "74c5b8e0",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-01T16:01:53+07:00",
       "title": "Official page: the avatar is a file on the public disk, as the page expects",
       "url": "https://github.com/navi-crwn/BioHop/commit/6249d3210a49c564e6db813874dec02f81323357",
@@ -7769,12 +9425,30 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-01T15:56:12+07:00",
+      "title": "Shared home engine: LinkHop's rabbit head, counters never below zero",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/b0ad3d21981ab7c677254972317cc83795b6a244",
+      "id": "b0ad3d21",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-01T15:55:15+07:00",
       "title": "Home: the hero phone stays inside its stage, the HOP family as 3D marks, LinkHop's rabbit head",
       "url": "https://github.com/navi-crwn/BioHop/commit/1829bbfe32b27e98ac141125e10c7242913b0197",
       "id": "1829bbfe",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-01T08:59:01+01:00",
+      "title": "Shared home engine: BIO cycle mode and the scroll scene helpers",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/ef7b81bdbf71505515dc64b02e967f249b352352",
+      "id": "ef7b81bd",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -7811,6 +9485,15 @@
       "id": "bbf34fc9",
       "app": "PixelHop",
       "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-01T07:57:27+01:00",
+      "title": "Dashboard chrome: apps in the sidebar, settings in the top bar",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/583546c59111ef0397479cb9ad707882d35c00da",
+      "id": "583546c5",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -7949,6 +9632,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-11-01T11:50:28+07:00",
+      "title": "Merge pull request #32: Shared home engine: logo presets, phone morph, scroll story",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/f19c77311f2fd2c3259ca9657cb429230a1f7581",
+      "id": "f19c7731",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-11-01T05:44:29+01:00",
       "title": "Homepage rebuilt as the long page: uploader first, then the file's life",
       "url": "https://github.com/navi-crwn/PixelHop/commit/c231023637299320f21f672393b72a9e1738880b",
@@ -7982,6 +9674,15 @@
       "id": "992e9cb8",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-01T05:44:28+01:00",
+      "title": "Shared home engine: logo presets from the marks, the phone morph and the scroll story",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/a4dc55caf0965f67c4e74edda260c69ea880f534",
+      "id": "a4dc55ca",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -8061,6 +9762,24 @@
       "title": "Interactive homepage, shared 3D engine and permanent superadmin",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/31",
       "id": "#31",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-01T10:47:09+07:00",
+      "title": "Merge pull request #31: Interactive homepage, shared 3D engine and permanent superadmin",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/5e851b29a239ca1b96bdde4667a27d94d34131cb",
+      "id": "5e851b29",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-01T04:28:10+01:00",
+      "title": "Interactive homepage with one section per app, shared 3D engine and permanent superadmin",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/26ab4d9bd7d3d3f62144423a0d59c1d12e3274b5",
+      "id": "26ab4d9b",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -8183,6 +9902,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-10-31T23:16:13+07:00",
+      "title": "Merge pull request #30: fix: refresh HEL.ink branding with the official jumping rabbit",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/83da81de774bfbf89d73f2f46d711225c00cf4af",
+      "id": "83da81de",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-10-31T17:08:16+01:00",
       "title": "fix: use jumping rabbit in the HOP family registry",
       "url": "https://github.com/navi-crwn/NoteHop/commit/b1906faa3e160f12d9e145f3d7406fcc480a379e",
@@ -8216,6 +9944,15 @@
       "id": "b75efc4e",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T17:07:48+01:00",
+      "title": "fix: refresh HEL.ink branding with the official jumping rabbit",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/c45694846e4d99997f94da7be82fe77097a1cd96",
+      "id": "c4569484",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -8290,11 +10027,29 @@
       "repo": "LinkHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-10-31T20:07:56+07:00",
+      "title": "Merge pull request #29: feat: complete P5 family experience and product history",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/e48f41c15ee0dc28aeb5ef1bd081c097811ffff4",
+      "id": "e48f41c1",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-10-31T13:07:56Z",
       "title": "feat: complete P5 family experience and product history",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/29",
       "id": "#29",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T13:59:15+01:00",
+      "title": "fix: fit authenticated hub navigation on narrow phones",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/5fba6e7ebe60716cfbed45483e2703ff62c4f2f2",
+      "id": "5fba6e7e",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -8333,6 +10088,15 @@
       "id": "d92b8b89",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T13:53:34+01:00",
+      "title": "feat: refine family experience, typography and product history",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/720e8ea38812189da70ce4a2d2ba9365b606a19d",
+      "id": "720e8ea3",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "pr",
@@ -8387,6 +10151,15 @@
       "id": "#19",
       "app": "PixelHop",
       "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T17:49:52+07:00",
+      "title": "Merge pull request #28: feat: hub master pages and content-warning terms (bring #26 and #27 to main)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/3a299e5fa48e2939057bc64831cf3186b2a99ef2",
+      "id": "3a299e5f",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "pr",
@@ -8468,6 +10241,15 @@
       "id": "#16",
       "app": "PixelHop",
       "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T11:46:22+01:00",
+      "title": "Merge remote-tracking branch 'origin/main' into feat/hub-master-experience",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/035c4a5fd9b74ddaf4e5bdcfbb8f9fe7b3404431",
+      "id": "035c4a5f",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -8677,6 +10459,24 @@
       "repo": "LinkHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-10-31T17:32:16+07:00",
+      "title": "Merge pull request #27 from navi-crwn/feat/master-terms-content-warning",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/a6a05512763b1a4420da363343bc25a4d5b234df",
+      "id": "a6a05512",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T17:31:56+07:00",
+      "title": "Merge pull request #25: docs: standard 8-language READMEs and GitHub Pages documentation site",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/f1b0a8344cf04be234988741a2c872885a2112d4",
+      "id": "f1b0a834",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-10-31T10:31:56Z",
       "title": "docs: standard 8-language READMEs and GitHub Pages documentation site",
@@ -8691,6 +10491,24 @@
       "title": "feat(marketing): localize dedicated hub pages across 8 languages",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/24",
       "id": "#24",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T17:31:42+07:00",
+      "title": "Merge pull request #24: feat(marketing): localize dedicated hub pages across 8 languages",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/8a4561ff66728f64acd5c11a9c23f71d4696e339",
+      "id": "8a4561ff",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T17:31:23+07:00",
+      "title": "Merge pull request #23: fix(nginx): add exact match locations for single segment hub pages",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/73d0692d015d8108bdc46fd134e1a59378be27a3",
+      "id": "73d0692d",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -8831,6 +10649,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-10-31T07:55:39+01:00",
+      "title": "feat(legal): add mandatory 18+ and sensitive content classification to master terms",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/772aef07e0c5ebb02b9ed633ee8ff099fb268d49",
+      "id": "772aef07",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-10-31T07:53:04+01:00",
       "title": "feat(gate): 3-level content warning gate before client decryption with zero-knowledge metadata",
       "url": "https://github.com/navi-crwn/NoteHop/commit/864aa9ae13c38a459d21268375967785fb022720",
@@ -8957,6 +10784,42 @@
     },
     {
       "kind": "commit",
+      "date": "2026-10-31T06:45:15+01:00",
+      "title": "feat(hub): master terms, faq, help, about, bento app pages, and status ticker",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/1da54e3761169900fdf6ce1e1785ca6e130f1f0b",
+      "id": "1da54e37",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T06:33:39+01:00",
+      "title": "Merge fix/nginx-exact-hub-pages into feat/hub-master-experience",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/670392529f302f7367d38be1f1fa91c09393d864",
+      "id": "67039252",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T06:33:34+01:00",
+      "title": "Merge feat/marketing-pages-i18n into feat/hub-master-experience",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/4f48ddd11adf7517a4d2342026ace6109053e88f",
+      "id": "4f48ddd1",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T06:26:47+01:00",
+      "title": "fix(nginx): sync map $uri $hop_hub_page and legacy redirect with production",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/643c7fbe58981e7ae4b99f8cbcd137b9225202d1",
+      "id": "643c7fbe",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-10-31T06:08:27+01:00",
       "title": "docs: 9-language Pages site and README updates (Phase 7)",
       "url": "https://github.com/navi-crwn/NoteHop/commit/bffdc69e1023b20d80b06322bda534c7f679de52",
@@ -8984,12 +10847,30 @@
     },
     {
       "kind": "commit",
+      "date": "2026-10-31T05:48:36+01:00",
+      "title": "docs: add 8-language READMEs and GitHub Pages documentation site",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/38ae395e54ad160fe7f90c4ba722cfe6aaaf29c0",
+      "id": "38ae395e",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-10-31T05:43:08+01:00",
       "title": "docs: add 8-language READMEs and GitHub Pages documentation site",
       "url": "https://github.com/navi-crwn/BioHop/commit/eedb811dd4ba3e356360eaa25db3ee1d248a13f9",
       "id": "eedb811d",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T05:31:26+01:00",
+      "title": "feat(marketing): localize dedicated hub pages across 8 languages",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/c51d55d403e645f3a0a3d7a8a1457b98bb83418b",
+      "id": "c51d55d4",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -9017,6 +10898,15 @@
       "id": "02543e3c",
       "app": "PixelHop",
       "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T04:44:02+01:00",
+      "title": "fix(nginx): add exact match locations for single segment hub pages",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/bf42ba7975c36a3151b25bf697d5c13c8b7f397a",
+      "id": "bf42ba79",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -9118,6 +11008,15 @@
       "repo": "LinkHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-10-31T09:56:34+07:00",
+      "title": "Merge pull request #22: chore: PixelHop at pixel.hel.ink in the manifest and family table",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/921c48a40e3ae9c14ab9ed7e7d7b4107aaca7423",
+      "id": "921c48a4",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-10-31T02:56:34Z",
       "title": "chore: PixelHop at pixel.hel.ink in the manifest and family table",
@@ -9164,6 +11063,24 @@
     },
     {
       "kind": "commit",
+      "date": "2026-10-31T03:54:03+01:00",
+      "title": "test: the logout chain passes through pixel.hel.ink",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/04d2b0a9e65287fadfa011cb3aa3b15e3ba2d833",
+      "id": "04d2b0a9",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T03:53:13+01:00",
+      "title": "chore: PixelHop lives at pixel.hel.ink (shared links stay on p.hel.ink)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/c4e2816921e21d2ae22ea24ef46ce221419c983a",
+      "id": "c4e28169",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-10-31T09:40:15+07:00",
       "title": "Merge pull request #61: fix: bump follow-redirects (npm audit); cookie banner above the sidebar",
       "url": "https://github.com/navi-crwn/LinkHop/commit/82757e8c01f9ec8a5b54699bf3f22735c04d100b",
@@ -9191,12 +11108,39 @@
     },
     {
       "kind": "commit",
+      "date": "2026-10-31T09:39:59+07:00",
+      "title": "Merge pull request #21: fix: cookie banner beside the sidebar, not above modals",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/cc127320b0a384193d24ab1133b337552642eb1f",
+      "id": "cc127320",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T03:38:46+01:00",
+      "title": "fix: cookie banner starts beside the sidebar instead of above every layer",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/eec975f944f2949980cc3cc4c4318b872f8913b1",
+      "id": "eec975f9",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-10-31T03:38:15+01:00",
       "title": "fix: cookie banner starts beside the sidebar instead of above every layer",
       "url": "https://github.com/navi-crwn/LinkHop/commit/7ef31cf643e50fe1a58e5f57a83a2f3c78b27612",
       "id": "7ef31cf6",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T09:37:02+07:00",
+      "title": "Merge pull request #20: fix: Google sign-in/sign-up loop; cookie banner hidden by the sidebar",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/e2ebd36b00e669078802e902774c68b662f1c118",
+      "id": "e2ebd36b",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "pr",
@@ -9215,6 +11159,15 @@
       "id": "f5e4f117",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T03:32:45+01:00",
+      "title": "fix: Google sign-in and sign-up are one step; cookie banner above the sidebar",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/ac6ae27c97fcd18d634fcf02afe68fa469de6a5e",
+      "id": "ac6ae27c",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -9640,11 +11593,29 @@
       "repo": "HEL.ink"
     },
     {
+      "kind": "commit",
+      "date": "2026-10-31T09:01:32+07:00",
+      "title": "Merge pull request #19: feat: hel.ink home page with app tabs, HOP pages and eight languages",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/b3a80603271b55124c2cfaeb3974eef3c85a80c8",
+      "id": "b3a80603",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-10-31T02:01:03Z",
       "title": "feat: HOP family typography, app marks and tiles on the hub",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/17",
       "id": "#17",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T09:01:02+07:00",
+      "title": "Merge pull request #17: feat: HOP family typography, app marks and tiles on the hub",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/99f6d040a4b3f15f0d5d526fb38529fb84ffc267",
+      "id": "99f6d040",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -9658,6 +11629,24 @@
       "repo": "HEL.ink"
     },
     {
+      "kind": "commit",
+      "date": "2026-10-31T09:00:49+07:00",
+      "title": "Merge pull request #16: feat: HOP family assets served from hel.ink/hop-assets",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/7e77b69a7c73ee384cbfa559ed50d1c4c3bfef02",
+      "id": "7e77b69a",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T09:00:22+07:00",
+      "title": "Merge pull request #15: feat: record terms acceptance for new accounts (inactive until configured)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/6244ecdef3d6bf37f8cf7436adf50a0fc792f1d5",
+      "id": "6244ecde",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-10-31T02:00:22Z",
       "title": "feat: record terms acceptance for new accounts (inactive until configured)",
@@ -9667,11 +11656,29 @@
       "repo": "HEL.ink"
     },
     {
+      "kind": "commit",
+      "date": "2026-10-31T09:00:08+07:00",
+      "title": "Merge pull request #13: fix: redirect LinkHop and BioHop root paths",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/c24fd024feacc83779adaedd27471d6b32c2a272",
+      "id": "c24fd024",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-10-31T02:00:08Z",
       "title": "fix: redirect LinkHop and BioHop root paths",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/13",
       "id": "#13",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-31T08:59:53+07:00",
+      "title": "Merge pull request #14: docs: add SECURITY.md and issue templates",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/ed318606892ff7427d5fdc2c21fe78af633fcc1e",
+      "id": "ed318606",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -9695,12 +11702,30 @@
     },
     {
       "kind": "commit",
+      "date": "2026-10-31T08:40:36+07:00",
+      "title": "Merge pull request #18: fix: status.json returns only public app fields",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/0417f800acedf0373a9bafe5b176da59ae8b0132",
+      "id": "0417f800",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-10-30T19:22:12+01:00",
       "title": "style: no purple pills or backgrounds next to the purple mark",
       "url": "https://github.com/navi-crwn/BioHop/commit/2cdf4d5d24571e0acda800dc14b913cff3ee60e2",
       "id": "2cdf4d5d",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-30T19:21:06+01:00",
+      "title": "feat: hel.ink home page with app tabs, HOP pages and eight languages (U-03, U-07, U-06)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/ff29648bb995c721b1250b88d56bcd470824a45b",
+      "id": "ff29648b",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -9767,6 +11792,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-10-30T18:36:18+01:00",
+      "title": "fix(security): status.json exposed every app's SSO secret",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/30f26befa62edb913509129a77ce4ea058e89ed3",
+      "id": "30f26bef",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-10-30T18:34:05+01:00",
       "title": "docs: canonical HOP family table with a CI check (U-08)",
       "url": "https://github.com/navi-crwn/NoteHop/commit/55433afb9ff44a4ef936114076101d90847af6f1",
@@ -9803,6 +11837,24 @@
     },
     {
       "kind": "commit",
+      "date": "2026-10-30T18:31:04+01:00",
+      "title": "Merge feat/hop-assets into feat/family-typography",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/8ba18e524064c1106473ab5dd95d85bc92560066",
+      "id": "8ba18e52",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-30T18:30:54+01:00",
+      "title": "feat: canonical HOP family table for every README (U-08)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/b8afb62465d3347ae9dcffd79e268c5c794d88d0",
+      "id": "b8afb624",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-10-30T18:27:31+01:00",
       "title": "feat: HOP family typography and family section",
       "url": "https://github.com/navi-crwn/NoteHop/commit/c203efc810bc3e11ab90069a04c815b8a604f805",
@@ -9818,6 +11870,15 @@
       "id": "f5be9bf7",
       "app": "PixelHop",
       "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-30T18:21:02+01:00",
+      "title": "feat: HOP family typography, official app marks and floating tiles on the hub",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/40d449549fc23b5fbbe8407bdf8d708e94f73b2b",
+      "id": "40d44954",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -9857,12 +11918,39 @@
     },
     {
       "kind": "commit",
+      "date": "2026-10-30T18:13:07+01:00",
+      "title": "fix: close the reduced-motion block in hop-float.css",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/0f674023da1d9ce443fa538c6e52f5bc5cd83a76",
+      "id": "0f674023",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-10-30T18:06:41+01:00",
       "title": "feat: HOP family typography and family list from hel.ink",
       "url": "https://github.com/navi-crwn/LinkHop/commit/b9d8204d9fb57f14b017e378b2d84e760b03aad6",
       "id": "b9d8204d",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-30T17:54:20+01:00",
+      "title": "feat: HOP family assets served from hel.ink/hop-assets",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/393db9c991e8fa8ef52ba7e3a00ebd2edd24e253",
+      "id": "393db9c9",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-30T17:48:51+01:00",
+      "title": "feat: record terms acceptance for new accounts (inactive until configured)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/b5d3ec69b9fb53a33407e87d2a0f441dab3ea871",
+      "id": "b5d3ec69",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -9938,6 +12026,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-10-30T17:40:01+01:00",
+      "title": "docs: add SECURITY.md and issue templates",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/8815747c6dd922f9591a61a8758716012dac48c5",
+      "id": "8815747c",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-10-30T09:04:48+01:00",
       "title": "U-06: mark temporary HOP hub destinations explicitly in nav, footer and compact public footer",
       "url": "https://github.com/navi-crwn/LinkHop/commit/9e84aed36adf1df404e993df7d754b90296c6e55",
@@ -9953,6 +12050,24 @@
       "id": "97418b11",
       "app": "LinkHop",
       "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-30T08:30:10+01:00",
+      "title": "ci: run U-05 nginx regression tests",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/78a782c66c854f74b465084b18b77c0dbfa61d2f",
+      "id": "78a782c6",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-30T08:26:20+01:00",
+      "title": "fix: redirect LinkHop and BioHop root paths",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/eed7f636b94866bc2c7bd4d04d904f4c01b8ef83",
+      "id": "eed7f636",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "pr",
@@ -10171,6 +12286,15 @@
       "repo": "LinkHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-10-30T11:11:36+07:00",
+      "title": "Merge pull request #12: docs: add NoteHop to ecosystem table and document shared packages",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/7d3496be5eb9eeb56a777f44b8b5f6b483856e33",
+      "id": "7d3496be",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-10-30T04:11:36Z",
       "title": "docs: add NoteHop to ecosystem table and document shared packages",
@@ -10180,11 +12304,29 @@
       "repo": "HEL.ink"
     },
     {
+      "kind": "commit",
+      "date": "2026-10-30T11:11:21+07:00",
+      "title": "Merge pull request #11: feat: perbarui packages/auth untuk verifikasi tiket sso rotasi ganda (F-08)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/745c1f506416468dbb7fbf995f6161e955636d1e",
+      "id": "745c1f50",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-10-30T04:11:21Z",
       "title": "feat: perbarui packages/auth untuk verifikasi tiket sso rotasi ganda (F-08)",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/11",
       "id": "#11",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-29T20:38:43+01:00",
+      "title": "docs: add NoteHop to ecosystem table and document shared packages",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/d822e8e2f5b854f7a8f809f8c9b745f7d0789a74",
+      "id": "d822e8e2",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -10259,6 +12401,15 @@
       "id": "90ca81ff",
       "app": "BioHop",
       "repo": "BioHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-29T19:58:31+01:00",
+      "title": "feat: perbarui packages/auth untuk verifikasi tiket sso rotasi ganda (F-08)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/857d8015441dbc1b432cea87b8c193b6563cdb11",
+      "id": "857d8015",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -10405,11 +12556,38 @@
       "repo": "HEL.ink"
     },
     {
+      "kind": "commit",
+      "date": "2026-10-29T22:28:54+07:00",
+      "title": "Merge pull request #8: feat: kirim event siklus akun ke app HOP dan perbaiki health check (F-01, F-15)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/b9ea0a99f51759061b481e877484efdfa637eb17",
+      "id": "b9ea0a99",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-10-29T15:28:35Z",
       "title": "fix: perketat klaim mfa, validasi _back, csp turnstile, dan perbarui symfony/mime (F-02, F-05, F-10, F-14)",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/9",
       "id": "#9",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-29T22:28:34+07:00",
+      "title": "Merge pull request #9: fix: perketat klaim mfa, validasi _back, csp turnstile, dan perbarui symfony/mime (F-02, F-05, F-10, F-14)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/ff0e85499e81d60fcf8f5be2b02e355ab1c0b37f",
+      "id": "ff0e8549",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-29T09:25:56+01:00",
+      "title": "chore: perbarui symfony/mime di composer.lock agar composer audit lulus",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/beb7ef77c4517fae5b52244576eb56b64de5e31f",
+      "id": "beb7ef77",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -10468,11 +12646,65 @@
       "repo": "LinkHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-10-29T09:01:35+01:00",
+      "title": "fix: gunakan path relatif untuk _back di settings dan pertahankan mfa di API stateless",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/05d986420fc86cb253a1d0b7f377d8cf970bfbf6",
+      "id": "05d98642",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-29T08:56:35+01:00",
+      "title": "fix: perketat klaim mfa, validasi _back, csp turnstile, dan perbarui symfony/mime",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/93d11cbde0243730fb11a4f5ca1ce160e64563de",
+      "id": "93d11cbd",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-29T08:53:02+01:00",
+      "title": "fix: panggil endpoint internal purge ke LinkHop dan BioHop saat hapus akun",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/870a5f5d66b08310205cfa04564652ebfb454538",
+      "id": "870a5f5d",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-29T08:44:41+01:00",
+      "title": "feat: kirim event siklus akun ke app HOP dan perbaiki health check",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/cb73c9c62c2494b61b46edc1594e7968ca6d9c97",
+      "id": "cb73c9c6",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-29T02:13:00+07:00",
+      "title": "Merge pull request #5: form-action allows the public home page where the logout chain ends",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/9b694d80b508b2516f774db98369b009797cf950",
+      "id": "9b694d80",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-10-28T19:13:00Z",
       "title": "form-action allows the public home page where the logout chain ends",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/5",
       "id": "#5",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-29T02:12:47+07:00",
+      "title": "Merge pull request #3: Archive the LinkHop design work in docs/design/linkhop",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/023c8a458f82224156e5b2e2295f04827c330933",
+      "id": "023c8a45",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -10491,6 +12723,15 @@
       "title": "Watchdog checks PixelHop at /healthz",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/6",
       "id": "#6",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-29T02:11:43+07:00",
+      "title": "Merge pull request #6: Watchdog checks PixelHop at /healthz",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/43c1c82ca3b7da8ad9c1b58609becb3da57af3eb",
+      "id": "43c1c82c",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -10577,6 +12818,15 @@
     },
     {
       "kind": "commit",
+      "date": "2026-10-29T02:10:23+07:00",
+      "title": "Merge pull request #7: The hub is the HOP ID provider for every app, Imperium included",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/4ae1f80115a8bd5334e3a7d1a4e57ff3db84c6ae",
+      "id": "4ae1f801",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
       "date": "2026-10-28T20:05:50+01:00",
       "title": "GET /auth/sso/logout: NoteHop joins the account server's chained logout",
       "url": "https://github.com/navi-crwn/NoteHop/commit/b995a6b1865dc00d3b7770016be21496dd9ae078",
@@ -10592,6 +12842,33 @@
       "id": "bbdda813",
       "app": "PixelHop",
       "repo": "PixelHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-28T20:02:46+01:00",
+      "title": "The hub is the HOP ID provider for every app, Imperium included",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/df501dd988b45901cff4deed3b488382d7adf687",
+      "id": "df501dd9",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-28T19:43:30+01:00",
+      "title": "Watchdog checks PixelHop at /healthz",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/c249243ea4c57f17655b5a092b66090db1dab906",
+      "id": "c249243e",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-28T19:42:28+01:00",
+      "title": "form-action allows the public home page where the logout chain ends",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/1280428679ead57d73276bb1eb4fbd9b2fe88f3f",
+      "id": "12804286",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
     },
     {
       "kind": "commit",
@@ -10617,6 +12894,24 @@
       "title": "Accept GET /logout from the apps",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/4",
       "id": "#4",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-29T01:30:29+07:00",
+      "title": "Merge pull request #4: Accept GET /logout from the apps",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/a3a763d85c1f76329918539f30813a2626f0bf8b",
+      "id": "a3a763d8",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-28T19:23:50+01:00",
+      "title": "Accept GET /logout from the apps",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/1457ecd1f25d3f8f582aebf0883b868854701a0b",
+      "id": "1457ecd1",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -10648,11 +12943,38 @@
       "repo": "LinkHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-10-28T18:15:26+00:00",
+      "title": "Archive the LinkHop design work in docs/design/linkhop",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/7598006733298aadba97084b7d3d73ff5f57cf01",
+      "id": "75980067",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-10-28T17:52:54Z",
       "title": "CSP allows unsafe-eval for Alpine; brand and marketing routes registered once",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/2",
       "id": "#2",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-29T00:52:53+07:00",
+      "title": "Merge pull request #2: CSP allows unsafe-eval for Alpine; brand and marketing routes registered once",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/eb055f87283fc29e26853cfc0715edd642ba8182",
+      "id": "eb055f87",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-28T18:51:59+01:00",
+      "title": "CSP allows unsafe-eval for Alpine; brand and marketing routes registered once",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/74ab7a6ed94f1bff16b2b8bb89a572685601e5fe",
+      "id": "74ab7a6e",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },
@@ -10927,11 +13249,83 @@
       "repo": "NoteHop"
     },
     {
+      "kind": "commit",
+      "date": "2026-10-28T18:25:45+07:00",
+      "title": "Merge pull request #1: Fase B: app hub HEL.ink (hel.ink + hub.hel.ink), SSO penerbit, paket hop/*, watchdog",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/3ac4bb781329cd02fd77dbc827be6fcfbec11e9f",
+      "id": "3ac4bb78",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
       "kind": "pr",
       "date": "2026-10-28T11:25:45Z",
       "title": "Fase B: app hub HEL.ink (hel.ink + hub.hel.ink), SSO penerbit, paket hop/*, watchdog",
       "url": "https://github.com/navi-crwn/HEL.ink/pull/1",
       "id": "#1",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-28T12:10:50+01:00",
+      "title": "Akun, SSO penerbit, launcher, pengumuman, status, admin, watchdog",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/fd4441b47ac68bba18198b68a95cf19cf1e42325",
+      "id": "fd4441b4",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-28T12:10:50+01:00",
+      "title": "README induk, .env.example, router nginx, placeholder website docs",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/f642dbbfe23461e5d442e005a939ee42043afb11",
+      "id": "f642dbbf",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-28T12:10:50+01:00",
+      "title": "Kerangka Laravel 12 untuk hub dengan config/hop.php",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/f10c0296bf3e38b99954edd9c2d10f81d616ed24",
+      "id": "f10c0296",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-28T12:10:50+01:00",
+      "title": "Tampilan hub: beranda HOP, launcher, status, pengumuman, admin, marketing",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/ca58c5ea912a79ccd22549d06b18d6194e3c1df6",
+      "id": "ca58c5ea",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-28T12:10:50+01:00",
+      "title": "Test (Pest, sqlite) dan CI GitHub Actions",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/982847a532c383428241da1dfaf980b53e7f49e5",
+      "id": "982847a5",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-28T12:10:50+01:00",
+      "title": "Paket bersama hop/ui, hop/auth, hop/safety",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/30bdbfacf4ba837db3b1d7faf200f470b069d602",
+      "id": "30bdbfac",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-10-28T12:10:46+01:00",
+      "title": "Repo induk HEL.ink: rencana pemisahan aplikasi dan file dasar",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/e70a1b099d18748e1678d9edb7c46be0ceec85f4",
+      "id": "e70a1b09",
       "app": "HOP ID",
       "repo": "HEL.ink"
     },

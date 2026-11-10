@@ -6,16 +6,14 @@ use App\Models\User;
 
 /**
  * Where someone lands after signing in at the hub when nothing else asked for
- * a page (no SSO round trip waiting): admins go to Imperium, the admin control
- * panel, when it is configured; everyone else to the launcher. The hub
- * dashboard stays one click away for admins (sidebar).
+ * a page (no SSO round trip waiting): the HOP ID dashboard, for everyone. An account with a role finds
+ * "Open Imperium" in the top bar; the hub itself is for people, Imperium for admins.
  */
 final class AfterLogin
 {
     public static function home(User $user): string
     {
-        $control = (string) config('hop.control_url');
-
-        return $control !== '' && $user->isAdmin() ? $control : route('dashboard', absolute: false);
+        // Everyone starts on the HOP ID dashboard; an account with a role finds "Open Imperium" in the top bar.
+        return route('dashboard', absolute: false);
     }
 }

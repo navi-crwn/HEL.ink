@@ -266,9 +266,6 @@
                     @endif
                 </div>
                 <div x-show="tab === '2fa'" x-cloak class="space-y-4 p-5">
-                    @if ($u->isSuperAdmin())
-                        <p role="status">{{ __('Superadmin accounts are permanent and read-only, including for the account itself.') }}</p>
-                    @else
                     <div>
                         <h3 class="text-base font-semibold text-ink">{{ __('Two-factor authentication') }}</h3>
                         <p class="text-sm text-muted">{{ __('A code from your phone at sign-in, on top of your password.') }}</p>
@@ -357,6 +354,9 @@
                                     </button>
                                 </form>
                             </div>
+                            @if ($u->isSuperAdmin())
+                                <p class="text-sm text-muted" role="status">{{ __('Two-factor stays on for this account. If the authenticator is lost, the server owner can reset it with the hop:reset-2fa command.') }}</p>
+                            @else
                             <div class="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-900/30 dark:bg-red-900/20">
                                 <h4 class="font-medium text-red-900 dark:text-red-100">{{ __('Turn off two-factor') }}</h4>
                                 <p class="mt-1 text-sm text-red-800 dark:text-red-200">
@@ -371,8 +371,8 @@
                                     </button>
                                 </form>
                             </div>
+                            @endif
                         @endif
-                    @endif
                     @endif
                 </div>
                 <div x-show="tab === 'backup'" x-cloak class="space-y-4 p-5">

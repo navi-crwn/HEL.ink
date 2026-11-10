@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\AdminMiddleware;
+use App\Http\Controllers\SsoController;
 use App\Http\Middleware\AutoLogout;
 use App\Http\Middleware\CheckSuspended;
 use App\Http\Middleware\ContentSecurityPolicyMiddleware;
@@ -15,6 +16,7 @@ use App\Http\Middleware\VerifyHopSignature;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\Request;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\Facades\Auth;
@@ -49,6 +51,12 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        // A silent SSO check (prompt=none) promises no page: over the throttle it gets an error at the app's callback.
+        $exceptions->render(function (ThrottleRequestsException $e, Request $request) {
+            return $request->routeIs('sso.ticket') && $request->query('prompt') === 'none'
+                ? SsoController::silentReply($request, 'temporarily_unavailable')
+                : null;
+        });
         // An expired CSRF token (session timed out while the page stayed open) is not an
         // attack worth a bare "419 Page Expired" page. CSRF stays on; only the reply changes.
         $exceptions->render(function (HttpException $e, Request $request) {

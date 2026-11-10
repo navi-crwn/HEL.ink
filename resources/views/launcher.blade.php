@@ -73,7 +73,7 @@
     {{-- My apps --}}
     <section aria-labelledby="apps-title" class="space-y-3">
         <h2 id="apps-title" class="section-title">{{ __('My apps') }}</h2>
-        <div class="hop-bento" data-bare data-rv-load>
+        <div class="dash-apps" data-rv-group data-rv-load>
             @foreach ($apps as $app)
                 <x-app-card :app="$app" :state="$status[$app->slug] ?? null">
                     @if (! empty($appNumbers[$app->slug]))
@@ -90,7 +90,7 @@
         </div>
     </section>
 
-    <div class="hop-bento" data-bare data-rv-load>
+    <div class="hop-bento dash-grid" data-bare data-rv-load>
         {{-- Account health: the checklist, while a step is open and the person has not hidden it this week.
              Once every step is done it is gone for good. --}}
         @if ($showHealth)
@@ -166,7 +166,7 @@
             </div>
         </section>
 
-        <div class="grid min-w-0 content-start gap-3">
+        <div class="grid min-w-0 content-start gap-4">
             {{-- Recent activity --}}
             <section class="glass-card min-w-0" aria-labelledby="activity-title">
                 <div class="flex items-center justify-between gap-2">

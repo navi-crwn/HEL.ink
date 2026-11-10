@@ -1018,5 +1018,11 @@
     "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} 你已没有恢复码|{1} 你还剩 :count 个恢复码|[2,*] 你还剩 :count 个恢复码",
     "Interface style": "界面样式",
     "Clean": "简洁",
-    "Applies to every HOP app on this browser.": "适用于此浏览器中的所有 HOP 应用。"
+    "Applies to every HOP app on this browser.": "适用于此浏览器中的所有 HOP 应用。",
+    "Two-factor stays on for this account. If the authenticator is lost, the server owner can reset it with the hop:reset-2fa command.": "此账号的两步验证将保持开启。如果验证器丢失，服务器所有者可以用 hop:reset-2fa 命令重置。",
+    "Open Imperium": "打开 Imperium",
+    "Uploads": "上传",
+    "Never": "从不",
+    "Two-factor is already on for this account.": "此账号已开启两步验证。",
+    "Stored": "已存储"
 }

@@ -172,7 +172,7 @@ class HopIdProviderTest extends TestCase
         $call('correct horse')->assertOk()->assertJsonPath('user.sub', (string) $user->id);
     }
 
-    public function test_admins_land_in_imperium_after_signing_in_and_others_on_the_launcher(): void
+    public function test_everyone_lands_on_the_dashboard_after_signing_in_admins_included(): void
     {
         config()->set('hop.control_url', 'https://citadel.example.com');
         config()->set('services.turnstile.secret', null);
@@ -180,7 +180,7 @@ class HopIdProviderTest extends TestCase
         $admin->forceFill(['password' => Hash::make('password')])->save();
 
         $this->post('/login', ['email' => $admin->email, 'password' => 'password'])
-            ->assertRedirect('https://citadel.example.com');
+            ->assertRedirect(route('dashboard', absolute: false));
 
         auth()->logout();
         $member = User::factory()->create(['password' => Hash::make('password')]);

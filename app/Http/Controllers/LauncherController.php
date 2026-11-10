@@ -24,7 +24,7 @@ class LauncherController extends Controller
 
         return view('launcher', [
             'apps' => $apps,
-            'appNumbers' => $summaries->for($user, $apps, $status),
+            'appNumbers' => $summaries->for($user, $apps, $status) + self::storesNothing(),
             'status' => $status,
             'summary' => HubDashboard::status($status),
             'dashboard' => $dashboard,
@@ -35,5 +35,20 @@ class LauncherController extends Controller
             'activity' => $dashboard->activity(),
             'announcements' => Announcement::live()->limit(3)->get(),
         ]);
+    }
+
+    /**
+     * The fixed line of an app that stores nothing (FileHop), so its card is as tall as the others and says why it has no counts.
+     *
+     * @return array<string, list<array{label: string, value: string}>>
+     */
+    private static function storesNothing(): array
+    {
+        $rows = [
+            ['label' => 'Uploads', 'value' => __('Never')],
+            ['label' => 'Stored', 'value' => '0 B'],
+        ];
+
+        return array_fill_keys((array) config('hop.card_facts', []), $rows);
     }
 }

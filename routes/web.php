@@ -88,6 +88,8 @@ Route::domain(config('hop.hub_host'))->group(function () use ($marketing) {
         Route::post('/onboarding/skip', fn () => redirect()->route('dashboard'))->name('onboarding.skip');
         Route::post('/onboarding/set-password', [ProfileController::class, 'createPasswordFromOnboarding'])->name('onboarding.set-password');
     });
+    // The ticket step decides for itself about guests and `prompt=none` (SsoController::ticket).
+    Route::get('/sso/{app}', [SsoController::class, 'ticket'])->where('app', '[a-z0-9-]{1,32}')->middleware('throttle:30,1,sso')->name('sso.ticket');
     // "Continue with Google" in the apps: works for guests too (see SsoController::viaGoogle).
     Route::get('/sso/{app}/google', [SsoController::class, 'viaGoogle'])->where('app', '[a-z0-9-]{1,32}')->middleware('throttle:30,1,sso-google')->name('sso.google');
     Route::get('/csrf-token', fn () => response()->json(['token' => csrf_token()])->header('Cache-Control', 'no-store, private'))
@@ -98,7 +100,6 @@ Route::domain(config('hop.hub_host'))->group(function () use ($marketing) {
         Route::post('/two-factor-challenge', [TwoFactorController::class, 'verify'])->middleware('throttle:5,1,two-factor')->name('two-factor.verify');
     });
     Route::middleware(['auth', '2fa'])->group(function () {
-        Route::get('/sso/{app}', [SsoController::class, 'ticket'])->where('app', '[a-z0-9-]{1,32}')->middleware('throttle:30,1,sso')->name('sso.ticket');
         Route::get('/apps/{app}', [SsoController::class, 'open'])->where('app', '[a-z0-9-]{1,32}')->name('apps.open');
         Route::get('/dashboard', LauncherController::class)->name('dashboard');
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

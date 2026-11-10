@@ -1018,5 +1018,11 @@
     "{0} You have no recovery codes left|{1} You have :count recovery code left|[2,*] You have :count recovery codes left": "{0} Du hast keine Wiederherstellungscodes mehr|{1} Du hast noch :count Wiederherstellungscode|[2,*] Du hast noch :count Wiederherstellungscodes",
     "Interface style": "Oberflächenstil",
     "Clean": "Schlicht",
-    "Applies to every HOP app on this browser.": "Gilt für alle HOP-Apps in diesem Browser."
+    "Applies to every HOP app on this browser.": "Gilt für alle HOP-Apps in diesem Browser.",
+    "Two-factor stays on for this account. If the authenticator is lost, the server owner can reset it with the hop:reset-2fa command.": "Die Zwei-Faktor-Authentifizierung bleibt für dieses Konto aktiv. Bei verlorenem Authenticator kann der Server-Inhaber sie mit dem Befehl hop:reset-2fa zurücksetzen.",
+    "Open Imperium": "Imperium öffnen",
+    "Uploads": "Uploads",
+    "Never": "Nie",
+    "Two-factor is already on for this account.": "Die Zwei-Faktor-Authentifizierung ist für dieses Konto bereits aktiv.",
+    "Stored": "Gespeichert"
 }

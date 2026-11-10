@@ -28,6 +28,10 @@ return [
     // The shared HMAC secret for SSO tickets. Per-app overrides: HOP_SSO_SECRET_LINKHOP, …
     'sso_secret' => env('HOP_SSO_SECRET'),
 
+    // Where the "Open Imperium" shortcut of an account with a role points: HOP_IMPERIUM_URL, else HOP_CONTROL_URL, else
+    // the Tailscale-only address. The hub itself is for people; admins use Imperium and get the same dashboard here.
+    'imperium_url' => rtrim((string) (env('HOP_IMPERIUM_URL') ?: env('HOP_CONTROL_URL') ?: 'https://imperium.hel.ink'), '/'),
+
     // Imperium, the admin control panel. Admins who sign in at the hub land there
     // (the hub dashboard stays one click away). citadel.hel.ink works from anywhere
     // through Cloudflare Access; imperium.hel.ink only over Tailscale.
@@ -182,6 +186,8 @@ return [
             'url' => env('FILEHOP_URL', 'https://file.hel.ink'),
             // Signs in with its own secret and callback from the HOP ID registry (`apps`), like NoteHop.
             'registry' => true,
+            // "Open" on its card goes to the signed-in dashboard, not the public page (the registry row says "/").
+            'open_path' => env('FILEHOP_OPEN_PATH', '/dashboard'),
             'public_prefix' => null,
             'logout' => env('FILEHOP_LOGOUT_PATH', '/auth/sso/logout'),
             'export' => null,
@@ -198,13 +204,16 @@ return [
     // `auth` is how the hub signs the call: "hub" (Laravel apps: /internal/accounts/{id}/summary,
     // shared SSO secret) or "hop" (Go apps: the HOP App Protocol, GET /hop/users/{id}).
     // Counts only, never content. `fields` maps the app's answer to a label (English key, translated on render).
-    // FileHop is left out: it stores no files, so it has no numbers to show on a card.
+    // FileHop is left out: it stores no files, so it has no numbers to show on a card; `card_facts` gives it a fixed line.
     'summaries' => [
         'linkhop' => ['auth' => 'hub', 'path' => '/internal/accounts/{id}/summary', 'fields' => ['links' => 'Links', 'clicks_7d' => 'Clicks, 7 days']],
         'biohop' => ['auth' => 'hub', 'path' => '/internal/accounts/{id}/summary', 'fields' => ['pages' => 'Pages', 'published' => 'Published', 'clicks_7d' => 'Clicks, 7 days']],
         'pixelhop' => ['auth' => 'hop', 'path' => '/hop/users/{id}', 'fields' => ['images' => 'Files', 'albums' => 'Albums', 'storage_bytes' => 'Storage:bytes']],
         'notehop' => ['auth' => 'hop', 'path' => '/hop/users/{id}', 'fields' => ['notes' => 'Notes', 'notes_public' => 'Basic notes']],
     ],
+
+    // Apps that store nothing: their card shows "Uploads: Never" and "Stored: 0 B" instead of counts.
+    'card_facts' => ['filehop'],
 
     // Watchdog (hop:watch): alert after this many failures in a row.
     'watch' => [

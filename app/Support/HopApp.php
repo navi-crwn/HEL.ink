@@ -75,6 +75,12 @@ final class HopApp implements \JsonSerializable
         );
     }
 
+    /** One absolute path on the app's own host ("/dashboard"); null for anything else (empty, "//host", backslashes, a URL). */
+    private static function openPath(mixed $path): ?string
+    {
+        return is_string($path) && preg_match('#^/(?:[A-Za-z0-9_-]+(?:/[A-Za-z0-9_-]+)*/?)?$#', $path) === 1 ? $path : null;
+    }
+
     /** An app from the registry table; its own secret, no logout or export endpoint known. */
     public static function fromRegistry(\App\Models\HopApp $m, array $display = []): self
     {
@@ -99,7 +105,7 @@ final class HopApp implements \JsonSerializable
                 repo: $display['repo'] ?? null,
                 hidden: false,
                 capabilities: (array) ($m->capabilities ?? []),
-                defaultNext: $m->page($m->continue_page),
+                defaultNext: self::openPath($display['open_path'] ?? null) ?? $m->page($m->continue_page),
             );
         }
 

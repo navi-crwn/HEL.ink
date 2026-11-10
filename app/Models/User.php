@@ -141,6 +141,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return in_array($app ? $role.':'.$app : $role, $this->roleNames(), true);
     }
 
+    /** Holds any role (owner, admin, moderator, support, or an app-scoped one): the account may open Imperium. */
+    public function hasAnyRole(): bool
+    {
+        return $this->roleNames() !== [];
+    }
+
     public function isOwner(): bool
     {
         return $this->hasRole(Role::OWNER);

@@ -31,7 +31,6 @@
         @auth
             @php
                 $user = auth()->user();
-                $isAdmin = $user->isAdmin();
                 $sectionTitle = trim(\Illuminate\Support\Str::beforeLast($pageTitle ?? '', ' · ')) ?: 'HOP';
             @endphp
             {{-- The drawer is modal on phones: Escape closes it, the page behind does not scroll while it is open,
@@ -49,16 +48,13 @@
                             {{-- Signed in, the wordmark is the way back to the HOP ID dashboard, not to the public home page. --}}
                             <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5" title="{{ __('HOP ID dashboard') }}">
                                 <x-wordmark class="h-10 w-auto" />
-                                @if ($isAdmin)
-                                    <span class="chip-blue">{{ __('Admin') }}</span>
-                                @endif
                             </a>
                             <button type="button" class="icon-btn lg:hidden" @click="nav = false" aria-label="{{ __('Close menu') }}">
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></svg>
                             </button>
                         </div>
                         <nav class="flex-1 overflow-y-auto px-3 pb-3">
-                            @include('components.partials.nav', ['isAdmin' => $isAdmin])
+                            @include('components.partials.nav')
                         </nav>
                         <div class="flex items-center gap-1 border-t border-slate-500/10 px-3.5 py-1 text-xs text-muted">
                             <a href="{{ route('changelog') }}" class="inline-flex min-h-11 items-center px-1.5 hover:underline">{{ __('Changelog') }}</a>
@@ -75,6 +71,13 @@
                         </button>
                         <p class="truncate pl-1 text-sm font-semibold text-ink">{{ $sectionTitle }}</p>
                         <div class="ml-auto flex items-center gap-1.5">
+                            {{-- Accounts with a role: one shortcut to Imperium. The hub stays the same dashboard for everyone. --}}
+                            @if ($user->hasAnyRole())
+                                <a href="{{ config('hop.imperium_url') }}" class="btn-primary btn-sm whitespace-nowrap" data-imperium-shortcut aria-label="{{ __('Open Imperium') }}" title="{{ __('Open Imperium') }}">
+                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6l-8-3Z"/></svg>
+                                    <span class="hidden sm:inline">{{ __('Open Imperium') }}</span>
+                                </a>
+                            @endif
                             <x-hop::language-switcher />
                             <button type="button" data-call="toggleTheme" id="theme-toggle-button" class="icon-btn" aria-label="{{ __('Toggle theme') }}" title="{{ __('Toggle theme') }}">
                                 <svg class="h-[18px] w-[18px] dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></svg>

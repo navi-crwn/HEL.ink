@@ -18,6 +18,11 @@ class TwoFactorController extends Controller
         if (! Hash::check($request->password, $request->user()->password)) {
             return back()->withErrors(['password' => 'The provided password is incorrect.']);
         }
+        // A confirmed setup is never overwritten: that would move 2FA to another authenticator without the old code.
+        // An unconfirmed one may be started again. Turning it off (disable) or, for the owner, hop:reset-2fa comes first.
+        if ($request->user()->two_factor_confirmed_at) {
+            return back()->withErrors(['password' => __('Two-factor is already on for this account.')])->with('active_tab', '2fa');
+        }
         $google2fa = new Google2FA;
         $secret = $google2fa->generateSecretKey();
         $recoveryCodes = [];

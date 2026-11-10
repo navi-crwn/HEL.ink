@@ -17,7 +17,7 @@ class ProtectPermanentSuperadmin
         $adminMutation = $request->routeIs('admin.users.*') && $target instanceof User && $target->isSuperAdmin();
         $selfMutation = $request->user()?->isSuperAdmin() && $request->routeIs(
             'profile.*', 'password.update', 'password.create', 'onboarding.set-password',
-            'settings.2fa.*', 'api-tokens.store', 'api-tokens.destroy'
+            'settings.2fa.disable', 'api-tokens.store', 'api-tokens.destroy'
         );
         if ($adminMutation || $selfMutation) {
             abort(403, 'Superadmin accounts are permanent and read-only, including for the account itself.');

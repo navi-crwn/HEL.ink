@@ -67,7 +67,7 @@ test('self service and legacy admin mutations cannot modify a superadmin', funct
     $owner = User::factory()->create();
     $owner->roles()->create(['role' => Role::OWNER, 'app_slug' => null]);
     $this->actingAs($owner)->withSession(['2fa_verified' => true]);
-    foreach ([['PATCH', '/profile'], ['POST', '/profile/avatar'], ['DELETE', '/profile/avatar'], ['DELETE', '/profile'], ['PUT', '/password'], ['POST', '/api-tokens'], ['POST', '/settings/2fa/enable'], ['DELETE', '/settings/2fa/disable'], ['POST', '/onboarding/set-password']] as [$method, $path]) {
+    foreach ([['PATCH', '/profile'], ['POST', '/profile/avatar'], ['DELETE', '/profile/avatar'], ['DELETE', '/profile'], ['PUT', '/password'], ['POST', '/api-tokens'], ['DELETE', '/settings/2fa/disable'], ['POST', '/onboarding/set-password']] as [$method, $path]) {
         $this->json($method, $path)->assertForbidden();
     }
     foreach (['suspend', 'activate', 'role'] as $action) {

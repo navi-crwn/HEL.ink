@@ -2,7 +2,6 @@
 
 use Hop\Safety\EncryptedNoteLink;
 use Hop\Safety\LinkSafety;
-use Illuminate\Support\Facades\Http;
 
 // Fake key only.
 const SAFETY_KEY = 'FAKEKEY0notehop0audit0000000000000000000';

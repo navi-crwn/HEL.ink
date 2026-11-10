@@ -1,0 +1,11 @@
+[
+    {"name": "live kit host fnjphdp.com (2026-11-05), guest", "url": "https://mjdgdqgk.fnjphdp.com/wqamhcsom?r=AbCdEf123", "guest": true, "verdict": ["block"]},
+    {"name": "live kit host bgp09.icu (2026-11-06), guest", "url": "https://bgp09.icu/", "guest": true, "verdict": ["block", "interstitial"]},
+    {"name": "official telegram handle", "url": "https://t.me/telegram", "guest": false, "verdict": ["allow"]},
+    {"name": "official telegram handle, guest", "url": "https://t.me/telegram", "guest": true, "verdict": ["allow"]},
+    {"name": "bank name as a subdomain of a risky domain", "url": "https://klikbca.com.example.xyz/", "guest": false, "verdict": ["block"]},
+    {"name": "apk destination", "url": "https://files.example.com/app/update.apk", "guest": false, "verdict": ["block"]},
+    {"name": "a word that only contains a brand token", "url": "https://bandana.com/", "guest": false, "verdict": ["allow"]},
+    {"name": "a word that only contains a brand token, guest", "url": "https://bandana.com/shop", "guest": true, "verdict": ["allow"]},
+    {"name": "plain site, guest", "url": "https://github.com/navi-crwn", "guest": true, "verdict": ["allow"]}
+]

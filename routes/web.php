@@ -13,6 +13,7 @@ use App\Http\Controllers\MarketingPageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\SsoController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\StatusController;
@@ -45,6 +46,7 @@ $brand = function () use ($brandFile) {
 };
 $marketing = function () {
     Route::get('/changelog', ChangelogController::class)->name('changelog');
+    Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
     Route::get('/about', [MarketingPageController::class, 'about'])->name('about');
     Route::get('/contact', [MarketingPageController::class, 'contact'])->name('contact');
     Route::get('/privacy', [MarketingPageController::class, 'privacy'])->name('privacy');

@@ -1,0 +1,14 @@
+[
+    {
+        "domain": "fnjphdp.com",
+        "match_type": "exact",
+        "category": "phishing",
+        "notes": "Telegram account-takeover form behind a LinkHop short link, 2026-11-05. Not in Safe Browsing or URLhaus at the time."
+    },
+    {
+        "domain": "*.fnjphdp.com",
+        "match_type": "wildcard",
+        "category": "phishing",
+        "notes": "Each victim gets a throwaway subdomain of the domain above."
+    }
+]

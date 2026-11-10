@@ -20,7 +20,7 @@
         $commits = collect($gh['repos'])->sum('commits');
         $repoCount = count((array) config('hop.github.repos', []));
     @endphp
-    <div class="hx-marq" data-hx-marq aria-label="{{ __('What you get') }}"><div>@foreach (['One free account', 'Five apps', 'Short links', 'Link in bio', 'Image hosting', 'Private notes', 'File conversion', 'No ads', 'No trackers', 'Open source', 'Self-host if you like'] as $t)<span>{{ __($t) }}</span>@endforeach</div></div>
+    <div class="hx-marq" data-hx-marq aria-label="{{ __('What you get') }}"><div>@foreach (['One free account', 'A family of apps', 'Short links', 'Link in bio', 'Image hosting', 'Private notes', 'File conversion', 'No ads', 'No trackers', 'Open source', 'Self-host if you like'] as $t)<span>{{ __($t) }}</span>@endforeach</div></div>
     <div class="hx-nums hop-bento" data-tiles data-hx-nums>
         <div data-spot><b data-count="{{ count($stories) }}">{{ count($stories) }}</b><span>{{ __('apps') }}</span></div>
         <div data-spot><b data-count="{{ count(\Hop\Ui\Locales::codes()) }}">{{ count(\Hop\Ui\Locales::codes()) }}</b><span>{{ __('languages') }}</span></div>
@@ -44,7 +44,7 @@
     @include('partials.home-open')
     @include('partials.home-faq')
     <section class="hx hx-final" aria-labelledby="final-title">
-        <div class="hx-wrap"><p class="h-label"><span class="n">05</span> · <span>{{ __('Your next hop') }}</span></p><h2 id="final-title"><span>{{ __('One small hop.') }} <em>{{ __('So many possibilities.') }}</em></span></h2><p class="h-sub"><span>{{ __('Short links, a page for your links, images, private notes and file conversion. One free HOP ID connects them all.') }}</span></p><div class="h-cta"><a class="h-pill dark" href="{{ hub_url('register') }}">{{ __('Create HOP ID') }}</a><a class="h-pill" href="#linkhop">{{ __('See the apps') }}</a></div></div>
+        <div class="hx-wrap"><h2 id="final-title"><span>{{ __('One small hop.') }} <em>{{ __('So many possibilities.') }}</em></span></h2><p class="h-sub"><span>{{ __('Short links, a page for your links, images, private notes and file conversion. One free HOP ID connects them all.') }}</span></p><div class="h-cta"><a class="h-pill dark" href="{{ hub_url('register') }}">{{ __('Create HOP ID') }}</a><a class="h-pill" href="#linkhop">{{ __('See the apps') }}</a></div></div>
     </section>
 </div>
 </x-marketing-layout>

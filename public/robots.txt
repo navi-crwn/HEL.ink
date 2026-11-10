@@ -1,5 +1,5 @@
 # HEL.ink Robots.txt
-# Last updated: December 2025
+# Last updated: November 2026
 
 User-agent: *
 Allow: /
@@ -28,3 +28,5 @@ Disallow: /two-factor
 Disallow: /health/
 Disallow: /sanctum/
 Disallow: /_debugbar/
+
+Sitemap: https://hel.ink/sitemap.xml

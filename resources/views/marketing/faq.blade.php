@@ -33,7 +33,7 @@
             <div class="space-y-3">
                 <details class="{{ $card }}">
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('What is HOP and what apps belong to the family?') }}</summary>
-                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('HOP stands for Hop Easy Link. It is a family of five independent, open-source web services: LinkHop (short links & QR codes), BioHop (link-in-bio pages), PixelHop (image and document hosting), NoteHop (zero-knowledge encrypted notes), and FileHop (file conversion in the browser). They are tied together by one account system: your HOP ID.') }}</p>
+                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('HOP stands for Hop Easy Link. It is a family of independent, open-source web services: LinkHop (short links & QR codes), BioHop (link-in-bio pages), PixelHop (image and document hosting), NoteHop (zero-knowledge encrypted notes), and FileHop (file conversion in the browser). They are tied together by one account system: your HOP ID.') }}</p>
                 </details>
 
                 <details class="{{ $card }}">

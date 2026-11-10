@@ -13,6 +13,16 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 - hop-assets v7 `hop-brand.css`: each app name in its own typeface, as ASCII-subset fonts with their OFL licences (HOP ID Syne, LinkHop Pixelify Sans, BioHop Space Grotesk, PixelHop Silkscreen, NoteHop Caveat, FileHop Sora).
 - hop-assets v8: the bento is proportional. `hop-bento.css` has 60 desktop columns so five tiles share one row from 1100 px (`data-tiles`), no box is alone on a row or wider than half of it unless it is the only box or `data-span` asks for it, and media is capped (`[data-media]` 160-200 px, `[data-scene]` 140 px). Pattern tables for two to nine boxes are at the top of the file and `tests/hop-bento.test.mjs` checks them. The hub's home, products, about, help, plans and contact pages use it. v7 stays as it was.
 - hop-assets v8: BioHop has a new mark, an 8x8 page with three lines, a stepped top-right corner and a cut bottom-left cell (`mark.svg`, `mark-white.svg`, the mark-only `wordmark.svg`, the 3D map and the floating tile). The manifest key `mark_white` is new.
+- Home page: the three numbered eyebrow labels (01, 04, 05) are gone, and the copy no longer spells out how many apps there are ("Five apps", "all five apps", "five independent services" now read without the number, in all nine languages), so adding an app does not make the text wrong.
+- `packages/safety` is the hop-safety v0.1.0 code (Safe Browsing v5, `LinkVerdict`, `Verdict`, its tests and fixtures).
+- Public GitHub Pages docs: FileHop is listed in the app table and in the app lists of all nine languages.
+- `scripts/build-changelog.py`: FileHop is a source of the public changelog.
+- `robots.txt` names `https://hel.ink/sitemap.xml`.
+
+### Added
+
+- `GET /sitemap.xml` on the hub (it answered 404): the marketing pages and one product page per app. A test checks every `Sitemap:` line of `robots.txt` is served.
+- Tests that fail when a local family list drifts from the hop-assets manifest: `FamilyStory::APPS`, `hop.github.repos` and `PUBLIC` in `scripts/build-changelog.py`.
 
 ### Fixed
 

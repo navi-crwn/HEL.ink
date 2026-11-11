@@ -4,6 +4,8 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-11-12
+
 ### Changed
 
 - Signing in no longer waits for outside services. `LoginRecorder` writes the login-history row and the account's last-sign-in fields at once (account, address, browser, how: password, Google or an app hand-off), and the GeoIP and proxy lookups that fill in the place and the proxy flags run as the queued job `EnrichLoginRecord` (the database queue served by `hub-queue`, with retries). If the queue cannot take the job, the lookups run after the response instead. The queue was chosen over `defer()` alone because a lookup that hangs would otherwise hold a PHP worker, and because it is retried. Turnstile verification stays in the sign-in request. All three callers (password, Google, single sign-on hand-off) go through `LoginRecorder`. Until the job has run, a new row shows no place.
@@ -140,7 +142,8 @@ The first stable release. HEL.ink's first pull request was merged on 2026-10-28;
 
 - The 2026-11-04 audit fixes are included: error pages in the visitor's language, a language cookie that works with `SESSION_DOMAIN`, and `HopAppsSeeder`, which adds the `events` rows for the four apps without changing an existing row.
 
-[Unreleased]: https://github.com/navi-crwn/HEL.ink/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/navi-crwn/HEL.ink/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/navi-crwn/HEL.ink/releases/tag/v1.3.0
 [1.2.0]: https://github.com/navi-crwn/HEL.ink/releases/tag/v1.2.0
 [1.1.0]: https://github.com/navi-crwn/HEL.ink/releases/tag/v1.1.0
 [1.0.0]: https://github.com/navi-crwn/HEL.ink/releases/tag/v1.0.0

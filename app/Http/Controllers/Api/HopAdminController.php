@@ -181,12 +181,17 @@ class HopAdminController extends Controller
                 'count' => (int) ($session->n ?? 0),
                 'last_activity' => $session && $session->last ? CarbonImmutable::createFromTimestampUTC((int) $session->last)->toIso8601String() : null,
             ],
-            'logins' => $user->loginHistories()->orderByDesc('logged_in_at')->limit(5)->get()->map(fn ($l) => [
+            'logins' => $user->loginHistories()->orderByDesc('logged_in_at')->limit(10)->get()->map(fn ($l) => [
                 'at' => $l->logged_in_at?->toIso8601String(), 'ip' => $l->ip_address, 'country' => $l->country, 'city' => $l->city,
                 'device' => $l->device, 'browser' => $l->browser, 'provider' => $l->provider, 'is_proxy' => (bool) $l->is_proxy,
             ])->all(),
             'activity' => $user->activityLogs()->orderByDesc('id')->limit(20)->get()->map(fn ($a) => [
                 'at' => $a->created_at?->toIso8601String(), 'action' => $a->action, 'model' => $a->model, 'description' => $a->description,
+            ])->all(),
+            // Name and last use only: never the token value or its hash.
+            'tokens' => $user->apiTokens()->orderBy('id')->get(['id', 'name', 'last_used_at', 'created_at'])->map(fn ($t) => [
+                'id' => (string) $t->id, 'name' => $t->name,
+                'last_used_at' => $t->last_used_at?->toIso8601String(), 'created_at' => $t->created_at?->toIso8601String(),
             ])->all(),
             'roles' => $user->roleNames(),
             'notes' => HopUserNote::where('user_id', $user->id)->orderByDesc('id')->get()->map(fn ($n) => [
@@ -219,9 +224,19 @@ class HopAdminController extends Controller
         $audit = ['actor' => $actor, 'app_slug' => $app->slug, 'action' => $action, 'target_type' => 'user',
             'target_id' => (string) $user->id, 'reason' => is_string($reason) ? mb_substr($reason, 0, 500) : null];
 
+        $actorUser = $this->actorUser($actor);
+        if (in_array($action, ['suspend', 'delete'], true) && $actorUser && $actorUser->is($user)) {
+            return $this->fail('forbidden', 'An account cannot '.$action.' itself.', 403);
+        }
+        if ($action === 'set_roles' && (! $actorUser || ! $actorUser->isOwner())) {
+            return $this->fail('forbidden', 'Only an owner can change roles.', 403);
+        }
+
         switch ($action) {
             case 'suspend':
                 $user->update(['status' => User::STATUS_SUSPENDED]);
+                // As the hub's own page does: a suspended account keeps no API tokens.
+                $params = ['tokens_deleted' => $user->apiTokens()->delete()];
                 break;
             case 'activate':
                 $user->update(['status' => User::STATUS_ACTIVE]);
@@ -246,10 +261,13 @@ class HopAdminController extends Controller
                     return $this->fail('bad_params', 'unknown role; use owner, admin, moderator, support or admin:<app>', 422);
                 }
                 $keepsOwner = in_array(Role::OWNER, array_column($parsed, 0), true);
+                if ($keepsOwner && ! $user->hasRole(Role::OWNER)) {
+                    return $this->fail('bad_params', 'Ownership is set with SUPERADMIN_EMAIL or hop:owner, not through the API.', 422);
+                }
                 if ($user->hasRole(Role::OWNER) && ! $keepsOwner && Role::where('role', Role::OWNER)->whereNull('app_slug')->count() <= 1) {
                     return $this->fail('last_owner', 'HOP ID must keep at least one owner.', 409);
                 }
-                $actorId = ctype_digit($actor) && User::whereKey((int) $actor)->exists() ? (int) $actor : null;
+                $actorId = $actorUser?->id;
                 DB::transaction(function () use ($user, $parsed, $actorId) {
                     $user->roles()->delete();
                     foreach ($parsed as [$role, $slug]) {
@@ -278,6 +296,14 @@ class HopAdminController extends Controller
         HopAudit::create($audit + ['params' => $params]);
 
         return response()->json(['ok' => true, 'data' => $this->summary($user->fresh())]);
+    }
+
+    /** The account behind `<sub>:<username>` (or a bare sub) in X-HOP-Actor, when there is one. */
+    private function actorUser(string $actor): ?User
+    {
+        $sub = explode(':', $actor, 2)[0];
+
+        return ctype_digit($sub) ? User::find((int) $sub) : null;
     }
 
     /**

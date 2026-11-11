@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\ActivityLog;
+use App\Services\AccountSessions;
 use App\Services\UserDeletion;
 use App\Support\Avatar;
 use App\Support\Input;
@@ -43,6 +44,10 @@ class ProfileController extends Controller
             $user->email_verified_at = null;
         }
         $user->save();
+        if ($originalEmail !== $user->email) {
+            // The address is how the account is recovered: whoever held a session under the old one is out.
+            AccountSessions::end($user, $request->session()->getId());
+        }
         $changes = [];
         if ($originalName !== $user->name) {
             $changes[] = "name: {$originalName} → {$user->name}";

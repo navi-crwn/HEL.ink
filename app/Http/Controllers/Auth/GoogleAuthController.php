@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\WelcomeEmail;
+use App\Models\ActivityLog;
 use App\Models\User;
+use App\Services\AccountSessions;
 use App\Services\LoginRecorder;
 use App\Services\NotificationService;
 use App\Support\AfterLogin;
@@ -127,7 +129,23 @@ class GoogleAuthController extends Controller
                 // Google vouches for this address (checked above), and it is the
                 // account's email: accounts made before the fix below get verified here.
                 if (! $user->hasVerifiedEmail() && ! $user->isSuperAdmin()) {
-                    $user->markEmailAsVerified();
+                    // Google proves who owns the address, so whoever made this sign-up without proving it loses everything
+                    // they could still use: password, sessions, remember-me cookies, API tokens, two-factor, and the apps' sessions.
+                    DB::transaction(function () use ($user) {
+                        $user->forceFill([
+                            'password' => Hash::make(Str::random(64)),
+                            'two_factor_secret' => null, 'two_factor_recovery_codes' => null, 'two_factor_confirmed_at' => null,
+                        ]);
+                        $user->apiTokens()->delete();
+                        AccountSessions::revoke($user);
+                        $user->markEmailAsVerified();
+                        ActivityLog::create([
+                            'user_id' => $user->id, 'action' => 'updated', 'model' => 'Account', 'model_id' => $user->id,
+                            'description' => 'Claimed through Google: the password, sessions, API tokens and two-factor of the earlier unverified sign-up were removed',
+                            'ip_address' => request()->ip(), 'user_agent' => request()->userAgent(),
+                        ]);
+                    });
+                    AccountSessions::announce($user);
                 }
                 if ($user->isSuspended()) {
                     return redirect()->route('suspended')->with('error', 'Your account has been suspended.');

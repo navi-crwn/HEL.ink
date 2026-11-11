@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
+use App\Services\AccountSessions;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -50,6 +51,8 @@ class PasswordController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
         ActivityLog::log('updated', 'Password', $request->user()->id, 'Changed password');
+        // Whoever knew the old password is out: every other session and remember-me cookie ends, and the apps follow.
+        AccountSessions::end($request->user(), $request->session()->getId());
 
         return back()->with('status', 'password-updated');
     }

@@ -9,6 +9,7 @@ use App\Models\HopAudit;
 use App\Models\HopUserNote;
 use App\Models\Role;
 use App\Models\User;
+use App\Services\AccountSessions;
 use App\Services\UserDeletion;
 use App\Support\Input;
 use Carbon\CarbonImmutable;
@@ -242,10 +243,12 @@ class HopAdminController extends Controller
                 // so a failure cannot leave a suspended account with live tokens (and no audit row is written).
                 $params = DB::transaction(function () use ($user) {
                     $deleted = $user->apiTokens()->delete();
+                    $sessions = AccountSessions::revoke($user);
                     $user->update(['status' => User::STATUS_SUSPENDED]);
 
-                    return ['tokens_deleted' => $deleted];
+                    return ['tokens_deleted' => $deleted, 'sessions_deleted' => $sessions];
                 });
+                AccountSessions::announce($user);
                 break;
             case 'activate':
                 $user->update(['status' => User::STATUS_ACTIVE]);

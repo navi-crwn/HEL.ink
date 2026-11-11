@@ -1,5 +1,6 @@
 <?php
 
+use App\Jobs\SendHopEvent;
 use App\Models\Announcement;
 use App\Models\ApiToken;
 use App\Models\HopApp;
@@ -8,6 +9,7 @@ use App\Models\LoginHistory;
 use App\Models\Role;
 use App\Models\User;
 use App\Support\HopSignature;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Queue;
 
 /*
@@ -267,15 +269,20 @@ test('an account cannot suspend or delete itself through the API', function () {
 });
 
 test('suspend also deletes the API tokens', function () {
+    Queue::fake();
     $ops = admOwner('ops');
     $user = User::factory()->create();
     ApiToken::generate($user->id, 'one');
     ApiToken::generate($user->id, 'two');
+    DB::table('sessions')->insert(['id' => 'sess-api-1', 'user_id' => $user->id, 'payload' => 'x', 'last_activity' => time()]);
+    HopApp::factory()->payhop()->create(['capabilities' => ['events']]);
 
     $res = adm($this, 'POST', '/api/hop/users/'.$user->id.'/actions', ['action' => 'suspend', 'reason' => 'abuse'], $ops->id.':ops')->assertOk();
 
     expect($user->fresh()->status)->toBe(User::STATUS_SUSPENDED)->and($user->apiTokens()->count())->toBe(0)
-        ->and(HopAudit::where('action', 'suspend')->first()->params)->toBe(['tokens_deleted' => 2]);
+        ->and(HopAudit::where('action', 'suspend')->first()->params)->toBe(['tokens_deleted' => 2, 'sessions_deleted' => 1]);
+    expect(DB::table('sessions')->where('user_id', $user->id)->count())->toBe(0);
+    Queue::assertPushed(SendHopEvent::class, fn ($j) => $j->type === 'session.revoked');
 });
 
 test('the user detail lists tokens by name and last use, never a value, and ten logins', function () {

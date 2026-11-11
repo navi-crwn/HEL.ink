@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AccountSessions;
 use App\Support\AfterLogin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -70,6 +71,7 @@ class TwoFactorController extends Controller
             'two_factor_recovery_codes' => null,
             'two_factor_confirmed_at' => null,
         ]);
+        AccountSessions::end($request->user(), $request->session()->getId());
 
         return back()->with('success', 'Two-factor authentication has been disabled.')->with('active_tab', '2fa');
     }

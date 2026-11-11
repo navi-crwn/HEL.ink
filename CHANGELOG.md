@@ -20,6 +20,13 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 - User actions through the admin API now follow the hub's own rules, and fail closed on who acts: `suspend`, `delete` and `set_roles` need `X-HOP-Actor` to be `<id>:<username>` (or a plain id) of an existing account, otherwise 403 `forbidden` (`system` is refused for these three). `set_roles` refuses a list that grants `owner` (422) and is only allowed when `X-HOP-Actor` names an account that is an owner (403 `forbidden`); `suspend` and `delete` are refused (403 `forbidden`) when the actor is the target; `suspend` also deletes the account's API tokens, in one transaction with the status change. `GET /api/hop/users/{id}` adds `tokens` (id, name, last use and creation time; never a value or hash) and returns 10 logins instead of 5.
 - Tests: the sign-in completes with every outside call failing and sends no lookup before the response; the sign-out chain leaves out apps with `events`, queues the event once per app, falls back to the full chain when the queue throws, and ends at the allowed `return` address; a sign-in started by an app returns to the app after a password sign-in, a password plus two-factor sign-in and a Google round trip.
 
+### Security
+
+- Signing in with Google no longer lets an earlier, unverified sign-up keep a hold on the account. When Google proves who owns an address that already had an account whose e-mail was never verified, the password of that sign-up is replaced by an unusable one, and its sessions, remember-me cookies, API tokens and two-factor settings are removed, and the apps are told to end their sessions. An account whose address was already verified is unchanged.
+- A password reset by e-mail does the same for an unverified sign-up (it also verifies the address, since reading the mail proves it), and ends every session of any account it is used on.
+- Changing your password, turning two-factor off or changing your e-mail address now ends your other sessions and remember-me cookies, and tells the apps to end theirs; the session you are using stays. In the apps you may have to sign in again once.
+- Suspending an account (the admin API and the old `/admin` page) now also ends its sessions and tells the apps to end theirs, in the same transaction as the status change and the removal of its API tokens. The message on the old page says what actually happens.
+
 ## [1.2.0] - 2026-11-11
 
 ### Added

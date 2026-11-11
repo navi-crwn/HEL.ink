@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
 use App\Models\User;
+use App\Services\AccountSessions;
 use App\Support\Input;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\RateLimiter;
@@ -58,10 +60,23 @@ class NewPasswordController extends Controller
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function (User $user) use ($request, $key) {
                 abort_if($user->isSuperAdmin(), 403, 'Superadmin accounts are permanent and read-only.');
-                $user->forceFill([
-                    'password' => Hash::make($request->password),
-                    'remember_token' => Str::random(60),
-                ])->save();
+                // Reading the reset mail proves the address. If the sign-up had never been verified, whoever made it
+                // may have set up more than a password: that goes too, so the reader of the mail is alone in the account.
+                $wasUnverified = ! $user->hasVerifiedEmail() && ! $user->google_id;
+                DB::transaction(function () use ($user, $request, $wasUnverified) {
+                    $user->forceFill([
+                        'password' => Hash::make($request->password),
+                        'remember_token' => Str::random(60),
+                    ]);
+                    if ($wasUnverified) {
+                        $user->forceFill(['two_factor_secret' => null, 'two_factor_recovery_codes' => null, 'two_factor_confirmed_at' => null,
+                            'email_verified_at' => now()]);
+                        $user->apiTokens()->delete();
+                    }
+                    $user->save();
+                    AccountSessions::revoke($user);
+                });
+                AccountSessions::announce($user);
                 // The person is not signed in here, so the row is written directly (ActivityLog::log needs a session).
                 ActivityLog::create([
                     'user_id' => $user->id,

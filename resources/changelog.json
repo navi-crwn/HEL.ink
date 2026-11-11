@@ -1,14 +1,321 @@
 {
   "schema": 1,
   "sources": {
-    "HEL.ink": "1865ac4cd3b720e9c9b577a9f43ce25db2940ef1",
-    "LinkHop": "3e2eb8aacef820f661cfab2dafb4d04606690f3e",
+    "HEL.ink": "b39afa2ec08f6b3211d412be128f9408ac20d549",
+    "LinkHop": "7264fbb7d183c2a258b858488599543862c2acf3",
     "BioHop": "39cf2085fadca5e27c69f0f46bd7382f7ba902ca",
     "PixelHop": "18acf1529fffa2640fb0f319d0515f43e870a13f",
     "NoteHop": "ee8fa6fc2009c4f834405888382385eb6b3cc9b4",
-    "FileHop": "f5fa9bbb202d2b26b0592348c2521ee1ceb95110"
+    "FileHop": "52c6d328f468dad574a1d425d320cc1a3275232e",
+    "PayHop": "daa4a0442095ea4aa8bfe430b837e5fb51072a6c"
   },
   "entries": [
+    {
+      "kind": "commit",
+      "date": "2026-11-10T23:46:22+07:00",
+      "title": "Merge pull request #2: Fix npm test on Node 22 (CI failed on main after the first PayHop merge)",
+      "url": "https://github.com/navi-crwn/PayHop/commit/daa4a0442095ea4aa8bfe430b837e5fb51072a6c",
+      "id": "daa4a044",
+      "app": "PayHop",
+      "repo": "PayHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T16:46:22Z",
+      "title": "Fix npm test on Node 22 (CI failed on main after the first PayHop merge)",
+      "url": "https://github.com/navi-crwn/PayHop/pull/2",
+      "id": "#2",
+      "app": "PayHop",
+      "repo": "PayHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T23:45:38+07:00",
+      "title": "Merge pull request #14: Add a signed-in /dashboard and re-check stale HOP ID sessions with a silent hub round trip",
+      "url": "https://github.com/navi-crwn/FileHop/commit/52c6d328f468dad574a1d425d320cc1a3275232e",
+      "id": "52c6d328",
+      "app": "FileHop",
+      "repo": "FileHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T16:45:38Z",
+      "title": "Add a signed-in /dashboard and re-check stale HOP ID sessions with a silent hub round trip",
+      "url": "https://github.com/navi-crwn/FileHop/pull/14",
+      "id": "#14",
+      "app": "FileHop",
+      "repo": "FileHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T16:42:43Z",
+      "title": "Add a guest QR page: Wi-Fi, contact card, link or text and a printable table card",
+      "url": "https://github.com/navi-crwn/LinkHop/pull/123",
+      "id": "#123",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T23:42:42+07:00",
+      "title": "Merge pull request #123: Add a guest QR page: Wi-Fi, contact card, link or text and a printable table card",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/7264fbb7d183c2a258b858488599543862c2acf3",
+      "id": "7264fbb7",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T16:42:38Z",
+      "title": "Hub dashboard: framed cards, Imperium shortcut, owner 2FA, FileHop card, silent SSO check",
+      "url": "https://github.com/navi-crwn/HEL.ink/pull/67",
+      "id": "#67",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T23:42:37+07:00",
+      "title": "Merge pull request #67: Hub dashboard: framed cards, Imperium shortcut, owner 2FA, FileHop card, silent SSO check",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/b39afa2ec08f6b3211d412be128f9408ac20d549",
+      "id": "b39afa2e",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T17:33:45+01:00",
+      "title": "Run the unit tests through a small runner that works on Node 20 and 22",
+      "url": "https://github.com/navi-crwn/PayHop/commit/20be1e4ae4b9b4df19e15eb67e9c5f337f477512",
+      "id": "20be1e4a",
+      "app": "PayHop",
+      "repo": "PayHop"
+    },
+    {
+      "kind": "pr",
+      "date": "2026-11-10T16:33:03Z",
+      "title": "Add PayHop: payment QR codes and split bills in the browser",
+      "url": "https://github.com/navi-crwn/PayHop/pull/1",
+      "id": "#1",
+      "app": "PayHop",
+      "repo": "PayHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T23:33:02+07:00",
+      "title": "Merge pull request #1: Add PayHop: payment QR codes and split bills in the browser",
+      "url": "https://github.com/navi-crwn/PayHop/commit/9a48d6033914dc370fc290da1c67d4807d2bd268",
+      "id": "9a48d603",
+      "app": "PayHop",
+      "repo": "PayHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T17:28:46+01:00",
+      "title": "Check the changelog page for the eyebrow element, not the word",
+      "url": "https://github.com/navi-crwn/FileHop/commit/2921b4e3496f654ac4173a5cdd4a73189d5fa830",
+      "id": "2921b4e3",
+      "app": "FileHop",
+      "repo": "FileHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T17:28:37+01:00",
+      "title": "Run the QR JS tests by file name so Node 22 finds them",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/99fa6f74ab89b7450b5851f82c353ca74224c308",
+      "id": "99fa6f74",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T17:27:21+01:00",
+      "title": "Fix Docker build of the changelog snapshot, record format decisions in the wallet matrix",
+      "url": "https://github.com/navi-crwn/PayHop/commit/ae1f36a378503e3ffc2c113c7b661d18f70bbe50",
+      "id": "ae1f36a3",
+      "app": "PayHop",
+      "repo": "PayHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T17:26:18+01:00",
+      "title": "Strict amount parser shared by generator and split, cleaner names, format fixes, terms and privacy pages, Clean style, installer scripts",
+      "url": "https://github.com/navi-crwn/PayHop/commit/3f952c6913141195c45a03a68cde3454eee99d3e",
+      "id": "3f952c69",
+      "app": "PayHop",
+      "repo": "PayHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T17:25:58+01:00",
+      "title": "Rebuild the changelog snapshot",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/11ed4e32a560a9c304c8e7f9aa85c8e5dea751a7",
+      "id": "11ed4e32",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T17:25:28+01:00",
+      "title": "Rebuild the changelog snapshot",
+      "url": "https://github.com/navi-crwn/FileHop/commit/6d579bd513bd7e53421331a0e5198b6b74842587",
+      "id": "6d579bd5",
+      "app": "FileHop",
+      "repo": "FileHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T17:21:23+01:00",
+      "title": "Require ticket aud, re-check stale sessions quietly through the hub, keep clipped text valid UTF-8",
+      "url": "https://github.com/navi-crwn/PayHop/commit/2ef5714a6a455ccdf8c55539183e82f7744328fd",
+      "id": "2ef5714a",
+      "app": "PayHop",
+      "repo": "PayHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T17:20:35+01:00",
+      "title": "Test the QR page's own option builder and forbid network and storage calls in its scripts",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/b4d0a535e0baf1bfdc7bba3415e0acedc6a17e22",
+      "id": "b4d0a535",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T17:12:44+01:00",
+      "title": "Dev hub stub for local sign-in tests, full-width dashboard top bar",
+      "url": "https://github.com/navi-crwn/PayHop/commit/e255b251473368ee78e1bb1df191eabf390d555b",
+      "id": "e255b251",
+      "app": "PayHop",
+      "repo": "PayHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T17:07:28+01:00",
+      "title": "Add docs, README in nine languages, changelog snapshot, icons and og image",
+      "url": "https://github.com/navi-crwn/PayHop/commit/32d163011382c647adbc8072625f6c16eb54eb85",
+      "id": "32d16301",
+      "app": "PayHop",
+      "repo": "PayHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T17:03:52+01:00",
+      "title": "Add the guest QR page (Wi-Fi, contact card, link or text, printable table card)",
+      "url": "https://github.com/navi-crwn/LinkHop/commit/b364968524e4c2e39672e467888dd4ef2804f26b",
+      "id": "b3649685",
+      "app": "LinkHop",
+      "repo": "LinkHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T17:02:25+01:00",
+      "title": "Add Svelte shell, home, generator, split, 9 languages, offline worker",
+      "url": "https://github.com/navi-crwn/PayHop/commit/dadba6f5f01dc2d47f8c51bf5af225ddca71b15c",
+      "id": "dadba6f5",
+      "app": "PayHop",
+      "repo": "PayHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T16:52:51+01:00",
+      "title": "Add hop-pay library with tests",
+      "url": "https://github.com/navi-crwn/PayHop/commit/55281690175da781adc09b4d398852403c42ccc0",
+      "id": "55281690",
+      "app": "PayHop",
+      "repo": "PayHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T16:50:50+01:00",
+      "title": "Add Go server: healthz, CSP without CDN, HOP ID sign-in and /hop/* protocol",
+      "url": "https://github.com/navi-crwn/PayHop/commit/2f50fa4b944b84058b736220c874ccab12fa4560",
+      "id": "2f50fa4b",
+      "app": "PayHop",
+      "repo": "PayHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T16:49:47+01:00",
+      "title": "Move the silent SSO contract to docs/silent-sso.md (hop-family.md is generated)",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/c1913a49938ad5af7f4976468ef383965f4a4b6c",
+      "id": "c1913a49",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T16:48:42+01:00",
+      "title": "Add license and readme",
+      "url": "https://github.com/navi-crwn/PayHop/commit/6c5c26010999b17dd60d95af2e981d2f2fddcece",
+      "id": "6c5c2601",
+      "app": "PayHop",
+      "repo": "PayHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T16:47:45+01:00",
+      "title": "Rebuild the changelog snapshot",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/ee1dcdd04a22f5012e1202e72f3c9e7fb26fa3a4",
+      "id": "ee1dcdd0",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T16:46:34+01:00",
+      "title": "Answer a throttled silent SSO check with temporarily_unavailable at the app callback",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/bf0fd51ca49c7bad054cb8a116c03af18083058e",
+      "id": "bf0fd51c",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T16:44:40+01:00",
+      "title": "Keep the quiet re-check from dropping work or depending on a down hub",
+      "url": "https://github.com/navi-crwn/FileHop/commit/2accb24da4586851a130302cae585d7ec81e3fef",
+      "id": "2accb24d",
+      "app": "FileHop",
+      "repo": "FileHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T16:40:43+01:00",
+      "title": "Refuse 2FA enable once confirmed, silent SSO check, stricter FileHop open path",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/e9854c3eb40e481170cdd8ee78be54072eeb4de1",
+      "id": "e9854c3e",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T16:39:09+01:00",
+      "title": "Re-check a stale session with a silent hub round trip",
+      "url": "https://github.com/navi-crwn/FileHop/commit/87864fdc3e1501a4ed05ccb15234713c15cca847",
+      "id": "87864fdc",
+      "app": "FileHop",
+      "repo": "FileHop"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T16:31:11+01:00",
+      "title": "Hub dashboard: framed cards, Imperium shortcut, FileHop card, owner 2FA",
+      "url": "https://github.com/navi-crwn/HEL.ink/commit/d21306cd4b290ad1d9f629e4caca59e9290b9d3c",
+      "id": "d21306cd",
+      "app": "HOP ID",
+      "repo": "HEL.ink"
+    },
+    {
+      "kind": "commit",
+      "date": "2026-11-10T16:25:39+01:00",
+      "title": "Add a signed-in dashboard and stop showing a stale HOP ID account",
+      "url": "https://github.com/navi-crwn/FileHop/commit/e06460ed46f9b54b600b6199d87ab0c387963475",
+      "id": "e06460ed",
+      "app": "FileHop",
+      "repo": "FileHop"
+    },
     {
       "kind": "pr",
       "date": "2026-11-10T15:12:28Z",

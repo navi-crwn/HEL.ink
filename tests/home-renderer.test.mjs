@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 
-const source = fs.readFileSync(new URL(`../public/hop-assets/${process.env.HOP_ASSETS_VERSION || 'v8'}/hop-hero3d.js`, import.meta.url), 'utf8');
+const source = fs.readFileSync(new URL(`../public/hop-assets/${process.env.HOP_ASSETS_VERSION || 'v9'}/hop-hero3d.js`, import.meta.url), 'utf8');
 function fixture({reduce = false, webgl = true, mobile = false, instanced = false} = {}) {
     const frames = new Map(), observers = [], canvases = [], calls = [];
     let sequence = 0;

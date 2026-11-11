@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>HEL.ink · Pusat Keluarga HOP & HOP ID</title>
-  <meta name="description" content="Portal akun pusat, single sign-on HOP ID, dan direktori keluarga untuk LinkHop, BioHop, PixelHop, NoteHop, dan FileHop.">
+  <meta name="description" content="Portal akun pusat, single sign-on HOP ID, dan direktori keluarga untuk LinkHop, BioHop, PixelHop, NoteHop, FileHop, dan PayHop.">
   <link rel="canonical" href="https://navi-crwn.github.io/HEL.ink/id/">
   <link rel="icon" href="../assets/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/styles.css">
   <link rel="stylesheet" href="../assets/product.css">
-  <link rel="stylesheet" href="https://hel.ink/hop-assets/v1/fonts-amnesia.css" integrity="sha384-750KEkFNx2ykcIsUyi1pZ0JC/Z6jfrK7OJtntqOzB8HKfEpjeostGTWJGAxh/5Zi" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://hel.ink/hop-assets/v9/fonts-amnesia.css" integrity="sha384-750KEkFNx2ykcIsUyi1pZ0JC/Z6jfrK7OJtntqOzB8HKfEpjeostGTWJGAxh/5Zi" crossorigin="anonymous">
   <link rel="alternate" hreflang="x-default" href="https://navi-crwn.github.io/HEL.ink/">
   <link rel="alternate" hreflang="en" href="https://navi-crwn.github.io/HEL.ink/en/">
   <link rel="alternate" hreflang="zh-CN" href="https://navi-crwn.github.io/HEL.ink/zh-CN/">
@@ -23,7 +23,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="HEL.ink">
   <meta property="og:title" content="HEL.ink · Hub Keluarga HOP">
-  <meta property="og:description" content="Portal akun pusat, single sign-on HOP ID, dan direktori keluarga untuk LinkHop, BioHop, PixelHop, NoteHop, dan FileHop.">
+  <meta property="og:description" content="Portal akun pusat, single sign-on HOP ID, dan direktori keluarga untuk LinkHop, BioHop, PixelHop, NoteHop, FileHop, dan PayHop.">
   <meta property="og:url" content="https://navi-crwn.github.io/HEL.ink/id/">
   <meta property="og:image" content="https://navi-crwn.github.io/HEL.ink/og.png">
   <meta property="og:image:width" content="1200">
@@ -66,7 +66,7 @@
       <div>
         <p class="kicker">HOP &middot; Pusat Keluarga & Portal Akun</p>
         <h1>Satu akun HOP untuk setiap aplikasi.</h1>
-        <p class="lede">HEL.ink adalah portal akun dan direktori keluarga untuk HOP. Masuk sekali dengan HOP ID Anda dan berpindah dengan mulus antara LinkHop, BioHop, PixelHop, NoteHop, dan FileHop.</p>
+        <p class="lede">HEL.ink adalah portal akun dan direktori keluarga untuk HOP. Masuk sekali dengan HOP ID Anda dan berpindah dengan mulus antara LinkHop, BioHop, PixelHop, NoteHop, FileHop, dan PayHop.</p>
         <div class="cta-row">
           <a class="btn primary" href="https://hel.ink">Kunjungi hel.ink</a>
           <a class="btn" href="https://hub.hel.ink">Buka Hub</a>
@@ -81,7 +81,7 @@
       <span class="section-number" aria-hidden="true">01</span><h2 id="features-h">Fitur Utama</h2>
       <ul class="features">
         <li><strong>Single Sign-On (HOP ID)</strong><p>Satu login mencakup seluruh aplikasi HOP. Tiket bertanda tangan dan logout berantai menjaga konsistensi sesi.</p></li>
-        <li><strong>Peluncur Aplikasi Terpadu</strong><p>Berpindah antara LinkHop, BioHop, PixelHop, NoteHop, dan FileHop dalam satu klik dari mana saja.</p></li>
+        <li><strong>Peluncur Aplikasi Terpadu</strong><p>Berpindah antara LinkHop, BioHop, PixelHop, NoteHop, FileHop, dan PayHop dalam satu klik dari mana saja.</p></li>
         <li><strong>Arsitektur Basis Data Bersama</strong><p>Satu basis data MySQL atau SQLite menyimpan kredensial dengan tabel migrasi terpisah per aplikasi.</p></li>
         <li><strong>Keamanan Akun Tangguh</strong><p>Hashing Argon2id, autentikasi dua faktor TOTP, proteksi bot Cloudflare Turnstile, dan verifikasi email.</p></li>
         <li><strong>Pengawas Layanan Langsung</strong><p>Pemeriksaan kesehatan otomatis dan pemantauan latensi di semua aplikasi tanpa pembocoran rahasia.</p></li>
@@ -105,7 +105,7 @@
       <h2 id="faq-h">Pertanyaan yang sering diajukan</h2>
       <details>
         <summary>Apa itu HOP ID?</summary>
-        <p>HOP ID adalah layanan autentikasi terpusat untuk keluarga HOP. Satu akun bisa dipakai di LinkHop, BioHop, PixelHop, NoteHop, dan FileHop.</p>
+        <p>HOP ID adalah layanan autentikasi terpusat untuk keluarga HOP. Satu akun bisa dipakai di LinkHop, BioHop, PixelHop, NoteHop, FileHop, dan PayHop.</p>
       </details>
       <details>
         <summary>Bisakah menjalankan hub tanpa aplikasi lain?</summary>
@@ -136,6 +136,7 @@
             <tr><td><strong>PixelHop</strong></td><td>Hosting gambar dan media</td><td><code>pixel.hel.ink</code> <span class="live">&middot; <code>p.hel.ink</code></span></td><td><a href="https://github.com/navi-crwn/PixelHop">navi-crwn/PixelHop</a></td></tr>
             <tr><td><strong>NoteHop</strong></td><td>Catatan privat terenkripsi klien</td><td><code>note.hel.ink</code> <span class="live">&middot; <code>n.hel.ink</code></span></td><td><a href="https://github.com/navi-crwn/NoteHop">navi-crwn/NoteHop</a></td></tr>
             <tr><td><strong>FileHop</strong></td><td>Konversi file di browser</td><td><code>file.hel.ink</code></td><td><a href="https://github.com/navi-crwn/FileHop">navi-crwn/FileHop</a></td></tr>
+            <tr><td><strong>PayHop</strong></td><td>Kode QR pembayaran dan patungan tagihan di browser</td><td><code>pay.hel.ink</code></td><td><a href="https://github.com/navi-crwn/PayHop">navi-crwn/PayHop</a></td></tr>
           </tbody>
         </table>
       </div>

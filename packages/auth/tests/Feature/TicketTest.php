@@ -34,7 +34,7 @@ test('bad signature, wrong audience, expiry and state mismatch are refused', fun
 });
 
 test('isHopUrl only accepts https urls on a trusted HOP host', function () {
-    foreach (['hel.ink', 'www.hel.ink', 'hub.hel.ink', 'link.hel.ink', 'bio.hel.ink', 'note.hel.ink', 'pixel.hel.ink', 'file.hel.ink'] as $host) {
+    foreach (['hel.ink', 'www.hel.ink', 'hub.hel.ink', 'link.hel.ink', 'bio.hel.ink', 'note.hel.ink', 'pixel.hel.ink', 'file.hel.ink', 'pay.hel.ink'] as $host) {
         expect(SsoController::isHopUrl("https://{$host}/auth/sso/logout?next=https%3A%2F%2Fhel.ink%2F"))->toBeTrue($host);
     }
     expect(SsoController::isHopUrl('https://HUB.HEL.INK/logout'))->toBeTrue();

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 
-const source = fs.readFileSync(new URL(`../public/hop-assets/${process.env.HOP_ASSETS_VERSION || 'v8'}/hop-motion.js`, import.meta.url), 'utf8');
+const source = fs.readFileSync(new URL(`../public/hop-assets/${process.env.HOP_ASSETS_VERSION || 'v9'}/hop-motion.js`, import.meta.url), 'utf8');
 
 function el(attrs = {}, top = 100) {
     const classes = new Set(), props = {}, own = new Map(Object.entries(attrs));

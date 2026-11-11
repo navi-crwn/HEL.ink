@@ -44,7 +44,7 @@ Repositori ini bertindak sebagai **pusat ekosistem**:
 
 ## Fitur Utama
 
-- **Single Sign-On (HOP ID)**: Satu akun untuk masuk ke LinkHop, BioHop, PixelHop, NoteHop, dan FileHop dengan tiket bertanda tangan dan pemutusan sesi berantai.
+- **Single Sign-On (HOP ID)**: Satu akun untuk masuk ke LinkHop, BioHop, PixelHop, NoteHop, FileHop, dan PayHop dengan tiket bertanda tangan dan pemutusan sesi berantai.
 - **Peluncur Aplikasi Terpadu**: Bilah navigasi atas terintegrasi untuk berpindah cepat antar-aplikasi keluarga HOP.
 - **Keamanan Akun Tangguh**: Hashing Argon2id, autentikasi 2FA TOTP, proteksi bot Cloudflare Turnstile, dan verifikasi email.
 - **Gerbang SSO, CSP, dan UI bersama**: setiap halaman dikirim dengan Content-Security-Policy (memakai nonce di halaman aplikasi), serah terima SSO ditandatangani dan diverifikasi oleh aplikasi, dan dialog serta menu bahasa dan akun berasal dari paket bersama HopUI.
@@ -99,7 +99,7 @@ Semua yang dibutuhkan HEL.ink ada di repositori publik: tanpa repositori privat,
 | Font dan ubin keluarga | Tidak perlu dipasang: dimuat dari `hel.ink/hop-assets` | Tanpa hel.ink: font sistem, tanpa ubin melayang |
 
 - **Urutan pemasangan**: hub ini dulu, lalu aplikasinya, lalu Imperium bila perlu. Daftarkan aplikasi dengan `php artisan db:seed --class='Database\Seeders\HopAppsSeeder' --force`. [`install-family.sh`](install-family.sh) mengerjakan semuanya sekaligus.
-- **Pengaturan minimum**: `APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `FILEHOP_URL` (satu per aplikasi); dengan Imperium: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`.
+- **Pengaturan minimum**: `APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `PAYHOP_URL` (satu per aplikasi); dengan Imperium: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`.
 - **Sendiri atau dalam keluarga**: hub sendiri sudah memberi akun, proses masuk, dan peluncur; README tiap aplikasi menjelaskan apa lagi yang dibutuhkannya.
 - **Tanpa Imperium**: hub tetap punya halaman admin akunnya sendiri (`/admin`); Imperium menambahkan konten, laporan, dan kesehatan aplikasi.
 <!-- self-hosting:end -->
@@ -116,6 +116,7 @@ HEL.ink adalah bagian dari keluarga aplikasi web **HOP** open-source di balik [h
 | **PixelHop** | [pixel.hel.ink](https://pixel.hel.ink) · `p.hel.ink/…` | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | Hosting gambar dengan album dan tautan langsung. |
 | **NoteHop** | [note.hel.ink](https://note.hel.ink) · `n.hel.ink/…` | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | Catatan privat terenkripsi yang dibagikan lewat tautan. |
 | **FileHop** | [file.hel.ink](https://file.hel.ink) | [navi-crwn/FileHop](https://github.com/navi-crwn/FileHop) | Konversi file di browser, tanpa unggah |
+| **PayHop** | [pay.hel.ink](https://pay.hel.ink) | [navi-crwn/PayHop](https://github.com/navi-crwn/PayHop) | Buat QR pembayaran dan patungan tagihan; tidak ada yang keluar dari browser Anda. |
 
 ## Changelog
 

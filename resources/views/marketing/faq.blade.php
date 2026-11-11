@@ -22,6 +22,7 @@
             <a href="#pixelhop" class="rounded-xl border border-slate-200 bg-white/80 px-3 py-1.5 font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-white/10 dark:bg-white/5 dark:text-white/80">PixelHop</a>
             <a href="#notehop" class="rounded-xl border border-slate-200 bg-white/80 px-3 py-1.5 font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-white/10 dark:bg-white/5 dark:text-white/80">NoteHop</a>
             <a href="#filehop" class="rounded-xl border border-slate-200 bg-white/80 px-3 py-1.5 font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-white/10 dark:bg-white/5 dark:text-white/80">FileHop</a>
+            <a href="#payhop" class="rounded-xl border border-slate-200 bg-white/80 px-3 py-1.5 font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-white/10 dark:bg-white/5 dark:text-white/80">PayHop</a>
         </div>
 
         {{-- Section 1: General & HOP ID --}}
@@ -33,12 +34,12 @@
             <div class="space-y-3">
                 <details class="{{ $card }}">
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('What is HOP and what apps belong to the family?') }}</summary>
-                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('HOP stands for Hop Easy Link. It is a family of independent, open-source web services: LinkHop (short links & QR codes), BioHop (link-in-bio pages), PixelHop (image and document hosting), NoteHop (zero-knowledge encrypted notes), and FileHop (file conversion in the browser). They are tied together by one account system: your HOP ID.') }}</p>
+                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('HOP stands for Hop Easy Link. It is a family of independent, open-source web services: LinkHop (short links & QR codes), BioHop (link-in-bio pages), PixelHop (image and document hosting), NoteHop (zero-knowledge encrypted notes), FileHop (file conversion in the browser), and PayHop (payment QR codes and bill splitting). They are tied together by one account system: your HOP ID.') }}</p>
                 </details>
 
                 <details class="{{ $card }}">
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('How does Single Sign-On (SSO) work with my HOP ID?') }}</summary>
-                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('You sign in once at hub.hel.ink. When you open LinkHop, BioHop, PixelHop, NoteHop, or FileHop, you are automatically recognized via signed cryptographic session tickets. You never have to create separate accounts or remember multiple passwords.') }}</p>
+                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('You sign in once at hub.hel.ink. When you open LinkHop, BioHop, PixelHop, NoteHop, FileHop, or PayHop, you are automatically recognized via signed cryptographic session tickets. You never have to create separate accounts or remember multiple passwords.') }}</p>
                 </details>
 
                 <details class="{{ $card }}">
@@ -58,7 +59,7 @@
 
                 <details class="{{ $card }}">
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('How do I export my data or delete my account?') }}</summary>
-                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('Visit Settings in hub.hel.ink. Under "Backup & Export", you can download a full JSON dump of your account data. Under "Delete Account", you can permanently erase your profile and all associated data across LinkHop, BioHop, PixelHop, NoteHop, and FileHop with zero recovery delay.') }}</p>
+                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('Visit Settings in hub.hel.ink. Under "Backup & Export", you can download a full JSON dump of your account data. Under "Delete Account", you can permanently erase your profile and all associated data across LinkHop, BioHop, PixelHop, NoteHop, FileHop, and PayHop with zero recovery delay.') }}</p>
                 </details>
 
                 <details class="{{ $card }}">
@@ -226,6 +227,31 @@
                 <details class="{{ $card }}">
                     <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('Do I need a HOP ID to use FileHop?') }}</summary>
                     <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('No. Every conversion works without an account. Signing in with your HOP ID only adds the account menu for now.') }}</p>
+                </details>
+            </div>
+        </section>
+
+        {{-- Section 7: PayHop --}}
+        <section id="payhop" class="space-y-4 scroll-mt-24">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="h-3 w-3 rounded-full bg-teal-500"></span>
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-white">PayHop</h2>
+                </div>
+                <a href="https://pay.hel.ink" class="text-xs font-semibold text-teal-700 underline underline-offset-2 dark:text-teal-400">{{ __('Open PayHop') }} &rarr;</a>
+            </div>
+            <div class="space-y-3">
+                <details class="{{ $card }}">
+                    <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('Does PayHop move money?') }}</summary>
+                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('No. PayHop only makes the QR code. Your bank or wallet app makes the payment.') }}</p>
+                </details>
+                <details class="{{ $card }}">
+                    <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('Are my payment details uploaded?') }}</summary>
+                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('No. Codes are made in your browser tab. If you sign in and choose to save a payment method, it is stored encrypted and you can delete it at any time.') }}</p>
+                </details>
+                <details class="{{ $card }}">
+                    <summary class="cursor-pointer font-semibold text-slate-900 dark:text-white">{{ __('Do I need a HOP ID to use PayHop?') }}</summary>
+                    <p class="mt-3 text-sm leading-relaxed {{ $muted }}">{{ __('No. Every tool works without an account. A HOP ID only adds saved payment methods and history.') }}</p>
                 </details>
             </div>
         </section>

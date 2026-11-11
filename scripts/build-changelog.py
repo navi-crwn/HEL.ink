@@ -2,6 +2,8 @@
 """Snapshot all main-branch commits, tags and merged PRs; no runtime GitHub calls.
 
 Run from a checkout: python3 scripts/build-changelog.py --repo HEL.ink
+At deploy time the hub reads storage/app/changelog.json when it exists (else resources/changelog.json):
+  python3 scripts/build-changelog.py --repo HEL.ink --family /path/to/checkouts --output storage/app/changelog.json
 Use --family /path/to/checkouts in the hub to aggregate the public apps.
 Requires git and authenticated gh with read access. Never reads working files.
 The script fetches origin first: a stale origin/main in the checkout is why the
@@ -14,7 +16,7 @@ import pathlib
 import re
 import subprocess
 
-PUBLIC = {"HEL.ink": "HOP ID", "LinkHop": "LinkHop", "BioHop": "BioHop", "PixelHop": "PixelHop", "NoteHop": "NoteHop", "FileHop": "FileHop"}
+PUBLIC = {"HEL.ink": "HOP ID", "LinkHop": "LinkHop", "BioHop": "BioHop", "PixelHop": "PixelHop", "NoteHop": "NoteHop", "FileHop": "FileHop", "PayHop": "PayHop"}
 
 
 def command(args, cwd):
@@ -64,9 +66,9 @@ def history(root, repo):
     return revision, entries
 
 
-def check(root, repos):
+def check(root, repos, snapshot=None):
     """Fail when a merged PR is missing, except the newest per repo (usually the snapshot's own PR)."""
-    have = {(e["repo"], e["id"]) for e in json.loads((root / "resources/changelog.json").read_text())["entries"] if e["kind"] == "pr"}
+    have = {(e["repo"], e["id"]) for e in json.loads((snapshot or root / "resources/changelog.json").read_text())["entries"] if e["kind"] == "pr"}
     missing = []
     for repo in repos:
         jq = '.[] | select(.merged_at != null and .base.ref == "main") | {merged_at,number} | @json'
@@ -83,11 +85,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repo", choices=PUBLIC, required=True)
     parser.add_argument("--family", type=pathlib.Path)
-    parser.add_argument("--check", action="store_true", help="verify resources/changelog.json against GitHub, write nothing")
+    parser.add_argument("--check", action="store_true", help="verify the snapshot (resources/changelog.json, or --output) against GitHub, write nothing")
+    parser.add_argument("--output", type=pathlib.Path, help="write here instead of the repository snapshot, e.g. storage/app/changelog.json at deploy time")
     args = parser.parse_args()
     root = pathlib.Path(__file__).resolve().parents[1]
     if args.check:
-        return check(root, PUBLIC)
+        return check(root, PUBLIC, args.output)
     repos = PUBLIC if args.family else {args.repo: PUBLIC[args.repo]}
     revisions, entries = {}, []
     for repo in repos:
@@ -95,7 +98,8 @@ def main():
         revisions[repo] = revision
         entries.extend(rows)
     entries.sort(key=lambda e: (datetime.datetime.fromisoformat(e["date"].replace("Z", "+00:00")), e["repo"], e["id"]), reverse=True)
-    output = root / ("web/changelog.json" if args.repo in ["PixelHop", "NoteHop"] else "resources/changelog.json")
+    output = args.output or root / ("web/changelog.json" if args.repo in ["PixelHop", "NoteHop"] else "resources/changelog.json")
+    output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps({"schema": 1, "sources": revisions, "entries": entries}, ensure_ascii=False, indent=2) + "\n")
     print(f"{output}: {len(entries)} entries from {len(revisions)} repositories")
 

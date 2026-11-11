@@ -9,7 +9,7 @@
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/readme/hero-en-dark.webp"><img src="docs/readme/hero-en-light.webp" alt="HEL.ink · Hub de la famille HOP" width="100%"></picture></p>
 
-<p align="center"><b>HEL.ink est le portail de comptes et le répertoire de la famille HOP. Connectez-vous une fois avec votre HOP ID et passez en toute fluidité entre LinkHop, BioHop, PixelHop, NoteHop et FileHop.</b></p>
+<p align="center"><b>HEL.ink est le portail de comptes et le répertoire de la famille HOP. Connectez-vous une fois avec votre HOP ID et passez en toute fluidité entre LinkHop, BioHop, PixelHop, NoteHop, FileHop et PayHop.</b></p>
 
 <p align="center">
   <a href="https://hel.ink">hel.ink</a> ·
@@ -32,14 +32,14 @@ Depuis un clone : `./install.sh` · mise à jour : `./update.sh` · suppression 
 
 ## Hub familial et portail de comptes
 
-Portail central de comptes, authentification unique HOP ID et répertoire de la famille LinkHop, BioHop, PixelHop, NoteHop et FileHop.
+Portail central de comptes, authentification unique HOP ID et répertoire de la famille LinkHop, BioHop, PixelHop, NoteHop, FileHop et PayHop.
 
 <a id="features"></a>
 
 ## Fonctionnalités
 
 - **Authentification unique (HOP ID)**: Une seule connexion pour toutes les applications HOP avec tickets signés et déconnexion en chaîne.
-- **Lanceur d'applications unifié**: Passez de LinkHop à BioHop, PixelHop, NoteHop et FileHop en un clic depuis n'importe où.
+- **Lanceur d'applications unifié**: Passez de LinkHop à BioHop, PixelHop, NoteHop, FileHop et PayHop en un clic depuis n'importe où.
 - **Base de données partagée**: Une base MySQL ou SQLite stocke les identités avec des tables de migration dédiées par application.
 - **Sécurité robuste des comptes**: Hachage Argon2id, 2FA TOTP, protection Cloudflare Turnstile et vérification des e-mails.
 - **Passerelle SSO, CSP et UI partagée**: chaque page est servie avec une Content-Security-Policy (avec nonce sur les pages de l'app), le transfert SSO est signé et vérifié par les apps, et les boîtes de dialogue ainsi que les menus de langue et de compte viennent du paquet partagé HopUI.
@@ -96,7 +96,7 @@ Tout ce dont HEL.ink a besoin se trouve dans des dépôts publics : aucun dépô
 | Polices et tuiles de la famille | Rien à installer : chargés depuis `hel.ink/hop-assets` | Sans hel.ink : polices système, pas de tuiles flottantes |
 
 - **Ordre d'installation** : d'abord ce hub, puis les apps, puis Imperium si vous le voulez. Enregistrez les apps avec `php artisan db:seed --class='Database\Seeders\HopAppsSeeder' --force`. [`install-family.sh`](install-family.sh) fait tout d'un coup.
-- **Réglages minimaux** : `APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `FILEHOP_URL` (une par app); avec Imperium: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`.
+- **Réglages minimaux** : `APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `PAYHOP_URL` (une par app); avec Imperium: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`.
 - **Seul ou en famille** : le hub seul fournit les comptes, la connexion et le lanceur ; le README de chaque app indique ce dont elle a besoin en plus.
 - **Sans Imperium** : le hub garde ses propres pages d'administration des comptes (`/admin`) ; Imperium ajoute le contenu, les signalements et l'état des apps.
 <!-- self-hosting:end -->
@@ -113,6 +113,7 @@ HEL.ink est le hub d'une famille d'outils web ouverts qui respectent votre vie p
 | **PixelHop** | `pixel.hel.ink` · `p.hel.ink/…` | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | Hébergement d'images et médias |
 | **NoteHop** | `note.hel.ink` · `n.hel.ink/…` | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | Notes privées chiffrées côté client |
 | **FileHop** | `file.hel.ink` | [navi-crwn/FileHop](https://github.com/navi-crwn/FileHop) | Conversion de fichiers dans le navigateur, sans envoi |
+| **PayHop** | `pay.hel.ink` | [navi-crwn/PayHop](https://github.com/navi-crwn/PayHop) | Créez un QR de paiement et partagez l'addition ; rien ne quitte votre navigateur. |
 
 ## Journal des modifications
 

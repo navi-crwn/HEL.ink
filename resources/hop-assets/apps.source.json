@@ -1,6 +1,6 @@
 {
-  "version": "v8",
-  "base": "https://hel.ink/hop-assets/v8/",
+  "version": "v9",
+  "base": "https://hel.ink/hop-assets/v9/",
   "assets": {
     "fonts_css": "fonts-amnesia.css",
     "float_css": "hop-float.css",
@@ -24,7 +24,9 @@
     "hero_notehop_light": "home/notehop-light.webp",
     "hero_notehop_dark": "home/notehop-dark.webp",
     "hero_filehop_light": "home/filehop-light.webp",
-    "hero_filehop_dark": "home/filehop-dark.webp"
+    "hero_filehop_dark": "home/filehop-dark.webp",
+    "hero_payhop_light": "home/payhop-light.webp",
+    "hero_payhop_dark": "home/payhop-dark.webp"
   },
   "apps": [
     {
@@ -126,6 +128,22 @@
         "icon_192": "apps/filehop/icon-192.png",
         "icon_512": "apps/filehop/icon-512.png",
         "apple_touch": "apps/filehop/apple-touch-icon.png"
+      }
+    },
+    {
+      "slug": "payhop",
+      "name": "PayHop",
+      "tagline": "Make a payment QR and split a bill; nothing leaves your browser.",
+      "url": "https://pay.hel.ink",
+      "color": "#14b8a6",
+      "public": true,
+      "repo": "https://github.com/navi-crwn/PayHop",
+      "icons": {
+        "mark": "apps/payhop/mark.svg",
+        "favicon": "apps/payhop/mark.svg",
+        "icon_192": "apps/payhop/icon-192.png",
+        "icon_512": "apps/payhop/icon-512.png",
+        "apple_touch": "apps/payhop/apple-touch-icon.png"
       }
     },
     {

@@ -44,15 +44,17 @@ return [
     'registry_taglines' => [
         'notehop' => 'Encrypted notes you share with a link.',
         'filehop' => 'Convert files in your browser; nothing is uploaded.',
+        'payhop' => 'Make a payment QR and split a bill; nothing leaves your browser.',
     ],
     'registry_repos' => [
         'notehop' => 'https://github.com/navi-crwn/NoteHop',
         'filehop' => 'https://github.com/navi-crwn/FileHop',
+        'payhop' => 'https://github.com/navi-crwn/PayHop',
     ],
     // Apps that must have a row in `apps` with the `events` capability, or the hub's account
     // events (suspend, delete, sign-out) never reach them. `php artisan db:seed
     // --class='Database\Seeders\HopAppsSeeder'` adds a missing row; it never changes an existing one.
-    // The secret of a new row comes from the environment (HOP_SSO_SECRET_PIXELHOP, HOP_SSO_SECRET_NOTEHOP, HOP_SSO_SECRET_FILEHOP,
+    // The secret of a new row comes from the environment (HOP_SSO_SECRET_PIXELHOP, HOP_SSO_SECRET_NOTEHOP, HOP_SSO_SECRET_FILEHOP, HOP_SSO_SECRET_PAYHOP,
     // HOP_SSO_SECRET_LINKHOP, HOP_SSO_SECRET_BIOHOP, or the shared HOP_SSO_SECRET for the Laravel apps).
     // LinkHop and BioHop end their sessions on session.revoked through hop/auth's event receiver.
     'event_apps' => [
@@ -88,6 +90,18 @@ return [
             'continue_page' => 'default',
             'sort_order' => 50,
         ],
+        'payhop' => [
+            'callback_path' => env('PAYHOP_SSO_CALLBACK', '/auth/sso/callback'),
+            'start_path' => env('PAYHOP_SSO_START', '/auth/sso'),
+            'secret' => env('HOP_SSO_SECRET_PAYHOP'),
+            'menu_label' => 'Payments',
+            // admin_api: Imperium reads /hop/health, manifest, stats and users. Saved payment methods and history
+            // (only after the person saves them) never appear in what PayHop tells Imperium.
+            'capabilities' => ['admin_api', 'events', 'zero_knowledge'],
+            'pages' => ['default' => '/'],
+            'continue_page' => 'default',
+            'sort_order' => 60,
+        ],
     ],
     // Where an app's bearer-token API and its documentation live, for the API page and the token
     // form. `scopes` is the prefix of that app's token scopes (ApiToken::SCOPES). An app that is
@@ -100,11 +114,13 @@ return [
     'export_notes' => [
         'notehop' => 'Notes are encrypted in your browser before they reach NoteHop, so there is nothing NoteHop could export for you.',
         'filehop' => 'FileHop stores no files: everything is converted in your browser.',
+        'payhop' => 'PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.',
     ],
     'registry_health' => [],   // default /healthz
     'registry_logout' => [
         'notehop' => '/auth/sso/logout',
         'filehop' => '/auth/sso/logout',
+        'payhop' => '/auth/sso/logout',
     ],   // slug => path that signs the visitor out, e.g. '/auth/sso/logout'
 
     // Seconds a sign-in ticket for an app stays valid.
@@ -198,6 +214,23 @@ return [
             'repo' => 'https://github.com/navi-crwn/FileHop',
             'enabled' => (bool) env('FILEHOP_ENABLED', true),
         ],
+        'payhop' => [
+            'name' => 'PayHop',
+            'tagline' => 'Make a payment QR and split a bill; nothing leaves your browser.',
+            'url' => env('PAYHOP_URL', 'https://pay.hel.ink'),
+            // Signs in with its own secret and callback from the HOP ID registry (`apps`), like NoteHop and FileHop.
+            'registry' => true,
+            'open_path' => env('PAYHOP_OPEN_PATH', '/'),
+            'public_prefix' => null,
+            'logout' => env('PAYHOP_LOGOUT_PATH', '/auth/sso/logout'),
+            'export' => null,
+            'health' => env('PAYHOP_HEALTH_PATH', '/healthz'),
+            'check' => env('PAYHOP_CHECK_URL'),
+            'icon' => 'pay',
+            'color' => 'teal',
+            'repo' => 'https://github.com/navi-crwn/PayHop',
+            'enabled' => (bool) env('PAYHOP_ENABLED', true),
+        ],
     ],
 
     // What each app tells the hub about one account, for the numbers on the dashboard cards.
@@ -205,6 +238,8 @@ return [
     // shared SSO secret) or "hop" (Go apps: the HOP App Protocol, GET /hop/users/{id}).
     // Counts only, never content. `fields` maps the app's answer to a label (English key, translated on render).
     // FileHop is left out: it stores no files, so it has no numbers to show on a card; `card_facts` gives it a fixed line.
+    // PayHop is left out too, but without that line: it keeps saved payment methods and history for people who choose to save them,
+    // so "Stored: 0 B" would be untrue, and its /hop/users answer carries no counts ("content" is empty). Its card shows no numbers.
     'summaries' => [
         'linkhop' => ['auth' => 'hub', 'path' => '/internal/accounts/{id}/summary', 'fields' => ['links' => 'Links', 'clicks_7d' => 'Clicks, 7 days']],
         'biohop' => ['auth' => 'hub', 'path' => '/internal/accounts/{id}/summary', 'fields' => ['pages' => 'Pages', 'published' => 'Published', 'clicks_7d' => 'Clicks, 7 days']],
@@ -239,6 +274,7 @@ return [
             'navi-crwn/PixelHop',
             'navi-crwn/NoteHop',
             'navi-crwn/FileHop',
+            'navi-crwn/PayHop',
         ],
         'token' => env('GITHUB_TOKEN'),
         'timeout' => 10,
@@ -258,7 +294,7 @@ return [
     // Usernames nobody can take: site routes of every app, staff-looking names,
     // and the brands. Lowercase. Prefixes end with "-".
     'reserved_usernames' => [
-        'hop', 'hopid', 'hop-id', 'imperium', 'citadel', 'linkhop', 'pixelhop', 'notehop', 'filehop', 'remotehop', 'biohop',
+        'hop', 'hopid', 'hop-id', 'imperium', 'citadel', 'linkhop', 'pixelhop', 'notehop', 'filehop', 'payhop', 'pay', 'remotehop', 'biohop',
         'helink', 'hel', 'hel-ink', 'hub', 'admin', 'administrator', 'root', 'system', 'moderator', 'mod',
         'staff', 'team', 'official', 'support', 'help', 'abuse', 'report', 'dmca', 'security', 'verify',
         'verified', 'legal', 'billing', 'owner', 'sysadmin', 'webmaster', 'postmaster', 'hostmaster',
@@ -276,5 +312,5 @@ return [
     ],
     'reserved_username_prefixes' => ['hop-', 'hop_', 'admin-', 'admin_', 'official-', 'official_', 'staff-', 'staff_',
         'support-', 'support_', 'team-', 'team_', 'security-', 'security_', 'verify-', 'verified-', 'linkhop-',
-        'pixelhop-', 'notehop-', 'filehop-', 'remotehop-', 'biohop-', 'helink-', 'imperium-'],
+        'pixelhop-', 'notehop-', 'filehop-', 'payhop-', 'remotehop-', 'biohop-', 'helink-', 'imperium-'],
 ];

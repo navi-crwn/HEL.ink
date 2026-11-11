@@ -27,7 +27,7 @@ jobs:
       - run: cp .env.example .env && php artisan key:generate
       - run: vendor/bin/pint --test
       - run: php artisan test
-      - run: node --test tests/home-renderer.test.mjs tests/dialogs.test.mjs
+      - run: node --test tests/home-renderer.test.mjs tests/dialogs.test.mjs tests/home-globe.test.mjs
       - run: python3 scripts/hop_assets.py check
       - run: composer audit
 

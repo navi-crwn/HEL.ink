@@ -4,7 +4,16 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-11-11
+
 ### Added
+
+- PayHop (pay.hel.ink), the seventh HOP app. Registry: `apps.payhop`, `event_apps.payhop` (admin API, events), `registry_taglines`, `registry_repos`, `registry_logout`, `export_notes`, `PAYHOP_*` settings in `.env.example`, `phpunit.xml`, the seeder and the app factory; `github.repos`; the reserved names `pay`, `payhop` and `payhop-`. Pages: `/apps/payhop`, a home section with its 3D tile and a bill-split demo, the products and sitemap entries, FAQ, help guide, how-it-works, security, privacy and terms cards, in all nine languages. Its card on the dashboard shows no numbers (no `Stored: 0 B` line: it keeps saved payment methods for people who choose to save them).
+- hop-assets v9: a copy of v8 plus PayHop's mark, PWA icons, 3D block map, floating tile (`.hop-theme-7`, eight tiles), name font (Unbounded, subset to "PayHop", with its OFL licence), home art and home demo. `apps.source.json` and the manifest are v9 with a `payhop` entry; v1 to v8 are unchanged. The family README table, `docs/hop-family.md` and the bundled manifest in `packages/ui` list PayHop.
+- `scripts/check-hop-family.sh` takes `--ref <branch|sha>` (or `HOP_FAMILY_REF`) and `--from <file>` (or `HOP_FAMILY_FILE`); without them it behaves as before. The script is byte-identical in every HOP repository.
+- Terms version 2026-11-11 (`resources/legal/terms-2026-11-11.md`) names FileHop and PayHop, with a section for each. It is registered in `config/legal.php` but not required: `LEGAL_TERMS_REQUIRED_VERSION` stays unset until the owner decides. The 2026-10-31 text is unchanged.
+- `/changelog` reads `storage/app/changelog.json` when it exists and is usable, and the snapshot in the repository otherwise. `scripts/build-changelog.py --output` writes it, so a deploy can build the history without a pull request (`--check --output` verifies it).
+- Tests: the v9 files and the PayHop block map equal the mark, v9 only differs from v8 in the five files PayHop needed, and the seeder and event tests use the list of event apps instead of a count.
 
 - `php artisan hop:reset-2fa {email}`: the official way back in when an authenticator is lost. It clears the two-factor secret, recovery codes and confirmation of that account, refuses an unknown email, and writes an activity-log row without any secret.
 - "Open Imperium" in the top bar for every account that holds a role (address from `HOP_IMPERIUM_URL`, then `HOP_CONTROL_URL`, default `https://imperium.hel.ink`; nine languages).
@@ -13,6 +22,11 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ### Changed
 
+- The "One account" scene on the home page is a globe you can turn: it spins slowly and follows a drag (`resources/js/home-globe.js`, two plain canvases, no new dependency). HOP ID is the core inside the globe, every app sits on its surface on its own curved line, a pulse runs along each line while its app is signed in, and the ticket shows a code that settles for each app. The sign-in code is a badge on the lower edge of the HOP ID mark. The story is one scrubbed function of the scroll position, so it plays the same forwards and backwards. Without scripts or with reduced motion the flat ring is shown as before.
+- `packages/ui` is the hop-ui `feat/manifest-v9` branch (footer with the family row and the brand slot, `Apps` with the `pay` icon, tests); `packages/auth` is the hop-auth `feat/pay-host-silent-recheck` branch (`pay.hel.ink` trusted, silent account re-check that runs only while the hub's `/up` answers 2xx); the `packages/*/README.md` family tables list PayHop.
+- Every `hop-assets/v8` reference (home, bento, account partial, tests, docs) is v9. The sentences that list the apps (FAQ, about, terms, open source, privacy) name PayHop, in nine languages; the nine READMEs list it (the German and Russian ones gained the family section), `install.sh`, `install-family.sh` (port 8105, Go and Node), `docs/self-hosting.md`, `docs/hop-assets.md` and `docs/adding-an-app.md` too.
+- The GitHub Pages site (`docs/`) lists seven apps in nine languages and loads its fonts from hop-assets v9 instead of v1.
+- The `/admin/users` pages stay: HOP ID's `set_roles` action and Imperium do not match them yet (Imperium lets any admin set roles and accepts `owner`; the hub page lets only the owner grant the four global roles and never `owner`, and refuses to suspend or delete the signed-in account).
 - **Security rule change (owner account, made on 2026-11-01):** the owner account may now turn on two-factor, confirm it and renew its recovery codes for itself (`settings.2fa.enable`, `.confirm`, `.recovery-codes`), because Imperium refuses an account without it. Turning it off stays blocked for the owner, and every other read-only rule of the owner account is unchanged. Another account or an admin still cannot touch the owner's two-factor. `enable` is refused once 2FA is confirmed, for every account (turn it off first; the owner uses `hop:reset-2fa`), so a session and a password cannot move 2FA to another authenticator.
 - The hub is for people and Imperium for admins: signing in always lands on the dashboard, the "Admin" chip and the sidebar "Admin" section (Accounts, Manage announcements) are gone, and an account with a role gets the same dashboard plus the one shortcut. The `/admin/*` pages, `Api/HopAdminController` and the `/hop/*` and `/api/hop/*` routes stay; the pages are simply no longer linked.
 - Dashboard frames: every card, panel and box inside the hub layout has a 1 px line in the new `--hop-frame` token (the muted ink at 80% in light, 55% in dark, 3:1 or better against the page) and a more opaque surface; the bare bento grids of the dashboard no longer strip it; the app cards sit in equal columns and every gap is 16 px. The Clean style (`hop_ui`) uses the same token.
@@ -112,5 +126,7 @@ The first stable release. HEL.ink's first pull request was merged on 2026-10-28;
 
 - The 2026-11-04 audit fixes are included: error pages in the visitor's language, a language cookie that works with `SESSION_DOMAIN`, and `HopAppsSeeder`, which adds the `events` rows for the four apps without changing an existing row.
 
-[Unreleased]: https://github.com/navi-crwn/HEL.ink/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/navi-crwn/HEL.ink/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/navi-crwn/HEL.ink/releases/tag/v1.2.0
+[1.1.0]: https://github.com/navi-crwn/HEL.ink/releases/tag/v1.1.0
 [1.0.0]: https://github.com/navi-crwn/HEL.ink/releases/tag/v1.0.0

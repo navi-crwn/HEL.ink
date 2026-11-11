@@ -7,7 +7,7 @@
         @php
             $metaTitle = $title ?? config('app.name');
             $metaDescription = $description ?? __('Short links, a page for your links, images, private notes and file conversion. One free HOP ID connects them all.');
-            $metaKeywords = 'hop, hel.ink, linkhop, biohop, pixelhop, notehop, filehop';
+            $metaKeywords = 'hop, hel.ink, linkhop, biohop, pixelhop, notehop, filehop, payhop';
             $ogTitle = $metaTitle;
             $ogDescription = $metaDescription;
             $ogImage = route('brand.logo.dark');

@@ -21,6 +21,14 @@
 .hop-home .hx-nums b { display: block; font: 800 clamp(32px, 4.2vw, 52px)/1 var(--h-sans); letter-spacing: -.04em; font-variant-numeric: tabular-nums; background: var(--h-ink); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .hop-home .hx-nums span { display: block; margin-top: 8px; color: var(--home-muted); font-size: 14px; }
 
+/* globe paint, as r,g,b so the canvas can set its own alpha (home-globe.js reads these from the stage) */
+.hop-home { --globe-dot: 79,70,229; --globe-line: 99,102,241; --globe-out: 244,63,94; --globe-pkt: 34,211,238; --globe-body: 99,102,241;
+    --globe-body-in: .02; --globe-body-out: .1; --globe-limb: .2; --globe-dot-min: .08; --globe-dot-max: .6; --globe-ring-min: .05; --globe-ring-max: .24; --globe-core: .16; --globe-pulse: 79,70,229; --globe-gloss: .5;
+    --core-a: #fff; --core-b: #e4e7ff; --core-hi: #fff; --core-edge: #6366f166; --core-shade: #6366f14d; --core-ring: #6366f114; --core-glow: #6366f14d; }
+.dark .hop-home, [data-theme=dark] .hop-home { --globe-dot: 165,180,252; --globe-line: 129,140,248; --globe-out: 251,113,133; --globe-pkt: 103,232,249; --globe-body: 99,102,241;
+    --globe-body-in: .05; --globe-body-out: .2; --globe-limb: .28; --globe-dot-min: .08; --globe-dot-max: .75; --globe-ring-min: .06; --globe-ring-max: .3; --globe-core: .3; --globe-pulse: 224,231,255; --globe-gloss: .07;
+    --core-a: #262e52; --core-b: #121730; --core-hi: #a5b4fc3d; --core-edge: #818cf88c; --core-shade: #0009; --core-ring: #818cf81f; --core-glow: #6366f18c; }
+
 /* 01 one account */
 .hop-home .hx-acct { min-height: calc(100vh - 64px); display: grid; align-items: center; }
 .hop-home .hx-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(28px, 5vw, 76px); align-items: center; }
@@ -41,10 +49,12 @@
 .hop-home .hx-stage .pkt { fill: #22d3ee; opacity: 0; }
 .hop-home .hx-stage.is-out .lines path { stroke: #f43f5e; }
 .hop-home .hx-stage.is-out .pkt { fill: #f43f5e; }
-.hop-home .hx-hub { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: grid; justify-items: center; gap: 4px; width: 132px; padding: 16px 12px; border: 1px solid var(--home-line); border-radius: 26px; background: var(--home-panel); box-shadow: 0 30px 70px -40px #4338ca; z-index: 2; }
+.hop-home .hx-hub { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(var(--s, 1)); display: grid; justify-items: center; gap: 4px; width: 132px; padding: 16px 12px; border: 1px solid var(--home-line); border-radius: 26px; background: var(--home-panel); box-shadow: 0 30px 70px -40px #4338ca; z-index: 3; transition: border-color .3s, box-shadow .3s; }
 .hop-home .hx-hub img { border-radius: 14px; }
 .hop-home .hx-hub b { font-size: 15px; }
-.hop-home .hx-code { padding: 3px 10px; border-radius: 99px; border: 1px dashed #6366f1; font: 600 12px var(--h-mono); letter-spacing: .12em; color: #6366f1; transition: opacity .3s; }
+/* the code is a badge on the lower edge of the card, so the mark and the name sit in the middle of the card (and of the globe) */
+.hop-home .hx-code { position: absolute; left: 50%; top: 100%; transform: translate(-50%, -50%); padding: 3px 10px; border-radius: 99px; border: 1px dashed #6366f1; background: var(--home-panel); font: 600 12px var(--h-mono); letter-spacing: .12em; color: #6366f1; transition: opacity .3s; }
+.dark .hop-home .hx-code, [data-theme=dark] .hop-home .hx-code { color: #a5b4fc; border-color: #818cf8; }
 .hop-home .hx-hub.is-secure { border-color: #10b981; box-shadow: 0 0 0 5px #10b98122, 0 30px 70px -40px #10b981; }
 .hop-home .hx-node { position: absolute; transform: translate(-50%, -50%); display: grid; justify-items: center; gap: 3px; width: 120px; padding: 12px 8px; border: 1px solid var(--home-line); border-radius: 22px; background: var(--home-panel); z-index: 2; transition: opacity .35s, border-color .35s; text-align: center; }
 .hop-home .hx-node b { font-size: 14px; }
@@ -54,9 +64,52 @@
 .hop-home .hx-node .st { font: 600 10px var(--h-mono); font-style: normal; color: #10b981; letter-spacing: .04em; }
 .hop-home .hx-node.is-out { border-color: #f43f5e66; }
 .hop-home .hx-node.is-out .st { color: #f43f5e; }
-.hop-home .hx-ticket { position: absolute; left: 50%; top: 31%; transform: translateX(-50%); display: none; gap: 0; padding: 4px 12px; border-radius: 10px; background: #22d3ee; color: #082f49; font: 600 11px var(--h-mono); z-index: 3; }
+.hop-home .hx-ticket { position: absolute; left: 50%; top: 31%; transform: translateX(-50%); display: none; padding: 4px 12px; border-radius: 10px; background: #22d3ee; color: #082f49; font: 600 11px var(--h-mono); z-index: 6; white-space: nowrap; }
 .hop-home .hx-ticket small { margin-inline-end: 6px; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; }
-.hop-home .hx-note { position: absolute; left: 0; right: 0; bottom: -2px; margin: 0; text-align: center; font: 12px var(--h-mono); color: var(--home-muted); }
+/* the ticket's code: a fresh one for every app, its characters still falling into place while it is made (home.js) */
+.hop-home .hx-tk { display: none; }
+.hop-home .hx-stage.is-globe .hx-ticket { padding: 5px 12px; border: 1px solid #22d3ee80; background: #04161ee6; color: #a5f3fc; box-shadow: 0 0 22px -6px #22d3ee, inset 0 0 12px -6px #22d3ee; }
+.hop-home .hx-stage.is-globe .hx-ticket small { color: #67e8f9; opacity: .75; }
+.hop-home .hx-stage.is-globe .hx-ticket b { color: #cffafe; }
+.hop-home .hx-stage.is-globe .hx-tk { display: inline-block; margin-inline-end: 8px; font-weight: 600; letter-spacing: .04em; color: #ecfeff; text-shadow: 0 0 8px #22d3ee; }
+.hop-home .hx-stage.is-globe .hx-tk i { display: inline-block; width: 1ch; font-style: normal; text-align: center; }
+.hop-home .hx-stage.is-globe .hx-tk i:nth-child(5) { margin-inline-start: .5ch; }
+.hop-home .hx-stage.is-globe .hx-tk i.raw { color: #34d399; opacity: .7; text-shadow: 0 0 6px #10b981; }
+.hop-home .hx-note { position: absolute; left: 0; right: 0; bottom: -2px; margin: 0; text-align: center; font: 12px var(--h-mono); color: var(--home-muted); transition: opacity .3s; }
+
+/* the story hides what has not happened yet; home.js sets .show as the scroll reaches it (a function of the scroll position, both ways).
+   Without scripts or with reduced motion none of this applies and the finished picture shows. */
+.hx-live .hop-home .hx-node .st, .hx-live .hop-home .hx-code, .hx-live .hop-home .hx-note { opacity: 0; }
+.hx-live .hop-home .hx-node .st.show, .hx-live .hop-home .hx-code.show, .hx-live .hop-home .hx-note.show { opacity: 1; }
+.hx-live .hop-home .hx-ticket.show { display: block; }
+
+/* the globe: home-globe.js draws the sphere, the lines and the packet on the canvas and places the tiles */
+.hop-home .hx-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: none; }
+.hop-home .hx-stage.is-globe canvas { display: block; }
+.hop-home .hx-stage.is-globe svg { display: none; }   /* the SVG lines stay for a page without scripts */
+.hop-home .hx-stage.is-globe { touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab; }
+.hop-home .hx-stage.is-globe.is-grabbing { cursor: grabbing; }
+/* a tile is its mark plus a card (frame, name, status); the card is drawn by ::before so it can fade on the far side
+   of the globe (--card: 1 near, 0 far) while the mark stays */
+.hop-home .hx-stage.is-globe .hx-node { left: 50%; top: 50%; background: none; border-color: transparent; transition: none; will-change: transform, opacity; }
+.hop-home .hx-stage.is-globe .hx-node::before { content: ""; position: absolute; inset: -1px; z-index: -1; border: 1px solid var(--home-line); border-radius: inherit; background: var(--home-panel); opacity: var(--card, 1); transition: border-color .35s; }
+.hop-home .hx-stage.is-globe .hx-node.is-front::before { box-shadow: 0 22px 44px -30px #4338ca; }
+.dark .hop-home .hx-stage.is-globe .hx-node.is-front::before, [data-theme=dark] .hop-home .hx-stage.is-globe .hx-node.is-front::before { box-shadow: 0 22px 50px -26px #000; }
+.hop-home .hx-stage.is-globe .hx-node.is-out::before { border-color: #f43f5e66; }
+.hop-home .hx-stage.is-globe .hx-node b, .hop-home .hx-stage.is-globe .hx-node .st { opacity: var(--card, 1); transition: none; }
+.hx-live .hop-home .hx-stage.is-globe .hx-node .st:not(.show) { opacity: 0; }
+.hop-home .hx-stage.is-globe .hx-node img, .hop-home .hx-stage.is-globe .hx-hub img { -webkit-user-drag: none; pointer-events: none; }
+/* two canvases: the far half of the globe behind the core, the near half in front of it */
+.hop-home .hx-stage canvas.hx-near { z-index: 4; pointer-events: none; }
+/* HOP ID is the core inside the globe: a small lit ball, not a card lying on top of it */
+.hop-home .hx-stage.is-globe .hx-hub { width: 24%; aspect-ratio: 1; padding: 0; gap: 3px; align-content: center; border-radius: 50%; border-color: var(--core-edge);
+    background: radial-gradient(circle at 32% 26%, var(--core-hi) 0, transparent 58%), radial-gradient(circle at 50% 56%, var(--core-a), var(--core-b));
+    box-shadow: inset 0 -18px 30px -16px var(--core-shade), 0 0 0 6px var(--core-ring), 0 0 56px 8px var(--core-glow); }
+.hop-home .hx-stage.is-globe .hx-hub img { width: 40%; height: auto; border-radius: 26%; }
+.hop-home .hx-stage.is-globe .hx-hub b { font-size: 13px; letter-spacing: -.01em; }
+.hop-home .hx-stage.is-globe .hx-hub.is-secure { border-color: #10b981; box-shadow: inset 0 -18px 30px -16px var(--core-shade), 0 0 0 6px #10b98126, 0 0 56px 8px #10b98166; }
+.hop-home .hx-stage.is-globe .hx-ticket { top: calc(38% - 34px); }
+.hop-home .hx-stage.is-globe .hx-note { bottom: -6px; }
 
 /* 04 questions */
 .hop-home .hx-cell { position: relative; padding: 22px; border: 1px solid var(--home-line); border-radius: 22px; background: var(--home-panel); min-width: 0; transition: border-color .3s, transform .3s; }
@@ -126,9 +179,14 @@
     .hop-home .hx-cell { padding: 18px; }
 }
 @media (max-width: 640px) {
-    .hop-home .hx-node { width: 96px; padding: 10px 6px; } .hop-home .hx-node img { width: 34px; height: 34px; } .hop-home .hx-node b { font-size: 12px; }
-    .hop-home .hx-hub { width: 108px; } .hop-home .hx-hub img { width: 44px; height: 44px; }
+    .hop-home .hx-node { width: 96px; padding: 10px 6px; border-radius: 18px; } .hop-home .hx-node img { width: 34px; height: 34px; } .hop-home .hx-node b { font-size: 12px; }
+    .hop-home .hx-hub { width: 108px; padding: 12px 10px; border-radius: 22px; } .hop-home .hx-hub img { width: 44px; height: 44px; }
     .hop-home .hx-stage { --ring-x: 38%; --ring-y: 43%; margin-block: 22px 30px; } .hop-home .hx-note { bottom: -28px; }
+    .hop-home .hx-stage.is-globe .hx-hub { width: 24%; padding: 0; border-radius: 50%; gap: 2px; }
+    .hop-home .hx-stage.is-globe .hx-hub img { width: 40%; height: auto; }
+    .hop-home .hx-stage.is-globe .hx-hub b { font-size: 11px; }
+    .hop-home .hx-stage.is-globe .hx-ticket { top: calc(38% - 32px); }
+    .hop-home .hx-stage.is-globe .hx-note { bottom: -26px; }
 }
 @media (prefers-reduced-motion: reduce) { .hop-home .hx *, .hop-home .hx *::before { animation: none !important; transition: none !important; } }
 

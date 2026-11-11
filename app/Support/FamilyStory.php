@@ -11,7 +11,7 @@ use Hop\Ui\Assets;
  */
 final class FamilyStory
 {
-    public const APPS = ['linkhop', 'biohop', 'pixelhop', 'notehop', 'filehop'];
+    public const APPS = ['linkhop', 'biohop', 'pixelhop', 'notehop', 'filehop', 'payhop'];
 
     /** @return array<string, array<string, mixed>> */
     public static function all(): array
@@ -96,6 +96,22 @@ final class FamilyStory
                     [__('Are my files uploaded?'), __('No. FileHop converts in your browser tab. Watch your browser\'s network tab while it runs: nothing is sent.')],
                     [__('Do I need an account?'), __('No. Every conversion works without one. A HOP ID only adds your account menu for now.')],
                     [__('Which formats does FileHop handle?'), __('Images, PDF, CSV/TSV/JSON/YAML, Markdown/HTML/text and ZIP/TAR/GZIP archives. Video, audio and DOCX are not there yet.')],
+                ],
+            ],
+            'payhop' => [
+                'kicker' => __('Payment QR'),
+                'story' => __('Make a QR code that pays the right person the right amount, or split a bill between friends. It all happens in your browser tab: what you type is not sent anywhere.'),
+                'features' => [__('QR codes for several bank and wallet formats'), __('See who a code pays before you share it'), __('Split a bill by person, item, tax and tip'), __('Saved payment methods, only if you choose to')],
+                'cta' => __('Make a payment QR'),
+                'steps' => [
+                    [__('Pick a format'), __('Choose the payment scheme and fill in the details.')],
+                    [__('Check the code'), __('PayHop shows who the code pays and how much before you download it.')],
+                    [__('Share or split'), __('Download the QR, or divide a bill and give each person their own code.')],
+                ],
+                'faqs' => [
+                    [__('Does PayHop move money?'), __('No. PayHop only makes the QR code. Your bank or wallet app makes the payment.')],
+                    [__('Are my payment details uploaded?'), __('No. Codes are made in your browser tab. If you sign in and choose to save a payment method, it is stored encrypted and you can delete it at any time.')],
+                    [__('Do I need a HOP ID to use PayHop?'), __('No. Every tool works without an account. A HOP ID only adds saved payment methods and history.')],
                 ],
             ],
         ];

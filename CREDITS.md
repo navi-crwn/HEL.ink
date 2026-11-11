@@ -67,6 +67,7 @@ kept next to the font files.
 - Silkscreen, by The Silkscreen Project Authors
 - Caveat, by The Caveat Project Authors
 - Sora, by The Sora Project Authors
+- Unbounded, by The Unbounded Project Authors
 
 ## Artwork
 

@@ -40,7 +40,8 @@ test('a retired stored language shows English as the current one', function () {
     expect($html)->toMatch('/hreflang="en"[^>]*aria-current/')->toContain('>EN</span>');
 });
 
-test('the footer has no language row (the language menu is in the top bar)', function () {
+test('the footer has no language row, the top bar menu is the one place to switch', function () {
+    app()->setLocale('en');
     $html = Blade::render('<x-hop::footer app="biohop" name="BioHop" />');
-    expect($html)->not->toContain('hreflang=')->not->toContain('Language:');
+    expect($html)->not->toContain('hreflang=')->not->toContain('?lang=')->toContain('Open source under MIT License');
 });

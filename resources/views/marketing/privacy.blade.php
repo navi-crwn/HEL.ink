@@ -82,6 +82,14 @@
                         {{ __('FileHop converts files inside your browser tab. Your files, their names and the results never reach the server, so there is nothing of yours to store, scan or share. If you sign in with HOP ID, FileHop keeps your HOP ID number, name and email and a session cookie; signing out, or being signed out by the hub, deletes the session.') }}
                     </p>
                 </div>
+
+                {{-- PayHop --}}
+                <div class="{{ $card }}">
+                    <h3 class="font-bold text-slate-900 dark:text-white">PayHop</h3>
+                    <p class="mt-2 text-xs leading-relaxed {{ $muted }}">
+                        {{ __('PayHop builds payment QR codes inside your browser tab. The names, account numbers and amounts you type are not sent to the server. If you sign in with HOP ID, PayHop keeps your HOP ID number, name and email and a session cookie. PayHop stores a payment method or a bill only if you choose to save it: each saved method is encrypted and kept only after you agree to that method, is never written to logs and never shown in the admin panel, and you can delete one method or everything at any time. History keeps your 200 most recent bills.') }}
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -93,6 +101,7 @@
                 <p>&bull; <strong>{{ __('Authentication & Activity logs:') }}</strong> {{ __('Sign-in history and account activity records are deleted after 90 days.') }}</p>
                 <p>&bull; <strong>{{ __('Abuse reports:') }}</strong> {{ __('IP addresses attached to abuse reports are purged after 30 days; closed report records after 180 days.') }}</p>
                 <p>&bull; <strong>{{ __('FileHop:') }}</strong> {{ __('Files are never stored. A FileHop session is deleted when you sign out or when the hub signs you out.') }}</p>
+                <p>&bull; <strong>{{ __('PayHop:') }}</strong> {{ __('Nothing is stored unless you save it. A saved payment method stays until you delete it, history keeps the 200 most recent bills, and a PayHop session is deleted when you sign out or when the hub signs you out.') }}</p>
                 <p>&bull; <strong>{{ __('Expired & Ephemeral Notes:') }}</strong> {{ __('Notes configured with self-destruct timers or read-burn limits are permanently deleted immediately upon expiration.') }}</p>
             </div>
         </div>

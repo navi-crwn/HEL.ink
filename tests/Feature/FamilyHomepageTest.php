@@ -27,6 +27,23 @@ test('the home page has one interactive section per public product in the manife
     expect($html)->not->toContain('data-home-tabs')->toContain('data-hx-acct');
 });
 
+test('the account stage has two canvases for the globe and still one SVG line per app', function () {
+    $html = $this->get('/')->assertOk()->getContent();
+
+    $dom = new DOMDocument;
+    @$dom->loadHTML('<?xml encoding="UTF-8">'.$html);
+    $xpath = new DOMXPath($dom);
+    $stage = $xpath->query('//*[@data-hx-acct]//*[contains(concat(" ", normalize-space(@class), " "), " hx-stage ")]');
+    expect($stage->length)->toBe(1);
+    expect($stage->item(0)->getAttribute('aria-hidden'))->toBe('true');
+    $tiles = $xpath->query('.//*[@data-hx-node]', $stage->item(0))->length;
+    expect($tiles)->toBeGreaterThan(0);
+    expect($xpath->query('.//*[@data-hx-ticket]//*[@data-hx-tk]', $stage->item(0))->length)->toBe(1);
+    expect($xpath->query('.//canvas', $stage->item(0))->length)->toBe(2);
+    expect($xpath->query('.//canvas[2]', $stage->item(0))->item(0)->getAttribute('class'))->toBe('hx-near');
+    expect($xpath->query('.//svg//g[@class="lines"]/path', $stage->item(0))->length)->toBe($tiles);
+});
+
 test('FileHop has its own home section, 3D tile and demo', function () {
     $html = $this->get('/')->assertOk()->getContent();
 
@@ -42,7 +59,7 @@ test('the home page has the HOP sections and no back link', function () {
     }
     expect($html)->not->toContain('Back to HOP');
     expect($html)->not->toContain('id="status"');
-    expect(substr_count($html, '<section '))->toBe(10);
+    expect(substr_count($html, '<section '))->toBe(5 + count(FamilyStory::APPS));
 });
 
 test('the home page is English by default and speaks nine languages', function () {

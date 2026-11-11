@@ -9,7 +9,7 @@
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/readme/hero-en-dark.webp"><img src="docs/readme/hero-en-light.webp" alt="HEL.ink · Hub da família HOP" width="100%"></picture></p>
 
-<p align="center"><b>O HEL.ink é o portal de contas e diretório da família para o HOP. Entre uma vez com seu HOP ID e navegue tranquilamente entre LinkHop, BioHop, PixelHop, NoteHop e FileHop.</b></p>
+<p align="center"><b>O HEL.ink é o portal de contas e diretório da família para o HOP. Entre uma vez com seu HOP ID e navegue tranquilamente entre LinkHop, BioHop, PixelHop, NoteHop, FileHop e PayHop.</b></p>
 
 <p align="center">
   <a href="https://hel.ink">hel.ink</a> ·
@@ -32,14 +32,14 @@ A partir de um clone: `./install.sh` · atualizar: `./update.sh` · remover: `./
 
 ## Hub da família e portal de contas
 
-Portal central de contas, logon único HOP ID e diretório da família para LinkHop, BioHop, PixelHop, NoteHop e FileHop.
+Portal central de contas, logon único HOP ID e diretório da família para LinkHop, BioHop, PixelHop, NoteHop, FileHop e PayHop.
 
 <a id="features"></a>
 
 ## Recursos
 
 - **Logon Único (HOP ID)**: Um login cobre todos os aplicativos HOP. Tickets assinados e encerramento em cadeia.
-- **Inicializador unificado de apps**: Alterne entre LinkHop, BioHop, PixelHop, NoteHop e FileHop com um clique.
+- **Inicializador unificado de apps**: Alterne entre LinkHop, BioHop, PixelHop, NoteHop, FileHop e PayHop com um clique.
 - **Arquitetura de banco compartilhado**: Um banco MySQL ou SQLite armazena identidades com tabelas de migração dedicadas por app.
 - **Segurança robusta de conta**: Hashing Argon2id, autenticação em dois fatores TOTP, Turnstile e verificação de e-mail.
 - **Porta SSO, CSP e UI compartilhada**: todas as páginas saem com Content-Security-Policy (com nonce nas páginas do app), a passagem SSO é assinada e verificada pelos apps, e os diálogos e os menus de idioma e conta vêm do pacote compartilhado HopUI.
@@ -95,6 +95,7 @@ O HEL.ink é o hub de uma família de ferramentas web abertas que respeitam sua 
 | **PixelHop** | `pixel.hel.ink` · `p.hel.ink/…` | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | Hospedagem de imagens e mídia |
 | **NoteHop** | `note.hel.ink` · `n.hel.ink/…` | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | Notas privadas com criptografia no cliente |
 | **FileHop** | `file.hel.ink` | [navi-crwn/FileHop](https://github.com/navi-crwn/FileHop) | Conversão de arquivos no navegador, sem envio |
+| **PayHop** | `pay.hel.ink` | [navi-crwn/PayHop](https://github.com/navi-crwn/PayHop) | Crie um QR de pagamento e divida contas; nada sai do seu navegador. |
 
 ## Changelog
 
@@ -115,7 +116,7 @@ Tudo o que o HEL.ink precisa está em repositórios públicos: nenhum repositór
 | Fontes e blocos da família | Nada a instalar: carregados de `hel.ink/hop-assets` | Sem hel.ink: fontes do sistema, sem blocos flutuantes |
 
 - **Ordem de instalação**: primeiro este hub, depois os apps e, se quiser, o Imperium. Registre os apps com `php artisan db:seed --class='Database\Seeders\HopAppsSeeder' --force`. O [`install-family.sh`](install-family.sh) faz tudo de uma vez.
-- **Configuração mínima**: `APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `FILEHOP_URL` (um por app); com o Imperium: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`.
+- **Configuração mínima**: `APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `PAYHOP_URL` (um por app); com o Imperium: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`.
 - **Sozinho ou na família**: o hub sozinho oferece contas, login e o lançador; o README de cada app diz do que mais ele precisa.
 - **Sem o Imperium**: o hub mantém suas próprias páginas de administração de contas (`/admin`); o Imperium acrescenta o conteúdo, as denúncias e a saúde dos apps.
 <!-- self-hosting:end -->

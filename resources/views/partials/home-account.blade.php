@@ -1,8 +1,8 @@
 {{-- 01 One account: pinned. The scroll plays how one HOP ID signs you in to every app and out of all of them.
-     (resources/js/home.js adds the motion; the finished picture is complete as plain HTML and CSS.) --}}
+     (resources/js/home.js adds the motion, the finished picture is complete as plain HTML and CSS.) --}}
 @php
     $family = collect(\Hop\Ui\Assets::family())->keyBy('slug');
-    $hubMark = $family['hub']['icons']['mark']['url'] ?? asset('hop-assets/v8/apps/hub/rabbit-mark.png');
+    $hubMark = $family['hub']['icons']['mark']['url'] ?? asset('hop-assets/v9/apps/hub/rabbit-mark.png');
     // Every public app sits on a ring around HOP ID, the first one on top; positions follow the
     // number of apps, so a new app appears here without a CSS change.
     $ring = collect($stories)->values();
@@ -24,12 +24,13 @@
         </div>
         <div class="hx-stage" data-signed-out="{{ __('Signed out') }}" data-note-out="{{ __('Signed out once. Signed out everywhere.') }}" aria-hidden="true">
             <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet"><g class="lines">@foreach ($ring as $i => $app)@php [$x, $y] = $spot($i); @endphp<path d="M200 200 L{{ round(200 + 144 * $x, 1) }} {{ round(200 + 144 * $y, 1) }}"/>@endforeach</g><circle class="pkt" r="6"/></svg>
+            <canvas></canvas><canvas class="hx-near"></canvas>
             <div class="hx-hub"><img src="{{ $hubMark }}" alt="" width="56" height="56"><b>HOP ID</b><span class="hx-code" data-hx-code dir="ltr">482 913</span></div>
             @foreach ($ring as $i => $app)
                 @php [$x, $y] = $spot($i); @endphp
-                <div class="hx-node" style="--cx: {{ $x }}; --cy: {{ $y }}" data-hx-node><img src="{{ $app['mark'] }}" alt="" width="44" height="44"><b>{{ $app['name'] }}</b><i class="st" data-hx-st>{{ __('Signed in') }} ✓</i></div>
+                <div class="hx-node" style="--cx: {{ $x }}; --cy: {{ $y }}" data-hx-node><img src="{{ $app['mark'] }}" alt="" width="44" height="44"><b class="hop-name hop-name-{{ $app['slug'] }}">{{ $app['name'] }}</b><i class="st" data-hx-st>{{ __('Signed in') }} ✓</i></div>
             @endforeach
-            <div class="hx-ticket" data-hx-ticket><small>{{ __('ticket') }}</small><b dir="ltr">30 s</b></div>
+            <div class="hx-ticket" data-hx-ticket><small>{{ __('ticket') }}</small><span class="hx-tk" data-hx-tk dir="ltr">7F3A C21E</span><b dir="ltr">30 s</b></div>
             <p class="hx-note" data-hx-note>{{ __('Signed in once. Every app knows you.') }}</p>
         </div>
     </div>

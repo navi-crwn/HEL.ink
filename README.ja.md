@@ -9,7 +9,7 @@
 
 <p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="docs/readme/hero-en-dark.webp"><img src="docs/readme/hero-en-light.webp" alt="HEL.ink · HOP ファミリーハブ" width="100%"></picture></p>
 
-<p align="center"><b>HEL.ink は HOP のアカウントポータルおよびディレクトリです。HOP ID で一度ログインすれば、LinkHop、BioHop、PixelHop、NoteHop、FileHop をシームレスに利用できます。</b></p>
+<p align="center"><b>HEL.ink は HOP のアカウントポータルおよびディレクトリです。HOP ID で一度ログインすれば、LinkHop、BioHop、PixelHop、NoteHop、FileHop、PayHop をシームレスに利用できます。</b></p>
 
 <p align="center">
   <a href="https://hel.ink">hel.ink</a> ·
@@ -32,14 +32,14 @@ curl -fsSL https://raw.githubusercontent.com/navi-crwn/HEL.ink/main/install.sh |
 
 ## ファミリーハブ & アカウントポータル
 
-LinkHop、BioHop、PixelHop、NoteHop、FileHop のための中央アカウントポータル、HOP ID シングルサインオン、ファミリーディレクトリ。
+LinkHop、BioHop、PixelHop、NoteHop、FileHop、PayHop のための中央アカウントポータル、HOP ID シングルサインオン、ファミリーディレクトリ。
 
 <a id="features"></a>
 
 ## 主な機能
 
 - **シングルサインオン (HOP ID)**: 1 回のログインですべての HOP アプリに対応。署名付きチケットと連鎖ログアウトで安全を維持。
-- **統合アプリランチャー**: どこからでもワンクリックで LinkHop、BioHop、PixelHop、NoteHop、FileHop を行き来できます。
+- **統合アプリランチャー**: どこからでもワンクリックで LinkHop、BioHop、PixelHop、NoteHop、FileHop、PayHop を行き来できます。
 - **共有データベース構造**: 1 つの MySQL または SQLite でアカウントを保持し、アプリ別のマイグレーション台帳で競合を防止。
 - **堅牢なアカウントセキュリティ**: Argon2id ハッシュ、TOTP 二要素認証、Cloudflare Turnstile 保護、メール確認に対応。
 - **SSO ゲート、CSP、共通 UI**: すべてのページは Content-Security-Policy 付きで配信され（アプリのページでは nonce 方式）、SSO の引き継ぎは署名されてアプリ側で検証され、ダイアログと言語・アカウントメニューは共通パッケージ HopUI から提供されます。
@@ -96,7 +96,7 @@ HEL.ink に必要なものはすべて公開リポジトリにあります。非
 | ファミリーのフォントとタイル | インストール不要：`hel.ink/hop-assets` から読み込み | hel.ink がなければシステムフォント、浮遊タイルなし |
 
 - **インストール順**：まずこのハブ、次にアプリ、必要なら最後に Imperium。アプリの登録は `php artisan db:seed --class='Database\Seeders\HopAppsSeeder' --force`。[`install-family.sh`](install-family.sh) なら一度にすべて行います。
-- **最小限の設定**：`APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `FILEHOP_URL` (アプリごとに 1 つ); Imperium 利用時: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`。
+- **最小限の設定**：`APP_URL`, `HUB_HOST`, `HOP_SSO_SECRET`, `DB_*`, `LINKHOP_URL` … `PAYHOP_URL` (アプリごとに 1 つ); Imperium 利用時: `HOP_CONTROL_URL`, `HOP_SSO_SECRET_IMPERIUM`。
 - **単体かファミリーか**：ハブ単体でアカウント、サインイン、ランチャーが使えます。各アプリに他に何が必要かは、それぞれの README にあります。
 - **Imperium なしの場合**：ハブにはアカウント用の独自の管理ページ（`/admin`）があります。Imperium はアプリのコンテンツ、通報、稼働状況を加えます。
 <!-- self-hosting:end -->
@@ -113,6 +113,7 @@ HEL.ink はプライバシーを重視したオープンソース Web アプリ�
 | **PixelHop** | `pixel.hel.ink` · `p.hel.ink/…` | [navi-crwn/PixelHop](https://github.com/navi-crwn/PixelHop) | 画像およびメディア配信 |
 | **NoteHop** | `note.hel.ink` · `n.hel.ink/…` | [navi-crwn/NoteHop](https://github.com/navi-crwn/NoteHop) | クライアント暗号化プライベートノート |
 | **FileHop** | `file.hel.ink` | [navi-crwn/FileHop](https://github.com/navi-crwn/FileHop) | ブラウザ内のファイル変換（アップロードなし） |
+| **PayHop** | `pay.hel.ink` | [navi-crwn/PayHop](https://github.com/navi-crwn/PayHop) | 支払い用QRコードの作成と割り勘。内容がブラウザの外に出ることはありません。 |
 
 ## 変更履歴
 

@@ -2,6 +2,7 @@
 
 namespace Hop\Auth\Http\Controllers;
 
+use Hop\Auth\SilentRecheck;
 use Hop\Auth\Ticket;
 use Hop\Auth\TicketException;
 use Illuminate\Http\RedirectResponse;
@@ -16,6 +17,10 @@ use Illuminate\Support\Str;
  *  start    GET /auth/sso?next=/page  → hub /sso/{app}?state=&return_to=
  *  callback GET /auth/sso/callback?ticket= → verify, Auth::loginUsingId(sub), redirect to next
  *  logout   GET /auth/sso/logout?next=  → sign out here, go on to next (the hub's chained logout)
+ *
+ * The callback also answers the silent re-check (`prompt=none`, see SilentRecheck): a ticket for the same
+ * account only refreshes the session's timestamp, a ticket for another account switches to it, and
+ * `error=login_required` signs out here.
  */
 class SsoController
 {
@@ -24,14 +29,27 @@ class SsoController
         $state = Str::random(40);
         $next = self::queryString($request, 'next');
         $request->session()->put('hop_sso', ['state' => $state, 'next' => self::safePath($next)]);
-        $query = http_build_query(['state' => $state, 'return_to' => url(config('hop-auth.routes.callback', '/auth/sso/callback'))]);
 
-        return redirect()->away(config('hop-auth.hub_url').'/sso/'.config('hop-auth.app').'?'.$query);
+        return redirect()->away(self::hubUrl($state));
+    }
+
+    /** The hub's sign-in URL for this app; `$silent` adds `prompt=none` (never a sign-in page, see the hub's docs/silent-sso.md). */
+    public static function hubUrl(string $state, bool $silent = false): string
+    {
+        $query = ['state' => $state, 'return_to' => url(config('hop-auth.routes.callback', '/auth/sso/callback'))];
+        if ($silent) {
+            $query['prompt'] = 'none';
+        }
+
+        return config('hop-auth.hub_url').'/sso/'.config('hop-auth.app').'?'.http_build_query($query);
     }
 
     public function callback(Request $request): RedirectResponse
     {
         $pending = (array) $request->session()->pull('hop_sso', []);
+        if (self::queryString($request, 'error') !== '') {
+            return $this->hubError($request, $pending);
+        }
         $ticket = self::queryString($request, 'ticket');
         if ($ticket === '' || empty($pending['state'])) {
             abort(400, 'Sign-in did not start here. Try again.');
@@ -48,14 +66,52 @@ class SsoController
         if (($payload['status'] ?? 'active') === 'suspended') {
             abort(403, 'This account is suspended.');
         }
+        if (! empty($pending['silent']) && Auth::check() && (string) Auth::id() === (string) $payload['sub']) {
+            // Same account the hub has: nothing changes for the visitor, the session is just vouched for again.
+            $request->session()->put('hop_profile', $payload);
+            SilentRecheck::markVerified($request->session());
+
+            return redirect()->to($pending['next'] ?: config('hop-auth.home', '/'));
+        }
+        if (! empty($pending['silent']) && Auth::check()) {
+            // Another account: nothing of the old one (flags, flash, choices) may follow into the new one.
+            Auth::logout();
+            $request->session()->invalidate();
+        }
         $user = Auth::loginUsingId((int) $payload['sub'], remember: true);
         if (! $user) {
             abort(403, 'Unknown account.');
         }
         $request->session()->regenerate();
         $request->session()->put('hop_profile', $payload);
+        SilentRecheck::markVerified($request->session());
 
         return redirect()->to($pending['next'] ?: config('hop-auth.home', '/'));
+    }
+
+    /**
+     * The hub answered with `?error=&state=` (only ever to a `prompt=none` request). The state must be the one this
+     * session started. `login_required`: nobody is signed in at the hub any more, so sign out here and go on to the
+     * page (a public page shows as a guest; a protected one starts the normal sign-in). Any other error keeps the
+     * session and waits before asking again.
+     */
+    private function hubError(Request $request, array $pending): RedirectResponse
+    {
+        $state = self::queryString($request, 'state');
+        if (empty($pending['silent']) || empty($pending['state']) || $state === '' || ! hash_equals((string) $pending['state'], $state)) {
+            abort(400, 'Sign-in did not start here. Try again.');
+        }
+        $next = $pending['next'] ?: config('hop-auth.home', '/');
+        if (self::queryString($request, 'error') === 'login_required') {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect()->to($next);
+        }
+        SilentRecheck::backOff($request->session());
+
+        return redirect()->to($next);
     }
 
     public function logout(Request $request): RedirectResponse

@@ -38,6 +38,10 @@
 .sc-file b { padding: 6px 9px; border-radius: 8px; border: 1.5px solid currentColor; }
 .sc-file b:last-child { animation: sc-swap-in 4.8s cubic-bezier(.23, 1, .32, 1) infinite both; }
 .sc-file b:first-child { opacity: .35; animation: sc-swap-out 4.8s ease-in-out infinite; }
+/* PayHop: coins split into equal shares */
+.sc-pay { gap: 8px; }
+.sc-pay i { width: 22px; height: 22px; border-radius: 50%; border: 2px solid currentColor; opacity: .55; animation: sc-in 4.8s cubic-bezier(.23, 1, .32, 1) infinite both; }
+.sc-pay i:nth-child(2) { opacity: .8; animation-delay: .2s; } .sc-pay i:nth-child(3) { opacity: 1; animation-delay: .4s; }
 /* HOP ID: one account reaches every app */
 .sc-id i { width: 10px; height: 10px; border-radius: 50%; background: currentColor; opacity: .5; }
 .sc-id i:nth-child(2) { width: 16px; height: 16px; opacity: 1; position: relative; }

@@ -4,6 +4,16 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ## [Unreleased]
 
+### Changed
+
+- Signing in no longer waits for outside services. `LoginRecorder` writes the login-history row and the account's last-sign-in fields at once (account, address, browser, how: password, Google or an app hand-off), and the GeoIP and proxy lookups that fill in the place and the proxy flags run as the queued job `EnrichLoginRecord` (the database queue served by `hub-queue`, with retries). If the queue cannot take the job, the lookups run after the response instead. The queue was chosen over `defer()` alone because a lookup that hangs would otherwise hold a PHP worker, and because it is retried. Turnstile verification stays in the sign-in request. All three callers (password, Google, single sign-on hand-off) go through `LoginRecorder`. Until the job has run, a new row shows no place.
+- Signing out no longer walks the browser through every app. The hub queues `session.revoked` for every app that is configured and has the `events` capability, and those apps are left out of the redirect chain (`SsoController::logoutChain()` takes the slugs to skip). Only apps without `events` stay in the chain. If queuing throws, the full chain runs as before. The same path serves "Use a different account" on the two-factor page and `GET /logout` coming from an app (the hub redirects back to the allowed `return` address). Trade-off: an app's session now ends when the queued event arrives (normally a second or two) instead of during the redirect; if the queue is down, the apps' silent re-check (5 minutes) is the backstop. A `GET /logout` without a hub session queues no event, so it keeps the full chain.
+- `SendHopEvent::broadcast()` returns the slugs of the apps whose job it queued.
+
+### Added
+
+- Tests: the sign-in completes with every outside call failing and sends no lookup before the response; the sign-out chain leaves out apps with `events`, queues the event once per app, falls back to the full chain when the queue throws, and ends at the allowed `return` address; a sign-in started by an app returns to the app after a password sign-in, a password plus two-factor sign-in and a Google round trip.
+
 ## [1.2.0] - 2026-11-11
 
 ### Added

@@ -39,21 +39,29 @@ class SendHopEvent implements ShouldQueue
         public readonly string $at = '',
     ) {}
 
-    /** Queue the event for every app that listens. */
-    public static function broadcast(string $type, array $data): void
+    /**
+     * Queue the event for every app that listens.
+     *
+     * @return list<string> slugs of the apps whose job was queued; a queue that cannot take a job throws
+     */
+    public static function broadcast(string $type, array $data): array
     {
         try {
             $apps = HopApp::registered()->get(); // hidden apps (Imperium) may listen too
         } catch (\Throwable) {
-            return; // table missing on a fresh install
+            return []; // table missing on a fresh install
         }
+        $queued = [];
         $id = (string) Str::uuid();
         $at = now()->toIso8601String();
         foreach ($apps as $app) {
             if ($app->isConfigured() && $app->can('events')) {
                 self::dispatch($app->id, $type, $data, $id, $at);
+                $queued[] = (string) $app->slug;
             }
         }
+
+        return $queued;
     }
 
     public function handle(): void

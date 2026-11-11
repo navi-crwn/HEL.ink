@@ -113,11 +113,12 @@ class SsoController extends Controller
     }
 
     /**
-     * POST /logout: sign out of the hub, tell every app that listens for events
-     * to end this person's sessions, then sign out of each app that has a logout
-     * endpoint, one redirect after another (each app sends the browser on to
-     * the next with ?next=). Apps without one just see their session end on
-     * its own.
+     * POST /logout (and GET /logout from an app): sign out of the hub and end the person's sessions
+     * in the apps. Back channel first: every app that listens for events gets a queued
+     * session.revoked and stays out of the browser chain. Only the apps that were not queued
+     * (no `events` capability, not configured, or the queue refused) are signed out by redirect,
+     * one after another (each app sends the browser on to the next with ?next=). When the queue
+     * cannot take the events at all, the full chain runs, as before.
      */
     public function logout(Request $request): RedirectResponse
     {
@@ -126,25 +127,27 @@ class SsoController extends Controller
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        if ($userId !== null) {
-            self::revokeAppSessions((string) $userId);
-        }
+        $queued = $userId !== null ? self::revokeAppSessions((string) $userId) : [];
 
-        return redirect()->to(self::logoutChain(self::returnTarget($request)));
+        return redirect()->to(self::logoutChain(self::returnTarget($request), $queued));
     }
 
     /**
-     * The redirect chain below only signs out the apps the browser reaches: it stops at the
-     * first app that is down and leaves every app after it signed in. A queued session.revoked
-     * event does not depend on the browser; the queue retries it when the app comes back.
+     * Queues session.revoked for every app that listens and returns their slugs. A queued event does not
+     * depend on the browser; the queue retries it when the app comes back. If the queue throws, nothing
+     * can be relied on and [] is returned, so the caller falls back to the full redirect chain.
+     *
+     * @return list<string>
      */
-    private static function revokeAppSessions(string $userId): void
+    private static function revokeAppSessions(string $userId): array
     {
         try {
-            SendHopEvent::broadcast('session.revoked', ['sub' => $userId, 'hop_id' => $userId]);
+            return SendHopEvent::broadcast('session.revoked', ['sub' => $userId, 'hop_id' => $userId]);
         } catch (\Throwable $e) {
             // A queue that cannot take the job must not break signing out.
             report($e);
+
+            return [];
         }
     }
 
@@ -169,11 +172,18 @@ class SsoController extends Controller
         return route('home');
     }
 
-    /** The first URL of the chained logout, ending at $finally. */
-    public static function logoutChain(string $finally): string
+    /**
+     * The first URL of the chained logout, ending at $finally.
+     *
+     * @param  list<string>  $signedOutByEvent  slugs of apps whose session.revoked event is queued; they are left out
+     */
+    public static function logoutChain(string $finally, array $signedOutByEvent = []): string
     {
         $next = $finally;
         foreach (array_reverse(HopApps::configured()) as $app) {
+            if (in_array($app->slug, $signedOutByEvent, true)) {
+                continue;
+            }
             if ($url = $app->logoutUrl()) {
                 $next = $url.'?'.http_build_query(['next' => $next]);
             }

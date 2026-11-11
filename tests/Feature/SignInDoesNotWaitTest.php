@@ -7,7 +7,9 @@ use App\Services\GeoIpService;
 use App\Services\LoginRecorder;
 use App\Services\ProxyDetectionService;
 use Illuminate\Support\Defer\DeferredCallbackCollection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Schema;
 
@@ -63,16 +65,49 @@ test('a Google sign-in and an app hand-off are recorded at once and queued the s
         ->and(LoginHistory::where('user_id', $user->id)->handoffs()->value('provider'))->toBe('PayHop');
 });
 
-test('when the queue cannot take the job the lookups wait for after the response', function () {
+test('when the queue cannot take the job the lookups run once after the response, not before', function () {
     config()->set('queue.default', 'database');
     Schema::drop('jobs');
-    Http::fake(fn () => throw new RuntimeException('network is down'));
+    $calls = 0;
+    $this->mock(GeoIpService::class, function ($m) use (&$calls) {
+        $m->shouldReceive('details')->andReturnUsing(function () use (&$calls) {
+            $calls++;
+
+            return ['country' => 'ID', 'country_name' => 'Indonesia', 'city' => 'Bandung', 'region' => 'JB', 'provider' => 'X', 'isp' => 'Y'];
+        });
+    });
+    $this->mock(ProxyDetectionService::class, fn ($m) => $m->shouldReceive('detect')->andReturn(['is_proxy' => false, 'type' => null, 'confidence' => 0]));
     $user = User::factory()->create();
 
     app(LoginRecorder::class)->record($user, '203.0.113.5', 'Mozilla/5.0', 'password');
 
-    // Row written, and nothing has been looked up yet.
-    expect(LoginHistory::where('user_id', $user->id)->count())->toBe(1);
-    Http::assertNothingSent();
+    expect($calls)->toBe(0)
+        ->and(LoginHistory::where('user_id', $user->id)->value('city'))->toBeNull();
     app(DeferredCallbackCollection::class)->invoke();
+    expect($calls)->toBe(1)
+        ->and(LoginHistory::where('user_id', $user->id)->value('city'))->toBe('Bandung');
+});
+
+test('a lookup job that fails on every attempt is dropped, not kept in failed_jobs, and the log has no address', function () {
+    config()->set('queue.default', 'database');
+    $this->mock(GeoIpService::class, fn ($m) => $m->shouldReceive('details')->andThrow(new RuntimeException('provider said 203.0.113.77 is bad')));
+    $user = User::factory()->create();
+    Log::spy();
+
+    app(LoginRecorder::class)->record($user, '203.0.113.77', 'Mozilla/5.0', 'password');
+    expect(DB::table('jobs')->count())->toBe(1);
+
+    $this->artisan('queue:work', ['--once' => true, '--tries' => 3]);
+    expect(DB::table('jobs')->count())->toBe(1);
+    $this->travel(31)->seconds();
+    $this->artisan('queue:work', ['--once' => true, '--tries' => 3]);
+    expect(DB::table('jobs')->count())->toBe(1);
+    $this->travel(301)->seconds();
+    $this->artisan('queue:work', ['--once' => true, '--tries' => 3]);
+
+    expect(DB::table('jobs')->count())->toBe(0)
+        ->and(DB::table('failed_jobs')->count())->toBe(0)
+        ->and(LoginHistory::where('user_id', $user->id)->exists())->toBeTrue();
+    Log::shouldHaveReceived('warning')->withArgs(fn ($msg, $ctx = []) => str_contains($msg, 'dropped')
+        && ! str_contains($msg.json_encode($ctx), '203.0.113.77'))->once();
 });

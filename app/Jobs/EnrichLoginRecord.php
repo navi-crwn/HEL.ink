@@ -10,6 +10,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Adds the place and the proxy check to a sign-in that LoginRecorder already wrote. The GeoIP and
@@ -37,7 +38,24 @@ class EnrichLoginRecord implements ShouldQueue
         public readonly string $via = 'password',
     ) {}
 
+    /**
+     * The payload carries an IP address, so a job that fails for good is not left in failed_jobs: on the last
+     * attempt the failure is logged (without the address) and the job ends. The login row is already written.
+     * Earlier attempts throw, so the queue retries.
+     */
     public function handle(GeoIpService $geoIp, ProxyDetectionService $proxy): void
+    {
+        try {
+            $this->enrich($geoIp, $proxy);
+        } catch (\Throwable $e) {
+            if ($this->attempts() < $this->tries) {
+                throw $e;
+            }
+            Log::warning('Sign-in lookup dropped after the last attempt', ['history' => $this->historyId, 'error' => class_basename($e)]);
+        }
+    }
+
+    private function enrich(GeoIpService $geoIp, ProxyDetectionService $proxy): void
     {
         $history = LoginHistory::find($this->historyId);
         if (! $history) {

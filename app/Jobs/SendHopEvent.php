@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -78,5 +79,31 @@ class SendHopEvent implements ShouldQueue
             Log::warning('HOP event not accepted', ['app' => $app->slug, 'type' => $this->type, 'status' => $res->status()]);
             $res->throw();
         }
+        Cache::forget(self::failureKey($app->slug));
+    }
+
+    /** Cache key of the count of deliveries to an app that failed for good (read by EventRegistry::warnings()). */
+    public static function failureKey(string $slug): string
+    {
+        return 'hop:event-failures:'.$slug;
+    }
+
+    /**
+     * After the last retry: remember, per app, that events did not arrive (how many, the last time and type), so the
+     * hub's event warnings can say so. Nothing about the person is kept: no id, no address.
+     */
+    public function failed(\Throwable $e): void
+    {
+        $app = HopApp::find($this->appId);
+        if (! $app) {
+            return;
+        }
+        $key = self::failureKey((string) $app->slug);
+        $seen = (array) Cache::get($key, []);
+        Cache::forever($key, [
+            'count' => (int) ($seen['count'] ?? 0) + 1,
+            'last_at' => now()->toIso8601String(),
+            'last_type' => $this->type,
+        ]);
     }
 }

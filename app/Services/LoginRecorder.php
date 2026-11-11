@@ -51,7 +51,14 @@ class LoginRecorder
             dispatch($job);
         } catch (\Throwable $e) {
             report($e);
-            defer(fn () => $job->handle(app(GeoIpService::class), app(ProxyDetectionService::class)));
+            defer(function () use ($job) {
+                try {
+                    $job->handle(app(GeoIpService::class), app(ProxyDetectionService::class));
+                } catch (\Throwable $e) {
+                    // One try, then dropped; the row is written. The address stays out of the log.
+                    \Log::warning('Sign-in lookup dropped', ['history' => $job->historyId, 'error' => class_basename($e)]);
+                }
+            });
         }
     }
 }

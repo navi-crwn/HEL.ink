@@ -87,6 +87,7 @@ test('hop:github-stats stores the numbers of every configured repo', function ()
 });
 
 test('a second run sends the stored ETags and a 304 keeps the numbers', function () {
+    $this->travelTo('2026-11-06 12:00:00'); // the clock must not decide this test
     fakeGithub();
     $this->artisan('hop:github-stats')->assertSuccessful();
     $before = app(GithubStats::class)->all();
@@ -100,10 +101,13 @@ test('a second run sends the stored ETags and a 304 keeps the numbers', function
         expect($request->hasHeader('If-None-Match'))->toBeTrue();
     }
     $after = app(GithubStats::class)->all();
-    expect($after['repos'])->toEqual($before['repos']);
+    // The numbers are what a 304 keeps; the time of the last check may move (and a second can change between two calls).
+    $numbers = fn (array $repos) => array_map(fn (array $r) => array_diff_key($r, ['fetched_at' => true]), $repos);
+    expect($numbers($after['repos']))->toEqual($numbers($before['repos']));
 });
 
 test('a rate limit keeps the old numbers and stops the run', function () {
+    $this->travelTo('2026-11-06 12:00:00'); // the clock must not decide this test
     fakeGithub();
     $this->artisan('hop:github-stats')->assertSuccessful();
     $before = app(GithubStats::class)->all();
@@ -146,6 +150,7 @@ test('without a release the newest tag is the version', function () {
 });
 
 test('a network failure never throws and keeps what was stored', function () {
+    $this->travelTo('2026-11-06 12:00:00');
     fakeGithub();
     $this->artisan('hop:github-stats')->assertSuccessful();
     $before = app(GithubStats::class)->all();

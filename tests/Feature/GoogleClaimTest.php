@@ -262,3 +262,11 @@ test('(7) the old-password comparison happens only after the token is valid', fu
     $this->post('/reset-password', ['token' => $token, 'email' => $user->email, 'password' => 'Another-fresh-pass-22', 'password_confirmation' => 'Another-fresh-pass-22'])
         ->assertRedirect(route('login'));
 });
+
+test('(5) the settings page, where the profile is edited, has the current-password field for an e-mail change', function () {
+    $user = User::factory()->create();
+
+    $this->withoutVite()->actingAs($user)->get('/settings')->assertOk()
+        ->assertSee('name="current_password"', false)
+        ->assertSee('Current password (only to change your email)');
+});

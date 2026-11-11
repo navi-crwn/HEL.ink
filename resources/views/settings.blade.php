@@ -144,6 +144,11 @@
                                         @error('email')<p class="help-error">{{ $message }}</p>@enderror
                                     </div>
                                     <div>
+                                        <label for="fsettin-2b" class="label">{{ __('Current password (only to change your email)') }}</label>
+                                        <input id="fsettin-2b" type="password" name="current_password" class="input" autocomplete="current-password">
+                                        @error('current_password')<p class="help-error">{{ $message }}</p>@enderror
+                                    </div>
+                                    <div>
                                         <label for="fsettin-4" class="label">{{ __('Location') }} <span class="text-muted">({{ __('optional') }})</span></label>
                                         <input id="fsettin-4" type="text" name="location" value="{{ \App\Support\Input::text(old('location', $u->location)) }}" class="input" maxlength="100" autocomplete="address-level2">
                                     </div>

@@ -1065,5 +1065,14 @@
     "Share per person": "Share per person",
     "Payments": "Payments",
     "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.",
-    "Current password (only to change your email)": "Current password (only to change your email)"
+    "Current password (only to change your email)": "Current password (only to change your email)",
+    "Enter your current password to change your email address. If you signed up with Google and never set a password, use \"Forgot your password\" first.": "Enter your current password to change your email address. If you signed up with Google and never set a password, use \"Forgot your password\" first.",
+    "The password is not correct. If you signed up with Google and never set a password, use \"Forgot your password\" first.": "The password is not correct. If you signed up with Google and never set a password, use \"Forgot your password\" first.",
+    "The email address of your :app account was changed": "The email address of your :app account was changed",
+    "Hello :name,": "Hello :name,",
+    "The email address of your :app account was just changed to :email. Your other sessions were signed out.": "The email address of your :app account was just changed to :email. Your other sessions were signed out.",
+    "If this was you, there is nothing to do. If it was not, someone else may have access to your account: reset your password at :url as soon as you can. The reset link goes to the address that is now on the account, so if you cannot receive it, write to us from this address.": "If this was you, there is nothing to do. If it was not, someone else may have access to your account: reset your password at :url as soon as you can. The reset link goes to the address that is now on the account, so if you cannot receive it, write to us from this address.",
+    "Signed up with Google? You have no password yet. On the sign-in page, choose \"Forgot your password\" to set one.": "Signed up with Google? You have no password yet. On the sign-in page, choose \"Forgot your password\" to set one.",
+    "This email address is already linked to a different Google account. Sign in with your password, or reset it, instead.": "This email address is already linked to a different Google account. Sign in with your password, or reset it, instead.",
+    "This email address cannot be used. Please use another address.": "This email address cannot be used. Please use another address."
 }

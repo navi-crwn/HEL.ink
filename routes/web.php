@@ -86,7 +86,6 @@ Route::domain(config('hop.hub_host'))->group(function () use ($marketing) {
     Route::middleware('auth')->group(function () {
         Route::get('/onboarding', fn () => view('auth.onboarding'))->name('onboarding');
         Route::post('/onboarding/skip', fn () => redirect()->route('dashboard'))->name('onboarding.skip');
-        Route::post('/onboarding/set-password', [ProfileController::class, 'createPasswordFromOnboarding'])->name('onboarding.set-password');
     });
     // The ticket step decides for itself about guests and `prompt=none` (SsoController::ticket).
     Route::get('/sso/{app}', [SsoController::class, 'ticket'])->where('app', '[a-z0-9-]{1,32}')->middleware('throttle:30,1,sso')->name('sso.ticket');
@@ -103,7 +102,7 @@ Route::domain(config('hop.hub_host'))->group(function () use ($marketing) {
         Route::get('/apps/{app}', [SsoController::class, 'open'])->where('app', '[a-z0-9-]{1,32}')->name('apps.open');
         Route::get('/dashboard', LauncherController::class)->name('dashboard');
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::patch('/profile', [ProfileController::class, 'update'])->middleware('throttle:6,1,profile-write')->name('profile.update');
         Route::get('/profile/username-check', [ProfileController::class, 'usernameCheck'])->middleware('throttle:60,1,username-check')->name('profile.username-check');
         Route::post('/profile/avatar', [ProfileController::class, 'storeAvatar'])->middleware('throttle:20,1,avatar')->name('profile.avatar');
         Route::delete('/profile/avatar', [ProfileController::class, 'destroyAvatar'])->name('profile.avatar.destroy');

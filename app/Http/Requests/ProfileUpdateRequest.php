@@ -22,14 +22,17 @@ class ProfileUpdateRequest extends FormRequest
             }
             $this->merge(['website' => $w]);
         }
+        if (is_string($this->input('email'))) {
+            $this->merge(['email' => mb_strtolower(trim($this->input('email')))]);
+        }
         $this->merge(['show_owner' => $this->boolean('show_owner', ! $this->has('_profile_form'))]);
     }
 
     public function messages(): array
     {
         return [
-            'current_password.required' => 'Enter your current password to change your email address. If you signed up with Google and never set a password, use "Forgot your password" first.',
-            'current_password.current_password' => 'The password is not correct. If you signed up with Google and never set a password, use "Forgot your password" first.',
+            'current_password.required' => __('Enter your current password to change your email address. If you signed up with Google and never set a password, use "Forgot your password" first.'),
+            'current_password.current_password' => __('The password is not correct. If you signed up with Google and never set a password, use "Forgot your password" first.'),
         ];
     }
 

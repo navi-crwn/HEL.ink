@@ -5,7 +5,6 @@ use App\Models\User;
 test('guests cannot open or submit onboarding', function () {
     $this->get('/onboarding')->assertRedirect('/login');
     $this->post('/onboarding/skip')->assertRedirect('/login');
-    $this->post('/onboarding/set-password')->assertRedirect('/login');
 });
 
 test('a signed-in user can render onboarding', function () {

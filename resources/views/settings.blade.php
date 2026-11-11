@@ -177,6 +177,9 @@
                         <div>
                             <h3 class="section-title">{{ __('Password') }}</h3>
                             <p class="mt-1 text-xs text-muted">{{ __("Use a long, random password you don't use anywhere else.") }}</p>
+                            @if ($u->google_id)
+                                <p class="mt-2 text-xs text-muted">{{ __('Signed up with Google? You have no password yet. On the sign-in page, choose "Forgot your password" to set one.') }}</p>
+                            @endif
                         </div>
                         <form method="POST" action="{{ route('password.update') }}" class="space-y-4 md:col-span-2">
                             @csrf

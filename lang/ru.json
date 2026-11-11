@@ -1065,5 +1065,14 @@
     "Share per person": "Доля на человека",
     "Payments": "Платежи",
     "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHop хранит только те способы оплаты и историю, которые вы решили сохранить, и вы можете удалить их в PayHop в любой момент.",
-    "Current password (only to change your email)": "Текущий пароль (только для смены адреса электронной почты)"
+    "Current password (only to change your email)": "Текущий пароль (только для смены адреса электронной почты)",
+    "Enter your current password to change your email address. If you signed up with Google and never set a password, use \"Forgot your password\" first.": "Введите текущий пароль, чтобы сменить адрес электронной почты. Если вы зарегистрировались через Google и ни разу не задавали пароль, сначала воспользуйтесь «Забыли пароль».",
+    "The password is not correct. If you signed up with Google and never set a password, use \"Forgot your password\" first.": "Пароль неверный. Если вы зарегистрировались через Google и ни разу не задавали пароль, сначала воспользуйтесь «Забыли пароль».",
+    "The email address of your :app account was changed": "Адрес электронной почты вашей учётной записи :app изменён",
+    "Hello :name,": "Здравствуйте, :name!",
+    "The email address of your :app account was just changed to :email. Your other sessions were signed out.": "Адрес электронной почты вашей учётной записи :app только что изменён на :email. Ваши другие сеансы завершены.",
+    "If this was you, there is nothing to do. If it was not, someone else may have access to your account: reset your password at :url as soon as you can. The reset link goes to the address that is now on the account, so if you cannot receive it, write to us from this address.": "Если это были вы, ничего делать не нужно. Если нет, к вашей учётной записи мог получить доступ кто-то другой: как можно скорее сбросьте пароль на :url. Ссылка для сброса придёт на адрес, который сейчас указан в учётной записи; если вы не можете её получить, напишите нам с этого адреса.",
+    "Signed up with Google? You have no password yet. On the sign-in page, choose \"Forgot your password\" to set one.": "Зарегистрировались через Google? Пароля у вас ещё нет. На странице входа выберите «Забыли пароль», чтобы задать его.",
+    "This email address is already linked to a different Google account. Sign in with your password, or reset it, instead.": "Этот адрес электронной почты уже связан с другим аккаунтом Google. Войдите с паролем или сбросьте его.",
+    "This email address cannot be used. Please use another address.": "Этот адрес электронной почты использовать нельзя. Укажите другой адрес."
 }

@@ -1065,5 +1065,14 @@
     "Share per person": "一人あたり",
     "Payments": "支払い",
     "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHopが保持するのは、あなたが保存を選んだ支払い方法と履歴だけで、PayHopの中でいつでも削除できます。",
-    "Current password (only to change your email)": "現在のパスワード（メールアドレスを変更するときのみ）"
+    "Current password (only to change your email)": "現在のパスワード（メールアドレスを変更するときのみ）",
+    "Enter your current password to change your email address. If you signed up with Google and never set a password, use \"Forgot your password\" first.": "メールアドレスを変更するには、現在のパスワードを入力してください。Google で登録してパスワードを設定したことがない場合は、先に「パスワードを忘れた場合」を使ってください。",
+    "The password is not correct. If you signed up with Google and never set a password, use \"Forgot your password\" first.": "パスワードが正しくありません。Google で登録してパスワードを設定したことがない場合は、先に「パスワードを忘れた場合」を使ってください。",
+    "The email address of your :app account was changed": ":app アカウントのメールアドレスが変更されました",
+    "Hello :name,": ":name さん、こんにちは。",
+    "The email address of your :app account was just changed to :email. Your other sessions were signed out.": ":app アカウントのメールアドレスが :email に変更されました。ほかのセッションはサインアウトされました。",
+    "If this was you, there is nothing to do. If it was not, someone else may have access to your account: reset your password at :url as soon as you can. The reset link goes to the address that is now on the account, so if you cannot receive it, write to us from this address.": "ご本人の操作であれば、対応は不要です。そうでない場合、第三者がアカウントにアクセスできる可能性があります。できるだけ早く :url でパスワードを再設定してください。再設定リンクは現在アカウントに設定されているアドレスに届くため、受け取れない場合はこのアドレスからご連絡ください。",
+    "Signed up with Google? You have no password yet. On the sign-in page, choose \"Forgot your password\" to set one.": "Google で登録しましたか？まだパスワードはありません。ログインページで「パスワードを忘れた場合」を選んで設定してください。",
+    "This email address is already linked to a different Google account. Sign in with your password, or reset it, instead.": "このメールアドレスはすでに別の Google アカウントに連携されています。代わりにパスワードでログインするか、パスワードを再設定してください。",
+    "This email address cannot be used. Please use another address.": "このメールアドレスは使用できません。別のアドレスをお使いください。"
 }

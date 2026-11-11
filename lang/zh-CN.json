@@ -1065,5 +1065,14 @@
     "Share per person": "每人份额",
     "Payments": "支付",
     "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHop 只保存你选择保存的支付方式和历史记录，你可以随时在 PayHop 中删除它们。",
-    "Current password (only to change your email)": "当前密码（仅在更改邮箱时需要）"
+    "Current password (only to change your email)": "当前密码（仅在更改邮箱时需要）",
+    "Enter your current password to change your email address. If you signed up with Google and never set a password, use \"Forgot your password\" first.": "要更改邮箱地址，请输入当前密码。如果你是通过 Google 注册且从未设置密码，请先使用“忘记密码”。",
+    "The password is not correct. If you signed up with Google and never set a password, use \"Forgot your password\" first.": "密码不正确。如果你是通过 Google 注册且从未设置密码，请先使用“忘记密码”。",
+    "The email address of your :app account was changed": "你的 :app 账户的邮箱地址已更改",
+    "Hello :name,": "你好 :name，",
+    "The email address of your :app account was just changed to :email. Your other sessions were signed out.": "你的 :app 账户的邮箱地址刚刚被更改为 :email。你的其他会话已被退出。",
+    "If this was you, there is nothing to do. If it was not, someone else may have access to your account: reset your password at :url as soon as you can. The reset link goes to the address that is now on the account, so if you cannot receive it, write to us from this address.": "如果是你本人操作，无需处理。如果不是，可能有其他人能访问你的账户：请尽快在 :url 重置密码。重置链接会发送到账户现在使用的地址；如果你收不到，请用此地址给我们写信。",
+    "Signed up with Google? You have no password yet. On the sign-in page, choose \"Forgot your password\" to set one.": "通过 Google 注册？你还没有密码。请在登录页选择“忘记密码”来设置一个。",
+    "This email address is already linked to a different Google account. Sign in with your password, or reset it, instead.": "此邮箱地址已关联另一个 Google 账号。请改用密码登录，或先重置密码。",
+    "This email address cannot be used. Please use another address.": "无法使用此邮箱地址，请换一个地址。"
 }

@@ -11,6 +11,7 @@ use App\Support\Avatar;
 use App\Support\Input;
 use App\Support\Username;
 use Hop\Auth\Http\Controllers\SsoController as HopSsoController;
+use Hop\Ui\Locales;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -41,21 +42,26 @@ class ProfileController extends Controller
         $originalUsername = $user->username;
         $data = $request->validated();
         unset($data['current_password']);
+        // The same comparison as the request's: capitals do not make a change. An unchanged address is left as stored.
+        $emailChanged = mb_strtolower((string) ($data['email'] ?? $originalEmail)) !== mb_strtolower((string) $originalEmail);
+        if (! $emailChanged) {
+            unset($data['email']);
+        }
         if (array_key_exists('username', $data)) {
             $user->changeUsername($data['username']);
             unset($data['username']);
         }
         $user->fill($data);
-        if ($originalEmail !== $user->email) {
+        if ($emailChanged) {
             $user->email_verified_at = null;
             $user->google_id = null; // a Google link proved the old address, not this one
         }
         $user->save();
-        if ($originalEmail !== $user->email) {
+        if ($emailChanged) {
             // The address is how the account is recovered: whoever held a session under the old one is out.
             AccountSessions::end($user, $request->session()->getId());
             // Tell the address the account used to have, after the response (mail can take seconds).
-            $notice = new EmailChangedNotice($user->name, $user->email);
+            $notice = new EmailChangedNotice($user->name, $user->email, Locales::resolve($user->locale) ?? app()->getLocale());
             defer(function () use ($originalEmail, $notice) {
                 try {
                     Mail::to($originalEmail)->send($notice);
@@ -68,7 +74,7 @@ class ProfileController extends Controller
         if ($originalName !== $user->name) {
             $changes[] = "name: {$originalName} → {$user->name}";
         }
-        if ($originalEmail !== $user->email) {
+        if ($emailChanged) {
             $changes[] = "email: {$originalEmail} → {$user->email}";
         }
         if ($originalUsername !== $user->username) {
@@ -145,31 +151,5 @@ class ProfileController extends Controller
 
             return back()->withErrors(['delete' => 'Failed to delete account. Please contact support.']);
         }
-    }
-
-    public function createPasswordFromOnboarding(Request $request): RedirectResponse
-    {
-        $user = $request->user();
-        // Only the person who has just created the account through Google, in this session, who has never had a
-        // password of their own (the sign-up marks the session). Anyone else changes the password in Settings.
-        if (! $user->google_id || ! session('google_user_needs_password')) {
-            return back()->withErrors(['password' => 'This action is not allowed.']);
-        }
-        $request->validate([
-            'password' => ['required', 'confirmed', 'min:8'],
-        ]);
-        $user->update([
-            'password' => bcrypt($request->password),
-        ]);
-        // Remove the flag from session
-        session()->forget('google_user_needs_password');
-        AccountSessions::end($user, $request->session()->getId());
-        ActivityLog::log('created', 'Password', $user->id, 'Created password from onboarding');
-
-        if ($app = SsoController::cameFrom($request)) {
-            return SsoController::continueTo($request, $app);
-        }
-
-        return redirect()->route('dashboard')->with('status', 'password-created');
     }
 }

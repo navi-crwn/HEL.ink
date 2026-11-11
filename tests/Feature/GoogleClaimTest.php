@@ -4,6 +4,7 @@ use App\Mail\EmailChangedNotice;
 use App\Models\ApiToken;
 use App\Models\HopApp;
 use App\Models\User;
+use Illuminate\Support\Defer\DeferredCallbackCollection;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -202,7 +203,7 @@ test('(5) changing the e-mail needs the current password, drops the Google link,
     $user = $user->fresh();
     expect($user->email)->toBe('after@example.com')->and($user->google_id)->toBeNull()->and($user->hasVerifiedEmail())->toBeFalse()
         ->and(DB::table('sessions')->where('user_id', $user->id)->count())->toBe(0);
-    app(Illuminate\Support\Defer\DeferredCallbackCollection::class)->invoke();
+    app(DeferredCallbackCollection::class)->invoke();
     Mail::assertSent(EmailChangedNotice::class, fn ($m) => $m->hasTo('before@example.com') && $m->newEmail === 'after@example.com');
 });
 
@@ -212,7 +213,7 @@ test('(5) changing only the name needs no password and sends no notice', functio
 
     $this->actingAs($user)->withSession(['2fa_verified' => true])->patch('/profile', ['name' => 'Another Name', 'username' => 'plain', 'email' => $user->email])->assertSessionHasNoErrors();
 
-    app(Illuminate\Support\Defer\DeferredCallbackCollection::class)->invoke();
+    app(DeferredCallbackCollection::class)->invoke();
     expect($user->fresh()->name)->toBe('Another Name');
     Mail::assertNothingSent();
 });

@@ -254,6 +254,7 @@ test('set_roles is only for an owner, found from X-HOP-Actor', function () {
 });
 
 test('an account cannot suspend or delete itself through the API', function () {
+    $ops = admOwner('ops');
     $admin = User::factory()->create();
     $admin->roles()->create(['role' => Role::ADMIN, 'app_slug' => null]);
 
@@ -262,15 +263,16 @@ test('an account cannot suspend or delete itself through the API', function () {
     }
     expect($admin->fresh()->status)->toBe(User::STATUS_ACTIVE)->and(User::find($admin->id))->not->toBeNull();
     // Another actor may still suspend.
-    adm($this, 'POST', '/api/hop/users/'.$admin->id.'/actions', ['action' => 'suspend'], 'system')->assertOk();
+    adm($this, 'POST', '/api/hop/users/'.$admin->id.'/actions', ['action' => 'suspend'], $ops->id.':ops')->assertOk();
 });
 
 test('suspend also deletes the API tokens', function () {
+    $ops = admOwner('ops');
     $user = User::factory()->create();
     ApiToken::generate($user->id, 'one');
     ApiToken::generate($user->id, 'two');
 
-    $res = adm($this, 'POST', '/api/hop/users/'.$user->id.'/actions', ['action' => 'suspend', 'reason' => 'abuse'], 'system')->assertOk();
+    $res = adm($this, 'POST', '/api/hop/users/'.$user->id.'/actions', ['action' => 'suspend', 'reason' => 'abuse'], $ops->id.':ops')->assertOk();
 
     expect($user->fresh()->status)->toBe(User::STATUS_SUSPENDED)->and($user->apiTokens()->count())->toBe(0)
         ->and(HopAudit::where('action', 'suspend')->first()->params)->toBe(['tokens_deleted' => 2]);
@@ -301,4 +303,68 @@ test('the other user actions and the list answer as before', function () {
     adm($this, 'POST', '/api/hop/users/'.$user->id.'/actions', ['action' => 'activate'], 'system')->assertOk()->assertJsonPath('data.status', 'active');
     adm($this, 'GET', '/api/hop/users')->assertOk()->assertJsonPath('page.total', 1);
     adm($this, 'POST', '/api/hop/users/'.$user->id.'/actions', ['action' => 'nope'], 'system')->assertStatus(422)->assertJsonPath('error', 'unknown_action');
+});
+
+// ---- the actor rule (fail closed) -------------------------------------------------
+
+test('suspend, delete and set_roles need an actor that names an existing account', function (string $action, string $shape) {
+    $owner = admOwner('chief');
+    $target = User::factory()->create();
+    $actor = str_replace('{id}', (string) $owner->id, $shape);
+    $body = ['action' => $action, 'params' => ['roles' => ['moderator']]];
+
+    adm($this, 'POST', '/api/hop/users/'.$target->id.'/actions', $body, $actor)->assertForbidden()->assertJsonPath('error', 'forbidden');
+
+    expect(User::find($target->id))->not->toBeNull()
+        ->and($target->fresh()->status)->toBe(User::STATUS_ACTIVE)->and($target->fresh()->roleNames())->toBe([])
+        ->and(HopAudit::where('action', $action)->count())->toBe(0);
+})->with(function () {
+    foreach (['suspend', 'delete', 'set_roles'] as $action) {
+        foreach (['system' => 'system', 'empty' => '', 'leading space' => ' {id}', 'trailing text' => '{id}abc', 'space before colon' => '{id} :x',
+            'leading zero' => '0{id}', 'unknown id' => '999999', 'newline' => "{id}:a\nb", 'name only' => 'chief'] as $label => $shape) {
+            yield "$action: $label" => [$action, $shape];
+        }
+    }
+});
+
+test('a well-formed actor that names an existing account is accepted, with or without a username', function () {
+    $owner = admOwner('chief');
+    foreach ([(string) $owner->id, $owner->id.':chief', $owner->id.':'] as $actor) {
+        $target = User::factory()->create();
+        adm($this, 'POST', '/api/hop/users/'.$target->id.'/actions', ['action' => 'suspend'], $actor)->assertOk();
+    }
+});
+
+test('system may still call the actions that do not need a person', function () {
+    $user = User::factory()->create();
+    foreach ([['note', ['text' => 'x']], ['revoke_sessions', []], ['revoke_tokens', []], ['activate', []]] as [$action, $params]) {
+        adm($this, 'POST', '/api/hop/users/'.$user->id.'/actions', ['action' => $action, 'params' => $params], 'system')->assertOk();
+    }
+});
+
+test('suspend is one transaction: a failure leaves the account active, the tokens alive and no audit row', function () {
+    $ops = admOwner('ops');
+    $user = User::factory()->create();
+    ApiToken::generate($user->id, 'keep me');
+    User::updating(function () {
+        throw new RuntimeException('forced failure');
+    });
+
+    adm($this, 'POST', '/api/hop/users/'.$user->id.'/actions', ['action' => 'suspend'], $ops->id.':ops')->assertStatus(500);
+
+    expect($user->fresh()->status)->toBe(User::STATUS_ACTIVE)->and($user->apiTokens()->count())->toBe(1)
+        ->and(HopAudit::where('action', 'suspend')->count())->toBe(0);
+});
+
+// ---- announcement dates ---------------------------------------------------------------
+
+test('a date or time that does not exist is refused, and publish_now is applied before the expiry check', function () {
+    adm($this, 'POST', '/api/hop/announcements', admBody(['published_at' => '2026-02-30T10:00:00Z']))->assertStatus(422)
+        ->assertJsonPath('message', 'published_at must be an ISO 8601 date and time');
+    adm($this, 'POST', '/api/hop/announcements', admBody(['published_at' => '2026-12-01T25:00:00Z']))->assertStatus(422);
+
+    $res = adm($this, 'POST', '/api/hop/announcements', admBody(['publish_now' => true, 'expires_at' => now()->addDay()->utc()->format('Y-m-d\TH:i:s\Z')]))->assertCreated();
+    expect($res->json('data.state'))->toBe('live');
+    adm($this, 'POST', '/api/hop/announcements', admBody(['publish_now' => true, 'published_at' => '2020-01-01T00:00:00Z', 'expires_at' => '2020-06-01T00:00:00Z']))
+        ->assertStatus(422)->assertJsonPath('message', 'expires_at must be after published_at');
 });

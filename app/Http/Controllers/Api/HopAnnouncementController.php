@@ -254,11 +254,11 @@ class HopAnnouncementController extends Controller
         if ($expires === false) {
             return $bad('expires_at must be an ISO 8601 date and time');
         }
-        if ($expires && (! $published || $expires->lte($published))) {
-            return $bad('expires_at must be after published_at');
-        }
         if ($request->boolean('publish_now')) {
             $published = CarbonImmutable::now('UTC');
+        }
+        if ($expires && (! $published || $expires->lte($published))) {
+            return $bad('expires_at must be after published_at');
         }
 
         return [[
@@ -274,8 +274,9 @@ class HopAnnouncementController extends Controller
         if ($value === null || $value === '') {
             return null;
         }
-        if (! is_string($value) || preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|[+-]\d{2}:?\d{2})?$/', $value) !== 1) {
-            return false;
+        if (! is_string($value) || preg_match('/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2})(?:\.\d+)?)?(Z|[+-]\d{2}:?\d{2})?$/', $value, $m) !== 1
+            || ! checkdate((int) $m[2], (int) $m[3], (int) $m[1]) || (int) $m[4] > 23 || (int) $m[5] > 59 || (int) ($m[6] ?? 0) > 59) {
+            return false; // wrong shape, or a date that does not exist (Feb 30) or a time that does not exist
         }
         try {
             return CarbonImmutable::parse($value, 'UTC')->utc();

@@ -225,18 +225,27 @@ class HopAdminController extends Controller
             'target_id' => (string) $user->id, 'reason' => is_string($reason) ? mb_substr($reason, 0, 500) : null];
 
         $actorUser = $this->actorUser($actor);
-        if (in_array($action, ['suspend', 'delete'], true) && $actorUser && $actorUser->is($user)) {
+        // Fail closed: these three need a person. `system`, an empty or malformed actor, or an unknown id is refused.
+        if (in_array($action, ['suspend', 'delete', 'set_roles'], true) && ! $actorUser) {
+            return $this->fail('forbidden', 'This action needs X-HOP-Actor to name an existing account (<id>:<username>).', 403);
+        }
+        if (in_array($action, ['suspend', 'delete'], true) && $actorUser->is($user)) {
             return $this->fail('forbidden', 'An account cannot '.$action.' itself.', 403);
         }
-        if ($action === 'set_roles' && (! $actorUser || ! $actorUser->isOwner())) {
+        if ($action === 'set_roles' && ! $actorUser->isOwner()) {
             return $this->fail('forbidden', 'Only an owner can change roles.', 403);
         }
 
         switch ($action) {
             case 'suspend':
-                $user->update(['status' => User::STATUS_SUSPENDED]);
-                // As the hub's own page does: a suspended account keeps no API tokens.
-                $params = ['tokens_deleted' => $user->apiTokens()->delete()];
+                // As the hub's own page does: a suspended account keeps no API tokens. One transaction, tokens first,
+                // so a failure cannot leave a suspended account with live tokens (and no audit row is written).
+                $params = DB::transaction(function () use ($user) {
+                    $deleted = $user->apiTokens()->delete();
+                    $user->update(['status' => User::STATUS_SUSPENDED]);
+
+                    return ['tokens_deleted' => $deleted];
+                });
                 break;
             case 'activate':
                 $user->update(['status' => User::STATUS_ACTIVE]);
@@ -301,9 +310,12 @@ class HopAdminController extends Controller
     /** The account behind `<sub>:<username>` (or a bare sub) in X-HOP-Actor, when there is one. */
     private function actorUser(string $actor): ?User
     {
-        $sub = explode(':', $actor, 2)[0];
+        // Strict shape: a plain number without leading zeros, optionally followed by ":<username>".
+        if (preg_match('/^([1-9]\d{0,17})(?::[^ -]*)?$/', $actor, $m) !== 1) {
+            return null;
+        }
 
-        return ctype_digit($sub) ? User::find((int) $sub) : null;
+        return User::find((int) $m[1]);
     }
 
     /**

@@ -1064,5 +1064,15 @@
     "People": "Personnes",
     "Share per person": "Part par personne",
     "Payments": "Paiements",
-    "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHop ne conserve que les moyens de paiement et l'historique que vous choisissez d'enregistrer, et vous pouvez les supprimer dans PayHop à tout moment."
+    "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHop ne conserve que les moyens de paiement et l'historique que vous choisissez d'enregistrer, et vous pouvez les supprimer dans PayHop à tout moment.",
+    "Current password (only to change your email)": "Mot de passe actuel (uniquement pour changer votre adresse e-mail)",
+    "Enter your current password to change your email address. If you signed up with Google and never set a password, use \"Forgot your password\" first.": "Saisissez votre mot de passe actuel pour changer votre adresse e-mail. Si vous vous êtes inscrit avec Google et n'avez jamais défini de mot de passe, utilisez d'abord « Mot de passe oublié ».",
+    "The password is not correct. If you signed up with Google and never set a password, use \"Forgot your password\" first.": "Le mot de passe n'est pas correct. Si vous vous êtes inscrit avec Google et n'avez jamais défini de mot de passe, utilisez d'abord « Mot de passe oublié ».",
+    "The email address of your :app account was changed": "L'adresse e-mail de votre compte :app a été modifiée",
+    "Hello :name,": "Bonjour :name,",
+    "The email address of your :app account was just changed to :email. Your other sessions were signed out.": "L'adresse e-mail de votre compte :app vient d'être changée en :email. Vos autres sessions ont été fermées.",
+    "If this was you, there is nothing to do. If it was not, someone else may have access to your account: reset your password at :url as soon as you can. The reset link goes to the address that is now on the account, so if you cannot receive it, write to us from this address.": "Si c'était vous, il n'y a rien à faire. Sinon, quelqu'un d'autre a peut-être accès à votre compte : réinitialisez votre mot de passe sur :url dès que possible. Le lien de réinitialisation est envoyé à l'adresse qui figure maintenant sur le compte ; si vous ne pouvez pas le recevoir, écrivez-nous depuis cette adresse.",
+    "Signed up with Google? You have no password yet. On the sign-in page, choose \"Forgot your password\" to set one.": "Inscrit avec Google ? Vous n'avez pas encore de mot de passe. Sur la page de connexion, choisissez « Mot de passe oublié » pour en définir un.",
+    "This email address is already linked to a different Google account. Sign in with your password, or reset it, instead.": "Cette adresse e-mail est déjà liée à un autre compte Google. Connectez-vous avec votre mot de passe ou réinitialisez-le.",
+    "This email address cannot be used. Please use another address.": "Cette adresse e-mail ne peut pas être utilisée. Utilisez une autre adresse."
 }

@@ -5,7 +5,6 @@ use App\Http\Controllers\SsoController;
 use App\Http\Middleware\AutoLogout;
 use App\Http\Middleware\CheckSuspended;
 use App\Http\Middleware\ContentSecurityPolicyMiddleware;
-use App\Http\Middleware\EnsureGoogleUserHasPassword;
 use App\Http\Middleware\EnsureTwoFactorAuthenticated;
 use App\Http\Middleware\NoStoreWhenSignedIn;
 use App\Http\Middleware\ProtectPermanentSuperadmin;
@@ -36,7 +35,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->appendToGroup('web', [
             AutoLogout::class,
             CheckSuspended::class,
-            EnsureGoogleUserHasPassword::class,
             ContentSecurityPolicyMiddleware::class,
             NoStoreWhenSignedIn::class,
             ProtectPermanentSuperadmin::class,

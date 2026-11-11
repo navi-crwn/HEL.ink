@@ -16,74 +16,6 @@
             </div>
         </div>
         @endif
-        @if(auth()->user()->google_id && session('google_user_needs_password'))
-        <div class="mt-6 rounded-lg border border-blue-500/50 bg-blue-50 p-4 dark:border-blue-500/30 dark:bg-blue-900/20">
-            <div class="flex items-start gap-2">
-                <div class="shrink-0 text-xl">🔑</div>
-                <div class="flex-1">
-                    <h2 class="text-base font-bold text-blue-900 dark:text-blue-100">Create Your Password (Required)</h2>
-                    <p class="mt-1 text-xs text-blue-800 dark:text-blue-200">
-                        You logged in with Google. Please create a password to secure your account and enable login with email.
-                    </p>
-                    <form method="POST" action="{{ route('onboarding.set-password') }}" class="mt-4 space-y-3">
-                        @csrf
-                        <div x-data="{ showPass: false }" class="field-narrow">
-                            <label class="block text-xs font-medium text-blue-900 dark:text-blue-100 mb-1">Password <span class="text-red-600">*</span></label>
-                            <div class="relative">
-                                <input 
-                                    :type="showPass ? 'text' : 'password'"
-                                    name="password" 
-                                    required
-                                    class="input pr-20"
-                                    placeholder="Enter password (min. 8 characters)"
-                                />
-                                <button 
-                                    type="button"
-                                    @click="showPass = !showPass"
-                                    class="absolute inset-y-0 right-0 flex items-center px-3 text-xs font-medium text-muted hover:text-ink"
-                                >
-                                    <span x-show="!showPass">Show</span>
-                                    <span x-show="showPass" x-cloak>Hide</span>
-                                </button>
-                            </div>
-                            @error('password')
-                                <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <div x-data="{ showConf: false }" class="field-narrow">
-                            <label class="block text-xs font-medium text-blue-900 dark:text-blue-100 mb-1">Confirm Password <span class="text-red-600">*</span></label>
-                            <div class="relative">
-                                <input 
-                                    :type="showConf ? 'text' : 'password'"
-                                    name="password_confirmation" 
-                                    required
-                                    class="input pr-20"
-                                    placeholder="Confirm password"
-                                />
-                                <button 
-                                    type="button"
-                                    @click="showConf = !showConf"
-                                    class="absolute inset-y-0 right-0 flex items-center px-3 text-xs font-medium text-muted hover:text-ink"
-                                >
-                                    <span x-show="!showConf">Show</span>
-                                    <span x-show="showConf" x-cloak>Hide</span>
-                                </button>
-                            </div>
-                        </div>
-                        <button 
-                            type="submit"
-                            class="btn-primary w-full sm:w-auto"
-                        >
-                            <span>Save and Continue to Dashboard</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        @endif
         <div class="mt-8">
             <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Quick Start Guide</h2>
             <div class="grid gap-3">
@@ -134,9 +66,7 @@
             </div>
         </div>
         <div class="mt-8 flex flex-col items-center justify-center gap-2 sm:flex-row">
-            @if(auth()->user()->google_id && session('google_user_needs_password'))
-                <p class="text-sm text-slate-600 dark:text-slate-400">Please create your password to continue</p>
-            @elseif($ssoApp = \App\Http\Controllers\SsoController::cameFrom(request()))
+            @if($ssoApp = \App\Http\Controllers\SsoController::cameFrom(request()))
                 <a href="{{ \App\Http\Controllers\SsoController::continueUrl($ssoApp) }}" class="btn-primary w-full sm:w-auto">
                     Continue to {{ $ssoApp->name }}
                 </a>
@@ -147,14 +77,12 @@
                 <a href="{{ route('dashboard') }}" class="btn-primary w-full sm:w-auto">
                     Go to Dashboard
                 </a>
-                @if(!auth()->user()->google_id)
-                    <form method="POST" action="{{ route('onboarding.skip') }}" class="w-full sm:w-auto">
-                        @csrf
-                        <button type="submit" class="btn-outline w-full sm:w-auto">
-                            Skip
-                        </button>
-                    </form>
-                @endif
+                <form method="POST" action="{{ route('onboarding.skip') }}" class="w-full sm:w-auto">
+                    @csrf
+                    <button type="submit" class="btn-outline w-full sm:w-auto">
+                        Skip
+                    </button>
+                </form>
             @endif
         </div>
     </section>

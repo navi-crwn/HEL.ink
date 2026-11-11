@@ -10,6 +10,12 @@ The notice in `LICENSE` also names components that the sibling apps use
 of this repository; their credits are in the repository of the app that ships
 them.
 
+## Data
+
+| Data | Source | License |
+|---|---|---|
+| `resources/data/disposable_email_blocklist.conf`: domains of throwaway e-mail services the hub refuses (a snapshot, refreshed weekly on the server) | [disposable-email-domains/disposable-email-domains](https://github.com/disposable-email-domains/disposable-email-domains), see `resources/data/disposable_email_blocklist.NOTICE.md` | CC0 1.0 (public domain dedication) |
+
 ## Back end (Composer)
 
 Runtime:

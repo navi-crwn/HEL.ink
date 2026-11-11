@@ -9,6 +9,7 @@ use App\Models\HopAudit;
 use App\Models\HopUserNote;
 use App\Models\Role;
 use App\Models\User;
+use App\Services\AccountSessions;
 use App\Services\UserDeletion;
 use App\Support\Input;
 use Carbon\CarbonImmutable;
@@ -19,7 +20,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
 
 /**
  * The HOP admin API for Imperium (HOP App Protocol): stats, accounts, admin
@@ -151,7 +151,7 @@ class HopAdminController extends Controller
             'email' => $u->email,
             'status' => $u->status,
             'roles' => $u->roleNames(),
-            'verified' => $u->hasVerifiedEmail() || (bool) $u->google_id,
+            'verified' => $u->hasVerifiedEmail(),
             'created_at' => $u->created_at?->toIso8601String(),
             'last_login_at' => $u->last_login_at?->toIso8601String(),
             'links' => $this->table('links')?->where('user_id', $u->id)->count() ?? 0,
@@ -181,12 +181,17 @@ class HopAdminController extends Controller
                 'count' => (int) ($session->n ?? 0),
                 'last_activity' => $session && $session->last ? CarbonImmutable::createFromTimestampUTC((int) $session->last)->toIso8601String() : null,
             ],
-            'logins' => $user->loginHistories()->orderByDesc('logged_in_at')->limit(5)->get()->map(fn ($l) => [
+            'logins' => $user->loginHistories()->orderByDesc('logged_in_at')->limit(10)->get()->map(fn ($l) => [
                 'at' => $l->logged_in_at?->toIso8601String(), 'ip' => $l->ip_address, 'country' => $l->country, 'city' => $l->city,
                 'device' => $l->device, 'browser' => $l->browser, 'provider' => $l->provider, 'is_proxy' => (bool) $l->is_proxy,
             ])->all(),
             'activity' => $user->activityLogs()->orderByDesc('id')->limit(20)->get()->map(fn ($a) => [
                 'at' => $a->created_at?->toIso8601String(), 'action' => $a->action, 'model' => $a->model, 'description' => $a->description,
+            ])->all(),
+            // Name and last use only: never the token value or its hash.
+            'tokens' => $user->apiTokens()->orderBy('id')->get(['id', 'name', 'last_used_at', 'created_at'])->map(fn ($t) => [
+                'id' => (string) $t->id, 'name' => $t->name,
+                'last_used_at' => $t->last_used_at?->toIso8601String(), 'created_at' => $t->created_at?->toIso8601String(),
             ])->all(),
             'roles' => $user->roleNames(),
             'notes' => HopUserNote::where('user_id', $user->id)->orderByDesc('id')->get()->map(fn ($n) => [
@@ -219,19 +224,37 @@ class HopAdminController extends Controller
         $audit = ['actor' => $actor, 'app_slug' => $app->slug, 'action' => $action, 'target_type' => 'user',
             'target_id' => (string) $user->id, 'reason' => is_string($reason) ? mb_substr($reason, 0, 500) : null];
 
+        $actorUser = $this->actorUser($actor);
+        // Fail closed: these three need a person. `system`, an empty or malformed actor, or an unknown id is refused.
+        if (in_array($action, ['suspend', 'delete', 'set_roles'], true) && ! $actorUser) {
+            return $this->fail('forbidden', 'This action needs X-HOP-Actor to name an existing account (<id>:<username>).', 403);
+        }
+        if (in_array($action, ['suspend', 'delete'], true) && $actorUser->is($user)) {
+            return $this->fail('forbidden', 'An account cannot '.$action.' itself.', 403);
+        }
+        if ($action === 'set_roles' && ! $actorUser->isOwner()) {
+            return $this->fail('forbidden', 'Only an owner can change roles.', 403);
+        }
+
         switch ($action) {
             case 'suspend':
-                $user->update(['status' => User::STATUS_SUSPENDED]);
+                // As the hub's own page does: a suspended account keeps no API tokens. One transaction, tokens first,
+                // so a failure cannot leave a suspended account with live tokens (and no audit row is written).
+                $params = DB::transaction(function () use ($user) {
+                    $deleted = $user->apiTokens()->delete();
+                    $sessions = AccountSessions::revoke($user);
+                    $user->update(['status' => User::STATUS_SUSPENDED]);
+
+                    return ['tokens_deleted' => $deleted, 'sessions_deleted' => $sessions];
+                });
+                AccountSessions::announce($user);
                 break;
             case 'activate':
                 $user->update(['status' => User::STATUS_ACTIVE]);
                 break;
             case 'revoke_sessions':
-                $params = ['deleted' => DB::table('sessions')->where('user_id', $user->id)->delete()];
-                // LinkHop and BioHop sign in with remember:true on this users table: without a new token the
-                // remember cookie would bring the person straight back in after their sessions are deleted.
-                $user->forceFill(['remember_token' => Str::random(60)])->saveQuietly();
-                SendHopEvent::broadcast('session.revoked', ['sub' => (string) $user->id, 'hop_id' => (string) $user->id]);
+                // The remember token is rotated too, or the remember cookie would bring the person straight back in.
+                $params = ['deleted' => AccountSessions::end($user)];
                 break;
             case 'revoke_tokens':
                 $params = ['deleted' => $user->apiTokens()->delete()];
@@ -246,10 +269,13 @@ class HopAdminController extends Controller
                     return $this->fail('bad_params', 'unknown role; use owner, admin, moderator, support or admin:<app>', 422);
                 }
                 $keepsOwner = in_array(Role::OWNER, array_column($parsed, 0), true);
+                if ($keepsOwner && ! $user->hasRole(Role::OWNER)) {
+                    return $this->fail('bad_params', 'Ownership is set with SUPERADMIN_EMAIL or hop:owner, not through the API.', 422);
+                }
                 if ($user->hasRole(Role::OWNER) && ! $keepsOwner && Role::where('role', Role::OWNER)->whereNull('app_slug')->count() <= 1) {
                     return $this->fail('last_owner', 'HOP ID must keep at least one owner.', 409);
                 }
-                $actorId = ctype_digit($actor) && User::whereKey((int) $actor)->exists() ? (int) $actor : null;
+                $actorId = $actorUser?->id;
                 DB::transaction(function () use ($user, $parsed, $actorId) {
                     $user->roles()->delete();
                     foreach ($parsed as [$role, $slug]) {
@@ -278,6 +304,17 @@ class HopAdminController extends Controller
         HopAudit::create($audit + ['params' => $params]);
 
         return response()->json(['ok' => true, 'data' => $this->summary($user->fresh())]);
+    }
+
+    /** The account behind `<sub>:<username>` (or a bare sub) in X-HOP-Actor, when there is one. */
+    private function actorUser(string $actor): ?User
+    {
+        // Strict shape: a plain number without leading zeros, optionally followed by ":<username>".
+        if (preg_match('/^([1-9]\d{0,17})(?::[^\x00-\x1f]*)?$/', $actor, $m) !== 1) {
+            return null;
+        }
+
+        return User::find((int) $m[1]);
     }
 
     /**

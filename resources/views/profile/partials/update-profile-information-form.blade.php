@@ -20,6 +20,11 @@
             <x-text-input id="email" name="email" type="email" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
         </div>
+        <div>
+            <x-input-label for="current_password_for_email" :value="__('Current password (only to change your email)')" />
+            <x-text-input id="current_password_for_email" name="current_password" type="password" autocomplete="current-password" />
+            <x-input-error class="mt-2" :messages="$errors->get('current_password')" />
+        </div>
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
             @if (session('status') === 'profile-updated')

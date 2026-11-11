@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\WelcomeEmail;
+use App\Models\ActivityLog;
 use App\Models\User;
+use App\Services\AccountSessions;
 use App\Services\LoginRecorder;
 use App\Services\NotificationService;
 use App\Support\AfterLogin;
+use App\Support\EmailDomains;
 use App\Support\Legal;
 use App\Support\Username;
 use Exception;
@@ -108,26 +111,56 @@ class GoogleAuthController extends Controller
             if (! ($raw['email_verified'] ?? $raw['verified_email'] ?? false)) {
                 return redirect()->route('login')->with('error', 'Your Google email address is not verified.');
             }
-            $user = User::where('email', $googleUser->email)
-                ->orWhere('google_id', $googleUser->id)
-                ->first();
+            // Two different ways to match, kept apart: the Google link and the address Google proved.
+            $googleEmail = mb_strtolower(trim((string) $googleUser->email));
+            $gid = (string) $googleUser->id;
+            $byEmail = User::whereRaw('lower(email) = ?', [$googleEmail])->first();
+            $byGoogle = User::where('google_id', $gid)->first();
+            // A Google identity that is already linked to an account is that account's: signing in with it is an ordinary
+            // sign-in that touches nothing else. No sign-in ever takes a link from one account to give it to another,
+            // whatever other account holds the same address.
+            $user = $byGoogle ?? $byEmail;
             // "Continue with Google" is one step on both pages: an existing account
             // signs in, a new address signs up (behind the terms gate when it is on).
             // Refusing one or the other sent people in a loop between the two pages,
             // and a repeated callback after sign-up showed "already exists".
             if ($user) {
-                // Existing account (sign-in or linking): unchanged. No new
-                // consent is recorded for a pre-gate account at sign-in.
-                if (! $user->google_id && ! $user->isSuperAdmin()) {
-                    $user->update([
-                        'google_id' => $googleUser->id,
-                        'avatar' => $googleUser->avatar,
-                    ]);
-                }
-                // Google vouches for this address (checked above), and it is the
-                // account's email: accounts made before the fix below get verified here.
-                if (! $user->hasVerifiedEmail() && ! $user->isSuperAdmin()) {
-                    $user->markEmailAsVerified();
+                // Existing account (sign-in or linking). No new consent is recorded for a pre-gate account at sign-in.
+                if ($byGoogle !== null) {
+                    // Google presenting the very address this linked account holds proves it, so an unverified one is verified.
+                    if (! $user->hasVerifiedEmail() && ! $user->isSuperAdmin() && mb_strtolower((string) $user->email) === $googleEmail) {
+                        $user->markEmailAsVerified();
+                    }
+                } elseif (! $user->isSuperAdmin()) {
+                    // Found by the address Google proved, and the account has no link to this Google identity.
+                    if ($user->hasVerifiedEmail() && $user->google_id) {
+                        // Do not move a verified account to another Google account silently.
+                        return redirect()->route('login')->with('error', __('This email address is already linked to a different Google account. Sign in with your password, or reset it, instead.'));
+                    }
+                    if (! $user->hasVerifiedEmail()) {
+                        // Google proves who owns the address, so whoever made this sign-up without proving it loses everything
+                        // they could still use: password, sessions, remember-me cookies, API tokens, two-factor, any Google
+                        // link they added, pending reset links, and the apps' sessions.
+                        DB::transaction(function () use ($user, $googleUser, $gid) {
+                            $user->forceFill([
+                                'password' => Hash::make(Str::random(64)),
+                                'google_id' => $gid, 'avatar' => $googleUser->avatar,
+                                'two_factor_secret' => null, 'two_factor_recovery_codes' => null, 'two_factor_confirmed_at' => null,
+                            ]);
+                            $user->apiTokens()->delete();
+                            DB::table('password_reset_tokens')->where('email', $user->email)->delete();
+                            AccountSessions::revoke($user);
+                            $user->markEmailAsVerified();
+                            ActivityLog::create([
+                                'user_id' => $user->id, 'action' => 'updated', 'model' => 'Account', 'model_id' => $user->id,
+                                'description' => 'Claimed through Google: the password, sessions, API tokens, two-factor and Google link of the earlier unverified sign-up were removed',
+                                'ip_address' => request()->ip(), 'user_agent' => request()->userAgent(),
+                            ]);
+                        });
+                        AccountSessions::announce($user);
+                    } else {
+                        $user->update(['google_id' => $gid, 'avatar' => $googleUser->avatar]);
+                    }
                 }
                 if ($user->isSuspended()) {
                     return redirect()->route('suspended')->with('error', 'Your account has been suspended.');
@@ -137,6 +170,10 @@ class GoogleAuthController extends Controller
 
                 return redirect()->intended(AfterLogin::home($user))->with('success', 'Welcome back, '.$user->name.'!');
             } else {
+                // A throwaway domain does not become an account because Google vouches for it.
+                if (EmailDomains::blocked($googleEmail)) {
+                    return redirect()->route('login')->with('error', __('This email address cannot be used. Please use another address.'));
+                }
                 // New account. While a terms version is required, this branch
                 // only runs after an explicit, server-verified, single-use
                 // consent from the terms step — never from a bare Google link.

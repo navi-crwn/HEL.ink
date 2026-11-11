@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AppAccountController;
 use App\Http\Controllers\Api\HopAdminController;
+use App\Http\Controllers\Api\HopAnnouncementController;
 use App\Http\Controllers\Api\HopController;
 use App\Http\Controllers\LegalArtifactController;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,12 @@ Route::middleware(['hop.signed', 'throttle:600,1,hop'])->prefix('hop')->group(fu
         $missing = fn () => response()->json(['ok' => false, 'error' => 'not_found', 'message' => 'No such user.'], 404);
         Route::get('/users/{user}', [HopAdminController::class, 'user'])->missing($missing);
         Route::post('/users/{user}/actions', [HopAdminController::class, 'act'])->missing($missing);
+        $missingAnnouncement = fn () => response()->json(['ok' => false, 'error' => 'not_found', 'message' => 'No such announcement.'], 404);
+        Route::get('/announcements', [HopAnnouncementController::class, 'index']);
+        Route::post('/announcements', [HopAnnouncementController::class, 'store']);
+        Route::get('/announcements/{announcement}', [HopAnnouncementController::class, 'show'])->missing($missingAnnouncement);
+        Route::put('/announcements/{announcement}', [HopAnnouncementController::class, 'update'])->missing($missingAnnouncement);
+        Route::post('/announcements/{announcement}/actions', [HopAnnouncementController::class, 'act'])->missing($missingAnnouncement);
         Route::get('/audit', [HopAdminController::class, 'audit']);
         Route::get('/search', [HopAdminController::class, 'search']);
     });

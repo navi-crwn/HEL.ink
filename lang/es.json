@@ -1064,5 +1064,15 @@
     "People": "Personas",
     "Share per person": "Parte por persona",
     "Payments": "Pagos",
-    "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHop solo conserva los métodos de pago y el historial que elijas guardar, y puedes borrarlos en PayHop en cualquier momento."
+    "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHop solo conserva los métodos de pago y el historial que elijas guardar, y puedes borrarlos en PayHop en cualquier momento.",
+    "Current password (only to change your email)": "Contraseña actual (solo para cambiar tu correo)",
+    "Enter your current password to change your email address. If you signed up with Google and never set a password, use \"Forgot your password\" first.": "Introduce tu contraseña actual para cambiar tu correo. Si te registraste con Google y nunca definiste una contraseña, usa primero «Olvidé mi contraseña».",
+    "The password is not correct. If you signed up with Google and never set a password, use \"Forgot your password\" first.": "La contraseña no es correcta. Si te registraste con Google y nunca definiste una contraseña, usa primero «Olvidé mi contraseña».",
+    "The email address of your :app account was changed": "Se cambió el correo de tu cuenta de :app",
+    "Hello :name,": "Hola, :name:",
+    "The email address of your :app account was just changed to :email. Your other sessions were signed out.": "El correo de tu cuenta de :app acaba de cambiar a :email. Tus otras sesiones se han cerrado.",
+    "If this was you, there is nothing to do. If it was not, someone else may have access to your account: reset your password at :url as soon as you can. The reset link goes to the address that is now on the account, so if you cannot receive it, write to us from this address.": "Si fuiste tú, no tienes que hacer nada. Si no, otra persona podría tener acceso a tu cuenta: restablece tu contraseña en :url lo antes posible. El enlace llega a la dirección que ahora está en la cuenta; si no puedes recibirlo, escríbenos desde esta dirección.",
+    "Signed up with Google? You have no password yet. On the sign-in page, choose \"Forgot your password\" to set one.": "¿Te registraste con Google? Aún no tienes contraseña. En la página de inicio de sesión, elige «Olvidé mi contraseña» para crear una.",
+    "This email address is already linked to a different Google account. Sign in with your password, or reset it, instead.": "Esta dirección de correo ya está vinculada a otra cuenta de Google. Inicia sesión con tu contraseña o restablécela.",
+    "This email address cannot be used. Please use another address.": "Esta dirección de correo no se puede usar. Usa otra dirección."
 }

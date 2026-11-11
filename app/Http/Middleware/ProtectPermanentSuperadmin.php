@@ -16,7 +16,7 @@ class ProtectPermanentSuperadmin
         $target = $request->route('user');
         $adminMutation = $request->routeIs('admin.users.*') && $target instanceof User && $target->isSuperAdmin();
         $selfMutation = $request->user()?->isSuperAdmin() && $request->routeIs(
-            'profile.*', 'password.update', 'password.create', 'onboarding.set-password',
+            'profile.*', 'password.update', 'password.create',
             'settings.2fa.disable', 'api-tokens.store', 'api-tokens.destroy'
         );
         if ($adminMutation || $selfMutation) {

@@ -2,7 +2,9 @@
 
 namespace App\Support;
 
+use App\Jobs\SendHopEvent;
 use App\Models\HopApp as HopAppRow;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * The apps that must be able to receive the hub's account events (config `hop.event_apps`).
@@ -32,6 +34,19 @@ final class EventRegistry
                 $out[] = "{$slug}: its apps row has no \"events\" capability, so it gets no account events. Add it to the row's capabilities.";
             } elseif (! $row->isConfigured()) {
                 $out[] = "{$slug}: its apps row has no usable URL or secret (32+ characters), so account events cannot be sent.";
+            }
+        }
+        // Every app with a failure on record, whether or not config/hop.php lists it as an event app.
+        try {
+            $slugs = HopAppRow::registered()->pluck('slug')->map(fn ($s) => (string) $s)->all();
+        } catch (\Throwable) {
+            $slugs = [];
+        }
+        foreach (array_values(array_unique(array_merge(self::expected(), $slugs))) as $slug) {
+            $count = (int) Cache::get(SendHopEvent::failureKey($slug), 0);
+            if ($count > 0) {
+                $last = (array) Cache::get(SendHopEvent::failureKey($slug).':last', []);
+                $out[] = "{$slug}: {$count} account event(s) could not be delivered after every retry (last: ".($last['type'] ?? 'unknown').', '.($last['at'] ?? 'unknown')."). Check the app's secret and that it is up; until then a sign-out, suspend or delete may not have reached it, and its sessions end at the next silent re-check.";
             }
         }
 

@@ -64,7 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
         ->name('password.confirm');
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
-    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+    Route::put('password', [PasswordController::class, 'update'])->middleware('throttle:6,1,password-write')->name('password.update');
     Route::post('password', [PasswordController::class, 'create'])->name('password.create');
     Route::post('logout', [SsoController::class, 'logout'])
         ->name('logout');

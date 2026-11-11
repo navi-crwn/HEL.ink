@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -39,21 +40,29 @@ class SendHopEvent implements ShouldQueue
         public readonly string $at = '',
     ) {}
 
-    /** Queue the event for every app that listens. */
-    public static function broadcast(string $type, array $data): void
+    /**
+     * Queue the event for every app that listens.
+     *
+     * @return list<string> slugs of the apps whose job was queued; a queue that cannot take a job throws
+     */
+    public static function broadcast(string $type, array $data): array
     {
         try {
             $apps = HopApp::registered()->get(); // hidden apps (Imperium) may listen too
         } catch (\Throwable) {
-            return; // table missing on a fresh install
+            return []; // table missing on a fresh install
         }
+        $queued = [];
         $id = (string) Str::uuid();
         $at = now()->toIso8601String();
         foreach ($apps as $app) {
             if ($app->isConfigured() && $app->can('events')) {
                 self::dispatch($app->id, $type, $data, $id, $at);
+                $queued[] = (string) $app->slug;
             }
         }
+
+        return $queued;
     }
 
     public function handle(): void
@@ -70,5 +79,33 @@ class SendHopEvent implements ShouldQueue
             Log::warning('HOP event not accepted', ['app' => $app->slug, 'type' => $this->type, 'status' => $res->status()]);
             $res->throw();
         }
+        Cache::forget(self::failureKey($app->slug));
+        Cache::forget(self::failureKey($app->slug).':last');
+    }
+
+    /** Cache key of the count of deliveries to an app that failed for good (a counter; `:last` beside it holds the time and type; read by EventRegistry::warnings()). */
+    public static function failureKey(string $slug): string
+    {
+        return 'hop:event-failures:'.$slug;
+    }
+
+    /**
+     * After the last retry: remember, per app, that events did not arrive (how many, the last time and type), so the
+     * hub's event warnings can say so. Nothing about the person is kept: no id, no address.
+     */
+    public function failed(\Throwable $e): void
+    {
+        $app = HopApp::find($this->appId);
+        if (! $app) {
+            return;
+        }
+        $key = self::failureKey((string) $app->slug);
+        // Atomic: several jobs can fail at the same moment.
+        if (! is_numeric(Cache::get($key, 0))) {
+            Cache::forget($key); // a leftover of an older format
+        }
+        Cache::add($key, 0);
+        Cache::increment($key);
+        Cache::forever($key.':last', ['at' => now()->toIso8601String(), 'type' => $this->type]);
     }
 }

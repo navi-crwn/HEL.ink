@@ -7,11 +7,13 @@ use App\Jobs\SendHopEvent;
 use App\Models\ActivityLog;
 use App\Models\Role;
 use App\Models\User;
+use App\Services\AccountSessions;
 use App\Services\UserDeletion;
 use App\Support\EventRegistry;
 use App\Support\Input;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 /**
@@ -50,11 +52,15 @@ class AdminUserController extends Controller
         if ($user->isOwner() || $user->is($request->user())) {
             return back()->withErrors(['user' => 'This account cannot be suspended.']);
         }
-        $user->forceFill(['status' => User::STATUS_SUSPENDED])->save();
-        $user->apiTokens()->delete();
+        DB::transaction(function () use ($user) {
+            $user->apiTokens()->delete();
+            AccountSessions::revoke($user);
+            $user->forceFill(['status' => User::STATUS_SUSPENDED])->save();
+        });
+        AccountSessions::announce($user);
         ActivityLog::log('suspended', 'User', $user->id, 'Suspended by '.$request->user()->email);
 
-        return back()->with('status', $user->email.' suspended. Every HOP app refuses the account from now on.');
+        return back()->with('status', $user->email.' suspended. Its sessions and API tokens are ended; the apps are told to drop theirs.');
     }
 
     public function activate(Request $request, User $user): RedirectResponse

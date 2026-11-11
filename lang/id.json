@@ -1064,5 +1064,15 @@
     "People": "Orang",
     "Share per person": "Bagian per orang",
     "Payments": "Pembayaran",
-    "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHop hanya menyimpan metode pembayaran dan riwayat yang Anda pilih untuk disimpan, dan Anda dapat menghapusnya di PayHop kapan saja."
+    "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHop hanya menyimpan metode pembayaran dan riwayat yang Anda pilih untuk disimpan, dan Anda dapat menghapusnya di PayHop kapan saja.",
+    "Current password (only to change your email)": "Kata sandi saat ini (hanya untuk mengubah email)",
+    "Enter your current password to change your email address. If you signed up with Google and never set a password, use \"Forgot your password\" first.": "Masukkan kata sandi saat ini untuk mengubah alamat email. Jika Anda mendaftar dengan Google dan belum pernah membuat kata sandi, gunakan \"Lupa kata sandi\" terlebih dahulu.",
+    "The password is not correct. If you signed up with Google and never set a password, use \"Forgot your password\" first.": "Kata sandi tidak benar. Jika Anda mendaftar dengan Google dan belum pernah membuat kata sandi, gunakan \"Lupa kata sandi\" terlebih dahulu.",
+    "The email address of your :app account was changed": "Alamat email akun :app Anda telah diubah",
+    "Hello :name,": "Halo :name,",
+    "The email address of your :app account was just changed to :email. Your other sessions were signed out.": "Alamat email akun :app Anda baru saja diubah menjadi :email. Sesi Anda yang lain telah dikeluarkan.",
+    "If this was you, there is nothing to do. If it was not, someone else may have access to your account: reset your password at :url as soon as you can. The reset link goes to the address that is now on the account, so if you cannot receive it, write to us from this address.": "Jika ini Anda, tidak ada yang perlu dilakukan. Jika bukan, orang lain mungkin memiliki akses ke akun Anda: segera atur ulang kata sandi di :url. Tautan reset dikirim ke alamat yang kini ada di akun, jadi jika Anda tidak bisa menerimanya, tulislah kepada kami dari alamat ini.",
+    "Signed up with Google? You have no password yet. On the sign-in page, choose \"Forgot your password\" to set one.": "Mendaftar dengan Google? Anda belum punya kata sandi. Di halaman masuk, pilih \"Lupa kata sandi\" untuk membuatnya.",
+    "This email address is already linked to a different Google account. Sign in with your password, or reset it, instead.": "Alamat email ini sudah tertaut ke akun Google lain. Masuklah dengan kata sandi, atau atur ulang kata sandi Anda.",
+    "This email address cannot be used. Please use another address.": "Alamat email ini tidak dapat digunakan. Silakan gunakan alamat lain."
 }

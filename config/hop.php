@@ -123,6 +123,15 @@ return [
         'payhop' => '/auth/sso/logout',
     ],   // slug => path that signs the visitor out, e.g. '/auth/sso/logout'
 
+    // E-mail addresses that cannot be used for an account (throwaway domains). The hub refuses the union of the committed
+    // snapshot of the list named below, its weekly refresh, the list of laravel-disposable-email, and `block`; `allow` wins
+    // over all of them. Comma-separated domains; a listed domain also covers its subdomains. Empty by default.
+    'email' => [
+        'allow' => array_values(array_filter(array_map('trim', explode(',', (string) env('HOP_EMAIL_ALLOW', ''))))),
+        'block' => array_values(array_filter(array_map('trim', explode(',', (string) env('HOP_EMAIL_BLOCK', ''))))),
+        'blocklist_url' => 'https://raw.githubusercontent.com/disposable-email-domains/disposable-email-domains/main/disposable_email_blocklist.conf',
+    ],
+
     // Seconds a sign-in ticket for an app stays valid.
     'ticket_ttl' => 120,
 

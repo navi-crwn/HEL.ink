@@ -1,5 +1,5 @@
 {{-- 01 One account: pinned. The scroll plays how one HOP ID signs you in to every app and out of all of them.
-     (resources/js/home.js adds the motion; the finished picture is complete as plain HTML and CSS.) --}}
+     (resources/js/home.js adds the motion, the finished picture is complete as plain HTML and CSS.) --}}
 @php
     $family = collect(\Hop\Ui\Assets::family())->keyBy('slug');
     $hubMark = $family['hub']['icons']['mark']['url'] ?? asset('hop-assets/v9/apps/hub/rabbit-mark.png');
@@ -24,6 +24,7 @@
         </div>
         <div class="hx-stage" data-signed-out="{{ __('Signed out') }}" data-note-out="{{ __('Signed out once. Signed out everywhere.') }}" aria-hidden="true">
             <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet"><g class="lines">@foreach ($ring as $i => $app)@php [$x, $y] = $spot($i); @endphp<path d="M200 200 L{{ round(200 + 144 * $x, 1) }} {{ round(200 + 144 * $y, 1) }}"/>@endforeach</g><circle class="pkt" r="6"/></svg>
+            <canvas></canvas>
             <div class="hx-hub"><img src="{{ $hubMark }}" alt="" width="56" height="56"><b>HOP ID</b><span class="hx-code" data-hx-code dir="ltr">482 913</span></div>
             @foreach ($ring as $i => $app)
                 @php [$x, $y] = $spot($i); @endphp

@@ -4,6 +4,7 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
+import { createGlobe } from './home-globe.js';
 
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -57,64 +58,76 @@ function marquee() {
     });
 }
 
-/** 01: pinned. One sign-in, a ticket to each app, the codes that protect it all, and one sign-out that reaches every app. */
+/** 01: pinned. One sign-in, a ticket to each app, the codes that protect it all, and one sign-out that reaches every app.
+ *  The globe (home-globe.js) draws the lines and the packet; the whole story is one pure function of time, apply(t),
+ *  scrubbed by the scroll, so the picture is right in both directions. */
 function account() {
     const sec = $('[data-hx-acct]');
     if (!sec) return;
-    const stage = $('.hx-stage', sec), paths = $$('.lines path', sec), pkt = $('.pkt', sec), hub = $('.hx-hub', sec), code = $('[data-hx-code]', sec);
+    const stage = $('.hx-stage', sec), hub = $('.hx-hub', sec), code = $('[data-hx-code]', sec);
     const nodes = $$('[data-hx-node]', sec), sts = $$('[data-hx-st]', sec), ticket = $('[data-hx-ticket]', sec), note = $('[data-hx-note]', sec), steps = $$('[data-hx-steps] li', sec);
     const inTxt = sts[0].textContent, outTxt = stage.dataset.signedOut || 'Signed out', noteIn = note.textContent, noteOut = stage.dataset.noteOut || noteIn;
-    paths.forEach((p) => { const l = p.getTotalLength(); gsap.set(p, { strokeDasharray: l, strokeDashoffset: l }); });
-    gsap.set(pkt, { opacity: 0 });
-    gsap.set(nodes, { opacity: .5 });
-    gsap.set(sts, { autoAlpha: 0 });
-    gsap.set([code, note], { autoAlpha: 0 });
 
-    const travel = (i, dur = .55) => {
-        const o = { t: 0 }, p = paths[i], len = p.getTotalLength();
-        return gsap.to(o, { t: 1, duration: dur, ease: 'power1.inOut', onUpdate: () => { const pt = p.getPointAtLength(len * o.t); pkt.setAttribute('cx', pt.x); pkt.setAttribute('cy', pt.y); } });
-    };
-    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
-    // 1 sign in once: the hub appears and the lines are drawn
-    tl.fromTo(hub, { scale: .85, autoAlpha: .4 }, { scale: 1, autoAlpha: 1, duration: .5, ease: 'back.out(1.6)' }, 0)
-        .to(paths, { strokeDashoffset: 0, duration: .8, stagger: .08, ease: 'power2.inOut' }, .3)
-        // 2 open any app: a ticket travels to each app, which signs in
-        .set(ticket, { display: 'grid' }, 1.6);
+    const globe = createGlobe(stage);
+    if (!globe) {
+        // no 2D canvas: the flat ring is the finished picture, nothing hidden
+        sts.forEach((s) => s.classList.add('show'));
+        [code, note].forEach((el) => el.classList.add('show'));
+        steps.forEach((li) => li.classList.add('on'));
+        return;
+    }
+
+    const n = nodes.length, TOTAL = 8.8;
     // the same 2.8 s (in) and 2 s (out) for any number of apps, so the steps stay in place
-    const inStep = 2.8 / nodes.length, outStep = 2 / nodes.length;
-    nodes.forEach((_, i) => {
-        const at = 1.7 + i * inStep, dur = Math.min(.55, inStep - .02);
-        tl.set(pkt, { opacity: 1 }, at).add(travel(i, dur), at).set(pkt, { opacity: 0 }, at + dur)
-            .to(nodes[i], { opacity: 1, duration: .25 }, at + dur - .05).to(sts[i], { autoAlpha: 1, duration: .25 }, at + dur);
-    });
-    tl.to(ticket, { autoAlpha: 0, duration: .2 }, 4.6)
-        // 3 keep it safe: the code and the green ring
-        .to(code, { autoAlpha: 1, duration: .3 }, 4.9).call(() => hub.classList.add('is-secure'), null, 5.0)
-        .to(note, { autoAlpha: 1, duration: .3 }, 5.1)
-        // 4 leave everywhere: one sign-out reaches every app, one after another
-        .call(() => { stage.classList.add('is-out'); hub.classList.remove('is-secure'); note.textContent = noteOut; }, null, 6.2);
-    nodes.forEach((_, i) => {
-        const at = 6.3 + i * outStep, dur = Math.min(.45, outStep - .02);
-        tl.set(pkt, { opacity: 1 }, at).add(travel(i, dur), at).set(pkt, { opacity: 0 }, at + dur)
-            .call(() => { nodes[i].classList.add('is-out'); sts[i].textContent = outTxt; }, null, at + dur).to(nodes[i], { opacity: .55, duration: .2 }, at + dur);
-    });
-    tl.to({}, { duration: .5 }); // a short hold at the end
-    // when the scrub goes back, the stage returns to its signed-in state
-    tl.eventCallback('onReverseComplete', () => { stage.classList.remove('is-out'); nodes.forEach((n) => n.classList.remove('is-out')); sts.forEach((s) => { s.textContent = inTxt; }); note.textContent = noteIn; });
+    const inStep = 2.8 / n, outStep = 2 / n;
+    const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
+    const inOut = (t) => (t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+    const backOut = (t) => { const c = 1.6; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };
+    const text = (el, value) => { if (el.textContent !== value) el.textContent = value; };
 
-    const mark = (progress) => {
-        const at = Math.min(steps.length - 1, Math.floor(progress * steps.length));
-        steps.forEach((li, i) => { li.classList.toggle('on', i === at); li.classList.toggle('done', i < at); });
-        // before the sign-out part, the stage shows the signed-in wording
-        if (progress < .72 && stage.classList.contains('is-out')) { stage.classList.remove('is-out'); nodes.forEach((n) => n.classList.remove('is-out')); sts.forEach((s) => { s.textContent = inTxt; }); note.textContent = noteIn; }
+    // the picture at time t of the story (0 .. TOTAL seconds)
+    const apply = (t) => {
+        const k = clamp(t / .5, 0, 1), out = t >= 6.2;
+        let packet = null;
+        // 1 sign in once: the hub appears and the lines are drawn
+        hub.style.setProperty('--s', (.85 + .15 * backOut(k)).toFixed(4));
+        hub.style.opacity = (.4 + .6 * k).toFixed(3);
+        for (let i = 0; i < n; i++) {
+            globe.beams[i] = inOut(clamp((t - .3 - i * .08) / .8, 0, 1));
+            // 2 open any app: a ticket travels to each app, which signs in
+            const a = 1.7 + i * inStep, d = Math.min(.55, inStep - .02), signed = t >= a + d;
+            // 4 leave everywhere: one sign-out reaches every app, one after another
+            const b = 6.3 + i * outStep, e = Math.min(.45, outStep - .02), gone = t >= b + e;
+            if (t >= a && t < a + d) packet = { i, t: inOut((t - a) / d) };
+            if (t >= b && t < b + e) packet = { i, t: inOut((t - b) / e) };
+            nodes[i].classList.toggle('is-out', gone);
+            text(sts[i], gone ? outTxt : inTxt);
+            sts[i].classList.toggle('show', signed);
+            globe.alpha[i] = gone ? .55 : signed ? 1 : .5;
+        }
+        ticket.classList.toggle('show', t >= 1.6 && t < 4.6);
+        // 3 keep it safe: the code and the green ring
+        code.classList.toggle('show', t >= 4.9);
+        hub.classList.toggle('is-secure', t >= 5.0 && t < 6.2);
+        note.classList.toggle('show', t >= 5.1);
+        text(note, out ? noteOut : noteIn);
+        stage.classList.toggle('is-out', out);
+        globe.out = out;
+        globe.packet = packet;
+        const at = Math.min(steps.length - 1, Math.floor(t / TOTAL * steps.length));
+        steps.forEach((li, j) => { li.classList.toggle('on', j === at); li.classList.toggle('done', j < at); });
     };
-    mark(0);
+    apply(0);
+
+    // one linear tween of the story clock, scrubbed by the scroll
+    const clock = { t: 0 };
+    const tween = gsap.to(clock, { t: TOTAL, duration: TOTAL, ease: 'none', paused: true, onUpdate: () => apply(clock.t) });
     const mm = gsap.matchMedia();
     mm.add('(min-width: 981px)', () => {
-        ScrollTrigger.create({ animation: tl, trigger: sec, start: 'top 64px', end: '+=3400', pin: true, scrub: .7, onUpdate: (self) => mark(self.progress) });
+        ScrollTrigger.create({ animation: tween, trigger: sec, start: 'top 64px', end: '+=3400', pin: true, scrub: .7 });
     });
     mm.add('(max-width: 980px)', () => {
-        ScrollTrigger.create({ animation: tl, trigger: stage, start: 'top 75%', end: 'bottom 25%', scrub: .7, onUpdate: (self) => mark(self.progress) });
+        ScrollTrigger.create({ animation: tween, trigger: stage, start: 'top 75%', end: 'bottom 25%', scrub: .7 });
     });
 }
 

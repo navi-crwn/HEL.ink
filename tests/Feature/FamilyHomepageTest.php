@@ -27,6 +27,21 @@ test('the home page has one interactive section per public product in the manife
     expect($html)->not->toContain('data-home-tabs')->toContain('data-hx-acct');
 });
 
+test('the account stage has one canvas for the globe and still one SVG line per app', function () {
+    $html = $this->get('/')->assertOk()->getContent();
+
+    $dom = new DOMDocument;
+    @$dom->loadHTML('<?xml encoding="UTF-8">'.$html);
+    $xpath = new DOMXPath($dom);
+    $stage = $xpath->query('//*[@data-hx-acct]//*[contains(concat(" ", normalize-space(@class), " "), " hx-stage ")]');
+    expect($stage->length)->toBe(1);
+    expect($stage->item(0)->getAttribute('aria-hidden'))->toBe('true');
+    $tiles = $xpath->query('.//*[@data-hx-node]', $stage->item(0))->length;
+    expect($tiles)->toBeGreaterThan(0);
+    expect($xpath->query('.//canvas', $stage->item(0))->length)->toBe(1);
+    expect($xpath->query('.//svg//g[@class="lines"]/path', $stage->item(0))->length)->toBe($tiles);
+});
+
 test('FileHop has its own home section, 3D tile and demo', function () {
     $html = $this->get('/')->assertOk()->getContent();
 

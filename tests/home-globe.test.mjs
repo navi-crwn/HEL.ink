@@ -142,3 +142,15 @@ test('with a single canvas the engine still works', () => {
     assert.ok(env.layers[0].cleared > before);
     assert.ok(!env.stageClasses.has('is-globe'));
 });
+
+test('onFrame is called with the time step of every frame', () => {
+    const env = setup();
+    const steps = [];
+    const globe = createGlobe(env.stage, { onFrame: (dt) => steps.push(dt) });
+    const run = (now) => { const [id, tick] = [...env.frames][0]; env.frames.delete(id); tick(now); };
+    run(1000); run(1016);
+    assert.equal(steps.length, 2);
+    assert.equal(steps[0], 0);                       // the first frame has no step to report
+    assert.ok(Math.abs(steps[1] - 0.016) < 1e-9);
+    globe.destroy();
+});

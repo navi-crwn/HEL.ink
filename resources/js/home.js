@@ -68,7 +68,28 @@ function account() {
     const nodes = $$('[data-hx-node]', sec), sts = $$('[data-hx-st]', sec), ticket = $('[data-hx-ticket]', sec), note = $('[data-hx-note]', sec), steps = $$('[data-hx-steps] li', sec);
     const inTxt = sts[0].textContent, outTxt = stage.dataset.signedOut || 'Signed out', noteIn = note.textContent, noteOut = stage.dataset.noteOut || noteIn;
 
-    const globe = createGlobe(stage);
+    // the ticket's code: eight characters, a different code for every app. While a ticket is being made its
+    // characters keep changing; they settle from the left as the packet sets off.
+    const tk = $('[data-hx-tk]', ticket), GLYPHS = '0123456789ABCDEF#$%&+=<>', TK = 8, cells = [];
+    let tkApp = 0, tkSolved = 0, tkClock = 0;
+    const codeFor = (i) => { let s = ''; for (let k = 0; k < TK; k++) { const h = Math.sin(i * 91.7 + k * 47.3 + 1.3) * 43758.5453; s += '0123456789ABCDEF'.charAt(Math.floor((h - Math.floor(h)) * 16)); } return s; };
+    const paintTicket = () => {
+        if (!cells.length) { tk.textContent = ''; for (let k = 0; k < TK; k++) cells.push(tk.appendChild(document.createElement('i'))); }
+        const word = codeFor(tkApp);
+        for (let j = 0; j < TK; j++) {
+            const raw = j >= tkSolved;
+            const ch = raw ? GLYPHS.charAt(Math.floor(Math.random() * GLYPHS.length)) : word.charAt(j);
+            if (cells[j].textContent !== ch) cells[j].textContent = ch;
+            cells[j].classList.toggle('raw', raw);
+        }
+    };
+    // the story only updates on scroll; the code keeps changing between scrolls, so it is repainted every 70 ms
+    const onFrame = (dt) => {
+        tkClock += dt;
+        if (tkClock >= .07 && ticket.classList.contains('show')) { tkClock = 0; paintTicket(); }
+    };
+
+    const globe = createGlobe(stage, { onFrame });
     if (!globe) {
         // no 2D canvas: the flat ring is the finished picture, nothing hidden
         sts.forEach((s) => s.classList.add('show'));
@@ -107,6 +128,8 @@ function account() {
             globe.pulse[i] = gone ? 0 : signed ? 1 : .3;   // a live line pulses; a signed-out one is still
         }
         ticket.classList.toggle('show', t >= 1.6 && t < 4.6);
+        tkApp = clamp(Math.floor((t - 1.7) / inStep), 0, n - 1);
+        tkSolved = Math.floor(clamp((t - 1.7 - tkApp * inStep) / (inStep * .45), 0, 1) * TK);
         // 3 keep it safe: the code and the green ring
         code.classList.toggle('show', t >= 4.9);
         hub.classList.toggle('is-secure', t >= 5.0 && t < 6.2);

@@ -66,6 +66,15 @@
 .hop-home .hx-node.is-out .st { color: #f43f5e; }
 .hop-home .hx-ticket { position: absolute; left: 50%; top: 31%; transform: translateX(-50%); display: none; padding: 4px 12px; border-radius: 10px; background: #22d3ee; color: #082f49; font: 600 11px var(--h-mono); z-index: 6; white-space: nowrap; }
 .hop-home .hx-ticket small { margin-inline-end: 6px; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; }
+/* the ticket's code: a fresh one for every app, its characters still falling into place while it is made (home.js) */
+.hop-home .hx-tk { display: none; }
+.hop-home .hx-stage.is-globe .hx-ticket { padding: 5px 12px; border: 1px solid #22d3ee80; background: #04161ee6; color: #a5f3fc; box-shadow: 0 0 22px -6px #22d3ee, inset 0 0 12px -6px #22d3ee; }
+.hop-home .hx-stage.is-globe .hx-ticket small { color: #67e8f9; opacity: .75; }
+.hop-home .hx-stage.is-globe .hx-ticket b { color: #cffafe; }
+.hop-home .hx-stage.is-globe .hx-tk { display: inline-block; margin-inline-end: 8px; font-weight: 600; letter-spacing: .04em; color: #ecfeff; text-shadow: 0 0 8px #22d3ee; }
+.hop-home .hx-stage.is-globe .hx-tk i { display: inline-block; width: 1ch; font-style: normal; text-align: center; }
+.hop-home .hx-stage.is-globe .hx-tk i:nth-child(5) { margin-inline-start: .5ch; }
+.hop-home .hx-stage.is-globe .hx-tk i.raw { color: #34d399; opacity: .7; text-shadow: 0 0 6px #10b981; }
 .hop-home .hx-note { position: absolute; left: 0; right: 0; bottom: -2px; margin: 0; text-align: center; font: 12px var(--h-mono); color: var(--home-muted); transition: opacity .3s; }
 
 /* the story hides what has not happened yet; home.js sets .show as the scroll reaches it (a function of the scroll position, both ways).

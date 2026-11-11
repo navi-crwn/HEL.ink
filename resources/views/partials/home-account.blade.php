@@ -30,7 +30,7 @@
                 @php [$x, $y] = $spot($i); @endphp
                 <div class="hx-node" style="--cx: {{ $x }}; --cy: {{ $y }}" data-hx-node><img src="{{ $app['mark'] }}" alt="" width="44" height="44"><b class="hop-name hop-name-{{ $app['slug'] }}">{{ $app['name'] }}</b><i class="st" data-hx-st>{{ __('Signed in') }} ✓</i></div>
             @endforeach
-            <div class="hx-ticket" data-hx-ticket><small>{{ __('ticket') }}</small><b dir="ltr">30 s</b></div>
+            <div class="hx-ticket" data-hx-ticket><small>{{ __('ticket') }}</small><span class="hx-tk" data-hx-tk dir="ltr">7F3A C21E</span><b dir="ltr">30 s</b></div>
             <p class="hx-note" data-hx-note>{{ __('Signed in once. Every app knows you.') }}</p>
         </div>
     </div>

@@ -212,7 +212,10 @@ export function createGlobe(stage, opts) {
         ctx = side(q[2]);
         ctx.save();
         ctx.shadowColor = 'rgba(' + pk + ',.9)'; ctx.shadowBlur = 14;
-        ctx.fillStyle = 'rgb(' + pk + ')'; ctx.beginPath(); ctx.arc(q[0], q[1], 4.5 + 1.5 * (q[2] + 1) / 2, 0, TAU); ctx.fill();
+        // it leaves the core softly and dissolves as it reaches the app, so it never sits on the app's mark
+        var pt = clamp(g.packet.t, 0, 1), life = Math.min(1, pt / .12, (1 - pt) / .22);
+        ctx.globalAlpha = life;
+        ctx.fillStyle = 'rgb(' + pk + ')'; ctx.beginPath(); ctx.arc(q[0], q[1], (4.5 + 1.5 * (q[2] + 1) / 2) * (.55 + .45 * life), 0, TAU); ctx.fill();
         ctx.restore();
       }
       // near side: the whole tile; far side: it shrinks and fades to the mark alone (--card drives the frame and the text)

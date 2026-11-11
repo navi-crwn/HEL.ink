@@ -10,6 +10,7 @@ use App\Services\AccountSessions;
 use App\Services\LoginRecorder;
 use App\Services\NotificationService;
 use App\Support\AfterLogin;
+use App\Support\EmailDomains;
 use App\Support\Legal;
 use App\Support\Username;
 use Exception;
@@ -169,6 +170,10 @@ class GoogleAuthController extends Controller
 
                 return redirect()->intended(AfterLogin::home($user))->with('success', 'Welcome back, '.$user->name.'!');
             } else {
+                // A throwaway domain does not become an account because Google vouches for it.
+                if (EmailDomains::blocked($googleEmail)) {
+                    return redirect()->route('login')->with('error', __('This email address cannot be used. Please use another address.'));
+                }
                 // New account. While a terms version is required, this branch
                 // only runs after an explicit, server-verified, single-use
                 // consent from the terms step — never from a bare Google link.

@@ -7,6 +7,7 @@ use App\Mail\WelcomeEmail;
 use App\Models\HopApp;
 use App\Models\LoginHistory;
 use App\Models\User;
+use App\Rules\AllowedEmailDomain;
 use App\Support\HopSignature;
 use App\Support\Input;
 use App\Support\Legal;
@@ -118,12 +119,11 @@ class AppAccountController extends Controller
         ];
         $v = Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'indisposable', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', new AllowedEmailDomain, 'unique:'.User::class],
             'password' => ['required', Rules\Password::defaults()],
             'tos_accepted' => ['accepted'],
             'terms_version' => $requiredVersion === null ? ['prohibited'] : ['required', 'in:'.$requiredVersion],
         ], [
-            'email.indisposable' => 'Disposable email addresses are not allowed.',
             'email.unique' => 'An account with this email already exists. Sign in instead.',
             'tos_accepted.accepted' => 'Please accept the terms.',
             'terms_version.required' => 'Please accept the current terms.',

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Mail\WelcomeEmail;
 use App\Models\User;
+use App\Rules\AllowedEmailDomain;
 use App\Services\TurnstileService;
 use App\Support\Legal;
 use App\Support\Username;
@@ -40,7 +41,7 @@ class RegisteredUserController extends Controller
         Legal::assertUsable($requiredVersion);
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['bail', 'required', 'string', 'lowercase', 'email', 'max:255', 'indisposable', 'unique:'.User::class],
+            'email' => ['bail', 'required', 'string', 'lowercase', 'email', 'max:255', new AllowedEmailDomain, 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'tos_accepted' => ['required', 'accepted'],
             // While the gate is inactive no version is asked for; when active,
@@ -48,7 +49,6 @@ class RegisteredUserController extends Controller
             // the client cannot name an arbitrary version.
             'terms_version' => $requiredVersion === null ? ['prohibited'] : ['required', 'in:'.$requiredVersion],
         ], [
-            'email.indisposable' => 'Disposable email addresses are not allowed.',
             'terms_version.required' => 'Please accept the current terms.',
             'terms_version.in' => 'Please accept the current terms.',
         ]);

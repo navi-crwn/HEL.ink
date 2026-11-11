@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use App\Rules\AllowedEmailDomain;
 use App\Support\Input;
 use App\Support\Username;
 use Illuminate\Foundation\Http\FormRequest;
@@ -50,6 +51,7 @@ class ProfileUpdateRequest extends FormRequest
                 'email',
                 'max:255',
                 Rule::unique(User::class)->ignore($user->id),
+                new AllowedEmailDomain($user->email), // only when the address is being changed
             ],
             // Moving the account's address needs the current password; the Google link does not vouch for the new address.
             'current_password' => [

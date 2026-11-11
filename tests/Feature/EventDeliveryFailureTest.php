@@ -33,7 +33,7 @@ test('a permanently failed session.revoked is reported for its app, with a count
 
 test('a delivery that works again clears the warning', function () {
     HopApp::factory()->payhop()->create(['capabilities' => ['events']]);
-    Cache::forever(SendHopEvent::failureKey('payhop'), ['count' => 3, 'last_at' => now()->toIso8601String(), 'last_type' => 'session.revoked']);
+    Cache::forever(SendHopEvent::failureKey('payhop'), 3);
     Http::fake(['https://pay.example.com/hop/events' => Http::response(['ok' => true])]);
 
     (new SendHopEvent(HopApp::where('slug', 'payhop')->value('id'), 'session.revoked', ['sub' => '1'], 'ev-2', now()->toIso8601String()))->handle();
@@ -54,4 +54,28 @@ test('through the real queue, the last failed attempt records the failure', func
 
     expect(DB::table('jobs')->count())->toBe(0)
         ->and(collect(EventRegistry::warnings())->filter(fn ($l) => str_starts_with($l, 'payhop:'))->first())->toContain('1 account event(s)');
+});
+
+test('failures that happen together are all counted', function () {
+    HopApp::factory()->payhop()->create(['capabilities' => ['events']]);
+    Http::fake(['https://pay.example.com/hop/events' => Http::response('no', 500)]);
+    $id = HopApp::where('slug', 'payhop')->value('id');
+
+    foreach (range(1, 5) as $_) {
+        // Each job starts from the same stale read in the old code; the counter must still reach 5.
+        (new SendHopEvent($id, 'session.revoked', ['sub' => '1'], 'ev', now()->toIso8601String()))->failed(new RuntimeException('x'));
+    }
+
+    expect((int) Cache::get(SendHopEvent::failureKey('payhop')))->toBe(5);
+});
+
+test('an app with events that config does not list as an event app is reported too', function () {
+    HopApp::factory()->create(['slug' => 'extraapp', 'name' => 'Extra', 'capabilities' => ['events']]);
+    $id = HopApp::where('slug', 'extraapp')->value('id');
+    expect(config('hop.event_apps'))->not->toHaveKey('extraapp');
+
+    (new SendHopEvent($id, 'account.status', ['sub' => '1'], 'ev', now()->toIso8601String()))->failed(new RuntimeException('x'));
+
+    $lines = array_values(array_filter(EventRegistry::warnings(), fn ($l) => str_starts_with($l, 'extraapp:')));
+    expect($lines)->toHaveCount(1)->and($lines[0])->toContain('1 account event(s)')->toContain('account.status');
 });

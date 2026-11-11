@@ -80,9 +80,10 @@ class SendHopEvent implements ShouldQueue
             $res->throw();
         }
         Cache::forget(self::failureKey($app->slug));
+        Cache::forget(self::failureKey($app->slug).':last');
     }
 
-    /** Cache key of the count of deliveries to an app that failed for good (read by EventRegistry::warnings()). */
+    /** Cache key of the count of deliveries to an app that failed for good (a counter; `:last` beside it holds the time and type; read by EventRegistry::warnings()). */
     public static function failureKey(string $slug): string
     {
         return 'hop:event-failures:'.$slug;
@@ -99,11 +100,9 @@ class SendHopEvent implements ShouldQueue
             return;
         }
         $key = self::failureKey((string) $app->slug);
-        $seen = (array) Cache::get($key, []);
-        Cache::forever($key, [
-            'count' => (int) ($seen['count'] ?? 0) + 1,
-            'last_at' => now()->toIso8601String(),
-            'last_type' => $this->type,
-        ]);
+        // Atomic: several jobs can fail at the same moment.
+        Cache::add($key, 0);
+        Cache::increment($key);
+        Cache::forever($key.':last', ['at' => now()->toIso8601String(), 'type' => $this->type]);
     }
 }

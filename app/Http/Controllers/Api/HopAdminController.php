@@ -311,7 +311,7 @@ class HopAdminController extends Controller
     private function actorUser(string $actor): ?User
     {
         // Strict shape: a plain number without leading zeros, optionally followed by ":<username>".
-        if (preg_match('/^([1-9]\d{0,17})(?::[^ -]*)?$/', $actor, $m) !== 1) {
+        if (preg_match('/^([1-9]\d{0,17})(?::[^\x00-\x1f]*)?$/', $actor, $m) !== 1) {
             return null;
         }
 

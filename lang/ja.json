@@ -1064,5 +1064,6 @@
     "People": "人数",
     "Share per person": "一人あたり",
     "Payments": "支払い",
-    "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHopが保持するのは、あなたが保存を選んだ支払い方法と履歴だけで、PayHopの中でいつでも削除できます。"
+    "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHopが保持するのは、あなたが保存を選んだ支払い方法と履歴だけで、PayHopの中でいつでも削除できます。",
+    "Current password (only to change your email)": "現在のパスワード（メールアドレスを変更するときのみ）"
 }

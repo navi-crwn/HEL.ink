@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Mail\EmailChangedNotice;
 use App\Models\ActivityLog;
 use App\Services\AccountSessions;
 use App\Services\UserDeletion;
@@ -14,8 +15,12 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+
+use function Illuminate\Support\defer;
 
 class ProfileController extends Controller
 {
@@ -35,6 +40,7 @@ class ProfileController extends Controller
         $originalEmail = $user->email;
         $originalUsername = $user->username;
         $data = $request->validated();
+        unset($data['current_password']);
         if (array_key_exists('username', $data)) {
             $user->changeUsername($data['username']);
             unset($data['username']);
@@ -42,11 +48,21 @@ class ProfileController extends Controller
         $user->fill($data);
         if ($originalEmail !== $user->email) {
             $user->email_verified_at = null;
+            $user->google_id = null; // a Google link proved the old address, not this one
         }
         $user->save();
         if ($originalEmail !== $user->email) {
             // The address is how the account is recovered: whoever held a session under the old one is out.
             AccountSessions::end($user, $request->session()->getId());
+            // Tell the address the account used to have, after the response (mail can take seconds).
+            $notice = new EmailChangedNotice($user->name, $user->email);
+            defer(function () use ($originalEmail, $notice) {
+                try {
+                    Mail::to($originalEmail)->send($notice);
+                } catch (\Throwable $e) {
+                    Log::warning('Email-change notice not sent', ['error' => class_basename($e)]);
+                }
+            });
         }
         $changes = [];
         if ($originalName !== $user->name) {
@@ -134,8 +150,9 @@ class ProfileController extends Controller
     public function createPasswordFromOnboarding(Request $request): RedirectResponse
     {
         $user = $request->user();
-        // Only allow Google OAuth users with temporary password
-        if (! $user->google_id) {
+        // Only the person who has just created the account through Google, in this session, who has never had a
+        // password of their own (the sign-up marks the session). Anyone else changes the password in Settings.
+        if (! $user->google_id || ! session('google_user_needs_password')) {
             return back()->withErrors(['password' => 'This action is not allowed.']);
         }
         $request->validate([
@@ -146,6 +163,7 @@ class ProfileController extends Controller
         ]);
         // Remove the flag from session
         session()->forget('google_user_needs_password');
+        AccountSessions::end($user, $request->session()->getId());
         ActivityLog::log('created', 'Password', $user->id, 'Created password from onboarding');
 
         if ($app = SsoController::cameFrom($request)) {

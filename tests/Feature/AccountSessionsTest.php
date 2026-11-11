@@ -177,7 +177,7 @@ test('changing the e-mail address ends the other sessions', function () {
     $user = User::factory()->create(['email' => 'before@example.com', 'username' => 'tester1']);
     otherSession($user);
 
-    $this->actingAs($user)->withSession(['2fa_verified' => true])->patch('/profile', ['name' => $user->name, 'email' => 'after@example.com', 'username' => $user->username])
+    $this->actingAs($user)->withSession(['2fa_verified' => true])->patch('/profile', ['name' => $user->name, 'email' => 'after@example.com', 'username' => $user->username, 'current_password' => 'password'])
         ->assertSessionHasNoErrors();
 
     expect($user->fresh()->email)->toBe('after@example.com')
@@ -186,7 +186,7 @@ test('changing the e-mail address ends the other sessions', function () {
 
     // A change of the name alone does not touch sessions.
     otherSession($user);
-    $this->actingAs($user->fresh())->withSession(['2fa_verified' => true])->patch('/profile', ['name' => 'New Name', 'email' => 'after@example.com', 'username' => $user->username]);
+    $this->actingAs($user->fresh())->withSession(['2fa_verified' => true])->patch('/profile', ['name' => 'New Name', 'email' => 'after@example.com', 'username' => $user->username, 'current_password' => 'password']);
     expect(sessionCount($user))->toBe(1);
 });
 

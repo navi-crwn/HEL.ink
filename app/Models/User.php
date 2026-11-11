@@ -204,7 +204,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'show_owner' => (bool) $this->show_owner,
             'roles' => $this->roleNames(),
             'status' => $this->status,
-            'verified' => $this->hasVerifiedEmail() || (bool) $this->google_id,
+            'verified' => $this->hasVerifiedEmail(),
             'mfa' => $this->hasTwoFactor() && (! $requireVerifiedSession || session('2fa_verified') === true),
             'profile_version' => max(1, (int) $this->profile_version),
             'created_at' => $this->created_at?->toIso8601String(),

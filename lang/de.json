@@ -1064,5 +1064,6 @@
     "People": "Personen",
     "Share per person": "Anteil pro Person",
     "Payments": "Zahlungen",
-    "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHop speichert nur die Zahlungsmethoden und den Verlauf, die du speichern möchtest, und du kannst sie jederzeit in PayHop löschen."
+    "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHop speichert nur die Zahlungsmethoden und den Verlauf, die du speichern möchtest, und du kannst sie jederzeit in PayHop löschen.",
+    "Current password (only to change your email)": "Aktuelles Passwort (nur zum Ändern deiner E-Mail-Adresse)"
 }

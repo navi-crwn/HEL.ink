@@ -85,7 +85,7 @@ class AppAccountController extends Controller
             return response()->json(['error' => 'two_factor'], 409);
         }
         // Same rule as the /sso/pixelhop ticket: confirm the address first.
-        if (! $user->hasVerifiedEmail() && ! $user->google_id) {
+        if (! $user->hasVerifiedEmail()) {
             return response()->json(['error' => 'unverified'], 403);
         }
         $user->forceFill(['last_login_at' => now(), 'last_login_ip' => $ip])->saveQuietly();

@@ -1064,5 +1064,6 @@
     "People": "Человек",
     "Share per person": "Доля на человека",
     "Payments": "Платежи",
-    "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHop хранит только те способы оплаты и историю, которые вы решили сохранить, и вы можете удалить их в PayHop в любой момент."
+    "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHop хранит только те способы оплаты и историю, которые вы решили сохранить, и вы можете удалить их в PayHop в любой момент.",
+    "Current password (only to change your email)": "Текущий пароль (только для смены адреса электронной почты)"
 }

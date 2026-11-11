@@ -48,29 +48,30 @@ class NewPasswordController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-        $user = User::where('email', $request->email)->first();
-        // Check if new password is same as old password
-        if ($user && Hash::check($request->password, $user->password)) {
-            RateLimiter::hit($key, 3600);
-            throw ValidationException::withMessages([
-                'password' => 'Please choose a new password. Do not use your old password for security reasons.',
-            ]);
-        }
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function (User $user) use ($request, $key) {
                 abort_if($user->isSuperAdmin(), 403, 'Superadmin accounts are permanent and read-only.');
+                // Only now, with a valid token, is the new password compared with the old one: before, the answer would
+                // tell anyone whether a guess at the current password was right.
+                if (Hash::check($request->password, $user->password)) {
+                    RateLimiter::hit($key, 3600);
+                    throw ValidationException::withMessages([
+                        'password' => 'Please choose a new password. Do not use your old password for security reasons.',
+                    ]);
+                }
                 // Reading the reset mail proves the address. If the sign-up had never been verified, whoever made it
                 // may have set up more than a password: that goes too, so the reader of the mail is alone in the account.
-                $wasUnverified = ! $user->hasVerifiedEmail() && ! $user->google_id;
+                $wasUnverified = ! $user->hasVerifiedEmail();
                 DB::transaction(function () use ($user, $request, $wasUnverified) {
                     $user->forceFill([
                         'password' => Hash::make($request->password),
                         'remember_token' => Str::random(60),
                     ]);
                     if ($wasUnverified) {
+                        // Google never proved this address either, so a Google link on an unverified account goes too.
                         $user->forceFill(['two_factor_secret' => null, 'two_factor_recovery_codes' => null, 'two_factor_confirmed_at' => null,
-                            'email_verified_at' => now()]);
+                            'google_id' => null, 'email_verified_at' => now()]);
                         $user->apiTokens()->delete();
                     }
                     $user->save();

@@ -54,8 +54,8 @@ class SsoController extends Controller
         if ($user->isSuspended()) {
             return redirect()->route('suspended');
         }
-        // Google already verified the address; everyone else confirms it first.
-        if (! $user->hasVerifiedEmail() && ! $user->google_id) {
+        // Only a verified address gets a ticket: a Google link says nothing about the address the account holds now.
+        if (! $user->hasVerifiedEmail()) {
             return redirect()->route('verification.notice');
         }
         $ticket = SsoTicket::issue($user, $hopApp, $state);

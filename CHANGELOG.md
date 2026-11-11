@@ -22,9 +22,10 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ### Security
 
-- Signing in with Google no longer lets an earlier, unverified sign-up keep a hold on the account. When Google proves who owns an address that already had an account whose e-mail was never verified, the password of that sign-up is replaced by an unusable one, and its sessions, remember-me cookies, API tokens and two-factor settings are removed, and the apps are told to end their sessions. An account whose address was already verified is unchanged.
-- A password reset by e-mail does the same for an unverified sign-up (it also verifies the address, since reading the mail proves it), and ends every session of any account it is used on.
-- Changing your password, turning two-factor off or changing your e-mail address now ends your other sessions and remember-me cookies, and tells the apps to end theirs; the session you are using stays. In the apps you may have to sign in again once.
+- Signing in with Google no longer lets an earlier, unverified sign-up keep a hold on the account. An account is verified or claimed only when Google presents the very address the account holds (compared without regard to case). When Google proves that address for an account whose e-mail was never verified, the sign-up's password is replaced by an unusable one, and its sessions, remember-me cookies, API tokens, two-factor settings, any other Google link and pending reset links are removed, and the apps are told to end their sessions. An account that is already linked to the same Google account is only verified. An account whose address was already verified is unchanged, and if it is linked to a different Google account the sign-in is refused rather than moved.
+- A match by the Google link alone is an ordinary sign-in: it never verifies the address the account holds now. A Google link no longer counts as a verified address anywhere: single sign-on into the apps, the apps' own sign-in form and the profile the apps receive all use the verified e-mail alone.
+- A password reset by e-mail does the same for an unverified account, Google link included (it also verifies the address, since reading the mail proves it), and ends every session of any account it is used on. The new password is compared with the old one only after the reset link has been checked.
+- Changing your e-mail address now needs your current password, drops the Google link (it vouched for the old address), tells the old address, and ends your other sessions and remember-me cookies. Changing your password, turning two-factor off or setting a password from the Google sign-up page also end your other sessions and tell the apps to end theirs; the session you are using stays. In the apps you may have to sign in again once. Setting a password from the sign-up page is possible only in the session that created the account.
 - Suspending an account (the admin API and the old `/admin` page) now also ends its sessions and tells the apps to end theirs, in the same transaction as the status change and the removal of its API tokens. The message on the old page says what actually happens.
 
 ## [1.2.0] - 2026-11-11
@@ -116,41 +117,17 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ### Security
 
-- A profile photo over 50 megapixels is refused before it is decoded, and photo uploads are limited to 20 a minute.
-
-## [1.0.0] - 2026-11-04
-
-The first stable release. HEL.ink's first pull request was merged on 2026-10-28; 1.0.0 is the point where the hub and the contracts it keeps with the HOP apps are treated as the baseline that later releases build on. The history behind it is on the `/changelog` page and in the merged pull requests.
-
-### Added
-
-- **HOP ID.** One account for LinkHop, BioHop, PixelHop and NoteHop, with email sign-up and sign-in, Google sign-in, email verification, password reset, TOTP two-factor authentication with recovery codes, Cloudflare Turnstile, a profile with an avatar, and scoped API tokens.
-- **Single sign-on.** The hub issues signed tickets that the apps verify (`hop/auth`). Two secrets can be active at once so a secret can be rotated without downtime, and signing out at the hub walks the chain of apps.
-- **Account events to the apps.** The hub tells every app registered with the `events` capability when a profile changes (`profile.updated`), an account is suspended or restored (`account.status`), an account is deleted (`account.deleted`) and sessions are ended (`session.revoked`, also queued when a person signs out). Deliveries are signed and retried with backoff.
-- **Admin API for Imperium.** A signed API (`/api/hop/*`) for an app registered with the `admin_client` capability: manifest, stats, users, per-user actions, audit log and search. Accounts with the `owner` role, and the configured superadmin email, are permanent superadmins that these actions refuse (`docs/PERMANENT-SUPERADMIN.md`). The hub also keeps its own user and announcement pages under `/admin` for admins.
-- **Public site.** A home page that tells the story of the family with a shared 3D engine, pages for each app, terms, privacy, FAQ, help and about, a status page fed by a watchdog that checks every app, live repository numbers from GitHub, and a `/changelog` page built from a snapshot of the commit, tag and pull request history of the five public repositories.
-- **Dashboard.** A launcher for the family, a card with numbers for each app, and the same chrome as the apps: a sidebar with the HOP family and a top bar for the primary action, language, theme and account menu.
-- **HOP assets.** The family's marks, fonts and home engine are served from `hel.ink/hop-assets/` in immutable versions (`v1`, `v2`) with integrity hashes, and `scripts/hop_assets.py` builds and checks the manifest.
-- **Shared packages.** `hop/auth`, `hop/ui` and `hop/safety` live in `packages/` and are synced into the apps.
-- **Nine languages.** English, 简体中文, Deutsch, Bahasa Indonesia, 日本語, Português (Brasil), Español, Français and Русский, for the interface, the READMEs and the documentation site. Arabic and right-to-left layout are removed.
-- **Self-hosting.** `install.sh`, `install-family.sh`, `update.sh` and `uninstall.sh`, a GitHub Pages documentation site and `SECURITY.md`.
-- **Terms acceptance.** Optional, off until configured: new accounts can be asked to accept a versioned set of terms (`docs/legal-gate.md`).
+- Signing in with Google no longer lets an earlier, unverified sign-up keep a hold on the account. An account is verified or claimed only when Google presents the very address the account holds (compared without regard to case). When Google proves that address for an account whose e-mail was never verified, the sign-up's password is replaced by an unusable one, and its sessions, remember-me cookies, API tokens, two-factor settings, any other Google link and pending reset links are removed, and the apps are told to end their sessions. An account that is already linked to the same Google account is only verified. An account whose address was already verified is unchanged, and if it is linked to a different Google account the sign-in is refused rather than moved.
+- A match by the Google link alone is an ordinary sign-in: it never verifies the address the account holds now. A Google link no longer counts as a verified address anywhere: single sign-on into the apps, the apps' own sign-in form and the profile the apps receive all use the verified e-mail alone.
+- A password reset by e-mail does the same for an unverified account, Google link included (it also verifies the address, since reading the mail proves it), and ends every session of any account it is used on. The new password is compared with the old one only after the reset link has been checked.
+- Changing your e-mail address now needs your current password, drops the Google link (it vouched for the old address), tells the old address, and ends your other sessions and remember-me cookies. Changing your password, turning two-factor off or setting a password from the Google sign-up page also end your other sessions and tell the apps to end theirs; the session you are using stays. In the apps you may have to sign in again once. Setting a password from the sign-up page is possible only in the session that created the account.
+- Suspending an account (the admin API and the old `/admin` page) now also ends its sessions and tells the apps to end theirs, in the same transaction as the status change and the removal of its API tokens. The message on the old page says what actually happens.
 
 ### Security
 
-- Signed-in pages are sent with `Cache-Control: no-store`, so Back after sign-out does not show them again.
-- The onboarding routes require a signed-in account; recovery codes are compared strictly; the `_back` address is validated; the `mfa` claim in a ticket is tightened; and the public `status.json` carries only public fields.
-- Sign-in history and account activity records are deleted after 90 days (`hop:prune-logs`, daily). Backup copies made by `scripts/backup.sh` are kept for 14 days on the same server, and the privacy page says so in all nine languages.
-- Deleting an account purges the data held by the apps, and the deletion service checks that each app did it.
-- `hop/safety` refuses links to encrypted NoteHop notes (the key is in the `#` part) and connects to the addresses it validated when it fetches a page.
-- Pictures and fonts come from the hub's own host. Flags are country codes, not images from another site.
+- Signing in with Google no longer lets an earlier, unverified sign-up keep a hold on the account. An account is verified or claimed only when Google presents the very address the account holds (compared without regard to case). When Google proves that address for an account whose e-mail was never verified, the sign-up's password is replaced by an unusable one, and its sessions, remember-me cookies, API tokens, two-factor settings, any other Google link and pending reset links are removed, and the apps are told to end their sessions. An account that is already linked to the same Google account is only verified. An account whose address was already verified is unchanged, and if it is linked to a different Google account the sign-in is refused rather than moved.
+- A match by the Google link alone is an ordinary sign-in: it never verifies the address the account holds now. A Google link no longer counts as a verified address anywhere: single sign-on into the apps, the apps' own sign-in form and the profile the apps receive all use the verified e-mail alone.
+- A password reset by e-mail does the same for an unverified account, Google link included (it also verifies the address, since reading the mail proves it), and ends every session of any account it is used on. The new password is compared with the old one only after the reset link has been checked.
+- Changing your e-mail address now needs your current password, drops the Google link (it vouched for the old address), tells the old address, and ends your other sessions and remember-me cookies. Changing your password, turning two-factor off or setting a password from the Google sign-up page also end your other sessions and tell the apps to end theirs; the session you are using stays. In the apps you may have to sign in again once. Setting a password from the sign-up page is possible only in the session that created the account.
+- Suspending an account (the admin API and the old `/admin` page) now also ends its sessions and tells the apps to end theirs, in the same transaction as the status change and the removal of its API tokens. The message on the old page says what actually happens.
 
-### Changed
-
-- The 2026-11-04 audit fixes are included: error pages in the visitor's language, a language cookie that works with `SESSION_DOMAIN`, and `HopAppsSeeder`, which adds the `events` rows for the four apps without changing an existing row.
-
-[Unreleased]: https://github.com/navi-crwn/HEL.ink/compare/v1.3.0...HEAD
-[1.3.0]: https://github.com/navi-crwn/HEL.ink/releases/tag/v1.3.0
-[1.2.0]: https://github.com/navi-crwn/HEL.ink/releases/tag/v1.2.0
-[1.1.0]: https://github.com/navi-crwn/HEL.ink/releases/tag/v1.1.0
-[1.0.0]: https://github.com/navi-crwn/HEL.ink/releases/tag/v1.0.0

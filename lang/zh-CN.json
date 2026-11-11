@@ -1064,5 +1064,6 @@
     "People": "人数",
     "Share per person": "每人份额",
     "Payments": "支付",
-    "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHop 只保存你选择保存的支付方式和历史记录，你可以随时在 PayHop 中删除它们。"
+    "PayHop keeps only the payment methods and history you choose to save, and you can delete them in PayHop at any time.": "PayHop 只保存你选择保存的支付方式和历史记录，你可以随时在 PayHop 中删除它们。",
+    "Current password (only to change your email)": "当前密码（仅在更改邮箱时需要）"
 }

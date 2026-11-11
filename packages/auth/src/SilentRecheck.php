@@ -17,7 +17,8 @@ use Illuminate\Support\Str;
  * round trip to the hub: same account, carry on; another account, switch to it; `login_required`, sign out here.
  * Nothing is stored in the database: the timestamps live in the session.
  *
- * Safeguards: no redirect while the hub does not answer on its port (and the probe result is cached), at most one
+ * Safeguards: no redirect (and no sign-out: the session stays trusted) unless the hub's health URL answers 2xx (the
+ * verdict is cached), at most one
  * attempt per `cooldown` seconds (a loop cannot start), and any hub `error` keeps the session and waits `retry_after`.
  */
 class SilentRecheck
@@ -26,7 +27,7 @@ class SilentRecheck
 
     public const BLOCKED_UNTIL = 'hop_recheck_until';
 
-    /** @var (callable(): bool)|null Test hook: replaces the reachability probe. */
+    /** @var (callable(string): ?int)|null Test hook: replaces the HTTP call of the probe; returns the status or null. */
     public static $probe = null;
 
     public static function enabled(): bool
@@ -72,35 +73,48 @@ class SilentRecheck
     {
         $purpose = strtolower((string) $request->header('Purpose', '').' '.(string) $request->header('Sec-Purpose', ''));
 
-        return $request->isMethod('GET') && ! $request->ajax() && ! $request->expectsJson()
+        $dest = strtolower((string) $request->header('Sec-Fetch-Dest', 'document'));
+
+        return $request->isMethod('GET') && $dest === 'document' && ! $request->ajax() && ! $request->expectsJson()
             && ! str_contains($purpose, 'prefetch') && ! str_contains($purpose, 'preview');
     }
 
-    /** A TCP connection to the hub within the timeout; cached for a short while so a dead hub costs one probe, not one per page. */
+    /**
+     * The hub answers its health URL with a 2xx within the timeout. Anything else (a 502 from the web server in front
+     * of a dead PHP, a timeout, no connection) means "not reachable": the session stays trusted and nobody is
+     * redirected. The verdict is cached (`probe_ttl`), so a sick hub costs one probe per window, and the next page
+     * load after the cache expires tries again.
+     */
     private static function hubReachable(): bool
     {
-        if (self::$probe !== null) {
-            return (bool) (self::$probe)();
-        }
-        if (! config('hop-auth.recheck.probe', true)) {
+        if (! config('hop-auth.recheck.probe', true) && self::$probe === null) {
             return true;
         }
-        $parts = parse_url((string) config('hop-auth.hub_url'));
-        $host = (string) ($parts['host'] ?? '');
-        if ($host === '') {
-            return false;
-        }
-        $tls = ($parts['scheme'] ?? 'https') === 'https';
-        $port = (int) ($parts['port'] ?? ($tls ? 443 : 80));
+        $url = (string) config('hop-auth.hub_url').(string) config('hop-auth.recheck.probe_path', '/up');
 
-        return (bool) Cache::remember('hop:hub-reachable', 30, static function () use ($host, $port, $tls): bool {
-            $socket = @stream_socket_client(($tls ? 'tls://' : 'tcp://').$host.':'.$port, $errno, $error, (float) config('hop-auth.recheck.probe_timeout', 1.5));
-            if (! is_resource($socket)) {
-                return false;
-            }
-            fclose($socket);
+        return (bool) Cache::remember('hop:hub-reachable:'.sha1($url), (int) config('hop-auth.recheck.probe_ttl', 60), static function () use ($url): bool {
+            $status = self::$probe !== null ? (self::$probe)($url) : self::fetchStatus($url);
 
-            return true;
+            return $status !== null && $status >= 200 && $status < 300;
         });
+    }
+
+    /** HTTP status of a GET (no redirects followed), or null when there was no answer in time. */
+    private static function fetchStatus(string $url): ?int
+    {
+        $context = stream_context_create(['http' => [
+            'method' => 'GET',
+            'timeout' => (float) config('hop-auth.recheck.probe_timeout', 2),
+            'follow_location' => 0,
+            'ignore_errors' => true,
+            'header' => "Accept: */*\r\nUser-Agent: hop-auth-probe\r\n",
+        ]]);
+        $stream = @fopen($url, 'r', false, $context);
+        $headers = $http_response_header ?? [];
+        if (is_resource($stream)) {
+            fclose($stream);
+        }
+
+        return isset($headers[0]) && preg_match('#^HTTP/\S+\s+(\d{3})#', $headers[0], $m) ? (int) $m[1] : null;
     }
 }

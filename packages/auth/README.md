@@ -34,7 +34,7 @@ The package is not on Packagist. Add the repository to the app's `composer.json`
     }
 ],
 "require": {
-    "hop/auth": "^0.1.2"
+    "hop/auth": "^0.2.0"
 }
 ```
 
@@ -135,9 +135,9 @@ A session in your app can outlive the account the person has at the hub: they si
 
 - The session is **fresh** for `recheck.max_age` seconds (default 300) after the hub last vouched for it, by a sign-in or by a silent answer. The time is kept in the session.
 - When it is not fresh, a page load (a `GET` that is not XHR or JSON and not a prefetch) makes one `prompt=none` round trip to the hub ([silent SSO](https://github.com/navi-crwn/HEL.ink/blob/main/docs/silent-sso.md)). Same account: the page loads as if nothing happened. Another account: the session switches to it. `login_required`: the person is signed out here and lands on the page as a guest. A protected page then starts the normal sign-in; a public page shows no sign-in at all.
-- Safeguards: a POST or an XHR request is never redirected. Nothing is redirected while the hub does not accept a connection (a short probe, cached for 30 seconds). At most one attempt per `recheck.cooldown` seconds (30), so there is no loop. Any other hub error, such as `temporarily_unavailable`, keeps the session and waits `recheck.retry_after` seconds (300). The `state` must be the one the session started.
+- Safeguards: a POST or an XHR request is never redirected. While the hub does not answer its health URL (`/up`) with a 2xx, such as a 502 or a timeout, nothing is redirected and nobody is signed out: the session stays trusted and the next page load after the cached verdict expires (60 seconds) tries again. At most one attempt per `recheck.cooldown` seconds (30), so there is no loop. Any other hub error, such as `temporarily_unavailable`, keeps the session and waits `recheck.retry_after` seconds (300). The `state` must be the one the session started.
 - Pages that need no sign-in but show the account (a landing page with a "Dashboard" button) get `hop.recheck` in their middleware, so they are checked too.
-- The keys are in `hop-auth.recheck` (`enabled`, `max_age`, `cooldown`, `retry_after`, `probe`, `probe_timeout`). `HOP_RECHECK=false` turns the whole check off.
+- The keys are in `hop-auth.recheck` (`enabled`, `max_age`, `cooldown`, `retry_after`, `probe`, `probe_path`, `probe_timeout`, `probe_ttl`). `HOP_RECHECK=false` turns the whole check off.
 
 ## Chained logout and trusted hosts
 

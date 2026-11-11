@@ -73,6 +73,11 @@ class SsoController
 
             return redirect()->to($pending['next'] ?: config('hop-auth.home', '/'));
         }
+        if (! empty($pending['silent']) && Auth::check()) {
+            // Another account: nothing of the old one (flags, flash, choices) may follow into the new one.
+            Auth::logout();
+            $request->session()->invalidate();
+        }
         $user = Auth::loginUsingId((int) $payload['sub'], remember: true);
         if (! $user) {
             abort(403, 'Unknown account.');

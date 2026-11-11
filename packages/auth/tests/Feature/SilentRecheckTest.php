@@ -7,6 +7,7 @@ use Hop\Auth\Http\Middleware\RecheckHubSession;
 use Hop\Auth\SilentRecheck;
 use Hop\Auth\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /*
@@ -19,8 +20,9 @@ beforeEach(function () {
     config()->set('hop-auth.secret', 'consumer-secret-that-is-long-enough-123456');
     config()->set('hop-auth.app', 'linkhop');
     config()->set('hop-auth.hub_url', 'https://hub.hel.ink');
-    config()->set('hop-auth.recheck', ['enabled' => true, 'max_age' => 300, 'cooldown' => 30, 'retry_after' => 300, 'probe' => true, 'probe_timeout' => 1.5]);
-    SilentRecheck::$probe = fn () => true;
+    config()->set('hop-auth.recheck', ['enabled' => true, 'max_age' => 300, 'cooldown' => 30, 'retry_after' => 300, 'probe' => true, 'probe_path' => '/up', 'probe_timeout' => 2, 'probe_ttl' => 60]);
+    Cache::flush();
+    SilentRecheck::$probe = fn () => 200;
 });
 
 afterEach(function () {
@@ -129,13 +131,55 @@ test('only a page load re-checks: POST, XHR, JSON and prefetch go through', func
     'sec-purpose' => ['GET', ['Sec-Purpose' => 'prefetch;prerender']],
 ]);
 
-test('no redirect while the hub is not reachable', function () {
-    SilentRecheck::$probe = fn () => false;
-    $request = recheckRequest(session: staleSession(), user: User::factory()->create());
+test('a hub that does not answer 2xx (502, 503, 404, redirect, timeout) changes nothing: trusted session, no redirect, no sign-out', function (?int $status) {
+    SilentRecheck::$probe = fn () => $status;
+    $user = User::factory()->create();
+    $request = recheckRequest(session: staleSession(['hop_profile' => ['sub' => $user->id]]), user: $user);
 
     expect(recheckPass($request)->getContent())->toBe('page');
     expect($request->session()->has('hop_sso'))->toBeFalse();
+    expect($request->session()->has('hop_profile'))->toBeTrue();
+    expect(auth()->id())->toBe($user->id);
+})->with(['502' => 502, '503' => 503, '404' => 404, '302' => 302, 'timeout' => null]);
+
+test('the probe asks the hub health url once per window and tries again after it, so a recovered hub is used', function () {
+    $calls = [];
+    $status = 502;
+    SilentRecheck::$probe = function (string $url) use (&$calls, &$status) {
+        $calls[] = $url;
+
+        return $status;
+    };
+    $user = User::factory()->create();
+
+    // Hub down: two page loads, one probe, both pass.
+    expect(recheckPass(recheckRequest(session: staleSession(), user: $user))->getContent())->toBe('page');
+    expect(recheckPass(recheckRequest(session: staleSession(), user: $user))->getContent())->toBe('page');
+    expect($calls)->toBe(['https://hub.hel.ink/up']);
+
+    // The verdict expires, the hub is back: the next page load makes the silent trip.
+    Cache::flush();
+    $status = 200;
+    expect(recheckPass(recheckRequest(session: staleSession(), user: $user))->getTargetUrl())->toContain('prompt=none');
+    expect($calls)->toHaveCount(2);
 });
+
+test('a hub that is down mid-flow cannot lock the app: the callback never comes, later page loads pass after the cooldown', function () {
+    $user = User::factory()->create();
+    $first = recheckRequest(session: staleSession(), user: $user);
+    expect(recheckPass($first)->isRedirect())->toBeTrue();
+
+    SilentRecheck::$probe = fn () => 502;
+    Cache::flush();
+    $later = recheckRequest(session: ['hop_recheck_until' => time() - 1] + $first->session()->all(), user: $user);
+    expect(recheckPass($later)->getContent())->toBe('page');
+});
+
+test('a request that is not a document navigation (img, iframe, script, fetch) is not re-checked', function (string $dest) {
+    $request = recheckRequest('GET', '/links', staleSession(), ['Sec-Fetch-Dest' => $dest], User::factory()->create());
+
+    expect(recheckPass($request)->getContent())->toBe('page');
+})->with(['image', 'iframe', 'script', 'empty']);
 
 test('at most one attempt per cooldown: a second page load right after goes through', function () {
     $user = User::factory()->create();
@@ -208,6 +252,19 @@ test('another account: the session switches to the account the hub has', functio
     expect($response->getTargetUrl())->toEndWith('/links');
     expect(auth()->id())->toBe($new->id);
     expect(time() - $request->session()->get('hop_verified_at'))->toBeLessThan(5);
+});
+
+test('another account: nothing of the old session (flags, flash) follows into the new one', function () {
+    $old = User::factory()->create();
+    $new = User::factory()->create();
+    $request = recheckCallback(recheckRequest('GET', '/auth/sso/callback', silentPending() + staleSession(['two_factor_passed' => true, 'draft' => 'x']), user: $old), [
+        'ticket' => recheckTicket(['sub' => (string) $new->id, 'state' => 'st']),
+    ]);
+
+    (new SsoController)->callback($request);
+
+    expect(auth()->id())->toBe($new->id);
+    expect($request->session()->has('two_factor_passed'))->toBeFalse()->and($request->session()->has('draft'))->toBeFalse();
 });
 
 test('login_required signs out here and goes on to the page', function () {

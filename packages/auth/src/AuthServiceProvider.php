@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->publishes([__DIR__.'/../config/hop-auth.php' => config_path('hop-auth.php')], 'hop-auth-config');
         $router->aliasMiddleware('hop.auth', AuthenticateViaHub::class);
         $router->aliasMiddleware('hop.recheck', RecheckHubSession::class);
-        $router->aliasMiddleware('hop.token',AuthenticateApiToken::class);
+        $router->aliasMiddleware('hop.token', AuthenticateApiToken::class);
         $router->aliasMiddleware('hop.event', VerifyHubEvent::class);
         // The hub issues tickets; it never consumes them.
         if (config('hop.current', config('hop-auth.app')) !== 'hub' && config('hop-auth.routes.start')) {

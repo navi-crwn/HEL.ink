@@ -49,9 +49,12 @@ return [
         'cooldown' => 30,
         // Seconds to wait after the hub answered with an error (e.g. temporarily_unavailable).
         'retry_after' => 300,
-        // Do not redirect to a hub that does not accept a TCP connection within probe_timeout seconds.
+        // Redirect only while GET hub_url + probe_path answers 2xx within probe_timeout seconds (a 502, a timeout or
+        // no answer: the session stays trusted, nobody is redirected or signed out). The verdict is cached probe_ttl seconds.
         'probe' => true,
-        'probe_timeout' => 1.5,
+        'probe_path' => '/up',
+        'probe_timeout' => 2,
+        'probe_ttl' => 60,
     ],
 
     // Account events from the hub (POST /hop/events: session.revoked, account.status, account.deleted, profile.updated).

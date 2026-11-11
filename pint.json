@@ -1,4 +1,0 @@
-{
-    "preset": "laravel",
-    "notPath": ["packages/auth/src/AuthServiceProvider.php"]
-}

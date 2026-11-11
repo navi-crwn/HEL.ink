@@ -154,3 +154,19 @@ test('onFrame is called with the time step of every frame', () => {
     assert.ok(Math.abs(steps[1] - 0.016) < 1e-9);
     globe.destroy();
 });
+
+test('the sign-in code is kept clear of the near half while it is shown', () => {
+    const env = setup();
+    const ops = [], base = env.layers[1].ctx;
+    env.layers[1].getContext = () => new Proxy({}, { get: (_, name) => base[name], set: (_, name, value) => { if (name === 'globalCompositeOperation') ops.push(value); return true; } });
+    let shown = false;
+    const code = { classList: { contains: (c) => c === 'show' && shown }, getBoundingClientRect: () => ({ left: 230, top: 300, width: 60, height: 22 }) };
+    env.stage.querySelector = (sel) => (sel === '[data-hx-code]' ? code : null);
+    env.stage.getBoundingClientRect = () => ({ left: 0, top: 0, width: 520, height: 520 });
+    const globe = createGlobe(env.stage);
+    globe.draw();
+    assert.deepEqual(ops, []);
+    shown = true;
+    globe.draw();
+    assert.deepEqual(ops, ['destination-out']);
+});

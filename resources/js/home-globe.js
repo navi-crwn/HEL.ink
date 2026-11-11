@@ -32,6 +32,8 @@ export function createGlobe(stage, opts) {
   if (!back || !front) return null;
   var nodes = Array.prototype.slice.call(stage.querySelectorAll('[data-hx-node]'));
   var n = nodes.length;
+  // the sign-in code stays readable: while it is shown, nothing of the near half is painted over it
+  var guard = stage.querySelector('[data-hx-code]'), hole = null;
 
   // unit vectors: x right, y up, z towards the viewer.
   // The apps are scattered, not on a ring: each has its own latitude and its own step around the globe.
@@ -127,7 +129,7 @@ export function createGlobe(stage, opts) {
     if (!w) return;
     size = w; dpr = Math.min(window.devicePixelRatio || 1, 2);
     for (var i = 0; i < layers.length && i < 2; i++) { layers[i].width = Math.round(size * dpr); layers[i].height = Math.round(size * dpr); }
-    R = size * RADIUS; cx = size / 2; cy = size / 2;
+    R = size * RADIUS; cx = size / 2; cy = size / 2; hole = null;
     draw();
   }
 
@@ -236,6 +238,14 @@ export function createGlobe(stage, opts) {
       gl.addColorStop(0, 'rgba(255,255,255,' + c.gloss + ')'); gl.addColorStop(1, 'rgba(255,255,255,0)');
       front.save(); front.beginPath(); front.arc(cx, cy, edge, 0, TAU); front.clip();
       front.fillStyle = gl; front.fillRect(cx - edge, cy - edge, edge * 2, edge * 2); front.restore();
+    }
+    if (guard && front !== back && guard.classList.contains('show')) {
+      if (!hole) { var sr = stage.getBoundingClientRect(), gr = guard.getBoundingClientRect(); hole = [gr.left - sr.left - 3, gr.top - sr.top - 3, gr.width + 6, gr.height + 6]; }
+      var rad = hole[3] / 2;
+      front.save(); front.globalCompositeOperation = 'destination-out'; front.fillStyle = '#000'; front.beginPath();
+      front.moveTo(hole[0] + rad, hole[1]); front.arcTo(hole[0] + hole[2], hole[1], hole[0] + hole[2], hole[1] + hole[3], rad);
+      front.arcTo(hole[0] + hole[2], hole[1] + hole[3], hole[0], hole[1] + hole[3], rad); front.arcTo(hole[0], hole[1] + hole[3], hole[0], hole[1], rad);
+      front.arcTo(hole[0], hole[1], hole[0] + hole[2], hole[1], rad); front.closePath(); front.fill(); front.restore();
     }
   }
 

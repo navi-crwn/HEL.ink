@@ -27,7 +27,7 @@ test('the home page has one interactive section per public product in the manife
     expect($html)->not->toContain('data-home-tabs')->toContain('data-hx-acct');
 });
 
-test('the account stage has one canvas for the globe and still one SVG line per app', function () {
+test('the account stage has two canvases for the globe and still one SVG line per app', function () {
     $html = $this->get('/')->assertOk()->getContent();
 
     $dom = new DOMDocument;
@@ -38,7 +38,8 @@ test('the account stage has one canvas for the globe and still one SVG line per 
     expect($stage->item(0)->getAttribute('aria-hidden'))->toBe('true');
     $tiles = $xpath->query('.//*[@data-hx-node]', $stage->item(0))->length;
     expect($tiles)->toBeGreaterThan(0);
-    expect($xpath->query('.//canvas', $stage->item(0))->length)->toBe(1);
+    expect($xpath->query('.//canvas', $stage->item(0))->length)->toBe(2);
+    expect($xpath->query('.//canvas[2]', $stage->item(0))->item(0)->getAttribute('class'))->toBe('hx-near');
     expect($xpath->query('.//svg//g[@class="lines"]/path', $stage->item(0))->length)->toBe($tiles);
 });
 

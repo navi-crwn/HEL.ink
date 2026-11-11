@@ -24,7 +24,7 @@
         </div>
         <div class="hx-stage" data-signed-out="{{ __('Signed out') }}" data-note-out="{{ __('Signed out once. Signed out everywhere.') }}" aria-hidden="true">
             <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet"><g class="lines">@foreach ($ring as $i => $app)@php [$x, $y] = $spot($i); @endphp<path d="M200 200 L{{ round(200 + 144 * $x, 1) }} {{ round(200 + 144 * $y, 1) }}"/>@endforeach</g><circle class="pkt" r="6"/></svg>
-            <canvas></canvas>
+            <canvas></canvas><canvas class="hx-near"></canvas>
             <div class="hx-hub"><img src="{{ $hubMark }}" alt="" width="56" height="56"><b>HOP ID</b><span class="hx-code" data-hx-code dir="ltr">482 913</span></div>
             @foreach ($ring as $i => $app)
                 @php [$x, $y] = $spot($i); @endphp

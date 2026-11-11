@@ -104,6 +104,7 @@ function account() {
             text(sts[i], gone ? outTxt : inTxt);
             sts[i].classList.toggle('show', signed);
             globe.alpha[i] = gone ? .55 : signed ? 1 : .5;
+            globe.pulse[i] = gone ? 0 : signed ? 1 : .3;   // a live line pulses; a signed-out one is still
         }
         ticket.classList.toggle('show', t >= 1.6 && t < 4.6);
         // 3 keep it safe: the code and the green ring

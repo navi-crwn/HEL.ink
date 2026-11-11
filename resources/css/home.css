@@ -23,9 +23,11 @@
 
 /* globe paint, as r,g,b so the canvas can set its own alpha (home-globe.js reads these from the stage) */
 .hop-home { --globe-dot: 79,70,229; --globe-line: 99,102,241; --globe-out: 244,63,94; --globe-pkt: 34,211,238; --globe-body: 99,102,241;
-    --globe-body-in: .02; --globe-body-out: .1; --globe-limb: .2; --globe-dot-min: .08; --globe-dot-max: .6; --globe-ring-min: .05; --globe-ring-max: .3; --globe-core: .14; }
+    --globe-body-in: .02; --globe-body-out: .1; --globe-limb: .2; --globe-dot-min: .08; --globe-dot-max: .6; --globe-ring-min: .05; --globe-ring-max: .24; --globe-core: .16; --globe-pulse: 79,70,229; --globe-gloss: .5;
+    --core-a: #fff; --core-b: #e4e7ff; --core-hi: #fff; --core-edge: #6366f166; --core-shade: #6366f14d; --core-ring: #6366f114; --core-glow: #6366f14d; }
 .dark .hop-home, [data-theme=dark] .hop-home { --globe-dot: 165,180,252; --globe-line: 129,140,248; --globe-out: 251,113,133; --globe-pkt: 103,232,249; --globe-body: 99,102,241;
-    --globe-body-in: .05; --globe-body-out: .2; --globe-limb: .28; --globe-dot-min: .08; --globe-dot-max: .75; --globe-ring-min: .06; --globe-ring-max: .36; --globe-core: .26; }
+    --globe-body-in: .05; --globe-body-out: .2; --globe-limb: .28; --globe-dot-min: .08; --globe-dot-max: .75; --globe-ring-min: .06; --globe-ring-max: .3; --globe-core: .3; --globe-pulse: 224,231,255; --globe-gloss: .07;
+    --core-a: #262e52; --core-b: #121730; --core-hi: #a5b4fc3d; --core-edge: #818cf88c; --core-shade: #0009; --core-ring: #818cf81f; --core-glow: #6366f18c; }
 
 /* 01 one account */
 .hop-home .hx-acct { min-height: calc(100vh - 64px); display: grid; align-items: center; }
@@ -88,7 +90,16 @@
 .hop-home .hx-stage.is-globe .hx-node b, .hop-home .hx-stage.is-globe .hx-node .st { opacity: var(--card, 1); transition: none; }
 .hx-live .hop-home .hx-stage.is-globe .hx-node .st:not(.show) { opacity: 0; }
 .hop-home .hx-stage.is-globe .hx-node img, .hop-home .hx-stage.is-globe .hx-hub img { -webkit-user-drag: none; pointer-events: none; }
-.hop-home .hx-stage.is-globe .hx-ticket { top: calc(50% - 92px); }
+/* two canvases: the far half of the globe behind the core, the near half in front of it */
+.hop-home .hx-stage canvas.hx-near { z-index: 4; pointer-events: none; }
+/* HOP ID is the core inside the globe: a small lit ball, not a card lying on top of it */
+.hop-home .hx-stage.is-globe .hx-hub { width: 24%; aspect-ratio: 1; padding: 0; gap: 3px; align-content: center; border-radius: 50%; border-color: var(--core-edge);
+    background: radial-gradient(circle at 32% 26%, var(--core-hi) 0, transparent 58%), radial-gradient(circle at 50% 56%, var(--core-a), var(--core-b));
+    box-shadow: inset 0 -18px 30px -16px var(--core-shade), 0 0 0 6px var(--core-ring), 0 0 56px 8px var(--core-glow); }
+.hop-home .hx-stage.is-globe .hx-hub img { width: 40%; height: auto; border-radius: 26%; }
+.hop-home .hx-stage.is-globe .hx-hub b { font-size: 13px; letter-spacing: -.01em; }
+.hop-home .hx-stage.is-globe .hx-hub.is-secure { border-color: #10b981; box-shadow: inset 0 -18px 30px -16px var(--core-shade), 0 0 0 6px #10b98126, 0 0 56px 8px #10b98166; }
+.hop-home .hx-stage.is-globe .hx-ticket { top: calc(38% - 34px); }
 .hop-home .hx-stage.is-globe .hx-note { bottom: -6px; }
 
 /* 04 questions */
@@ -162,7 +173,10 @@
     .hop-home .hx-node { width: 96px; padding: 10px 6px; border-radius: 18px; } .hop-home .hx-node img { width: 34px; height: 34px; } .hop-home .hx-node b { font-size: 12px; }
     .hop-home .hx-hub { width: 108px; padding: 12px 10px; border-radius: 22px; } .hop-home .hx-hub img { width: 44px; height: 44px; }
     .hop-home .hx-stage { --ring-x: 38%; --ring-y: 43%; margin-block: 22px 30px; } .hop-home .hx-note { bottom: -28px; }
-    .hop-home .hx-stage.is-globe .hx-ticket { top: calc(50% - 78px); }
+    .hop-home .hx-stage.is-globe .hx-hub { width: 24%; padding: 0; border-radius: 50%; gap: 2px; }
+    .hop-home .hx-stage.is-globe .hx-hub img { width: 40%; height: auto; }
+    .hop-home .hx-stage.is-globe .hx-hub b { font-size: 11px; }
+    .hop-home .hx-stage.is-globe .hx-ticket { top: calc(38% - 32px); }
     .hop-home .hx-stage.is-globe .hx-note { bottom: -26px; }
 }
 @media (prefers-reduced-motion: reduce) { .hop-home .hx *, .hop-home .hx *::before { animation: none !important; transition: none !important; } }

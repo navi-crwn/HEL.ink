@@ -101,7 +101,7 @@ class SendHopEvent implements ShouldQueue
         }
         $key = self::failureKey((string) $app->slug);
         // Atomic: several jobs can fail at the same moment.
-        if (! is_int(Cache::get($key, 0))) {
+        if (! is_numeric(Cache::get($key, 0))) {
             Cache::forget($key); // a leftover of an older format
         }
         Cache::add($key, 0);

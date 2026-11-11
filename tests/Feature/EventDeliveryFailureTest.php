@@ -79,3 +79,23 @@ test('an app with events that config does not list as an event app is reported t
     $lines = array_values(array_filter(EventRegistry::warnings(), fn ($l) => str_starts_with($l, 'extraapp:')));
     expect($lines)->toHaveCount(1)->and($lines[0])->toContain('1 account event(s)')->toContain('account.status');
 });
+
+test('a count that the cache returns as a numeric string keeps counting', function () {
+    HopApp::factory()->payhop()->create(['capabilities' => ['events']]);
+    $id = HopApp::where('slug', 'payhop')->value('id');
+    Cache::forever(SendHopEvent::failureKey('payhop'), '4');
+
+    (new SendHopEvent($id, 'session.revoked', ['sub' => '1'], 'ev', now()->toIso8601String()))->failed(new RuntimeException('x'));
+
+    expect((int) Cache::get(SendHopEvent::failureKey('payhop')))->toBe(5);
+});
+
+test('a leftover value that is not a number is replaced', function () {
+    HopApp::factory()->payhop()->create(['capabilities' => ['events']]);
+    $id = HopApp::where('slug', 'payhop')->value('id');
+    Cache::forever(SendHopEvent::failureKey('payhop'), ['count' => 3]);
+
+    (new SendHopEvent($id, 'session.revoked', ['sub' => '1'], 'ev', now()->toIso8601String()))->failed(new RuntimeException('x'));
+
+    expect((int) Cache::get(SendHopEvent::failureKey('payhop')))->toBe(1);
+});

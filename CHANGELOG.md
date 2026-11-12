@@ -11,6 +11,10 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 - The API page and the token form no longer say that one token works at every HOP API. Hub tokens (`hlk_…`) are for LinkHop; the form offers only the scopes of apps that accept them (`link:*`), and PixelHop, which refuses hub tokens, is listed under "Apps with their own keys" with the addresses where its keys (`ph_…`) are made (`pixel.hel.ink/settings#api`) and documented (`pixel.hel.ink/docs`). The marker is `own_keys` on the app in `config/hop.php` `api_docs`. A new token cannot carry a `pixel:*` scope (422); a token that already does keeps working and stays in the list. In the nine languages.
 - The theme and the language are one choice for the whole family. The theme is the cookie `hop_theme` (`light` or `dark`), written by `hopSetTheme()` in `partials/hop-theme.blade.php` on every theme control (app shell, sign-in pages, public pages, the goodbye page) and read before first paint, then the old `helink-theme` key, then the system setting; an old key is copied into the cookie once. The language cookie `hop_lang` carries `Domain=.hel.ink` on hel.ink and its subdomains (host-only elsewhere), so a choice on `hel.ink` holds on `hub.hel.ink` and the other way round. Once per browser and host (marker cookie `hop_pref=2`) the old host-only `hop_lang` is removed and its value moved to the domain cookie. No new setting or environment variable.
 
+### Security
+
+- `phpseclib/phpseclib` 4.0.2 to 4.0.3 (with `paragonie/constant_time_encoding` 3.1.3 to 3.1.4) for the advisory GHSA-w3p9-g4p2-h3rr (unbounded key-derivation iteration count, CPU exhaustion); `composer audit` is clean again.
+
 ### Added
 
 - Tests: the token form, the API page and the creation rules (nine languages, old tokens), the cookie rules on both hub hosts and elsewhere including each branch of the clean-up, and the first-paint script (`tests/theme-boot.test.mjs`, run by CI).

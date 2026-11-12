@@ -91,7 +91,8 @@ test('the API page links only documentation that exists, at the real API address
     expect($html)->toContain('href="https://link.example.test/api-docs"')
         ->and($html)->toContain('<code>https://link.example.test/api</code>')
         ->and($html)->toContain('href="https://pixel.example.test/docs"')
-        ->and($html)->toContain('<code>https://pixel.example.test/api/v1</code>')
+        ->and($html)->toContain('href="https://pixel.example.test/settings#api"')
+        ->and($html)->not->toContain('<code>https://pixel.example.test/api/v1</code>')
         ->and($html)->not->toContain('https://pixel.example.test/api-docs')
         ->and($html)->not->toContain('https://bio.example.test/api')
         ->and($html)->not->toContain('https://note.example.test/api');

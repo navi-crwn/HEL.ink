@@ -106,9 +106,12 @@ return [
     // Where an app's bearer-token API and its documentation live, for the API page and the token
     // form. `scopes` is the prefix of that app's token scopes (ApiToken::SCOPES). An app that is
     // not listed has no such API: the page says so and its scopes are not offered.
+    // `own_keys` marks an app that does not check hub tokens (hlk_…): it issues its own keys, made at
+    // `path` in that app (prefix `prefix`). The hub does not offer that app's scopes for new tokens and
+    // points to the app instead; a token that already carries such a scope is left alone.
     'api_docs' => [
         'linkhop' => ['base' => '/api', 'docs' => '/api-docs', 'scopes' => 'link'],
-        'pixelhop' => ['base' => '/api/v1', 'docs' => '/docs', 'scopes' => 'pixel'],
+        'pixelhop' => ['base' => '/api/v1', 'docs' => '/docs', 'scopes' => 'pixel', 'own_keys' => ['path' => '/settings#api', 'prefix' => 'ph_']],
     ],
     // Why an app has no export link on the Export tab (English, translated on render).
     'export_notes' => [

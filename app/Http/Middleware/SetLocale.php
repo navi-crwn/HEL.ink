@@ -37,11 +37,30 @@ class SetLocale
         return $host === 'hel.ink' || str_ends_with($host, '.hel.ink') ? '.hel.ink' : null;
     }
 
+    /**
+     * The value of cookie $name in the raw Cookie header; when it appears more than once the last one counts (browsers send
+     * the oldest first, so the last is the newer family cookie, while PHP alone keeps the first). Without such a pair in
+     * the header, the value PHP parsed; '' when there is none. Parts that are not name=value are ignored.
+     */
+    public static function lastCookie(Request $request, string $name): string
+    {
+        $value = null;
+        foreach (explode(';', (string) $request->headers->get('Cookie', '')) as $part) {
+            [$n, $v] = array_pad(explode('=', trim($part), 2), 2, null);
+            if ($v !== null && trim($n) === $name) {
+                $value = trim($v);
+            }
+        }
+
+        return $value ?? Input::text($request->cookie($name));
+    }
+
     public function handle(Request $request, Closure $next): Response
     {
         $requested = Locales::resolve(Input::text($request->query('lang')));
-        $carried = Locales::resolve(Input::text($request->cookie(self::COOKIE)));
-        $locale = $requested ?? Locales::normalize(Input::text($request->cookie(self::COOKIE, Locales::DEFAULT)));
+        $sent = self::lastCookie($request, self::COOKIE);
+        $carried = Locales::resolve($sent);
+        $locale = $requested ?? Locales::normalize($sent);
         app()->setLocale($locale);
         $response = $next($request);
 

@@ -109,3 +109,32 @@ test('the theme writer is on the marketing (home layout), sign-in, dashboard and
         expect($this->withoutVite()->actingAs($user)->withSession(['2fa_verified' => true])->get($path)->getContent())->toContain('hop_theme=');
     }
 });
+
+test('with hop_lang twice in the Cookie header the last one counts, on both hub hosts', function () {
+    foreach (['hel.ink', 'hub.hel.ink'] as $host) {
+        $res = $this->withoutVite()->withHeader('Cookie', 'hop_lang=en; hop_lang=ja')->get("https://{$host}/about");
+        $cookies = langCookies($res);
+        expect($res->getContent())->toContain('lang="ja"')
+            ->and(pickCookie($cookies, 'hop_lang', true)['value'])->toBe('ja')
+            ->and(pickCookie($cookies, 'hop_lang', true)['domain'])->toBe('.hel.ink')
+            ->and(pickCookie($cookies, 'hop_lang', false)['expires'])->toBeLessThan(time())
+            ->and(pickCookie($cookies, 'hop_pref', false)['value'])->toBe('2');
+    }
+});
+
+test('a single hop_lang in the header, or a ?lang= in the same request, behaves as before', function () {
+    $res = $this->withoutVite()->withHeader('Cookie', 'a=1; hop_lang=fr')->get('https://hel.ink/about');
+    expect($res->getContent())->toContain('lang="fr"')->and(pickCookie(langCookies($res), 'hop_lang', true)['value'])->toBe('fr');
+    $res = $this->withoutVite()->withHeader('Cookie', 'hop_lang=en; hop_lang=ja')->get('https://hel.ink/about?lang=ru');
+    $values = array_map(fn ($c) => $c['value'], array_filter(langCookies($res), fn ($c) => $c['name'] === 'hop_lang' && $c['domain'] !== null));
+    expect($res->getContent())->toContain('lang="ru"')->and(array_values($values))->toBe(['ru']);
+});
+
+test('a malformed Cookie header does not break the page or pick a wrong value', function () {
+    foreach (['hop_lang', ';;; =x; hop_lang=', 'hop_lang=de; garbage; ==; hop_lang', 'xhop_lang=ja; hop_lang_x=ru'] as $header) {
+        $res = $this->withoutVite()->withHeader('Cookie', $header)->get('https://hel.ink/about');
+        $res->assertOk();
+        expect($res->getContent())->toContain($header === 'hop_lang=de; garbage; ==; hop_lang' ? 'lang="de"' : 'lang="en"');
+    }
+    expect(SetLocale::lastCookie(Request::create('/', 'GET', [], [], [], ['HTTP_COOKIE' => 'hop_lang=en; hop_lang=ja; hop_lang=de']), 'hop_lang'))->toBe('de');
+});

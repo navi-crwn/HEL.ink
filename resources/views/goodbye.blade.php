@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>{{ __('Account deleted') }} · HOP</title>
     <link rel="icon" href="{{ route('brand.favicon') }}" type="image/png">
     @vite(['resources/css/app.css', 'resources/js/app.js'])

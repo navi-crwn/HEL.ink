@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="robots" content="noindex, nofollow">
         <title>{{ $title ?? config('app.name', 'HOP') }}</title>
         <meta property="og:title" content="{{ $title ?? config('app.name', 'HOP') }}">
         <link rel="icon" href="{{ route('brand.favicon') }}" type="image/png" sizes="32x32">

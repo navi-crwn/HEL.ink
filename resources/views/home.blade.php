@@ -2,6 +2,8 @@
     $stories = \App\Support\FamilyStory::all();
 @endphp
 @push('head')
+    {{-- Structured data, not a script that runs: the apps come from the same registry as the page (HopApps::all()). --}}
+    <script type="application/ld+json" nonce="{{ Vite::cspNonce() }}">{!! json_encode(\App\Support\Seo::homeGraph($apps), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP) !!}</script>
     <link rel="stylesheet" href="{{ asset('hop-assets/v9/hop-home.css') }}">
     <script src="{{ asset('hop-assets/v9/hop-hero3d.js') }}" defer></script>
     <script src="{{ asset('hop-assets/v9/hop-home.js') }}" defer></script>

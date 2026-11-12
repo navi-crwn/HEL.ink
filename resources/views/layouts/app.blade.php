@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="robots" content="noindex, nofollow">
         <title>{{ trim(($pageTitle ?? '') ?: config('app.name').' - Hop Easy Link') }}</title>
         <meta name="description" content="{{ __('Your HOP ID: one account for LinkHop, BioHop, PixelHop and every HOP app.') }}">
         <link rel="icon" href="{{ route('brand.favicon') }}">

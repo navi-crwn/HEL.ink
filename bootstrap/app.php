@@ -39,8 +39,8 @@ return Application::configure(basePath: dirname(__DIR__))
             NoStoreWhenSignedIn::class,
             ProtectPermanentSuperadmin::class,
         ]);
-        // The language cookie is plain text (en, id, …), read before decryption.
-        $middleware->encryptCookies(except: [SetLocale::COOKIE]);
+        // The language cookie is plain text (en, id, …), read before decryption; so is its clean-up marker.
+        $middleware->encryptCookies(except: [SetLocale::COOKIE, SetLocale::MARKER]);
         $middleware->alias([
             'admin' => AdminMiddleware::class,
             '2fa' => EnsureTwoFactorAuthenticated::class,

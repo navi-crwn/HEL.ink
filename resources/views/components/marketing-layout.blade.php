@@ -27,18 +27,7 @@
         <link rel="canonical" href="{{ $canonical }}">
         <link rel="icon" href="{{ $favicon }}">
         @if ($themed)
-            {{-- Apply the saved theme before first paint (same key as the app shell) --}}
-            <script nonce="{{ Vite::cspNonce() }}">
-                (function () {
-                    try {
-                        var t = localStorage.getItem('helink-theme');
-                    if (/(?:^|; )hop_ui=clean(?:;|$)/.test(document.cookie)) document.documentElement.dataset.ui = 'clean';
-                        if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                            document.documentElement.classList.add('dark');
-                        }
-                    } catch (e) {}
-                })();
-            </script>
+            @include('partials.hop-theme')
         @endif
         {{-- Every public page exists in the nine languages; `alternates` is kept so older callers still pass it. --}}
         @foreach (\App\Support\Seo::alternates(request()->path()) as $code => $href)

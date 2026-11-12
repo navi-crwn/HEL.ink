@@ -136,7 +136,7 @@ export default function installInlineActions(root = document) {
         if (el.dataset.copyFrom) copyText(el, document.querySelector(el.dataset.copyFrom)?.value ?? '');
         if (el.hasAttribute('data-toggle-dark')) {
             const dark = document.documentElement.classList.toggle('dark');
-            try { localStorage.setItem('helink-theme', dark ? 'dark' : 'light'); } catch (err) { /* storage blocked */ }
+            window.hopSetTheme?.(dark ? 'dark' : 'light'); // partials/hop-theme.blade.php: the cookie on .hel.ink and the old key
         }
         if (el.dataset.call) {
             const fn = window[el.dataset.call];

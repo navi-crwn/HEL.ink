@@ -9,17 +9,7 @@
         <meta property="og:title" content="{{ $title ?? config('app.name', 'HOP') }}">
         <link rel="icon" href="{{ route('brand.favicon') }}" type="image/png" sizes="32x32">
         <link rel="apple-touch-icon" href="{{ route('brand.favicon') }}">
-        <script nonce="{{ Vite::cspNonce() }}">
-            (function () {
-                try {
-                    var t = localStorage.getItem('helink-theme');
-                    if (/(?:^|; )hop_ui=clean(?:;|$)/.test(document.cookie)) document.documentElement.dataset.ui = 'clean';
-                    if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                        document.documentElement.classList.add('dark');
-                    }
-                } catch (e) {}
-            })();
-        </script>
+        @include('partials.hop-theme')
         <x-hop::fonts />
         @include('partials.hop-ui')
         @vite(['resources/css/app.css', 'resources/css/coss.css', 'resources/js/app.js'])

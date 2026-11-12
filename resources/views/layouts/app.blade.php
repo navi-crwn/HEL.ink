@@ -8,18 +8,7 @@
         <title>{{ trim(($pageTitle ?? '') ?: config('app.name').' - Hop Easy Link') }}</title>
         <meta name="description" content="{{ __('Your HOP ID: one account for LinkHop, BioHop, PixelHop and every HOP app.') }}">
         <link rel="icon" href="{{ route('brand.favicon') }}">
-        {{-- Apply the saved theme before first paint (no light flash in dark mode) --}}
-        <script nonce="{{ Vite::cspNonce() }}">
-            (function () {
-                try {
-                    var t = localStorage.getItem('helink-theme');
-                    if (/(?:^|; )hop_ui=clean(?:;|$)/.test(document.cookie)) document.documentElement.dataset.ui = 'clean';
-                    if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                        document.documentElement.classList.add('dark');
-                    }
-                } catch (e) {}
-            })();
-        </script>
+        @include('partials.hop-theme')
         <x-hop::fonts />
         @include('partials.hop-ui')
         @stack('scripts-head')
@@ -137,7 +126,7 @@
             document.querySelectorAll('[data-ui-choice]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.uiChoice === (document.documentElement.dataset.ui === 'clean' ? 'clean' : 'hop') ? 'true' : 'false'); });
             window.toggleTheme = function () {
                 const isDark = document.documentElement.classList.toggle('dark');
-                try { localStorage.setItem('helink-theme', isDark ? 'dark' : 'light'); } catch (e) {}
+                window.hopSetTheme(isDark ? 'dark' : 'light');
                 window.dispatchEvent(new CustomEvent('theme-changed'));
             };
         </script>

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ darkMode: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) }" x-bind:class="{ 'dark': darkMode }" x-init="$watch('darkMode', val => localStorage.setItem('theme', val ? 'dark' : 'light'))">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ darkMode: document.documentElement.classList.contains('dark') }" x-bind:class="{ 'dark': darkMode }" x-init="$watch('darkMode', val => hopSetTheme(val ? 'dark' : 'light'))">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
+    @include('partials.hop-theme')
     <title>{{ __('Account deleted') }} · HOP</title>
     <link rel="icon" href="{{ route('brand.favicon') }}" type="image/png">
     @vite(['resources/css/app.css', 'resources/js/app.js'])

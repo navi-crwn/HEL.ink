@@ -121,7 +121,7 @@ A client sends `Authorization: Bearer hlk_…`. The package stores only the SHA-
 
 On success the request carries the `api_user` and `api_token` attributes, and `$request->user()` returns the token's owner.
 
-`hop.token` without a scope only checks that the token is valid. `hop.token:link:create` also needs the `link:create` scope. A token with no scopes (null or an empty list) may do everything. Otherwise `can()` accepts an exact match, a prefix wildcard such as `link:*`, or `*`. The scopes the family defines are in `ApiToken::SCOPES`: `link:read`, `link:create`, `link:write`, `bio:read`, `bio:write`, `pixel:read` and `pixel:write`.
+`hop.token` without a scope only checks that the token is valid. `hop.token:link:create` also needs the `link:create` scope. A token with no scopes (null or an empty list) may do everything. Otherwise `can()` accepts an exact match, a prefix wildcard such as `link:*`, or `*`. The scopes the family defines are in `ApiToken::SCOPES`: `link:read`, `link:create`, `link:write`, `bio:read`, `bio:write`, `pixel:read` and `pixel:write`. The HOP hub offers only the `link:*` scopes when someone makes a new token (hub tokens are for LinkHop), and it refuses a new token that carries a `pixel:*` scope, because PixelHop issues its own keys. The `bio:*` scopes are in the list but the form does not offer them. A token that was made earlier with a `pixel:*` scope keeps working.
 
 ### API token rate limit
 

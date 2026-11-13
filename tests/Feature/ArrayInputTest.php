@@ -72,7 +72,8 @@ test('the changelog treats an array app filter as no filter', function () {
     $response = $this->withoutVite()->get('/changelog?app[]=LinkHop')->assertOk();
 
     expect($response->viewData('selected'))->toBe('');
-    expect($response->viewData('entries')->pluck('app')->unique()->count())->toBeGreaterThan(1);
+    // no filter: every entry of the snapshot is counted, the same as for a plain visit
+    expect($response->viewData('total'))->toBe($this->withoutVite()->get('/changelog')->viewData('total'));
 });
 
 test('the password reset page does not lock the email field for an array email', function () {

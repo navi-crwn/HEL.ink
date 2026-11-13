@@ -4,6 +4,13 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here. The for
 
 ## [Unreleased]
 
+## [1.3.2] - 2026-11-14
+
+### Fixed
+
+- Public pages that follow the chosen language (home, about, privacy and the other marketing pages) now also answer `Vary: Cookie`, so a shared cache keeps visitors of different languages apart. Files and the public numbers under `/stats/` are unchanged, and signed-in pages stay `no-store`.
+- A visit without a language cookie no longer receives the one-time clean-up cookies (`hop_lang` expired and `hop_pref=2`), so a plain page answer carries no `hop_*` cookie. Picking a language with `?lang=` writes only the one `hop_lang` cookie for `.hel.ink`. A browser that sends `hop_lang` is cleaned up once as before.
+
 ## [1.3.1] - 2026-11-12
 
 ### Changed

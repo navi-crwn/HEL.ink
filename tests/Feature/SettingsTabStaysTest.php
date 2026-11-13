@@ -7,12 +7,12 @@ use App\Models\User;
  * Every form of Settings that can redirect after a result (done, refused, or a mistake in the form) must leave
  * the person on the tab the form is on: the redirect carries `active_tab`, which settings.blade.php reads.
  */
-function settingsMember(array $attrs = []): User
+function tabsTestMember(array $attrs = []): User
 {
     return User::factory()->create($attrs);
 }
 
-function withTwoFactor(): array
+function tabsTestTwoFactorAttrs(): array
 {
     return [
         'two_factor_secret' => encrypt('JBSWY3DPEHPK3PXP'),
@@ -22,7 +22,7 @@ function withTwoFactor(): array
 }
 
 test('revoking a token leaves you on the API tab with the message', function () {
-    $user = settingsMember();
+    $user = tabsTestMember();
     $token = ApiToken::generate($user->id, 'CLI')['model'];
 
     $this->actingAs($user)->withSession(['2fa_verified' => true])
@@ -34,7 +34,7 @@ test('revoking a token leaves you on the API tab with the message', function () 
 });
 
 test('creating a token without scripts shows the new token once, on the API tab', function () {
-    $user = settingsMember();
+    $user = tabsTestMember();
     $this->actingAs($user)->withSession(['2fa_verified' => true])
         ->post('/api-tokens', ['name' => 'No script'])
         ->assertRedirect()
@@ -50,7 +50,7 @@ test('creating a token without scripts shows the new token once, on the API tab'
 });
 
 test('a mistake in the token form leaves you on the API tab with the error', function () {
-    $user = settingsMember();
+    $user = tabsTestMember();
     $this->actingAs($user)->withSession(['2fa_verified' => true])
         ->post('/api-tokens', ['name' => ''])
         ->assertRedirect()
@@ -63,13 +63,13 @@ test('a mistake in the token form leaves you on the API tab with the error', fun
 });
 
 test('a wrong password or a missing field in the two-factor forms keeps the two-factor tab', function () {
-    $user = settingsMember();
+    $user = tabsTestMember();
     $this->actingAs($user)->withSession(['2fa_verified' => true]);
 
     $this->post('/settings/2fa/enable', ['password' => 'wrong-password'])->assertSessionHasErrors('password')->assertSessionHas('active_tab', '2fa');
     $this->post('/settings/2fa/enable', [])->assertSessionHasErrors('password')->assertSessionHas('active_tab', '2fa');
 
-    $user->update(withTwoFactor());
+    $user->update(tabsTestTwoFactorAttrs());
     $this->post('/settings/2fa/disable', ['password' => 'wrong-password'])->assertSessionHasErrors('password')->assertSessionHas('active_tab', '2fa');
     $this->post('/settings/2fa/disable', [])->assertSessionHasErrors('password')->assertSessionHas('active_tab', '2fa');
     $this->post('/settings/2fa/recovery-codes', ['password' => 'wrong-password'])->assertSessionHasErrors('password')->assertSessionHas('active_tab', '2fa');
@@ -78,7 +78,7 @@ test('a wrong password or a missing field in the two-factor forms keeps the two-
 });
 
 test('forms on the Account tab still land on the Account tab', function () {
-    $user = settingsMember();
+    $user = tabsTestMember();
     $this->actingAs($user)->withSession(['2fa_verified' => true]);
     $this->put('/password', ['current_password' => 'wrong', 'password' => 'a-new-Password-1', 'password_confirmation' => 'a-new-Password-1'])
         ->assertRedirect()->assertSessionMissing('active_tab');
@@ -87,7 +87,7 @@ test('forms on the Account tab still land on the Account tab', function () {
 });
 
 test('the language links of Settings keep the tab', function () {
-    $user = settingsMember();
+    $user = tabsTestMember();
     $html = $this->withoutVite()->actingAs($user)->withSession(['2fa_verified' => true])->get('/settings')->assertOk()->getContent();
     expect($html)->toContain('hreflang="de"')->and($html)->toContain('keepTabOnLanguageLinks');
 });

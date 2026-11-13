@@ -12,6 +12,7 @@
             $ogDescription = $metaDescription;
             $ogImage = route('brand.logo.dark');
             $favicon = route('brand.favicon');
+            $canonical = \App\Support\Seo::canonical(request());
         @endphp
         <title>{{ $metaTitle }}</title>
         <meta name="description" content="{{ $metaDescription }}">
@@ -19,26 +20,19 @@
         <meta property="og:title" content="{{ $ogTitle }}">
         <meta property="og:description" content="{{ $ogDescription }}">
         <meta property="og:image" content="{{ $ogImage }}">
+        <meta property="og:url" content="{{ $canonical }}">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="{{ \App\Support\Seo::NAME }}">
+        <meta name="twitter:card" content="summary">
+        <link rel="canonical" href="{{ $canonical }}">
         <link rel="icon" href="{{ $favicon }}">
         @if ($themed)
-            {{-- Apply the saved theme before first paint (same key as the app shell) --}}
-            <script nonce="{{ Vite::cspNonce() }}">
-                (function () {
-                    try {
-                        var t = localStorage.getItem('helink-theme');
-                    if (/(?:^|; )hop_ui=clean(?:;|$)/.test(document.cookie)) document.documentElement.dataset.ui = 'clean';
-                        if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                            document.documentElement.classList.add('dark');
-                        }
-                    } catch (e) {}
-                })();
-            </script>
+            @include('partials.hop-theme')
         @endif
-        @if ($alternates)
-            @foreach (\Hop\Ui\Locales::names() as $code => $name)
-                <link rel="alternate" hreflang="{{ $code }}" href="{{ url()->current() }}?lang={{ $code }}">
-            @endforeach
-        @endif
+        {{-- Every public page exists in the nine languages; `alternates` is kept so older callers still pass it. --}}
+        @foreach (\App\Support\Seo::alternates(request()->path()) as $code => $href)
+            <link rel="alternate" hreflang="{{ $code }}" href="{{ $href }}">
+        @endforeach
         <x-hop::fonts />
         @vite(['resources/css/app.css', 'resources/css/coss.css', 'resources/js/app.js'])
         @include('partials.hop-bento')

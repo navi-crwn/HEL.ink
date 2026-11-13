@@ -4,21 +4,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="robots" content="noindex, nofollow">
         <title>{{ $title ?? config('app.name', 'HOP') }}</title>
         <meta property="og:title" content="{{ $title ?? config('app.name', 'HOP') }}">
         <link rel="icon" href="{{ route('brand.favicon') }}" type="image/png" sizes="32x32">
         <link rel="apple-touch-icon" href="{{ route('brand.favicon') }}">
-        <script nonce="{{ Vite::cspNonce() }}">
-            (function () {
-                try {
-                    var t = localStorage.getItem('helink-theme');
-                    if (/(?:^|; )hop_ui=clean(?:;|$)/.test(document.cookie)) document.documentElement.dataset.ui = 'clean';
-                    if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                        document.documentElement.classList.add('dark');
-                    }
-                } catch (e) {}
-            })();
-        </script>
+        @include('partials.hop-theme')
         <x-hop::fonts />
         @include('partials.hop-ui')
         @vite(['resources/css/app.css', 'resources/css/coss.css', 'resources/js/app.js'])

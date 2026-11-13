@@ -11,8 +11,9 @@
         ];
         $u = auth()->user();
         $actionLabels = ['created' => __('Created'), 'updated' => __('Updated'), 'deleted' => __('Deleted'), 'suspended' => __('Suspended'), 'activated' => __('Activated'), 'login' => __('Login')];
-        // Apps with a bearer-token API (config hop.api_docs), for the API tab's wording.
-        $apiApps = collect($apps)->filter(fn ($a) => config('hop.api_docs.'.$a->slug))->values();
+        // Apps whose API accepts hub tokens (config hop.api_docs), and apps that issue their own keys, for the API tab's wording.
+        $apiApps = collect(\App\Http\Controllers\ApiTokenController::hubTokenApps($apps));
+        $ownKeyApps = \App\Http\Controllers\ApiTokenController::ownKeyApps($apps);
         $apiScopes = \App\Http\Controllers\ApiTokenController::availableScopes($apiApps->pluck('slug')->all());
         // Sign-in times are shown in the person's timezone (the app's when none or an unknown one is saved), and say so.
         $tz = $u->timezone ?: config('app.timezone');
@@ -563,7 +564,11 @@
                     @else
                     <div>
                         <h3 class="text-base font-semibold text-ink">{{ __('API tokens') }}</h3>
-                        <p class="text-sm text-muted">{{ __('One token works at every HOP API (:apps) and is limited to the scopes you pick.', ['apps' => $apiApps->pluck('name')->join(', ')]) }}</p>
+                        <p class="text-sm text-muted">{{ __('Hub tokens (hlk_…) work at :apps and are limited to the scopes you pick.', ['apps' => $apiApps->pluck('name')->join(', ')]) }}</p>
+                        @foreach ($ownKeyApps as $app)
+                            @php($own = config('hop.api_docs.'.$app->slug.'.own_keys'))
+                            <p class="text-sm text-muted">{!! __(':app keys (:prefix…) are made in :app itself, at :link, not here.', ['app' => e($app->name), 'prefix' => e($own['prefix']), 'link' => '<a href="'.e($app->url.$own['path']).'" class="underline">'.e(parse_url($app->url, PHP_URL_HOST).$own['path']).'</a>']) !!}</p>
+                        @endforeach
                     </div>
                     <div class="glass-inset rounded-xl p-4">
                         <h4 class="text-sm font-semibold text-ink mb-3">{{ __('Create a token') }}</h4>

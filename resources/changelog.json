@@ -42,8 +42,8 @@
         },
         {
           "type": "fixed",
-          "where": "Top bar on narrow phones",
-          "text": "The public top bar no longer grows past the screen on 375 px wide phones with long button words, and the dashboard title keeps more room next to the buttons."
+          "where": "Launcher, PayHop",
+          "text": "The Open button on the PayHop card now starts at PayHop's own dashboard, as it does for the other apps, instead of its public start page. Reason: signing in through the launcher should end where your work is."
         },
         {
           "type": "changed",

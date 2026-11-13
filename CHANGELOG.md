@@ -13,7 +13,7 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here, written
 - **Settings, language.** Changing the language while on another tab of Settings no longer jumps to the Account tab, because the tab now stays in the address.
 - **Settings, API tokens without scripts.** When scripts are blocked, a newly made token is now shown once on the page. Before, the token was made but never displayed, so it could not be copied.
 - **Public pages for members.** For a signed-in person, the logo and the Back link on the announcements, status and changelog pages, the app list in the top bar and the Open buttons now lead to the dashboard instead of the public home page. Visitors who are not signed in still go to the public home page. Reason: members found themselves on the public site when they only wanted to go back.
-- **Top bar on narrow phones.** The public top bar no longer grows past the screen on 375 px wide phones with long button words, and the dashboard title keeps more room next to the buttons.
+- **Launcher, PayHop.** The Open button on the PayHop card now starts at PayHop's own dashboard, as it does for the other apps, instead of its public start page. Reason: signing in through the launcher should end where your work is.
 
 ### Changed
 

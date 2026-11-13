@@ -71,12 +71,19 @@ class SetLocale
         }
         // A browser that holds the old host-only cookie and the new domain cookie sends both, the old one first, so the
         // old choice would win. Once per browser and host: drop the old one, keep its value under the domain, mark it done.
-        if ($domain !== null && $request->cookie(self::MARKER) !== '2') {
+        // A request without hop_lang has nothing to move: it gets no cookie at all, so a plain page stays plain (as BioHop).
+        if ($domain !== null && $sent !== '' && $request->cookie(self::MARKER) !== '2') {
             $response->headers->setCookie(new Cookie(self::COOKIE, '', 1, '/', null, $secure, false, false, 'lax'));
             if ($requested === null && $carried !== null) {
                 $response->headers->setCookie($this->cookie(self::COOKIE, $carried, $domain, $secure));
             }
             $response->headers->setCookie($this->cookie(self::MARKER, '2', null, $secure));
+        }
+        // Rule 6 (SEO and language contract): the page follows hop_lang, so a shared cache must keep visitors apart.
+        // A `public` answer (files, the stats numbers) does not follow the cookie and is left alone.
+        if (! $response->headers->hasCacheControlDirective('public')
+            && ! in_array('cookie', array_map('strtolower', array_map('trim', explode(',', (string) $response->headers->get('Vary')))), true)) {
+            $response->headers->set('Vary', 'Cookie', false);
         }
 
         return $response;

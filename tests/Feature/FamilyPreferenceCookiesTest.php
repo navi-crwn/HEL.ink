@@ -64,15 +64,6 @@ test('on any other host the language cookie is host-only and nothing is migrated
         ->and($res->getContent())->toContain('lang="de"');
 });
 
-test('clean-up, no cookie at all: the old host-only cookie is expired and the marker is set', function () {
-    $cookies = langCookies($this->withoutVite()->get('https://hel.ink/about'));
-    $old = pickCookie($cookies, 'hop_lang', false);
-    expect($old['value'])->toBe('')->and($old['expires'])->toBeLessThan(time())
-        ->and(pickCookie($cookies, 'hop_lang', true))->toBeNull();
-    $marker = pickCookie($cookies, 'hop_pref', false);
-    expect($marker['value'])->toBe('2')->and($marker['domain'])->toBeNull()->and($marker['expires'])->toBeGreaterThan(time() + 360 * 86400);
-});
-
 test('clean-up, old cookie only: the value moves to the .hel.ink cookie and the page uses it', function () {
     $res = $this->withoutVite()->withUnencryptedCookie('hop_lang', 'zh')->get('https://hub.hel.ink/about');
     $cookies = langCookies($res);
@@ -137,4 +128,23 @@ test('a malformed Cookie header does not break the page or pick a wrong value', 
         expect($res->getContent())->toContain($header === 'hop_lang=de; garbage; ==; hop_lang' ? 'lang="de"' : 'lang="en"');
     }
     expect(SetLocale::lastCookie(Request::create('/', 'GET', [], [], [], ['HTTP_COOKIE' => 'hop_lang=en; hop_lang=ja; hop_lang=de']), 'hop_lang'))->toBe('de');
+});
+
+test('a visitor with no language cookie gets no hop_* cookie at all, so the page stays plain', function () {
+    foreach (['/about', '/privacy'] as $path) {
+        expect(langCookies($this->withoutVite()->get('https://hel.ink'.$path)))->toBe([]);
+    }
+    expect(langCookies($this->withoutVite()->withUnencryptedCookie('hop_lang', '')->get('https://hel.ink/about')))->toBe([]);
+});
+
+test('picking a language with no cookie writes exactly the one .hel.ink cookie and no marker', function () {
+    $cookies = langCookies($this->withoutVite()->get('https://hel.ink/about?lang=ru'));
+    expect($cookies)->toHaveCount(1)
+        ->and($cookies[0]['name'])->toBe('hop_lang')->and($cookies[0]['value'])->toBe('ru')->and($cookies[0]['domain'])->toBe('.hel.ink');
+});
+
+test('a request that carries hop_lang, even an unsupported value, still gets the one-time clean-up', function () {
+    $cookies = langCookies($this->withoutVite()->withUnencryptedCookie('hop_lang', 'xx')->get('https://hel.ink/about'));
+    expect(pickCookie($cookies, 'hop_lang', false)['expires'])->toBeLessThan(time())
+        ->and(pickCookie($cookies, 'hop_pref', false)['value'])->toBe('2');
 });

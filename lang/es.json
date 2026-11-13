@@ -270,7 +270,6 @@
     "Your HOP ID": "Tu HOP ID",
     "Your HOP ID is one account for every HOP app (LinkHop, BioHop, PixelHop and any app added later). These terms apply to all of them; suspension or deletion of the account applies to all of them.": "Tu HOP ID es una cuenta común para todas las apps HOP.",
     "Your account lives at the hub, <strong>hub.hel.ink</strong>: email and password or Google, two-factor codes, your profile, API tokens, your data download and account deletion. The apps keep no passwords.": "Tu cuenta reside en <strong>hub.hel.ink</strong>. Las apps no guardan contraseñas.",
-    "Your new token (shown only once)": "Tu nuevo token (se muestra una sola vez)",
     "Your own short links at hel.ink/l/…": "Tus propios enlaces cortos en hel.ink/l/…",
     "Your page is <code>hel.ink/b/your-slug</code>, edited in <a class=\"underline\" href=\"https://bio.hel.ink\">BioHop</a>. Link and bio slugs are separate namespaces.": "Tu bio es <code>hel.ink/b/tu-slug</code> en <a class=\"underline\" href=\"https://bio.hel.ink\">BioHop</a>.",
     "auth.password": "La contraseña proporcionada es incorrecta.",

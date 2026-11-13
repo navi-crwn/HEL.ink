@@ -270,7 +270,6 @@
     "Your HOP ID": "Votre HOP ID",
     "Your HOP ID is one account for every HOP app (LinkHop, BioHop, PixelHop and any app added later). These terms apply to all of them; suspension or deletion of the account applies to all of them.": "Votre HOP ID est un compte unique pour toutes les applications HOP (LinkHop, BioHop, PixelHop et toute application ajoutée plus tard). Ces conditions s’appliquent à toutes ; la suspension ou la suppression du compte vaut pour toutes.",
     "Your account lives at the hub, <strong>hub.hel.ink</strong>: email and password or Google, two-factor codes, your profile, API tokens, your data download and account deletion. The apps keep no passwords.": "Votre compte vit sur le hub, <strong>hub.hel.ink</strong> : e-mail et mot de passe ou Google, codes à deux facteurs, votre profil, jetons d’API, le téléchargement de vos données et la suppression du compte. Les applications ne conservent aucun mot de passe.",
-    "Your new token (shown only once)": "Votre nouveau jeton (affiché une seule fois)",
     "Your own short links at hel.ink/l/…": "Vos propres liens courts sur hel.ink/l/…",
     "Your page is <code>hel.ink/b/your-slug</code>, edited in <a class=\"underline\" href=\"https://bio.hel.ink\">BioHop</a>. Link and bio slugs are separate namespaces.": "Votre page se trouve à l’adresse <code>hel.ink/b/votre-slug</code> et s’édite dans <a class=\"underline\" href=\"https://bio.hel.ink\">BioHop</a>. Les slugs de liens et de pages bio sont des espaces de noms distincts.",
     "auth.password": "Mot de passe",

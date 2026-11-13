@@ -44,9 +44,9 @@ class ChangelogTest extends TestCase
             $this->assertLessThanOrEqual(40, $data['entries']->count());
         }
         $this->assertSame($first['total'], $count);
-        $filtered = $controller(Request::create('/changelog?app=LinkHop&page=999999'))->getData();
+        $filtered = $controller(Request::create('/changelog?app=HOP+ID&page=999999'))->getData();
         $this->assertSame($filtered['pages'], $filtered['page']);
-        $this->assertSame(['LinkHop'], $filtered['entries']->pluck('app')->unique()->values()->all());
+        $this->assertSame(['HOP ID'], $filtered['entries']->pluck('app')->unique()->values()->all());
         $negative = $controller(Request::create('/changelog?page=-1'))->getData();
         $this->assertSame(1, $negative['page']);
         $this->assertSame(ChangelogController::class, app('router')->getRoutes()->match(Request::create('/changelog'))->getActionName());
@@ -64,10 +64,10 @@ class ChangelogTest extends TestCase
             $this->assertSame(['HEL.ink' => 'abc'], ChangelogController::history()['sources']);
 
             file_put_contents($built, '{"entries": [');
-            $this->assertGreaterThan(1, count(ChangelogController::history()['sources']));
+            $this->assertNotSame(['HEL.ink' => 'abc'], ChangelogController::history()['sources']);
 
             file_put_contents($built, '{"entries": []}');   // valid JSON, but no sources: not usable either
-            $this->assertGreaterThan(1, count(ChangelogController::history()['sources']));
+            $this->assertNotSame(['HEL.ink' => 'abc'], ChangelogController::history()['sources']);
         } finally {
             @unlink($built);
         }

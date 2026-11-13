@@ -270,7 +270,6 @@
     "Your HOP ID": "你的 HOP ID",
     "Your HOP ID is one account for every HOP app (LinkHop, BioHop, PixelHop and any app added later). These terms apply to all of them; suspension or deletion of the account applies to all of them.": "你的 HOP ID 是通用于所有 HOP 应用（LinkHop、BioHop、PixelHop 以及日后新增的应用）的一个账号。这些条款适用于全部应用；账号被暂停或删除时，同样对全部应用生效。",
     "Your account lives at the hub, <strong>hub.hel.ink</strong>: email and password or Google, two-factor codes, your profile, API tokens, your data download and account deletion. The apps keep no passwords.": "你的账号存放在中心 <strong>hub.hel.ink</strong>：邮箱和密码或 Google 登录、两步验证码、个人资料、API 令牌、数据下载和账号删除。各应用不保存任何密码。",
-    "Your new token (shown only once)": "你的新令牌（只显示一次）",
     "Your own short links at hel.ink/l/…": "你自己的短链接 hel.ink/l/…",
     "Your page is <code>hel.ink/b/your-slug</code>, edited in <a class=\"underline\" href=\"https://bio.hel.ink\">BioHop</a>. Link and bio slugs are separate namespaces.": "你的页面位于 <code>hel.ink/b/你的短链接名</code>，在 <a class=\"underline\" href=\"https://bio.hel.ink\">BioHop</a> 中编辑。链接和个人主页的短链接名属于各自独立的命名空间。",
     "auth.password": "密码",

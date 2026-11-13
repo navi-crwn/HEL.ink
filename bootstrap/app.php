@@ -6,6 +6,7 @@ use App\Http\Middleware\AutoLogout;
 use App\Http\Middleware\CheckSuspended;
 use App\Http\Middleware\ContentSecurityPolicyMiddleware;
 use App\Http\Middleware\EnsureTwoFactorAuthenticated;
+use App\Http\Middleware\KeepSettingsTab;
 use App\Http\Middleware\NoStoreWhenSignedIn;
 use App\Http\Middleware\ProtectPermanentSuperadmin;
 use App\Http\Middleware\RemoveWwwPrefix;
@@ -44,6 +45,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => AdminMiddleware::class,
             '2fa' => EnsureTwoFactorAuthenticated::class,
+            'settings.tab' => KeepSettingsTab::class,
             'hop.signed' => VerifyHopSignature::class,
             'hop.admin_client' => RequireHopAdminClient::class,
         ]);

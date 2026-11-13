@@ -1,6 +1,6 @@
 @php
     $marketingLinks = [
-        ['label' => __('Apps'), 'href' => route('home').'#apps'],
+        ['label' => __('Apps'), 'href' => auth()->check() ? hub_url('dashboard') : route('home').'#apps'],
         ['label' => __('How it works'), 'href' => route('how-it-works')],
         ['label' => __('Security'), 'href' => route('security')],
         ['label' => __('Status'), 'href' => route('status')],
@@ -26,7 +26,7 @@
      stays out of the top bar there (the dashboard chrome rule). --}}
 <header class="marketing-nav sticky top-0 z-40 px-3 pt-3 sm:px-5" x-data="{ open: false }" @keydown.escape.window="open = false" x-effect="document.documentElement.classList.toggle('drawer-open', open); if (open) $nextTick(() => $refs.close && $refs.close.focus())">
     <nav class="mx-auto flex h-14 max-w-6xl items-center justify-between gap-2 rounded-2xl border border-slate-200/80 bg-white/70 px-2 shadow-xs shadow-slate-900/5 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/50 dark:shadow-none sm:px-4">
-        <a href="{{ route('home') }}" aria-label="HOP ID" class="marketing-brand flex min-w-0 items-center gap-2.5 text-slate-900 dark:text-white">
+        <a href="{{ hop_home_url() }}" aria-label="HOP ID" class="marketing-brand flex min-w-0 items-center gap-2.5 text-slate-900 dark:text-white">
             <x-wordmark class="h-10 w-auto" :sub="request()->routeIs('home')" />
         </a>
         <div class="hidden items-center gap-1 text-sm text-slate-600 xl:flex dark:text-white/70">
@@ -35,7 +35,7 @@
             @endforeach
         </div>
         <div class="flex shrink-0 items-center gap-1 text-sm sm:gap-2">
-            <div class="hidden xl:block"><x-hop::app-switcher app="hub" /></div>
+            <div class="hidden xl:block"><x-hop::app-switcher app="hub" :open="fn ($slug, $url) => hop_app_url($slug, $url)" /></div>
             <x-hop::language-switcher />
             @if (! empty($themed))
                 <button type="button" class="marketing-icon-btn" aria-label="{{ __('Toggle theme') }}" title="{{ __('Toggle theme') }}" data-toggle-dark>
@@ -82,7 +82,7 @@
             <ul class="mt-1">
                 @foreach ($family as $item)
                     <li>
-                        <a href="{{ $item['url'] }}" class="marketing-drawer-link" @if ($item['current']) aria-current="page" @endif>
+                        <a href="{{ hop_app_url($item['slug'], $item['url']) }}" class="marketing-drawer-link" @if ($item['current']) aria-current="page" @endif>
                             <img src="{{ $item['icons']['mark']['url'] }}" alt="" width="24" height="24" loading="lazy" class="h-6 w-6 shrink-0 rounded-md object-contain">
                             <span>{{ $item['slug'] === 'hub' ? 'HOP ID' : $item['name'] }}</span>
                         </a>

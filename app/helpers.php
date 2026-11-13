@@ -66,3 +66,21 @@ if (! function_exists('app_page_url')) {
         return Route::has('apps.show') ? route('apps.show', $slug) : route('home').'#'.$slug;
     }
 }
+if (! function_exists('hop_home_url')) {
+    /** Where "back" and the logo of a public page lead: the dashboard for a signed-in member, the public home for a visitor. */
+    function hop_home_url(): string
+    {
+        return auth()->check() ? hub_url('dashboard') : route('home');
+    }
+}
+if (! function_exists('hop_app_url')) {
+    /** Where "Open <app>" leads: the app's dashboard through the hub launcher for a member, its public page for a visitor. */
+    function hop_app_url(string $slug, string $publicUrl): string
+    {
+        if (! auth()->check()) {
+            return $publicUrl;
+        }
+
+        return $slug === 'hub' ? hub_url('dashboard') : hub_url('apps/'.$slug);
+    }
+}

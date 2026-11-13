@@ -14,7 +14,7 @@
             <p class="max-w-2xl text-lg leading-relaxed {{ $muted }}">{{ $app['story'] }}</p>
 
             <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
-                <a href="{{ $app['url'] }}" class="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:opacity-90" style="background-color: {{ $app['color'] }}">
+                <a href="{{ hop_app_url($slug, $app['url']) }}" class="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:opacity-90" style="background-color: {{ $app['color'] }}">
                     {{ $app['cta'] }} &rarr;
                 </a>
                 <a href="{{ $app['url'] }}/features" class="rounded-xl border border-slate-200 bg-white/80 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-white/10 dark:bg-white/5 dark:text-white/80">
@@ -135,10 +135,10 @@
                 {{ __('Free forever. One HOP ID connects you to every app in the HOP family with zero setup fees or third-party tracking.') }}
             </p>
             <div class="mt-6 flex flex-wrap gap-3">
-                <a href="{{ $app['url'] }}" class="rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 shadow transition hover:bg-slate-100">
+                <a href="{{ hop_app_url($slug, $app['url']) }}" class="rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 shadow transition hover:bg-slate-100">
                     {{ $app['cta'] }}
                 </a>
-                <a href="{{ route('home') }}" class="rounded-xl border border-white/40 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10">
+                <a href="{{ hop_home_url() }}" class="rounded-xl border border-white/40 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10">
                     {{ __('Back to HOP Family') }}
                 </a>
             </div>

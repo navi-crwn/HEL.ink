@@ -73,6 +73,6 @@ class MarketingPageController extends Controller
         $story = FamilyStory::find($app);
         abort_unless($story, 404);
 
-        return view('marketing.app', ['app' => $story, 'status' => $watchdog->summary()[$app] ?? null]);
+        return view('marketing.app', ['app' => $story, 'slug' => $app, 'status' => $watchdog->summary()[$app] ?? null]);
     }
 }

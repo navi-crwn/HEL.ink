@@ -32,6 +32,11 @@
         },
         {
           "type": "changed",
+          "where": "Dashboard sidebar",
+          "text": "The foot of the sidebar is now a short list going down: Help, Terms, Privacy, Changelog, GitHub and Announcement, then a line saying the hub is part of Hop Easy Link. It scrolls together with the menu, so it can be reached on a short screen and in the phone menu. Reason: the same foot is now used in every HOP dashboard, and the hub had only two links."
+        },
+        {
+          "type": "changed",
           "where": "Dashboard, Delete account",
           "text": "The Delete account button now opens the delete section of Settings directly. Reason: it used to leave you at the top of the Account tab."
         }

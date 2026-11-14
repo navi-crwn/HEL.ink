@@ -43,13 +43,26 @@
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></svg>
                             </button>
                         </div>
-                        <nav class="flex-1 overflow-y-auto px-3 pb-3">
-                            @include('components.partials.nav')
-                        </nav>
-                        <div class="flex items-center gap-1 border-t border-slate-500/10 px-3.5 py-1 text-xs text-muted">
-                            <a href="{{ route('changelog') }}" class="inline-flex min-h-11 items-center px-1.5 hover:underline">{{ __('Changelog') }}</a>
-                            <span aria-hidden="true">·</span>
-                            <a href="https://github.com/navi-crwn/HEL.ink" rel="noopener" class="inline-flex min-h-11 items-center px-1.5 hover:underline">GitHub</a>
+                        {{-- Menu, HOP family and the foot scroll together (one scroll area), so on a short screen or in the phone
+                             drawer the foot down to "Part of" can always be reached. --}}
+                        <div class="flex min-h-0 flex-1 flex-col overflow-y-auto px-3 pb-3" data-side-scroll>
+                            <nav>
+                                @include('components.partials.nav')
+                            </nav>
+                            <div class="mt-auto pt-3" data-side-foot>
+                                <ul class="grid gap-0.5 border-t border-slate-500/10 pt-2 text-xs text-muted">
+                                    <li><a href="{{ route('help') }}" class="flex h-7 items-center px-2.5 hover:text-ink hover:underline">{{ __('Help') }}</a></li>
+                                    <li><a href="{{ route('terms') }}" class="flex h-7 items-center px-2.5 hover:text-ink hover:underline">{{ __('Terms') }}</a></li>
+                                    <li><a href="{{ route('privacy') }}" class="flex h-7 items-center px-2.5 hover:text-ink hover:underline">{{ __('Privacy') }}</a></li>
+                                    <li><a href="{{ route('changelog') }}" class="flex h-7 items-center px-2.5 hover:text-ink hover:underline">{{ __('Changelog') }}</a></li>
+                                    <li><a href="https://github.com/navi-crwn/HEL.ink" rel="noopener" class="flex h-7 items-center px-2.5 hover:text-ink hover:underline">GitHub</a></li>
+                                    <li><a href="{{ route('announcements.index') }}" class="flex h-7 items-center px-2.5 hover:text-ink hover:underline">{{ __('Announcement') }}</a></li>
+                                </ul>
+                                <p class="mt-2 flex items-center gap-2 px-2.5 text-xs text-muted" data-part-of>
+                                    <img src="{{ route('brand.favicon') }}" alt="" width="20" height="20" class="h-5 w-5 rounded-md">
+                                    <span>{!! str_replace('@@N@@', '<a href="'.e(route('home')).'" class="text-ink hover:underline">Hop Easy Link</a>', e(__('Part of :name', ['name' => '@@N@@']))) !!}</span>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </aside>

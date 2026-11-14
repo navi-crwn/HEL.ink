@@ -14,6 +14,7 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here, written
 
 - **Dashboard.** The dashboard now shows one announcement card, like the other apps: an urgent one first, otherwise the newest. A normal announcement can be hidden for a week with the Hide button, an urgent one cannot, and a link leads to the full list when there are more. Reason: up to three cards at once made the page busy.
 - **Announcements pages.** The public announcements list and each announcement page now follow your language in all nine languages, including the dates and app names. The text of an announcement stays in the language it was written in. Reason: the page labels were always English.
+- **Dashboard sidebar.** The foot of the sidebar is now a short list going down: Help, Terms, Privacy, Changelog, GitHub and Announcement, then a line saying the hub is part of Hop Easy Link. It scrolls together with the menu, so it can be reached on a short screen and in the phone menu. Reason: the same foot is now used in every HOP dashboard, and the hub had only two links.
 - **Dashboard, Delete account.** The Delete account button now opens the delete section of Settings directly. Reason: it used to leave you at the top of the Account tab.
 
 ## [1.4.0] - 2026-11-14 - Confirm it is you

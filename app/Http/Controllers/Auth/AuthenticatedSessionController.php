@@ -49,6 +49,8 @@ class AuthenticatedSessionController extends Controller
             if (! $user->two_factor_secret || ! $user->two_factor_confirmed_at) {
                 $request->session()->put('2fa_verified', true);
                 AuthTime::stamp();
+            } else {
+                AuthTime::awaitSecondFactor();
             }
         }
 

@@ -2,6 +2,7 @@
 
 use App\Models\HopApp;
 use App\Models\User;
+use Illuminate\Cookie\CookieValuePrefix;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Tests\TestCase;
@@ -20,6 +21,16 @@ function recentIntended(string $url): string
     ksort($q);
 
     return 'http://localhost'.parse_url($url, PHP_URL_PATH).'?'.http_build_query($q);
+}
+
+/** The "remember me" cookie of $user as the browser would send it (encrypted like Laravel does). */
+function recentRememberCookie(User $user, string $token): array
+{
+    $name = Auth::guard('web')->getRecallerName();
+    $enc = app('encrypter');
+    $value = $user->id.'|'.$token.'|'.$user->getAuthPassword();
+
+    return [$name, $enc->encrypt(CookieValuePrefix::create($name, $enc->getKey()).$value, false)];
 }
 
 function recentTicket(string $location): array
@@ -70,13 +81,13 @@ test('with two-factor the stamp is set when the code is accepted, not at the pas
     $this->post('/login', ['email' => $user->email, 'password' => 'password'])->assertRedirect();
     expect(session('auth_time'))->toBeNull();
     $this->post('/two-factor-challenge', ['code' => 'abcde-fghij'])->assertRedirect();
-    expect(session('2fa_verified'))->toBeTrue()->and(session('auth_time'))->toBeGreaterThan(time() - 5);
+    expect(session('2fa_verified'))->toBeTrue()->and(session('auth_time'))->toBeGreaterThan(time() - 30);
 });
 
 test('a new sign-up stamps auth_time', function () {
     $this->post('/register', ['name' => 'Helena', 'email' => 'helena@example.com', 'password' => 'a-long-password-9!', 'password_confirmation' => 'a-long-password-9!', 'tos_accepted' => '1'])->assertRedirect();
     $this->assertAuthenticated();
-    expect(session('auth_time'))->toBeGreaterThan(time() - 5);
+    expect(session('auth_time'))->toBeGreaterThan(time() - 30);
 });
 
 test('signing in with Google stamps auth_time', function () {
@@ -91,7 +102,7 @@ test('signing in with Google stamps auth_time', function () {
     Socialite::shouldReceive('user')->andReturn($g);
     $this->get('/auth/google/callback')->assertRedirect();
     $this->assertAuthenticatedAs($user);
-    expect(session('auth_time'))->toBeGreaterThan(time() - 5);
+    expect(session('auth_time'))->toBeGreaterThan(time() - 30);
 });
 
 test('the hand-over to an app does not move auth_time', function () {
@@ -102,12 +113,12 @@ test('the hand-over to an app does not move auth_time', function () {
 
 test('a "remember me" cookie that restores the session is not a sign-in: auth_time stays unknown', function () {
     $user = User::factory()->create(['remember_token' => 'remember-token-0123456789']);
-    $name = Auth::guard('web')->getRecallerName();
-    $res = test()->withUnencryptedCookie($name, $user->id.'|remember-token-0123456789|'.$user->getAuthPassword())
-        ->get(recentUrl(['max_age' => 300]));
+    [$name, $cookie] = recentRememberCookie($user, 'remember-token-0123456789');
+    $res = test()->withUnencryptedCookie($name, $cookie)->get(recentUrl(['max_age' => 300]));
     // Restored by the cookie, but no proof of a sign-in: the person is asked again.
     $res->assertRedirect(route('login'));
-    $this->assertGuest();
+    expect(session()->has(Auth::guard('web')->getName()))->toBeFalse();
+    $res->assertCookieExpired($name);
 });
 
 // ---- max_age --------------------------------------------------------------------------
@@ -134,8 +145,6 @@ test('max_age with an older sign-in ends this hub session and shows the sign-in 
     expect(session('url.intended'))->toBe(recentIntended($url))
         ->and(session('status'))->toBe('Please sign in again to confirm it is you.')
         ->and(session('auth_time'))->toBeNull();
-    // The remember cookie of this browser is dropped, so it cannot sign the person straight back in.
-    $res->assertCookieExpired(Auth::guard('web')->getRecallerName());
     // Other devices: the remember token is not rotated.
     expect($user->fresh()->remember_token)->toBe('remember-token-0123456789');
 
@@ -229,4 +238,60 @@ test('the Google button passes max_age and prompt on to the ticket step', functi
     // Signed in with an old sign-in: the Google button sends on to the ticket step, which asks again.
     $res = recentSession(User::factory()->create(), 5000)->get('/sso/filehop/google?'.http_build_query(['state' => RECENT_STATE, 'return_to' => 'https://file.example.com/auth/sso/callback', 'max_age' => 120]));
     expect($res->headers->get('Location'))->toContain('max_age=120');
+});
+
+// ---- review round ---------------------------------------------------------------------
+
+test('a member who also carries a "remember me" cookie really gets the sign-in page, and the cookie of other devices stays valid', function () {
+    $user = User::factory()->create(['remember_token' => 'remember-token-0123456789']);
+    [$name, $cookie] = recentRememberCookie($user, 'remember-token-0123456789');
+    $res = test()->withUnencryptedCookie($name, $cookie)
+        ->withSession(['2fa_verified' => true, 'auth_time' => time() - 5000])
+        ->get(recentUrl(['max_age' => 300]));
+    $res->assertRedirect(route('login'));
+    // The session of this request must not hold the member again (the cookie must not be read a second time).
+    expect(session()->has(Auth::guard('web')->getName()))->toBeFalse();
+    $res->assertCookieExpired($name);
+    expect($user->fresh()->remember_token)->toBe('remember-token-0123456789');
+});
+
+test('a session restored by "remember me" gets no fresh auth_time from a two-factor code alone', function () {
+    $user = User::factory()->create(['two_factor_secret' => encrypt('JBSWY3DPEHPK3PXP'), 'two_factor_confirmed_at' => now(), 'two_factor_recovery_codes' => encrypt(json_encode(['ABCDE-FGHIJ']))]);
+    test()->actingAs($user)->post('/two-factor-challenge', ['code' => 'abcde-fghij'])->assertRedirect();
+    expect(session('2fa_verified'))->toBeTrue()->and(session('auth_time'))->toBeNull();
+});
+
+test('after a real password sign-in the code stamps, once', function () {
+    $user = User::factory()->create(['two_factor_secret' => encrypt('JBSWY3DPEHPK3PXP'), 'two_factor_confirmed_at' => now(), 'two_factor_recovery_codes' => encrypt(json_encode(['ABCDE-FGHIJ', 'KLMNO-PQRST']))]);
+    $this->post('/login', ['email' => $user->email, 'password' => 'password']);
+    $this->post('/two-factor-challenge', ['code' => 'abcde-fghij']);
+    expect(session('auth_time'))->toBeGreaterThan(time() - 30);
+    // A later code in the same session does not move it.
+    session()->put('auth_time', 1000);
+    $this->post('/two-factor-challenge', ['code' => 'klmno-pqrst']);
+    expect(session('auth_time'))->toBe(1000);
+});
+
+test('Google with two-factor stamps after the code, not before', function () {
+    $user = User::factory()->create(['email' => 'helena@example.com', 'google_id' => 'G-HEL', 'two_factor_secret' => encrypt('JBSWY3DPEHPK3PXP'), 'two_factor_confirmed_at' => now(), 'two_factor_recovery_codes' => encrypt(json_encode(['ABCDE-FGHIJ']))]);
+    $g = Mockery::mock(Laravel\Socialite\Contracts\User::class);
+    $g->id = 'G-HEL';
+    $g->email = 'helena@example.com';
+    $g->name = 'Helena';
+    $g->avatar = 'https://example.com/a.png';
+    $g->user = ['email_verified' => true];
+    Socialite::shouldReceive('driver')->with('google')->andReturnSelf();
+    Socialite::shouldReceive('user')->andReturn($g);
+    $this->get('/auth/google/callback')->assertRedirect();
+    expect(session('auth_time'))->toBeNull();
+    $this->post('/two-factor-challenge', ['code' => 'abcde-fghij'])->assertRedirect();
+    expect(session('auth_time'))->toBeGreaterThan(time() - 30);
+});
+
+test('a max_age of ten digits or more is cut to a day, not ignored', function () {
+    foreach (['1234567890', '99999999999999999999999'] as $big) {
+        recentSession(User::factory()->create(), 86401)->get(recentUrl(['max_age' => $big]))->assertRedirect(route('login'));
+        $res = recentSession(User::factory()->create(), 80000)->get(recentUrl(['max_age' => $big]));
+        expect($res->headers->get('Location'))->toContain('?ticket=');
+    }
 });

@@ -16,6 +16,24 @@ final class AuthTime
         session()->put(self::KEY, time());
     }
 
+    /**
+     * A real sign-in (password, Google) that still has the second factor to go: the stamp is set when the code is
+     * accepted, and only then. A session that was restored by a "remember me" cookie has no such mark, so a code
+     * alone never gives a fresh stamp.
+     */
+    public static function awaitSecondFactor(): void
+    {
+        session()->put('auth_time_pending', true);
+    }
+
+    /** The second factor was accepted: stamp, but only when it follows a real sign-in of this session. */
+    public static function stampAfterSecondFactor(): void
+    {
+        if (session()->pull('auth_time_pending', false) === true) {
+            self::stamp();
+        }
+    }
+
     public static function get(): int
     {
         return max(0, (int) session(self::KEY, 0));
@@ -29,7 +47,7 @@ final class AuthTime
     public static function maxAge(mixed $maxAge, mixed $prompt): ?int
     {
         $age = null;
-        if (is_string($maxAge) && preg_match('/^[0-9]{1,9}$/', $maxAge) === 1) {
+        if (is_string($maxAge) && preg_match('/^[0-9]+$/', $maxAge) === 1) {
             $age = max(10, min((int) $maxAge, 86400));
         }
         if ($prompt === 'login') {

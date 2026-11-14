@@ -7,6 +7,7 @@ use App\Mail\WelcomeEmail;
 use App\Models\User;
 use App\Rules\AllowedEmailDomain;
 use App\Services\TurnstileService;
+use App\Support\AuthTime;
 use App\Support\Legal;
 use App\Support\Username;
 use Illuminate\Auth\Events\Registered;
@@ -72,6 +73,7 @@ class RegisteredUserController extends Controller
             return $user;
         });
         Auth::login($user);
+        AuthTime::stamp();
         // SMTP can take seconds per message: send both after the response.
         defer(function () use ($user) {
             event(new Registered($user)); // the "confirm your email" message

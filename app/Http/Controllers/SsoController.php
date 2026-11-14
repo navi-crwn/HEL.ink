@@ -6,12 +6,14 @@ use App\Jobs\SendHopEvent;
 use App\Models\User;
 use App\Services\LoginRecorder;
 use App\Services\SsoTicket;
+use App\Support\AuthTime;
 use App\Support\HopApp;
 use App\Support\HopApps;
 use App\Support\Input;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 /**
  * The hub as SSO issuer for every app in config/hop.php (LinkHop, BioHop,
@@ -31,6 +33,11 @@ class SsoController extends Controller
      * 302 to the app's registered callback with `error=login_required` and the same `state`, and nothing is
      * kept as the intended URL. Without `prompt=none` a guest is sent to sign in, as before. The route is
      * outside the auth group so this controller decides, in this order, the same things auth and 2fa did.
+     *
+     * `max_age=<seconds>` (and `prompt=login`, which is `max_age=60`): the app wants a sign-in at the hub no older
+     * than that. A hub session whose `auth_time` is older, or has none, is ended here and the visitor sees the
+     * sign-in page; the same SSO address is kept as the place to go next, so after signing in the ticket follows
+     * at once, carrying the fresh `auth_time`. With `prompt=none` that case answers `login_required` instead.
      */
     public function ticket(Request $request, string $app): RedirectResponse
     {
@@ -39,8 +46,10 @@ class SsoController extends Controller
         /** @var User|null $user */
         $user = $request->user();
         $silent = $request->query('prompt') === 'none';
+        $maxAge = AuthTime::maxAge($request->query('max_age'), $request->query('prompt'));
+        $stale = $maxAge !== null && time() - AuthTime::get() > $maxAge;
         $needsCode = $user && $user->two_factor_secret && $user->two_factor_confirmed_at && ! $request->session()->get('2fa_verified', false);
-        if ($silent && (! $user || $needsCode || $user->isSuspended())) {
+        if ($silent && (! $user || $needsCode || $user->isSuspended() || $stale)) {
             return self::silentReply($request, 'login_required');
         }
         if (! $user) {
@@ -58,10 +67,30 @@ class SsoController extends Controller
         if (! $user->hasVerifiedEmail()) {
             return redirect()->route('verification.notice');
         }
+        if ($stale) {
+            return $this->signInAgain($request);
+        }
         $ticket = SsoTicket::issue($user, $hopApp, $state);
         app(LoginRecorder::class)->record($user, $request->ip(), $request->userAgent(), $hopApp->name);
 
         return redirect()->away($returnTo.'?'.http_build_query(['ticket' => $ticket]));
+    }
+
+    /**
+     * Ends this browser's hub session (and only this one) and shows the sign-in page, with the current address
+     * as the place to go after it. The "remember me" cookie of this browser is dropped too, or it would sign the
+     * person straight back in without proving anything; the remember token itself is not rotated, so the cookies
+     * of the person's other devices keep working.
+     */
+    private function signInAgain(Request $request): RedirectResponse
+    {
+        $guard = Auth::guard('web');
+        Cookie::queue(Cookie::forget($guard->getRecallerName()));
+        $guard->forgetUser();
+        $request->session()->invalidate();
+        $request->session()->put('url.intended', $request->fullUrl());
+
+        return redirect()->route('login')->with('status', __('Please sign in again to confirm it is you.'));
     }
 
     /**
@@ -89,7 +118,13 @@ class SsoController extends Controller
     {
         [$hopApp, $state, $returnTo] = $this->checked($request, $app);
         abort_if(! config('services.google.client_id'), 404);
-        $ticket = route('sso.ticket', ['app' => $hopApp->slug, 'state' => $state, 'return_to' => $returnTo]);
+        $ticket = route('sso.ticket', array_filter([
+            'app' => $hopApp->slug,
+            'state' => $state,
+            'return_to' => $returnTo,
+            'max_age' => $request->query('max_age'),
+            'prompt' => $request->query('prompt'),
+        ], fn ($v) => is_string($v) && $v !== ''));
         if ($request->user()) {
             return redirect()->to($ticket);
         }

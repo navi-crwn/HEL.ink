@@ -65,6 +65,8 @@ $marketing = function () {
     Route::get('/status.json', [StatusController::class, 'json'])->name('status.json');
     Route::get('/stats/github.json', [StatsController::class, 'github'])->name('stats.github');
     Route::get('/stats/uptime.json', [StatsController::class, 'uptime'])->name('stats.uptime');
+    // The read-only feed for the apps: no session, no cookie (outside the web group), the same answer for everybody.
+    Route::get('/announcements.json', [AnnouncementController::class, 'feed'])->withoutMiddleware('web')->name('announcements.feed');
     Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
     Route::get('/announcements/{announcement}', [AnnouncementController::class, 'show'])->name('announcements.show');
 };

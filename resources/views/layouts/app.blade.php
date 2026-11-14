@@ -51,8 +51,8 @@
                             </nav>
                             <div class="mt-auto pt-3" data-side-foot>
                                 {{-- Colour set of the family (L-10): the same three in every HOP dashboard; light and dark stay in the top bar. --}}
-                                <div class="px-2.5 pb-3" x-data="{ p: document.documentElement.dataset.palette || 'classic' }" data-palette-picker>
-                                    <p class="mb-1.5 text-xs text-muted" id="pal-label">{{ __('Colours') }}</p>
+                                <div class="pb-3" x-data="{ p: document.documentElement.dataset.palette || 'classic' }" data-palette-picker>
+                                    <p class="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wide text-muted" id="pal-label">{{ __('Colours') }}</p>
                                     <div class="pal-picker" role="group" aria-labelledby="pal-label">
                                         @foreach (['classic' => __('Classic'), 'mist' => __('Mist'), 'sand' => __('Sand')] as $key => $label)
                                             <button type="button" data-palette-choice="{{ $key }}" :aria-pressed="p === '{{ $key }}' ? 'true' : 'false'" @click="p = '{{ $key }}'; window.hopSetPalette('{{ $key }}')"><span class="pal-swatch pal-swatch-{{ $key }}" aria-hidden="true"></span>{{ $label }}</button>

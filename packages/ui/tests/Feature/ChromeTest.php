@@ -34,3 +34,11 @@ test('the dropdown styles come once even when several switchers are on the page'
     $html = Blade::render('<x-hop::language-switcher /><x-hop::app-switcher app="biohop" /><x-hop::account-menu :user="$user" />', ['user' => $user]);
     expect(substr_count($html, '.hop-switcher{position:relative'))->toBe(1);
 });
+
+test('the app switcher can rewrite where each app leads', function () {
+    $plain = Blade::render('<x-hop::app-switcher app="hub" />');
+    $rewritten = Blade::render('<x-hop::app-switcher app="hub" :open="fn ($slug, $url) => \'https://hub.example/apps/\'.$slug" />');
+
+    expect($plain)->not->toContain('https://hub.example/apps/')
+        ->and($rewritten)->toContain('href="https://hub.example/apps/biohop"')->and($rewritten)->toContain('href="https://hub.example/apps/linkhop"');
+});

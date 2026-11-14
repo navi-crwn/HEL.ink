@@ -1,9 +1,42 @@
 {
   "schema": 2,
   "sources": {
-    "HEL.ink": "1.4.0"
+    "HEL.ink": "1.5.0"
   },
   "entries": [
+    {
+      "kind": "tag",
+      "date": "2026-11-14T00:00:00Z",
+      "title": "One place for announcements",
+      "url": "https://github.com/navi-crwn/HEL.ink/releases/tag/v1.5.0",
+      "id": "v1.5.0",
+      "app": "HOP ID",
+      "repo": "HEL.ink",
+      "version": "1.5.0",
+      "summary": "",
+      "items": [
+        {
+          "type": "added",
+          "where": "Announcements for the apps",
+          "text": "The hub now publishes the live announcements as a plain list at its announcements.json address, for every app or for one app only. The other HOP apps can show them on their dashboards. Reason: announcements were typed in one place but no app could read them."
+        },
+        {
+          "type": "changed",
+          "where": "Dashboard",
+          "text": "The dashboard now shows one announcement card, like the other apps: an urgent one first, otherwise the newest. A normal announcement can be hidden for a week with the Hide button, an urgent one cannot, and a link leads to the full list when there are more. Reason: up to three cards at once made the page busy."
+        },
+        {
+          "type": "changed",
+          "where": "Announcements pages",
+          "text": "The public announcements list and each announcement page now follow your language in all nine languages, including the dates and app names. The text of an announcement stays in the language it was written in. Reason: the page labels were always English."
+        },
+        {
+          "type": "changed",
+          "where": "Dashboard, Delete account",
+          "text": "The Delete account button now opens the delete section of Settings directly. Reason: it used to leave you at the top of the Account tab."
+        }
+      ]
+    },
     {
       "kind": "tag",
       "date": "2026-11-14T00:00:00Z",

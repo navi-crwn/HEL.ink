@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Announcement;
+use App\Models\User;
 use Illuminate\Support\Facades\Schema;
 
 /*
@@ -80,7 +81,7 @@ test('the answer is public and cacheable for five minutes, and carries no cookie
 });
 
 test('a visitor with cookies and a signed-in member get the same cookie-free answer', function () {
-    $user = App\Models\User::factory()->create();
+    $user = User::factory()->create();
     $res = test()->actingAs($user)->withUnencryptedCookie('hop_lang', 'id')->get('/announcements.json')->assertOk();
     expect($res->headers->getCookies())->toBe([]);
     expect($res->headers->get('Cache-Control'))->toContain('public');

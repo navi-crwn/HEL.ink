@@ -21,7 +21,7 @@ function run({ cookie = '', local = {}, host = 'localhost', dark = false, throwS
     : { getItem: (k) => store[k] ?? null, setItem: (k, v) => { store[k] = v; } };
   const window = { matchMedia: () => ({ matches: dark }) };
   vm.runInNewContext(code, { document, localStorage, location: { hostname: host }, window });
-  return { classes, written, store, window };
+  return { classes, written, store, window, dataset: document.documentElement.dataset };
 }
 
 test('the cookie wins over the old key and the system preference', () => {
@@ -60,4 +60,31 @@ test('the writer uses .hel.ink with Secure on hel.ink hosts and host-only elsewh
 
 test('blocked storage does not break the page', () => {
   assert.ok(run({ throwStorage: true, dark: true }).classes.has('dark'));
+});
+
+test('the colour set comes from the hop_palette cookie: mist and sand set the attribute, anything else is classic', () => {
+  assert.equal(run({ cookie: 'hop_palette=mist' }).dataset.palette, 'mist');
+  assert.equal(run({ cookie: 'hop_theme=dark; hop_palette=sand' }).dataset.palette, 'sand');
+  for (const junk of ['hop_palette=classic', 'hop_palette=neon', 'hop_palette=', 'xhop_palette=mist', '']) {
+    assert.equal(run({ cookie: junk }).dataset.palette, undefined, junk);
+  }
+});
+
+test('hopSetPalette writes the cookie like hop_theme and sets or removes the attribute', () => {
+  const r = run({});
+  r.window.hopSetPalette('sand');
+  assert.ok(r.written.some((w) => w.startsWith('hop_palette=sand; path=/; max-age=31536000; SameSite=Lax')));
+  assert.equal(r.dataset.palette, 'sand');
+  r.window.hopSetPalette('nonsense');
+  assert.ok(r.written.some((w) => w.startsWith('hop_palette=classic;')));
+  assert.equal(r.dataset.palette, undefined);
+  const hel = run({ host: 'hub.hel.ink' });
+  hel.window.hopSetPalette('mist');
+  assert.ok(hel.written.some((w) => w.startsWith('hop_palette=mist;') && w.includes('domain=.hel.ink') && w.includes('Secure')));
+});
+
+test('the colour set does not touch the theme', () => {
+  const r = run({ cookie: 'hop_theme=dark; hop_palette=mist' });
+  assert.ok(r.classes.has('dark'));
+  assert.equal(r.dataset.palette, 'mist');
 });

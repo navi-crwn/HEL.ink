@@ -37,6 +37,11 @@
         },
         {
           "type": "changed",
+          "where": "Dashboard colours",
+          "text": "The sidebar of the dashboard has a new Colours choice with three sets: Classic (as before), Mist and Sand. Mist and Sand change the accent colours and the soft background and card colours, and the choice is remembered in this browser and shared with the other HOP apps that offer it. Reason: one colour choice for the whole HOP family. Public pages keep the Classic colours."
+        },
+        {
+          "type": "changed",
           "where": "Dashboard, Delete account",
           "text": "The Delete account button now opens the delete section of Settings directly. Reason: it used to leave you at the top of the Account tab."
         }

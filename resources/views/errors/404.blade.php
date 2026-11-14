@@ -20,7 +20,8 @@
             <h1 class="mt-4 text-4xl font-semibold">{{ __('Page not found') }}</h1>
             <p class="mt-2 max-w-md text-white/70">{{ __('This page does not exist or has moved. Check the address or go back to the home page.') }}</p>
             <div class="mt-6 flex flex-wrap items-center gap-4">
-                <a href="{{ url('/') }}" class="rounded-2xl bg-blue-600 px-6 py-3 font-semibold text-white shadow-lg shadow-blue-500/40">{{ __('Back to the home page') }}</a>
+                @php [$homeUrl, $homeLabel] = hop_error_home(); @endphp
+                <a href="{{ $homeUrl }}" class="rounded-2xl bg-blue-600 px-6 py-3 font-semibold text-white shadow-lg shadow-blue-500/40">{{ $homeLabel }}</a>
             </div>
         </main>
     </body>

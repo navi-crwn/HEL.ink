@@ -1085,5 +1085,6 @@
     "If this was you, there is nothing to do. If it was not, someone else may have access to your account: reset your password at :url as soon as you can. The reset link goes to the address that is now on the account, so if you cannot receive it, write to us from this address.": "If this was you, there is nothing to do. If it was not, someone else may have access to your account: reset your password at :url as soon as you can. The reset link goes to the address that is now on the account, so if you cannot receive it, write to us from this address.",
     "Signed up with Google? You have no password yet. On the sign-in page, choose \"Forgot your password\" to set one.": "Signed up with Google? You have no password yet. On the sign-in page, choose \"Forgot your password\" to set one.",
     "This email address is already linked to a different Google account. Sign in with your password, or reset it, instead.": "This email address is already linked to a different Google account. Sign in with your password, or reset it, instead.",
-    "This email address cannot be used. Please use another address.": "This email address cannot be used. Please use another address."
+    "This email address cannot be used. Please use another address.": "This email address cannot be used. Please use another address.",
+    "Back to your dashboard": "Back to your dashboard"
 }

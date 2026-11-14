@@ -1085,5 +1085,6 @@
     "If this was you, there is nothing to do. If it was not, someone else may have access to your account: reset your password at :url as soon as you can. The reset link goes to the address that is now on the account, so if you cannot receive it, write to us from this address.": "Если это были вы, ничего делать не нужно. Если нет, к вашей учётной записи мог получить доступ кто-то другой: как можно скорее сбросьте пароль на :url. Ссылка для сброса придёт на адрес, который сейчас указан в учётной записи; если вы не можете её получить, напишите нам с этого адреса.",
     "Signed up with Google? You have no password yet. On the sign-in page, choose \"Forgot your password\" to set one.": "Зарегистрировались через Google? Пароля у вас ещё нет. На странице входа выберите «Забыли пароль», чтобы задать его.",
     "This email address is already linked to a different Google account. Sign in with your password, or reset it, instead.": "Этот адрес электронной почты уже связан с другим аккаунтом Google. Войдите с паролем или сбросьте его.",
-    "This email address cannot be used. Please use another address.": "Этот адрес электронной почты использовать нельзя. Укажите другой адрес."
+    "This email address cannot be used. Please use another address.": "Этот адрес электронной почты использовать нельзя. Укажите другой адрес.",
+    "Back to your dashboard": "Назад на панель"
 }

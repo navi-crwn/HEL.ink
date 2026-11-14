@@ -1085,5 +1085,6 @@
     "If this was you, there is nothing to do. If it was not, someone else may have access to your account: reset your password at :url as soon as you can. The reset link goes to the address that is now on the account, so if you cannot receive it, write to us from this address.": "Wenn du das warst, musst du nichts tun. Wenn nicht, hat möglicherweise jemand anderes Zugriff auf dein Konto: Setze dein Passwort so bald wie möglich unter :url zurück. Der Link geht an die Adresse, die jetzt im Konto steht. Wenn du ihn nicht empfangen kannst, schreib uns von dieser Adresse aus.",
     "Signed up with Google? You have no password yet. On the sign-in page, choose \"Forgot your password\" to set one.": "Mit Google registriert? Dann hast du noch kein Passwort. Wähle auf der Anmeldeseite „Passwort vergessen“, um eines festzulegen.",
     "This email address is already linked to a different Google account. Sign in with your password, or reset it, instead.": "Diese E-Mail-Adresse ist bereits mit einem anderen Google-Konto verknüpft. Melde dich stattdessen mit deinem Passwort an oder setze es zurück.",
-    "This email address cannot be used. Please use another address.": "Diese E-Mail-Adresse kann nicht verwendet werden. Bitte nutze eine andere Adresse."
+    "This email address cannot be used. Please use another address.": "Diese E-Mail-Adresse kann nicht verwendet werden. Bitte nutze eine andere Adresse.",
+    "Back to your dashboard": "Zurück zum Dashboard"
 }

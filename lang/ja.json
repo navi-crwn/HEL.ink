@@ -1085,5 +1085,6 @@
     "If this was you, there is nothing to do. If it was not, someone else may have access to your account: reset your password at :url as soon as you can. The reset link goes to the address that is now on the account, so if you cannot receive it, write to us from this address.": "ご本人の操作であれば、対応は不要です。そうでない場合、第三者がアカウントにアクセスできる可能性があります。できるだけ早く :url でパスワードを再設定してください。再設定リンクは現在アカウントに設定されているアドレスに届くため、受け取れない場合はこのアドレスからご連絡ください。",
     "Signed up with Google? You have no password yet. On the sign-in page, choose \"Forgot your password\" to set one.": "Google で登録しましたか？まだパスワードはありません。ログインページで「パスワードを忘れた場合」を選んで設定してください。",
     "This email address is already linked to a different Google account. Sign in with your password, or reset it, instead.": "このメールアドレスはすでに別の Google アカウントに連携されています。代わりにパスワードでログインするか、パスワードを再設定してください。",
-    "This email address cannot be used. Please use another address.": "このメールアドレスは使用できません。別のアドレスをお使いください。"
+    "This email address cannot be used. Please use another address.": "このメールアドレスは使用できません。別のアドレスをお使いください。",
+    "Back to your dashboard": "ダッシュボードに戻る"
 }

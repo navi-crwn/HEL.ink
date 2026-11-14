@@ -126,7 +126,7 @@ class TwoFactorController extends Controller
         }
         if ($valid) {
             $request->session()->put('2fa_verified', true);
-            AuthTime::stamp();
+            AuthTime::stampAfterSecondFactor();
 
             return redirect()->intended(AfterLogin::home($request->user()));
         }

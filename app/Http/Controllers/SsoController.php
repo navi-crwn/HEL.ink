@@ -84,9 +84,9 @@ class SsoController extends Controller
      */
     private function signInAgain(Request $request): RedirectResponse
     {
-        $guard = Auth::guard('web');
-        Cookie::queue(Cookie::forget($guard->getRecallerName()));
-        $guard->forgetUser();
+        // Only this device: the remember token is kept, and the guard stays logged out for the rest of this request
+        // (a plain forgetUser() lets a later $request->user() read the "remember me" cookie again).
+        Auth::guard('web')->logoutCurrentDevice();
         $request->session()->invalidate();
         $request->session()->put('url.intended', $request->fullUrl());
 

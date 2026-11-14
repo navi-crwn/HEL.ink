@@ -167,7 +167,11 @@ class GoogleAuthController extends Controller
                     return redirect()->route('suspended')->with('error', 'Your account has been suspended.');
                 }
                 Auth::login($user, true);
-                AuthTime::stamp();
+                if ($user->hasTwoFactor()) {
+                    AuthTime::awaitSecondFactor();
+                } else {
+                    AuthTime::stamp();
+                }
                 app(LoginRecorder::class)->record($user, request()->ip(), request()->userAgent(), 'google');
 
                 return redirect()->intended(AfterLogin::home($user))->with('success', 'Welcome back, '.$user->name.'!');

@@ -109,12 +109,12 @@ Route::domain(config('hop.hub_host'))->group(function () use ($marketing) {
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
         Route::post('/settings/export-account', [SettingsController::class, 'exportAccount'])->middleware('throttle:5,1,export-account')->name('settings.export.account');
-        Route::post('/settings/2fa/enable', [TwoFactorController::class, 'enable'])->name('settings.2fa.enable');
-        Route::post('/settings/2fa/confirm', [TwoFactorController::class, 'confirm'])->name('settings.2fa.confirm');
-        Route::delete('/settings/2fa/disable', [TwoFactorController::class, 'disable'])->name('settings.2fa.disable');
-        Route::post('/settings/2fa/recovery-codes', [TwoFactorController::class, 'regenerateRecoveryCodes'])->name('settings.2fa.recovery-codes');
-        Route::post('/api-tokens', [ApiTokenController::class, 'store'])->middleware('verified')->name('api-tokens.store');
-        Route::delete('/api-tokens/{apiToken}', [ApiTokenController::class, 'destroy'])->name('api-tokens.destroy');
+        Route::post('/settings/2fa/enable', [TwoFactorController::class, 'enable'])->middleware('settings.tab:2fa')->name('settings.2fa.enable');
+        Route::post('/settings/2fa/confirm', [TwoFactorController::class, 'confirm'])->middleware('settings.tab:2fa')->name('settings.2fa.confirm');
+        Route::delete('/settings/2fa/disable', [TwoFactorController::class, 'disable'])->middleware('settings.tab:2fa')->name('settings.2fa.disable');
+        Route::post('/settings/2fa/recovery-codes', [TwoFactorController::class, 'regenerateRecoveryCodes'])->middleware('settings.tab:2fa')->name('settings.2fa.recovery-codes');
+        Route::post('/api-tokens', [ApiTokenController::class, 'store'])->middleware(['verified', 'settings.tab:api'])->name('api-tokens.store');
+        Route::delete('/api-tokens/{apiToken}', [ApiTokenController::class, 'destroy'])->middleware('settings.tab:api')->name('api-tokens.destroy');
         Route::get('/api-docs', [ApiTokenController::class, 'docs'])->name('api-docs');
         // The "Hide" button of a reminder card on the dashboard (data-hop-remind): away for seven days.
         Route::post('/reminders/dismiss', [ReminderController::class, 'dismiss'])->middleware('throttle:30,1,reminders')->name('reminders.dismiss');

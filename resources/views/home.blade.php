@@ -39,7 +39,7 @@
     <section id="{{ $slug }}" class="h-sec h-app" style="--app-accent: {{ $app['color'] }}" aria-labelledby="{{ $slug }}-title" data-app-section="{{ $slug }}">
         <div class="h-app-copy"><span class="h-tag" data-rv><img src="{{ $app['mark'] }}" alt="" width="28" height="28">{{ $app['name'] }}</span><h2 id="{{ $slug }}-title" data-split><em>{{ $app['kicker'] }}</em></h2><p class="h-sub" data-rv>{{ $app['story'] }}</p>
             <ul class="h-feats">@foreach ($app['steps'] as [$title, $description])<li><span aria-hidden="true">✓</span><span><b>{{ $title }}</b>{{ $description }}</span></li>@endforeach</ul>
-            <div class="h-cta"><a class="h-pill dark" href="{{ $app['url'] }}">{{ __('Open :app', ['app' => $app['name']]) }}</a><a class="h-pill" href="{{ $app['url'] }}/#features">{{ __('Learn more') }}</a></div>
+            <div class="h-cta"><a class="h-pill dark" href="{{ hop_app_url($slug, $app['url']) }}">{{ __('Open :app', ['app' => $app['name']]) }}</a><a class="h-pill" href="{{ $app['url'] }}/#features">{{ __('Learn more') }}</a></div>
         </div><div><x-home-art :preset="$slug" :name="$app['name']" />@include('partials.home-mini-demo')</div>
     </section>
     @endforeach

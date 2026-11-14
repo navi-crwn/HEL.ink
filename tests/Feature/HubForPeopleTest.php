@@ -89,3 +89,10 @@ test('the dashboard cards get a token frame, also in the bare bento grids and in
     expect($css)->toContain('--hop-frame-a: 0.8')->toContain('--hop-frame-a: 0.55')->toContain('.hop-bento[data-bare] > :is(.glass, .glass-card)');
     expect(file_get_contents(resource_path('css/coss.css')))->toContain('border: 1px solid var(--hop-frame) !important');
 });
+
+test('"Open" on the PayHop card starts at PayHop\'s dashboard, not at its public page', function () {
+    HopApp::factory()->payhop()->create();
+    $this->actingAs(hubUser())->withSession(['2fa_verified' => true]);
+    $location = $this->get('/apps/payhop')->headers->get('Location');
+    expect($location)->toContain('/auth/sso')->toContain('next=%2Faccount');
+});

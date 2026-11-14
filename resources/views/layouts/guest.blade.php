@@ -18,7 +18,7 @@
         <x-session-expired-notice />
         <div class="relative z-10 flex min-h-screen flex-col items-center px-4 py-8 sm:justify-center">
             <div class="mb-6 flex w-full max-w-sm items-center justify-between">
-                <a href="{{ route('home') }}" class="flex items-center gap-2.5" title="{{ __('Home') }}">
+                <a href="{{ hop_home_url() }}" class="flex items-center gap-2.5" title="{{ __('Home') }}">
                     <x-wordmark class="h-10 w-auto" />
                 </a>
                 {{-- Language and theme, as in every dashboard top bar: the sign-in pages are the first thing a visitor sees. --}}

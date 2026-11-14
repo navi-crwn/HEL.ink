@@ -58,7 +58,7 @@
         <main id="main">
             @if ($back)
                 <div class="mx-auto max-w-6xl px-4 pt-6 sm:px-6">
-                    <a href="{{ route('home') }}" class="inline-flex items-center gap-1.5 text-sm text-slate-500 transition hover:text-slate-900 dark:text-white/60 dark:hover:text-white">
+                    <a href="{{ hop_home_url() }}" class="inline-flex items-center gap-1.5 text-sm text-slate-500 transition hover:text-slate-900 dark:text-white/60 dark:hover:text-white">
                         <span aria-hidden="true" class="inline-block rtl:-scale-x-100">&larr;</span> {{ __('Back to HOP') }}
                     </a>
                 </div>

@@ -29,6 +29,8 @@ jobs:
       - run: php artisan test
       - run: node --test tests/home-renderer.test.mjs tests/dialogs.test.mjs tests/home-globe.test.mjs tests/theme-boot.test.mjs
       - run: python3 scripts/hop_assets.py check
+      - name: Changelog is plain and current
+        run: python3 scripts/build-changelog.py --repo HEL.ink --check && python3 -m unittest scripts/test_build_changelog.py
       - run: composer audit
 
   nginx-u05:

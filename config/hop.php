@@ -232,7 +232,8 @@ return [
             'url' => env('PAYHOP_URL', 'https://pay.hel.ink'),
             // Signs in with its own secret and callback from the HOP ID registry (`apps`), like NoteHop and FileHop.
             'registry' => true,
-            'open_path' => env('PAYHOP_OPEN_PATH', '/'),
+            // PayHop's own dashboard is /account; "/" would be turned into it by PayHop, so say it here.
+            'open_path' => env('PAYHOP_OPEN_PATH', '/account'),
             'public_prefix' => null,
             'logout' => env('PAYHOP_LOGOUT_PATH', '/auth/sso/logout'),
             'export' => null,

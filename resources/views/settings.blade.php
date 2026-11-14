@@ -50,7 +50,15 @@
                 }
             });
         },
+        // The language links drop the #tab of the address: put it back when one is used, so the tab stays.
+        keepTabOnLanguageLinks() {
+            document.addEventListener('click', event => {
+                const link = event.target.closest && event.target.closest('a[hreflang]');
+                if (link && window.location.hash && !link.href.includes('#')) { link.href += window.location.hash; }
+            }, true);
+        },
         init() {
+            this.keepTabOnLanguageLinks();
             this.fromHash();
             this.reveal();
             // The row gets wider when the web font arrives, which moves the tabs: place it again then.
@@ -664,7 +672,7 @@
     function apiSettings() {
         return {
             newTokenName: '',
-            newlyCreatedToken: '',
+            newlyCreatedToken: @js(session('api_token', '')),
             isCreating: false,
             copied: false,
             async createToken(event) {

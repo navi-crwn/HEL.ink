@@ -12,9 +12,10 @@ test('the sidebar wordmark links to the dashboard, not the public home page', fu
     $html = $this->get('/dashboard')->assertOk()->getContent();
 
     expect($html)->toContain('href="'.route('dashboard').'" class="flex items-center gap-2.5"');
-    // The home page link is for guests (guest layout); the signed-in sidebar must not have it.
+    // The home page link is for guests (guest layout); the signed-in sidebar has exactly one: "Part of Hop Easy Link" at its foot.
     preg_match('#<aside.*?</aside>#s', $html, $aside);
-    expect($aside[0] ?? '')->not->toContain('href="'.route('home').'"');
+    expect(substr_count($aside[0] ?? '', 'href="'.route('home').'"'))->toBe(1);
+    expect($aside[0] ?? '')->toMatch('#data-part-of.*?href="'.preg_quote(route('home'), '#').'"#s');
 });
 
 test('the app list in the sidebar is labelled HOP family', function () {

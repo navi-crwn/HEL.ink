@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Announcement;
+use App\Models\User;
 use App\Services\AppSummaries;
 use App\Services\Watchdog;
 use App\Support\HopApps;
@@ -21,6 +22,7 @@ class LauncherController extends Controller
         $status = $watchdog->summary();
         $apps = HopApps::all();
         $health = $user->isSuperAdmin() ? null : $dashboard->health();
+        [$announcement, $announcementsMore] = self::announcementCard($user);
 
         return view('launcher', [
             'apps' => $apps,
@@ -33,8 +35,27 @@ class LauncherController extends Controller
             'reminders' => Reminders::due($user, $dashboard, $health),
             'logins' => $dashboard->logins(),
             'activity' => $dashboard->activity(),
-            'announcements' => Announcement::live()->limit(3)->get(),
+            'announcement' => $announcement,
+            'announcementsMore' => $announcementsMore,
         ]);
+    }
+
+    /**
+     * The one announcement card of the dashboard, like in the other apps: a critical one first (it cannot be hidden),
+     * else the newest the person has not hidden for a week. The second value is how many more are live and not
+     * hidden, so the card can point to the list instead of silently dropping them.
+     *
+     * @return array{0: Announcement|null, 1: int}
+     */
+    private static function announcementCard(User $user): array
+    {
+        $hidden = Reminders::hidden($user);
+        $shown = Announcement::live()->limit(20)->get()
+            ->reject(fn (Announcement $a) => $a->level !== 'critical' && in_array(Reminders::announcementKey($a), $hidden, true))
+            ->sortBy([fn ($a, $b) => ($b->level === 'critical') <=> ($a->level === 'critical')])
+            ->values();
+
+        return [$shown->first(), max(0, $shown->count() - 1)];
     }
 
     /**

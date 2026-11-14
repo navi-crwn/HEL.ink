@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcement;
 use App\Support\Input;
 use App\Support\Reminders;
 use Illuminate\Http\JsonResponse;
@@ -16,8 +17,15 @@ class ReminderController extends Controller
     public function dismiss(Request $request): JsonResponse
     {
         $key = Input::text($request->input('key'));
-        if (! in_array($key, Reminders::KEYS, true)) {
+        if (! Reminders::isKey($key)) {
             return response()->json(['ok' => false, 'message' => 'Unknown reminder.'], 422);
+        }
+        // An announcement card: only a live one that is not critical can be hidden.
+        if (str_starts_with($key, 'ann-')) {
+            $announcement = Announcement::live()->find((int) substr($key, 4));
+            if (! $announcement || $announcement->level === 'critical') {
+                return response()->json(['ok' => false, 'message' => 'This announcement cannot be hidden.'], 422);
+            }
         }
         Reminders::dismiss($request->user(), $key);
 

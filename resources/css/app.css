@@ -6,6 +6,7 @@
 @import './identity-hero.css';
 @import './bento-scenes.css';
 @import './home-product.css';
+@import './palette.css';
 
 @plugin '@tailwindcss/forms';
 

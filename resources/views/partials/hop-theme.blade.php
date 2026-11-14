@@ -10,6 +10,18 @@
             try { document.cookie = 'hop_theme=' + t + '; path=/; max-age=31536000; SameSite=Lax' + d; } catch (e) {}
             try { localStorage.setItem('helink-theme', t); } catch (e) {}
         };
+        // The colour set (contract L-10): cookie `hop_palette` (classic|mist|sand, same domain rules as hop_theme).
+        // `classic` is no attribute at all; anything else than mist or sand counts as classic.
+        window.hopSetPalette = function (p) {
+            var d = /(^|\.)hel\.ink$/.test(location.hostname) ? '; domain=.hel.ink; Secure' : '';
+            p = p === 'mist' || p === 'sand' ? p : 'classic';
+            try { document.cookie = 'hop_palette=' + p + '; path=/; max-age=31536000; SameSite=Lax' + d; } catch (e) {}
+            if (p === 'classic') { delete root.dataset.palette; } else { root.dataset.palette = p; }
+        };
+        try {
+            var pm = document.cookie.match(/(?:^|; )hop_palette=(mist|sand)(?:;|$)/);
+            if (pm) root.dataset.palette = pm[1];
+        } catch (e) {}
         try {
             var m = document.cookie.match(/(?:^|; )hop_theme=(light|dark)(?:;|$)/);
             var t = m ? m[1] : null;

@@ -1,0 +1,65 @@
+/*
+| Family colour sets (contract L-10): `classic` is the hub as it always looked (no attribute). `mist` and `sand` are
+| set by <html data-palette="mist|sand"> (cookie hop_palette, written by hopSetPalette in partials/hop-theme.blade.php).
+| The accent runs through Tailwind's own indigo and violet colour variables, so every indigo-* and violet-* class of
+| the dashboard follows without touching a template; the surfaces use the hub's own tokens (--bg, --glass, the frame).
+| Nothing here applies without the attribute, so `classic` is unchanged.
+*/
+:root[data-palette="mist"] {
+    --pal-a: #4f5bd5; --pal-b: #2f74b8;
+    --accent: 79 91 213; --accent-2: 47 116 184;
+    --bg: 244 246 252; --glass: 255 255 255; --glass-border: 221 226 241; --glass-border-alpha: 1;
+}
+:root.dark[data-palette="mist"] {
+    --pal-a: #9aaeff; --pal-b: #86c8f3;
+    --accent: 154 174 255; --accent-2: 134 200 243;
+    --bg: 13 17 32; --glass: 20 26 46; --glass-border: 38 46 74; --glass-border-alpha: 1;
+}
+:root[data-palette="sand"] {
+    --pal-a: #b4532a; --pal-b: #a2406f;
+    --accent: 180 83 42; --accent-2: 162 64 111;
+    --bg: 250 246 241; --glass: 255 255 255; --glass-border: 236 226 214; --glass-border-alpha: 1;
+}
+:root.dark[data-palette="sand"] {
+    --pal-a: #f3b48c; --pal-b: #ea9fb0;
+    --accent: 243 180 140; --accent-2: 234 159 176;
+    --bg: 23 17 13; --glass: 31 24 20; --glass-border: 58 46 37; --glass-border-alpha: 1;
+}
+:root[data-palette="mist"], :root[data-palette="sand"] {
+    --color-indigo-50: color-mix(in oklab, var(--pal-a) 8%, white);
+    --color-indigo-100: color-mix(in oklab, var(--pal-a) 16%, white);
+    --color-indigo-200: color-mix(in oklab, var(--pal-a) 32%, white);
+    --color-indigo-300: color-mix(in oklab, var(--pal-a) 55%, white);
+    --color-indigo-400: color-mix(in oklab, var(--pal-a) 78%, white);
+    --color-indigo-500: color-mix(in oklab, var(--pal-a) 92%, white);
+    --color-indigo-600: var(--pal-a);
+    --color-indigo-700: color-mix(in oklab, var(--pal-a) 82%, black);
+    --color-indigo-800: color-mix(in oklab, var(--pal-a) 66%, black);
+    --color-indigo-900: color-mix(in oklab, var(--pal-a) 52%, black);
+    --color-indigo-950: color-mix(in oklab, var(--pal-a) 36%, black);
+    --color-violet-50: color-mix(in oklab, var(--pal-b) 8%, white);
+    --color-violet-100: color-mix(in oklab, var(--pal-b) 16%, white);
+    --color-violet-200: color-mix(in oklab, var(--pal-b) 32%, white);
+    --color-violet-300: color-mix(in oklab, var(--pal-b) 55%, white);
+    --color-violet-400: color-mix(in oklab, var(--pal-b) 78%, white);
+    --color-violet-500: color-mix(in oklab, var(--pal-b) 92%, white);
+    --color-violet-600: var(--pal-b);
+    --color-violet-700: color-mix(in oklab, var(--pal-b) 82%, black);
+    --color-violet-800: color-mix(in oklab, var(--pal-b) 66%, black);
+    --color-violet-900: color-mix(in oklab, var(--pal-b) 52%, black);
+    --color-violet-950: color-mix(in oklab, var(--pal-b) 36%, black);
+}
+
+/* The picker at the foot of the sidebar: three small colour samples with their names. */
+.pal-picker { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.375rem; padding: 0 0.25rem; }
+.pal-picker button {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.3rem; min-height: 3.25rem; min-width: 0; padding: 0.4rem 0.2rem;
+    border: 1px solid rgb(var(--muted) / 0.3); border-radius: 0.625rem; font-size: 0.75rem; line-height: 1.1; color: rgb(var(--muted));
+    background: transparent; overflow-wrap: anywhere; text-align: center;
+}
+.pal-picker button[aria-pressed="true"] { color: rgb(var(--ink)); border-color: rgb(var(--accent)); box-shadow: 0 0 0 1px rgb(var(--accent)); }
+.pal-picker button:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 2px; }
+.pal-swatch { width: 1.125rem; height: 1.125rem; border-radius: 9999px; border: 1px solid rgb(var(--muted) / 0.4); }
+.pal-swatch-classic { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+.pal-swatch-mist { background: linear-gradient(135deg, #4f5bd5, #86c8f3); }
+.pal-swatch-sand { background: linear-gradient(135deg, #b4532a, #f3b48c); }

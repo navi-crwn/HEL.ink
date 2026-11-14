@@ -21,6 +21,7 @@ QUERIES = (None, "x=1&y=%2F", "dup=1&dup=1&next=a%2Bb%3Fx%3D1")
 HUB_SINGLE_SEGMENT_PAGES = (
     "about",
     "announcements",
+    "announcements.json",
     "apps",
     "changelog",
     "contact",

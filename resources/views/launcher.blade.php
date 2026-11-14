@@ -34,20 +34,28 @@
     </div>
 
     <x-flash />
-    @foreach ($announcements as $a)
-        <a href="{{ route('announcements.show', $a) }}" class="glass flex items-start gap-3 rounded-2xl px-4 py-3 {{ $a->level === 'critical' ? 'border-rose-400/40' : ($a->level === 'warning' ? 'border-amber-400/40' : '') }}">
-            <span class="mt-0.5 chip-blue">{{ $a->app_slug ? ucfirst($a->app_slug) : 'HOP' }}</span>
-            <span class="min-w-0 flex-1">
-                <span class="block truncate text-sm font-semibold text-ink">{{ $a->title }}</span>
-                <span class="block text-xs text-muted">{{ $a->published_at->diffForHumans() }}</span>
-            </span>
-        </a>
-    @endforeach
-
-    {{-- Reminders the person can hide for a week (App\Support\Reminders). The shared hop-ui.js, or the hub's own
-         reminders.js without it, adds the "Hide" button; the announcements above are not reminders and stay. --}}
     @php
         $remindAttrs = 'data-hop-remind-url="'.e(route('reminders.dismiss')).'" data-hop-remind-hide="'.e(__('Hide')).'" data-hop-remind-again="'.e(__('Shows again next week')).'"';
+    @endphp
+    {{-- One announcement card, like in the other apps: a critical one first and without a Hide button, else the newest
+         not hidden. It is hidden for a week through the same reminder mechanism (key ann-<id>). --}}
+    @if ($announcement)
+        @php
+            $hideable = $announcement->level !== 'critical';
+            $annApp = $announcement->app_slug ? (\App\Support\HopApps::find($announcement->app_slug)?->name ?? ucfirst($announcement->app_slug)) : 'HOP';
+        @endphp
+        <section class="glass flex flex-wrap items-start gap-x-3 gap-y-1 rounded-2xl py-3 pl-4 {{ $hideable ? 'pr-14' : 'pr-4' }} {{ $announcement->level === 'critical' ? 'border-rose-400/40' : ($announcement->level === 'warning' ? 'border-amber-400/40' : '') }}" aria-labelledby="announcement-title" @if ($hideable) data-hop-remind="{{ \App\Support\Reminders::announcementKey($announcement) }}" {!! $remindAttrs !!} @endif>
+            <span class="mt-0.5 chip-blue">{{ $annApp }}</span>
+            <div class="min-w-0 flex-1 basis-56">
+                <h2 id="announcement-title" class="text-sm font-semibold text-ink"><a href="{{ route('announcements.show', $announcement) }}" class="hover:underline">{{ $announcement->title }}</a></h2>
+                <p class="text-xs text-muted">{{ $announcement->published_at->diffForHumans() }}@if ($announcementsMore > 0) · <a href="{{ route('announcements.index') }}" class="underline decoration-dotted underline-offset-2 hover:text-ink">{{ __('All announcements') }}</a>@endif</p>
+            </div>
+        </section>
+    @endif
+
+    {{-- Reminders the person can hide for a week (App\Support\Reminders). The shared hop-ui.js, or the hub's own
+         reminders.js without it, adds the "Hide" button. --}}
+    @php
         $showHealth = $health && in_array(\App\Support\Reminders::ACCOUNT_HEALTH, $reminders, true);
     @endphp
     @if (in_array(\App\Support\Reminders::TWO_FACTOR, $reminders, true))
@@ -195,7 +203,7 @@
                 <div class="mt-3 flex flex-wrap items-center gap-2">
                     <a href="{{ $settings }}#backup" class="btn-outline btn-sm">{{ __('Export my data') }}</a>
                     @unless ($user->isSuperAdmin())
-                        <a href="{{ $settings }}#account" class="btn-danger-outline btn-sm">{{ __('Delete account') }}</a>
+                        <a href="{{ $settings }}#delete-account" class="btn-danger-outline btn-sm">{{ __('Delete account') }}</a>
                     @endunless
                 </div>
             </section>

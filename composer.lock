@@ -1254,7 +1254,7 @@
         },
         {
             "name": "hop/auth",
-            "version": "dev-feat/dashboard-polish",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "packages/auth",
@@ -1288,7 +1288,7 @@
         },
         {
             "name": "hop/safety",
-            "version": "dev-feat/dashboard-polish",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "packages/safety",
@@ -1324,7 +1324,7 @@
         },
         {
             "name": "hop/ui",
-            "version": "dev-feat/dashboard-polish",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "packages/ui",

@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use App\Models\Announcement;
 use App\Models\User;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +12,8 @@ use Illuminate\Support\Facades\DB;
  * on two-factor, and the warning that the recovery codes are running out. A person can hide
  * a card; it stays away for seven days and then shows again while its task is still open.
  * A card whose task is done is never shown, hidden or not. Functional banners (verify your
- * email, an announcement) are not reminders and cannot be hidden.
+ * email) are not reminders and cannot be hidden. An announcement card can be hidden the same way (key `ann-<id>`,
+ * see announcementKey) unless it is critical.
  */
 final class Reminders
 {
@@ -30,6 +32,18 @@ final class Reminders
     public const LOW_CODES = 2;
 
     private const TABLE = 'hub_reminder_dismissals';
+
+    /** The key of the card of one announcement: `ann-<id>`, the same in every HOP app. */
+    public static function announcementKey(Announcement $announcement): string
+    {
+        return 'ann-'.$announcement->getKey();
+    }
+
+    /** A card the person may hide: one of the fixed reminders, or `ann-<digits>` (the announcement itself is checked by the caller). */
+    public static function isKey(string $key): bool
+    {
+        return in_array($key, self::KEYS, true) || preg_match('/^ann-[0-9]{1,18}$/', $key) === 1;
+    }
 
     public static function dismiss(User $user, string $key, ?CarbonInterface $at = null): void
     {

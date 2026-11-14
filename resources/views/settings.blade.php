@@ -40,7 +40,13 @@
             }
             // The links from the apps (#delete-account) open the Account tab and go down to the delete section.
             if (hash === 'delete' || hash === 'delete-account') {
-                this.$nextTick(() => document.getElementById('delete-account')?.scrollIntoView({ block: 'start' }));
+                // The tab has to be on screen before there is anything to scroll to: try again on the next frame, a few times.
+                const goDown = (tries = 0) => {
+                    const el = document.getElementById('delete-account');
+                    if (el && el.getBoundingClientRect().height > 0) { el.scrollIntoView({ block: 'start' }); }
+                    else if (el && tries < 30) { requestAnimationFrame(() => goDown(tries + 1)); }
+                };
+                requestAnimationFrame(() => goDown());
             }
         },
         // On a phone the tab row scrolls sideways: bring the active tab into view (opened via #api it sat off-screen).

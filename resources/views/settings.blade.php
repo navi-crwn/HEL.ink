@@ -32,11 +32,15 @@
         tab: '{{ session('active_tab', 'account') }}',
         fromHash() {
             // Older links from the apps (LinkHop: #security, #data) and obvious guesses still land on the right tab.
-            const aliases = { security: '2fa', 'two-factor': '2fa', data: 'backup', export: 'backup', tokens: 'api', logins: 'login', profile: 'account', password: 'account' };
+            const aliases = { security: '2fa', 'two-factor': '2fa', data: 'backup', export: 'backup', tokens: 'api', logins: 'login', profile: 'account', password: 'account', delete: 'account', 'delete-account': 'account' };
             const hash = window.location.hash.substring(1);
             const hashTab = aliases[hash] || hash;
             if (@js(array_keys($settingsTabs)).includes(hashTab)) {
                 this.tab = hashTab;
+            }
+            // The links from the apps (#delete-account) open the Account tab and go down to the delete section.
+            if (hash === 'delete' || hash === 'delete-account') {
+                this.$nextTick(() => document.getElementById('delete-account')?.scrollIntoView({ block: 'start' }));
             }
         },
         // On a phone the tab row scrolls sideways: bring the active tab into view (opened via #api it sat off-screen).
@@ -232,7 +236,7 @@
                         </div>
                     </section>
                     @unless($u->isSuperAdmin())
-                        <section class="grid gap-4 p-5 md:grid-cols-3 md:gap-8" x-data="{
+                        <section id="delete-account" class="grid scroll-mt-24 gap-4 p-5 md:grid-cols-3 md:gap-8" x-data="{
                             showModal: false,
                             password: '',
                             countdown: 10,
@@ -251,7 +255,7 @@
                         }">
                             <div>
                                 <h3 class="section-title text-rose-600 dark:text-rose-400">{{ __('Delete account') }}</h3>
-                                <p class="mt-1 text-xs text-muted">{{ __('Removes your HOP ID and everything you made in the apps (links, bio pages, images, notes, folders, tags, analytics) for good.') }}</p>
+                                <p class="mt-1 text-xs text-muted">{{ __('Removes your HOP ID and everything you made in the HOP family for good: LinkHop (links, analytics), BioHop (bio pages), PixelHop (images), NoteHop (notes, folders, tags), FileHop and PayHop (your account there).') }}</p>
                             </div>
                             <div class="flex items-start md:col-span-2">
                                 <button type="button" @click="showModal = true; $nextTick(() => startCountdown())" class="btn-danger-outline">{{ __('Delete my account') }}</button>
@@ -259,7 +263,7 @@
                             <div x-show="showModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-xs" @click.self="showModal = false; password = ''" @keydown.escape.window="showModal = false; password = ''">
                                 <div class="glass-strong w-full max-w-sm rounded-2xl p-5" role="dialog" aria-modal="true" aria-labelledby="delete-account-title">
                                     <h3 id="delete-account-title" class="text-base font-semibold text-rose-600 dark:text-rose-400">{{ __('Delete account') }}</h3>
-                                    <p class="mt-1 text-sm text-muted"><strong class="text-ink">{{ __('This is permanent.') }}</strong> {{ __('Your links, bio pages, images, notes, folders, tags and analytics are deleted together with your HOP ID.') }}</p>
+                                    <p class="mt-1 text-sm text-muted"><strong class="text-ink">{{ __('This is permanent.') }}</strong> {{ __('What you have in LinkHop, BioHop, PixelHop, NoteHop, FileHop and PayHop is deleted together with your HOP ID.') }}</p>
                                     <form method="POST" action="{{ route('profile.destroy') }}" class="mt-4 space-y-3">
                                         @csrf
                                         @method('DELETE')

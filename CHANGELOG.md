@@ -4,6 +4,17 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here, written
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-11-14 - Confirm it is you
+
+### Added
+
+- **Signing in to an app.** An app can now ask the hub for a sign-in that is recent before it lets you do something sensitive. If your last sign-in is older than the app asks for, the hub shows the sign-in page once more, with the note that it needs to confirm it is you, and takes you straight back to the app after you sign in. Reason: until now an app could not tell a sign-in from a minute ago from a browser left open for weeks. The sign-in time is only counted when you really sign in with a password, with Google, by signing up, or with the code of two-factor sign-in, never when the browser remembers you, and only this browser is signed out, not your other devices.
+- **Settings, Account.** The delete section now has its own link, so an app can send you straight to it: opening it shows the Account tab and scrolls down to Delete account. Reason: the apps said where to delete the account but could only point at the top of the page.
+
+### Changed
+
+- **Settings, Delete account.** The warning now names every app whose data goes with the HOP ID: LinkHop, BioHop, PixelHop, NoteHop, FileHop and PayHop, in all nine languages. Reason: the old text listed only some kinds of data and left out FileHop and PayHop.
+
 ## [1.3.3] - 2026-11-14 - Settings stay put, calmer changelog
 
 ### Fixed
@@ -159,4 +170,4 @@ The first stable release of the hub. Everything below existed before and from no
 
 - **Audit fixes.** Error pages follow the visitor's language and the language cookie works when sessions are shared between hosts.
 
-[Unreleased]: https://github.com/navi-crwn/HEL.ink/compare/v1.3.2...HEAD
+[Unreleased]: https://github.com/navi-crwn/HEL.ink/compare/v1.4.0...HEAD

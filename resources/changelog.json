@@ -46,6 +46,11 @@
           "text": "The Open button on the PayHop card now starts at PayHop's own dashboard, as it does for the other apps, instead of its public start page. Reason: signing in through the launcher should end where your work is."
         },
         {
+          "type": "security",
+          "where": "Software update",
+          "text": "The web framework the hub runs on was updated to a version that fixes a reported weakness in how background tasks report their output. Reason: the dependency audit had started to flag the old version."
+        },
+        {
           "type": "changed",
           "where": "Changelog page",
           "text": "The page now shows one card per release of each app, with a short title and a list of what changed, where, what it means for you and why, instead of a stream of commit and pull request titles. The text of the entries stays in English; the page labels are in all nine languages. Reason: the old list was hard to read and showed internal wording."

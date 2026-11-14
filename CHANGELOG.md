@@ -15,6 +15,10 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here, written
 - **Public pages for members.** For a signed-in person, the logo and the Back link on the announcements, status and changelog pages, the app list in the top bar and the Open buttons now lead to the dashboard instead of the public home page. Visitors who are not signed in still go to the public home page. Reason: members found themselves on the public site when they only wanted to go back.
 - **Launcher, PayHop.** The Open button on the PayHop card now starts at PayHop's own dashboard, as it does for the other apps, instead of its public start page. Reason: signing in through the launcher should end where your work is.
 
+### Security
+
+- **Software update.** The web framework the hub runs on was updated to a version that fixes a reported weakness in how background tasks report their output. Reason: the dependency audit had started to flag the old version.
+
 ### Changed
 
 - **Changelog page.** The page now shows one card per release of each app, with a short title and a list of what changed, where, what it means for you and why, instead of a stream of commit and pull request titles. The text of the entries stays in English; the page labels are in all nine languages. Reason: the old list was hard to read and showed internal wording.

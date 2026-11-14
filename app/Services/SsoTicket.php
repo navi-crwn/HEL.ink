@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Support\AuthTime;
 use App\Support\HopApp;
 
 /**
@@ -20,6 +21,7 @@ final class SsoTicket
             'aud' => $app->slug,
             'admin' => $user->isAdminOf($app->slug),
             'state' => $state,
+            'auth_time' => AuthTime::get(),
             'iat' => $now,
             'exp' => $now + (int) config('hop.ticket_ttl', 120),
             'jti' => bin2hex(random_bytes(16)),

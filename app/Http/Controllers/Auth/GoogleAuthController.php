@@ -10,6 +10,7 @@ use App\Services\AccountSessions;
 use App\Services\LoginRecorder;
 use App\Services\NotificationService;
 use App\Support\AfterLogin;
+use App\Support\AuthTime;
 use App\Support\EmailDomains;
 use App\Support\Legal;
 use App\Support\Username;
@@ -166,6 +167,11 @@ class GoogleAuthController extends Controller
                     return redirect()->route('suspended')->with('error', 'Your account has been suspended.');
                 }
                 Auth::login($user, true);
+                if ($user->hasTwoFactor()) {
+                    AuthTime::awaitSecondFactor();
+                } else {
+                    AuthTime::stamp();
+                }
                 app(LoginRecorder::class)->record($user, request()->ip(), request()->userAgent(), 'google');
 
                 return redirect()->intended(AfterLogin::home($user))->with('success', 'Welcome back, '.$user->name.'!');
@@ -223,6 +229,7 @@ class GoogleAuthController extends Controller
                     ]);
                 }
                 Auth::login($user, true);
+                AuthTime::stamp();
 
                 if ($fromPage === 'app') {
                     return redirect()->intended(route('onboarding'));

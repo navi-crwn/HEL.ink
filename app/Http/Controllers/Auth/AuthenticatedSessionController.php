@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Services\LoginRecorder;
 use App\Services\TurnstileService;
 use App\Support\AfterLogin;
+use App\Support\AuthTime;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,6 +48,9 @@ class AuthenticatedSessionController extends Controller
             $this->recorder->record($user, $request->ip(), $request->userAgent(), 'password');
             if (! $user->two_factor_secret || ! $user->two_factor_confirmed_at) {
                 $request->session()->put('2fa_verified', true);
+                AuthTime::stamp();
+            } else {
+                AuthTime::awaitSecondFactor();
             }
         }
 

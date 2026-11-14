@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\AccountSessions;
 use App\Support\AfterLogin;
+use App\Support\AuthTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
@@ -125,6 +126,7 @@ class TwoFactorController extends Controller
         }
         if ($valid) {
             $request->session()->put('2fa_verified', true);
+            AuthTime::stampAfterSecondFactor();
 
             return redirect()->intended(AfterLogin::home($request->user()));
         }

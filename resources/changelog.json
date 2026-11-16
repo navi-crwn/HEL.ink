@@ -33,7 +33,7 @@
         {
           "type": "changed",
           "where": "Server settings",
-          "text": "Asking for the file name index.php directly now answers \"not found\" every time. Reason: once in a while it answered a server error, which search engines read as a fault of the site. The owner applies this once on the server."
+          "text": "Asking for the file name index.php directly now answers \"not found\" every time. Reason: it was seen answering a server error now and then, which search engines read as a fault of the site."
         }
       ]
     },

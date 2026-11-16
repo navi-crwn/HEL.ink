@@ -14,7 +14,7 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here, written
 ### Changed
 
 - **Page descriptions.** Every public page now has its own short description for search results and link previews, in all nine languages, instead of one shared sentence on 15 pages. The descriptions of the app pages are cut at the end of a sentence so they are not shortened in the middle by search engines. Reason: search engines treat many pages with the same description as pages about the same thing.
-- **Server settings.** Asking for the file name index.php directly now answers "not found" every time. Reason: once in a while it answered a server error, which search engines read as a fault of the site. The owner applies this once on the server.
+- **Server settings.** Asking for the file name index.php directly now answers "not found" every time. Reason: it was seen answering a server error now and then, which search engines read as a fault of the site.
 
 ## [1.5.0] - 2026-11-14 - One place for announcements
 

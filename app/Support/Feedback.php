@@ -21,12 +21,19 @@ final class Feedback
         if (! config('hop.feedback.enabled')) {
             return false;
         }
-        try {
-            return HopApp::query()->where('status', '!=', HopApp::STATUS_OFF)->get()
-                ->contains(fn (HopApp $a) => $a->can('admin_client'));
-        } catch (\Throwable) {
-            return false; // no database yet (fresh install): the form is not offered
+        // Asked by the sidebar, the footer and the page itself: once per request is enough.
+        $attributes = request()->attributes;
+        if (! $attributes->has('hop.feedback.active')) {
+            try {
+                $on = HopApp::query()->where('status', '!=', HopApp::STATUS_OFF)->get()
+                    ->contains(fn (HopApp $a) => $a->can('admin_client'));
+            } catch (\Throwable) {
+                $on = false; // no database yet (fresh install): the form is not offered
+            }
+            $attributes->set('hop.feedback.active', $on);
         }
+
+        return (bool) $attributes->get('hop.feedback.active');
     }
 
     /** The app slug a link named, or `hub` for anything unknown. */

@@ -3,6 +3,7 @@
 use App\Models\Announcement;
 use App\Models\User;
 use App\Support\FamilyStory;
+use App\Support\Seo;
 use Hop\Ui\Locales;
 use Illuminate\Support\Facades\Http;
 
@@ -168,4 +169,12 @@ test('every URL in the sitemap answers 200', function () {
     foreach (array_keys(seoSitemap($this->get('/sitemap.xml')->assertOk()->getContent())) as $loc) {
         $this->get(parse_url($loc, PHP_URL_PATH))->assertOk();
     }
+});
+
+test('Seo::description keeps whole sentences and never passes the limit', function () {
+    $long = 'First sentence is short. Second sentence is a little longer than the first. '.str_repeat('Third words go on and on. ', 10);
+    $out = Seo::description($long, 80);
+    expect($out)->toBe('First sentence is short. Second sentence is a little longer than the first.');
+    expect(mb_strlen(Seo::description(str_repeat('word ', 100), 60)))->toBeLessThanOrEqual(60);
+    expect(Seo::description("<p>Hello\n  world</p>"))->toBe('Hello world');
 });

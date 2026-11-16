@@ -1,4 +1,4 @@
-<x-marketing-layout :title="__('How to sign up').' · HOP'" :themed="true">
+<x-marketing-layout :title="__('How to sign up').' · HOP'" :description="__('Create a free HOP ID in a minute with your email or Google, confirm your address, and open every HOP app already signed in.')" :themed="true">
     <section class="mx-auto max-w-3xl px-4 py-10 sm:px-6">
         <h1 class="text-3xl font-bold text-slate-900 sm:text-4xl dark:text-white">{{ __('How to sign up') }}</h1>
         <div class="mt-6 space-y-4 text-slate-700 dark:text-white/80">

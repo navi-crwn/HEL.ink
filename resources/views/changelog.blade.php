@@ -1,4 +1,4 @@
-<x-marketing-layout :title="__('Changelog')" :themed="true">
+<x-marketing-layout :title="__('Changelog')" :description="__('What changed in HOP and when, in plain words: new features, fixes and improvements, with the reason for each change.')" :themed="true">
     <section class="mx-auto max-w-4xl px-4 py-12 sm:px-6">
         <h1 class="text-4xl font-bold">{{ __('Changelog') }}</h1>
         <p class="mt-4 text-slate-600 dark:text-slate-300">{{ __('What changed in each HOP app, newest first.') }}</p>

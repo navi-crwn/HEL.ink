@@ -2,7 +2,7 @@
     $card = 'rounded-3xl border border-slate-200/80 bg-white/70 p-6 dark:border-white/10 dark:bg-white/3';
     $muted = 'text-slate-600 dark:text-white/70';
 @endphp
-<x-marketing-layout :title="$app['name'].' · HOP'" :description="$app['story']" :themed="true">
+<x-marketing-layout :title="$app['name'].' · HOP'" :description="\App\Support\Seo::description($app['story'])" :themed="true">
     {{-- Hero Section --}}
     <section class="relative mx-auto max-w-5xl px-4 pt-14 pb-8 sm:px-6">
         <div class="flex flex-col items-center text-center space-y-4">
@@ -17,9 +17,12 @@
                 <a href="{{ hop_app_url($slug, $app['url']) }}" class="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:opacity-90" style="background-color: {{ $app['color'] }}">
                     {{ $app['cta'] }} &rarr;
                 </a>
-                <a href="{{ $app['url'] }}/features" class="rounded-xl border border-slate-200 bg-white/80 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-white/10 dark:bg-white/5 dark:text-white/80">
-                    {{ __('All Features') }}
-                </a>
+                {{-- Only these apps have a features page of their own (FileHop and PayHop answer 404 or the home shell there). --}}
+                @if (in_array($slug, ['linkhop', 'biohop', 'pixelhop', 'notehop'], true))
+                    <a href="{{ $app['url'] }}/features" class="rounded-xl border border-slate-200 bg-white/80 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-white/10 dark:bg-white/5 dark:text-white/80">
+                        {{ __('All Features') }}
+                    </a>
+                @endif
                 @if ($app['repo'])
                     <a href="{{ $app['repo'] }}" target="_blank" rel="noopener noreferrer" class="rounded-xl border border-slate-200 bg-white/80 px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 dark:border-white/10 dark:bg-white/5 dark:text-white/70">
                         GitHub (MIT)

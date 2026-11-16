@@ -1,4 +1,4 @@
-<x-marketing-layout :title="__('Security').' · HOP'" :themed="true">
+<x-marketing-layout :title="__('Security').' · HOP'" :description="__('How HOP keeps accounts and visitors safe: hashed passwords, two-factor codes, link checks, visitor privacy and end-to-end encrypted notes.')" :themed="true">
     <section class="mx-auto max-w-3xl px-4 py-10 sm:px-6">
         <h1 class="text-3xl font-bold text-slate-900 sm:text-4xl dark:text-white">{{ __('Security') }}</h1>
         <div class="mt-6 space-y-4 text-slate-700 dark:text-white/80">

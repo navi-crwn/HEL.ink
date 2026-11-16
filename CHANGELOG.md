@@ -4,6 +4,18 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here, written
 
 ## [Unreleased]
 
+## [1.5.1] - 2026-11-16 - Clearer pages for search engines
+
+### Fixed
+
+- **Pages of PayHop and FileHop on the hub.** The "All Features" button on these two pages led to an address that does not exist, so it is gone; the other four apps keep it. Reason: a button that opens an error page is a dead end for visitors and counts against the site in search results.
+- **Home page, Learn more.** Each "Learn more" link now says which app it is about (for example "Learn more about LinkHop") for screen readers and search engines, in all nine languages. It looks the same as before. Reason: five links with the same words do not tell anyone where they lead.
+
+### Changed
+
+- **Page descriptions.** Every public page now has its own short description for search results and link previews, in all nine languages, instead of one shared sentence on 15 pages. The descriptions of the app pages are cut at the end of a sentence so they are not shortened in the middle by search engines. Reason: search engines treat many pages with the same description as pages about the same thing.
+- **Server settings.** Asking for the file name index.php directly now answers "not found" every time. Reason: once in a while it answered a server error, which search engines read as a fault of the site. The owner applies this once on the server.
+
 ## [1.5.0] - 2026-11-14 - One place for announcements
 
 ### Added

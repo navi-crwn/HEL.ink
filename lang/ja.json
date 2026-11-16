@@ -1098,5 +1098,21 @@
     "Signed up with Google? You have no password yet. On the sign-in page, choose \"Forgot your password\" to set one.": "Google で登録しましたか？まだパスワードはありません。ログインページで「パスワードを忘れた場合」を選んで設定してください。",
     "This email address is already linked to a different Google account. Sign in with your password, or reset it, instead.": "このメールアドレスはすでに別の Google アカウントに連携されています。代わりにパスワードでログインするか、パスワードを再設定してください。",
     "This email address cannot be used. Please use another address.": "このメールアドレスは使用できません。別のアドレスをお使いください。",
-    "Back to your dashboard": "ダッシュボードに戻る"
+    "Back to your dashboard": "ダッシュボードに戻る",
+    "HOP is a small family of free apps for short links, link pages, images, notes and files, all opened with one HOP ID and built in the open.": "HOPは、短縮リンク、リンクページ、画像、ノート、ファイルのための無料アプリの小さなファミリーです。1つのHOP IDで全部使え、コードも公開しています。",
+    "Meet the HOP apps: LinkHop, BioHop, PixelHop, NoteHop, FileHop and PayHop. Each does one job well, and one free HOP ID opens them all.": "HOPのアプリを紹介します：LinkHop、BioHop、PixelHop、NoteHop、FileHop、PayHop。それぞれが1つの仕事をこなし、無料のHOP ID 1つで全部開けます。",
+    "How HOP works: one account at the hub, one sign-in for every app, one sign-out, and what each app can and cannot see about you.": "HOPのしくみ：ハブに1つのアカウント、全アプリで1回のログイン、1回のログアウト、そして各アプリがあなたについて見られること・見られないこと。",
+    "How HOP keeps accounts and visitors safe: hashed passwords, two-factor codes, link checks, visitor privacy and end-to-end encrypted notes.": "HOPがアカウントと訪問者を守る方法：ハッシュ化したパスワード、二要素コード、リンクの安全確認、訪問者のプライバシー、エンドツーエンド暗号化ノート。",
+    "HOP is open source. Read the code of every app on GitHub, see the licence, report a problem or suggest a change.": "HOPはオープンソースです。GitHubで各アプリのコードを読み、ライセンスを確認し、問題を報告したり変更を提案したりできます。",
+    "Create a free HOP ID in a minute with your email or Google, confirm your address, and open every HOP app already signed in.": "メールまたはGoogleで1分で無料のHOP IDを作成し、アドレスを確認すれば、すべてのHOPアプリをログイン済みのまま開けます。",
+    "Every HOP app is free. See the usage limits for guests and for free HOP ID accounts, and why the limits exist.": "HOPのアプリはすべて無料です。ゲストと無料HOP IDアカウントの利用上限と、その上限がある理由を説明します。",
+    "Answers to common questions about HOP: accounts, privacy, languages, open source and how the apps work together.": "HOPのよくある質問への回答：アカウント、プライバシー、言語、オープンソース、アプリどうしの連携について。",
+    "Practical guides for HOP ID and every HOP app: registering, two-factor codes, opening apps, shortening links, and backing up or deleting your data.": "HOP IDと各HOPアプリの実用ガイド：登録、二要素コード、アプリの開き方、リンクの短縮、データのバックアップと削除。",
+    "Live status of every HOP app: whether each one is working right now, and any failures in the last 24 hours.": "各HOPアプリのリアルタイムの稼働状況：今動いているかどうかと、過去24時間に起きた障害を確認できます。",
+    "What changed in HOP and when, in plain words: new features, fixes and improvements, with the reason for each change.": "HOPがいつ何を変えたかを、やさしい言葉で説明します：新機能、修正、改善と、それぞれの理由。",
+    "News and notices from HOP: new features, planned maintenance and anything that affects your account or your apps.": "HOPからのお知らせ：新機能、予定されているメンテナンス、アカウントやアプリに関わる情報をお伝えします。",
+    "How to reach HOP: GitHub for bugs and questions, help with your HOP ID, and the private way to report a security problem.": "HOPへの連絡方法：不具合や質問はGitHub、HOP IDのサポート、セキュリティ問題を非公開で報告する方法。",
+    "The HOP privacy policy: what data the apps keep, how long they keep it, who can see it, and how to download or delete it all.": "HOPのプライバシーポリシー：アプリが保存するデータ、保存期間、閲覧できる人、すべてをダウンロードまたは削除する方法。",
+    "The terms for using HOP: what you may do with the apps, what you must not do, and what happens if the rules are broken.": "HOPの利用規約：アプリでできること、してはいけないこと、ルールに違反した場合に起きること。",
+    "Learn more about :app": ":appについて詳しく見る"
 }

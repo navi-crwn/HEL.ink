@@ -1,4 +1,4 @@
-<x-marketing-layout :title="__('Service status') . ' · HOP'" :themed="true">
+<x-marketing-layout :title="__('Service status') . ' · HOP'" :description="__('Live status of every HOP app: whether each one is working right now, and any failures in the last 24 hours.')" :themed="true">
     <section class="mx-auto max-w-4xl px-4 py-12 sm:px-6">
         <h1 class="text-3xl font-bold text-slate-900 dark:text-white">{{ __('Service status') }}</h1>
         <p class="mt-2 text-sm text-slate-600 dark:text-white/70">{{ __('Each app\'s health endpoint is checked every minute. Uptime is over the last 24 hours.') }}</p>

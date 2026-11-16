@@ -2,7 +2,7 @@
     $card = 'rounded-3xl border border-slate-200/80 bg-white/70 p-6 dark:border-white/10 dark:bg-white/3';
     $muted = 'text-slate-600 dark:text-white/70';
 @endphp
-<x-marketing-layout :title="__('Master FAQ') . ' · HOP'" :themed="true">
+<x-marketing-layout :title="__('Master FAQ') . ' · HOP'" :description="__('Answers to common questions about HOP: accounts, privacy, languages, open source and how the apps work together.')" :themed="true">
     <section class="mx-auto max-w-4xl px-4 py-14 sm:px-6 space-y-12">
         <div class="space-y-3">
             <span class="inline-flex items-center gap-1.5 rounded-full border border-indigo-200 bg-indigo-50/80 px-3 py-1 text-xs font-semibold text-indigo-700 dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-300">

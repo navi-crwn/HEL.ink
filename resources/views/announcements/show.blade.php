@@ -1,4 +1,4 @@
-<x-marketing-layout :title="$announcement->title.' - HOP'" :themed="true">
+<x-marketing-layout :title="$announcement->title.' - HOP'" :description="\App\Support\Seo::description($announcement->body ?: $announcement->title)" :themed="true">
     <article class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
         <a href="{{ route('announcements.index') }}" class="text-xs text-slate-500 hover:underline dark:text-white/60">← {{ __('All announcements') }}</a>
         <p class="mt-4 text-xs font-semibold uppercase tracking-wider text-indigo-500">{{ $announcement->app_slug ? (\App\Support\HopApps::find($announcement->app_slug)?->name ?? ucfirst($announcement->app_slug)) : 'HOP' }} · {{ $announcement->published_at?->translatedFormat('j M Y') ?? __('Draft') }}</p>

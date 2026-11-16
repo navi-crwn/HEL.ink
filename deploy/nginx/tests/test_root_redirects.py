@@ -334,5 +334,15 @@ class BioFontsCors(unittest.TestCase):
                     process.wait(timeout=5)
 
 
+class LaravelSnippetContract(unittest.TestCase):
+    def test_index_php_asked_for_directly_is_a_plain_404(self):
+        snippet = (TESTS_DIR.parent / "snippets-hop-laravel.conf").read_text(encoding="utf-8")
+        # $request_uri is the visitor's own address; the try_files fallback to /index.php keeps its page address.
+        self.assertIn('if ($request_uri ~ "^/index\\.php") { return 404; }', snippet)
+        # the guard sits inside the php location, before anything reaches PHP-FPM
+        php_block = snippet[snippet.index("location ~ \\.php$ {"):]
+        self.assertLess(php_block.index("return 404;"), php_block.index("fastcgi_pass"))
+
+
 if __name__ == "__main__":
     unittest.main()

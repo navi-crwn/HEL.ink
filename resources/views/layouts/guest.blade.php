@@ -37,7 +37,7 @@
                 </div>
             </main>
             <p class="mt-6 flex flex-wrap items-center justify-center gap-x-1 text-xs text-muted">
-                <a href="{{ route('terms') }}" class="inline-flex min-h-11 items-center px-1.5 hover:underline">{{ __('Terms') }}</a> · <a href="{{ route('privacy') }}" class="inline-flex min-h-11 items-center px-1.5 hover:underline">{{ __('Privacy') }}</a> · <a href="{{ route('help') }}" class="inline-flex min-h-11 items-center px-1.5 hover:underline">{{ __('Help') }}</a>
+                <a href="{{ route('terms') }}" class="inline-flex min-h-11 items-center px-1.5 hover:underline">{{ __('Terms') }}</a> · <a href="{{ route('privacy') }}" class="inline-flex min-h-11 items-center px-1.5 hover:underline">{{ __('Privacy') }}</a> · <a href="{{ route('help') }}" class="inline-flex min-h-11 items-center px-1.5 hover:underline">{{ __('Help') }}</a>@if ($feedbackLink = \App\Support\Feedback::hubLink()) · <a href="{{ $feedbackLink }}" class="inline-flex min-h-11 items-center px-1.5 hover:underline">{{ __('Feedback') }}</a>@endif
             </p>
         </div>
     </body>

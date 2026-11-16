@@ -6,6 +6,7 @@
     'featuresUrl' => '/features',
     'statusUrl' => '/status',
     'abuseUrl' => 'https://link.hel.ink/report-abuse',
+    'feedbackUrl' => null, // the Feedback form of the hub; no link when the hub has none
     'languages' => false, // deprecated, ignored: the language menu lives in the top bar
 ])
 @php
@@ -45,6 +46,9 @@
                 <h3 class="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white">{{ __('Support') }}</h3>
                 <ul class="space-y-2 text-slate-600 dark:text-slate-400">
                     <li><a href="/help" class="transition hover:text-slate-900 dark:hover:text-white">{{ __('Help') }}</a></li>
+                    @if ($feedbackUrl)
+                        <li><a href="{{ $feedbackUrl }}" class="transition hover:text-slate-900 dark:hover:text-white">{{ __('Feedback') }}</a></li>
+                    @endif
                     <li><a href="/faq" class="transition hover:text-slate-900 dark:hover:text-white">{{ __('FAQ') }}</a></li>
                     <li><a href="/contact" class="transition hover:text-slate-900 dark:hover:text-white">{{ __('Contact') }}</a></li>
                     <li><a href="{{ $abuseUrl }}" class="transition hover:text-slate-900 dark:hover:text-white">{{ __('Report abuse') }}</a></li>

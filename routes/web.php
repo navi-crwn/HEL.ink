@@ -6,6 +6,7 @@ use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\BrandAssetController;
 use App\Http\Controllers\ChangelogController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LauncherController;
 use App\Http\Controllers\LegalArtifactController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\SsoController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TwoFactorController;
+use App\Http\Middleware\NoIndex;
 use App\Support\FamilyStory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -93,6 +95,13 @@ Route::domain(config('hop.hub_host'))->group(function () use ($marketing) {
     Route::get('/sso/{app}', [SsoController::class, 'ticket'])->where('app', '[a-z0-9-]{1,32}')->middleware('throttle:30,1,sso')->name('sso.ticket');
     // "Continue with Google" in the apps: works for guests too (see SsoController::viaGoogle).
     Route::get('/sso/{app}/google', [SsoController::class, 'viaGoogle'])->where('app', '[a-z0-9-]{1,32}')->middleware('throttle:30,1,sso-google')->name('sso.google');
+    // The Feedback form of the whole family: open to guests and members, out of search results. It answers here (the hub
+    // host) because the sign-in session lives here; the public host sends visitors on (below).
+    Route::middleware(NoIndex::class)->group(function () {
+        Route::get('/feedback', [FeedbackController::class, 'create'])->name('feedback.create');
+        Route::post('/feedback', [FeedbackController::class, 'store'])->middleware('throttle:60,1,feedback')->name('feedback.store');
+        Route::get('/feedback/sent', [FeedbackController::class, 'sent'])->name('feedback.sent');
+    });
     Route::get('/csrf-token', fn () => response()->json(['token' => csrf_token()])->header('Cache-Control', 'no-store, private'))
         ->middleware('throttle:30,1,csrf-token')->name('csrf.token');
 
@@ -153,6 +162,11 @@ Route::domain(config('hop.public_host'))->group(function () {
             hub_url('sso/'.$path).($request->getQueryString() ? '?'.$request->getQueryString() : '')
         ))->where('path', '[a-z0-9-]{1,32}(/google)?');
         Route::get('/register', fn () => redirect()->to(hub_url('register')));
+        // Same for the Feedback form: a member is only known on the hub host.
+        Route::middleware(NoIndex::class)->group(function () {
+            Route::get('/feedback', [FeedbackController::class, 'toHub']);
+            Route::get('/feedback/sent', [FeedbackController::class, 'toHub']);
+        });
         Route::get('/dashboard', fn () => redirect()->to(hub_url('dashboard')));
     }
 });

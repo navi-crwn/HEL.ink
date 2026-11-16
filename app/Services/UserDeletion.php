@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Jobs\PurgeAppAccount;
+use App\Models\FeedbackReport;
 use App\Models\User;
 use App\Support\Avatar;
 use App\Support\HopApps;
@@ -33,6 +34,7 @@ class UserDeletion
         $this->purgeInApps($user->id, $user->deletedFiles);
 
         Avatar::delete($user);
+        $this->deleteFeedback($user->id);
         DB::transaction(function () use ($user) {
             DB::table('sessions')->where('user_id', $user->id)->delete();
             DB::table('login_histories')->where('user_id', $user->id)->delete();
@@ -59,6 +61,15 @@ class UserDeletion
             Storage::disk('public')->delete($path);
         }
         $this->deleteUnusedBioFiles($bioFiles);
+    }
+
+    /** The reports this account sent go with it, each with its screenshot (the model removes the file). */
+    private function deleteFeedback(int $userId): void
+    {
+        if (! Schema::hasTable('feedback_reports')) {
+            return;
+        }
+        FeedbackReport::where('user_id', $userId)->get()->each->delete();
     }
 
     /** @return list<string> */

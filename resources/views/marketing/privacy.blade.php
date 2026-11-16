@@ -90,6 +90,14 @@
                         {{ __('PayHop builds payment QR codes inside your browser tab. The names, account numbers and amounts you type are not sent to the server. If you sign in with HOP ID, PayHop keeps your HOP ID number, name and email and a session cookie. PayHop stores a payment method or a bill only if you choose to save it: each saved method is encrypted and kept only after you agree to that method, is never written to logs and never shown in the admin panel, and you can delete one method or everything at any time. History keeps your 200 most recent bills.') }}
                     </p>
                 </div>
+
+                {{-- Feedback --}}
+                <div class="{{ $card }}">
+                    <h3 class="font-bold text-slate-900 dark:text-white">{{ __('Feedback') }}</h3>
+                    <p class="mt-2 text-xs leading-relaxed {{ $muted }}">
+                        {{ __('When you send feedback we keep what you wrote, the kind of report, the app and screen it came from, the app version, your browser and screen size, your language, your IP address, your HOP ID username if you were signed in, and the screenshot if you added one. A screenshot is saved again as a new image, so details hidden in the file, such as the location of a photo, are removed. Only the people who run HOP can read reports, and the form is a single page at hub.hel.ink: the other HOP apps receive nothing from it.') }}
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -100,6 +108,7 @@
                 <p>&bull; <strong>{{ __('Click logs (LinkHop & BioHop):') }}</strong> {{ __('Detailed click logs are permanently purged after 30 days.') }}</p>
                 <p>&bull; <strong>{{ __('Authentication & Activity logs:') }}</strong> {{ __('Sign-in history and account activity records are deleted after 90 days.') }}</p>
                 <p>&bull; <strong>{{ __('Abuse reports:') }}</strong> {{ __('IP addresses attached to abuse reports are purged after 30 days; closed report records after 180 days.') }}</p>
+                <p>&bull; <strong>{{ __('Feedback:') }}</strong> {{ __('The IP address on a feedback report is deleted after 30 days; a finished report after 180 days; any other report after 12 months.') }}</p>
                 <p>&bull; <strong>{{ __('FileHop:') }}</strong> {{ __('Files are never stored. A FileHop session is deleted when you sign out or when the hub signs you out.') }}</p>
                 <p>&bull; <strong>{{ __('PayHop:') }}</strong> {{ __('Nothing is stored unless you save it. A saved payment method stays until you delete it, history keeps the 200 most recent bills, and a PayHop session is deleted when you sign out or when the hub signs you out.') }}</p>
                 <p>&bull; <strong>{{ __('Expired & Ephemeral Notes:') }}</strong> {{ __('Notes configured with self-destruct timers or read-burn limits are permanently deleted immediately upon expiration.') }}</p>

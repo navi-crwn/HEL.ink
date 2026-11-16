@@ -27,6 +27,7 @@ HUB_SINGLE_SEGMENT_PAGES = (
     "contact",
     "dashboard",
     "faq",
+    "feedback",
     "goodbye",
     "help",
     "how-it-works",

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FeedbackReport;
 use App\Models\LoginHistory;
 use App\Support\HopApps;
 use App\Support\Input;
 use App\Support\Reminders;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class SettingsController extends Controller
 {
@@ -47,6 +49,17 @@ class SettingsController extends Controller
      * roles, recent sign-ins, the activity log and the API token names. Each
      * app exports its own content (links, bio pages, images) from its settings.
      */
+    /** The reports this account sent: what kind, about which app, the text and the date (the screenshot is not part of it). */
+    private function feedbackExport(int $userId): array
+    {
+        if (! Schema::hasTable('feedback_reports')) {
+            return [];
+        }
+
+        return FeedbackReport::where('user_id', $userId)->orderBy('id')->get()
+            ->map(fn (FeedbackReport $r) => ['kind' => $r->kind, 'app' => $r->app, 'message' => $r->message, 'created_at' => $r->created_at?->toIso8601String()])->all();
+    }
+
     public function exportAccount(Request $request)
     {
         $user = $request->user();
@@ -58,6 +71,7 @@ class SettingsController extends Controller
             'activity_log' => $user->activityLogs()->latest()->get(['created_at', 'action', 'model', 'description']),
             'api_tokens' => $user->apiTokens()->get(['name', 'scopes', 'created_at', 'last_used_at', 'expires_at']),
             'hidden_reminders' => Reminders::export($user),
+            'feedback' => $this->feedbackExport($user->id),
             'app_exports' => collect(HopApps::all())->filter->export->mapWithKeys(fn ($a) => [$a->slug => $a->exportUrl()]),
         ];
 

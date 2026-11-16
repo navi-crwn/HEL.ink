@@ -1,4 +1,4 @@
-@props(['title' => null, 'description' => null, 'themed' => false, 'back' => true, 'alternates' => false])
+@props(['title' => null, 'description' => null, 'themed' => false, 'back' => true, 'alternates' => false, 'noindex' => false])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="ltr" @class(['h-full', 'dark' => ! $themed])>
     <head>
@@ -20,19 +20,26 @@
         <meta property="og:title" content="{{ $ogTitle }}">
         <meta property="og:description" content="{{ $ogDescription }}">
         <meta property="og:image" content="{{ $ogImage }}">
-        <meta property="og:url" content="{{ $canonical }}">
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="{{ \App\Support\Seo::NAME }}">
         <meta name="twitter:card" content="summary">
-        <link rel="canonical" href="{{ $canonical }}">
         <link rel="icon" href="{{ $favicon }}">
+        @if ($noindex)
+            {{-- A page that stays out of search results has no canonical address and no language alternates. --}}
+            <meta name="robots" content="noindex, nofollow">
+        @else
+            <meta property="og:url" content="{{ $canonical }}">
+            <link rel="canonical" href="{{ $canonical }}">
+        @endif
         @if ($themed)
             @include('partials.hop-theme')
         @endif
         {{-- Every public page exists in the nine languages; `alternates` is kept so older callers still pass it. --}}
-        @foreach (\App\Support\Seo::alternates(request()->path()) as $code => $href)
-            <link rel="alternate" hreflang="{{ $code }}" href="{{ $href }}">
-        @endforeach
+        @unless ($noindex)
+            @foreach (\App\Support\Seo::alternates(request()->path()) as $code => $href)
+                <link rel="alternate" hreflang="{{ $code }}" href="{{ $href }}">
+            @endforeach
+        @endunless
         <x-hop::fonts />
         @vite(['resources/css/app.css', 'resources/css/coss.css', 'resources/js/app.js'])
         @include('partials.hop-bento')

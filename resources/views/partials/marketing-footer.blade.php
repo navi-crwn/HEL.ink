@@ -6,6 +6,7 @@
     featuresUrl="{{ route('home') }}#apps"
     statusUrl="{{ route('status') }}"
     abuseUrl="https://link.hel.ink/report-abuse"
+    :feedbackUrl="\App\Support\Feedback::hubLink()"
 >
     <x-slot:brand><div class="coss-footer-brand"><img src="{{ route('brand.favicon') }}" alt="" width="28" height="28"><span><b class="hop-name hop-name-hub">HOP ID</b> · Hop Easy Link</span></div></x-slot:brand>
 </x-hop::footer>

@@ -61,6 +61,9 @@
                                 </div>
                                 <ul class="grid gap-0.5 border-t border-slate-500/10 pt-2 text-xs text-muted">
                                     <li><a href="{{ route('help') }}" class="flex h-7 items-center px-2.5 hover:text-ink hover:underline">{{ __('Help') }}</a></li>
+                                    @if ($feedbackUrl = \App\Support\Feedback::hubLink())
+                                        <li><a href="{{ $feedbackUrl }}" class="flex h-7 items-center px-2.5 hover:text-ink hover:underline">{{ __('Feedback') }}</a></li>
+                                    @endif
                                     <li><a href="{{ route('terms') }}" class="flex h-7 items-center px-2.5 hover:text-ink hover:underline">{{ __('Terms') }}</a></li>
                                     <li><a href="{{ route('privacy') }}" class="flex h-7 items-center px-2.5 hover:text-ink hover:underline">{{ __('Privacy') }}</a></li>
                                     <li><a href="{{ route('changelog') }}" class="flex h-7 items-center px-2.5 hover:text-ink hover:underline">{{ __('Changelog') }}</a></li>

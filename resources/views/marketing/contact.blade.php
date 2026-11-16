@@ -20,6 +20,7 @@
             <p class="text-lg {{ $muted }}">
                 {{ __('Have a question, feedback, or a security issue? Here are the best ways to reach out.') }}
             </p>
+            @include('partials.feedback-link')
         </div>
 
         <div class="hop-bento mt-10">

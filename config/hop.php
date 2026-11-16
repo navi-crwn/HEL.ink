@@ -301,6 +301,14 @@ return [
         'cache_seconds' => 300,
     ],
 
+    // Feedback form (/feedback). It is on unless HOP_FEEDBACK_ENABLED is false, and it only works while an app with the
+    // admin_client capability (Imperium) is registered, because that is where the reports are read.
+    'feedback' => [
+        'enabled' => filter_var(env('HOP_FEEDBACK_ENABLED', true), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? true,
+        // Total size of the screenshot folder; over it, reports are kept without their image.
+        'max_folder_mb' => (int) env('HOP_FEEDBACK_MAX_MB', 1024),
+    ],
+
     // Days a released username stays unavailable to other people.
     'username_hold_days' => 90,
 
@@ -320,7 +328,7 @@ return [
         'auth', 'oauth', 'callback', 'health', 'healthz', 'metrics', 'status', 'contact', 'terms', 'privacy',
         'faq', 'blog', 'news', 'shop', 'store', 'pricing', 'plans', 'download', 'downloads', 'share',
         'embed', 'oembed', 'sitemap', 'robots', 'manifest', 'sw', 'offline', 'raw', 'mock', 'nearby',
-        'vault', 'diff', 'in', 'inbox', 'live', 'render', 'i18n', 'legacy', 'announcements', 'launcher',
+        'vault', 'diff', 'in', 'inbox', 'feedback', 'live', 'render', 'i18n', 'legacy', 'announcements', 'launcher',
         'null', 'undefined', 'none', 'nobody', 'anonymous', 'guest', 'me', 'you', 'everyone', 'test', 'demo',
     ],
     'reserved_username_prefixes' => ['hop-', 'hop_', 'admin-', 'admin_', 'official-', 'official_', 'staff-', 'staff_',

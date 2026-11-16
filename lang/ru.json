@@ -918,7 +918,6 @@
     "Disable 2FA": "Отключить 2FA",
     "Your account lives here; your content lives in each app. Download both.": "Аккаунт хранится здесь, содержимое — в каждом приложении. Скачайте и то и другое.",
     "Account data (JSON)": "Данные аккаунта (JSON)",
-    "Profile, roles, recent sign-ins, activity log and API token names.": "Профиль, роли, последние входы, журнал действий и названия API-токенов.",
     "Download JSON": "Скачать JSON",
     "Export in :app": "Экспорт в :app",
     "Nothing to export": "Нечего экспортировать",
@@ -1153,5 +1152,6 @@
     "Send more feedback": "Отправить ещё один отзыв",
     "Feedback:": "Обратная связь:",
     "When you send feedback we keep what you wrote, the kind of report, the app and screen it came from, the app version, your browser and screen size, your language, your IP address, your HOP ID username if you were signed in, and the screenshot if you added one. A screenshot is saved again as a new image, so details hidden in the file, such as the location of a photo, are removed. Only the people who run HOP can read reports, and the form is a single page at hub.hel.ink: the other HOP apps receive nothing from it.": "Когда вы отправляете отзыв, мы сохраняем написанный вами текст, тип сообщения, приложение и экран, откуда оно пришло, версию приложения, ваш браузер и размер экрана, язык, IP-адрес, имя пользователя HOP ID, если вы вошли, и скриншот, если вы его добавили. Скриншот сохраняется заново как новое изображение, поэтому скрытые в файле сведения, например место съёмки фотографии, удаляются. Читать сообщения могут только те, кто управляет HOP, а форма — это одна страница на hub.hel.ink: остальные приложения HOP ничего из неё не получают.",
-    "The IP address on a feedback report is deleted after 30 days; a finished report after 180 days; any other report after 12 months.": "IP-адрес в сообщении обратной связи удаляется через 30 дней, обработанное сообщение — через 180 дней, любое другое — через 12 месяцев."
+    "The IP address on a feedback report is deleted after 30 days; a finished report after 180 days; any other report after 12 months.": "IP-адрес в сообщении обратной связи удаляется через 30 дней, обработанное сообщение — через 180 дней, любое другое — через 12 месяцев.",
+    "Profile, roles, recent sign-ins, activity log, API token names and the feedback you sent.": "Профиль, роли, последние входы, журнал действий, названия API-токенов и отправленные вами отзывы."
 }

@@ -918,7 +918,6 @@
     "Disable 2FA": "Desativar 2FA",
     "Your account lives here; your content lives in each app. Download both.": "Sua conta fica aqui; seu conteúdo fica em cada app. Baixe os dois.",
     "Account data (JSON)": "Dados da conta (JSON)",
-    "Profile, roles, recent sign-ins, activity log and API token names.": "Perfil, papéis, logins recentes, registro de atividades e nomes dos tokens de API.",
     "Download JSON": "Baixar JSON",
     "Export in :app": "Exportar no :app",
     "Nothing to export": "Nada para exportar",
@@ -1153,5 +1152,6 @@
     "Send more feedback": "Enviar mais feedback",
     "Feedback:": "Feedback:",
     "When you send feedback we keep what you wrote, the kind of report, the app and screen it came from, the app version, your browser and screen size, your language, your IP address, your HOP ID username if you were signed in, and the screenshot if you added one. A screenshot is saved again as a new image, so details hidden in the file, such as the location of a photo, are removed. Only the people who run HOP can read reports, and the form is a single page at hub.hel.ink: the other HOP apps receive nothing from it.": "Quando você envia feedback, guardamos o que você escreveu, o tipo de relato, o app e a tela de onde veio, a versão do app, seu navegador e o tamanho da tela, seu idioma, seu endereço IP, seu nome de usuário do HOP ID se você estava conectado e a captura de tela, se você adicionou uma. A captura é salva de novo como uma imagem nova, então detalhes escondidos no arquivo, como o local de uma foto, são removidos. Só quem administra o HOP pode ler os relatos, e o formulário é uma única página em hub.hel.ink: os outros apps do HOP não recebem nada dele.",
-    "The IP address on a feedback report is deleted after 30 days; a finished report after 180 days; any other report after 12 months.": "O endereço IP de um relato de feedback é apagado após 30 dias; um relato concluído, após 180 dias; qualquer outro relato, após 12 meses."
+    "The IP address on a feedback report is deleted after 30 days; a finished report after 180 days; any other report after 12 months.": "O endereço IP de um relato de feedback é apagado após 30 dias; um relato concluído, após 180 dias; qualquer outro relato, após 12 meses.",
+    "Profile, roles, recent sign-ins, activity log, API token names and the feedback you sent.": "Perfil, papéis, logins recentes, registro de atividades, nomes dos tokens de API e os feedbacks que você enviou."
 }

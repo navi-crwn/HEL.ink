@@ -918,7 +918,6 @@
     "Disable 2FA": "2FA を無効にする",
     "Your account lives here; your content lives in each app. Download both.": "アカウントはここに、コンテンツは各アプリにあります。両方ダウンロードできます。",
     "Account data (JSON)": "アカウントデータ（JSON）",
-    "Profile, roles, recent sign-ins, activity log and API token names.": "プロフィール、ロール、最近のサインイン、アクティビティログ、API トークン名。",
     "Download JSON": "JSON をダウンロード",
     "Export in :app": ":app でエクスポート",
     "Nothing to export": "エクスポートするものはありません",
@@ -1153,5 +1152,6 @@
     "Send more feedback": "さらにフィードバックを送る",
     "Feedback:": "フィードバック：",
     "When you send feedback we keep what you wrote, the kind of report, the app and screen it came from, the app version, your browser and screen size, your language, your IP address, your HOP ID username if you were signed in, and the screenshot if you added one. A screenshot is saved again as a new image, so details hidden in the file, such as the location of a photo, are removed. Only the people who run HOP can read reports, and the form is a single page at hub.hel.ink: the other HOP apps receive nothing from it.": "フィードバックを送信すると、書いた内容、報告の種類、送信元のアプリと画面、アプリのバージョン、ブラウザーと画面サイズ、言語、IP アドレス、サインインしていた場合は HOP ID のユーザー名、追加した場合はスクリーンショットを保存します。スクリーンショットは新しい画像として保存し直すため、写真の撮影場所のようにファイルに隠れた情報は取り除かれます。報告を読めるのは HOP を運営する人だけで、フォームは hub.hel.ink にある 1 ページです。ほかの HOP アプリには何も送られません。",
-    "The IP address on a feedback report is deleted after 30 days; a finished report after 180 days; any other report after 12 months.": "フィードバック報告の IP アドレスは 30 日後に、対応済みの報告は 180 日後に、それ以外の報告は 12 か月後に削除されます。"
+    "The IP address on a feedback report is deleted after 30 days; a finished report after 180 days; any other report after 12 months.": "フィードバック報告の IP アドレスは 30 日後に、対応済みの報告は 180 日後に、それ以外の報告は 12 か月後に削除されます。",
+    "Profile, roles, recent sign-ins, activity log, API token names and the feedback you sent.": "プロフィール、ロール、最近のサインイン、アクティビティログ、API トークン名、送信したフィードバック。"
 }

@@ -86,6 +86,7 @@ Open `.env` (detailed in `.env.example`) to configure essential settings:
 | `APP_URL` | Public front-facing address (`https://hel.ink`) |
 | `HUB_HOST` | Hostname for the accounts portal (`hub.hel.ink`) |
 | `HOP_SSO_SECRET` | Secret key (32+ random characters) for signing SSO tickets |
+| `HOP_FEEDBACK_ENABLED` | `true` (default) shows the Feedback form at `/feedback`; it also needs Imperium registered. `false` switches it off |
 | `DB_CONNECTION`, `DB_*` | Database connection settings |
 | `DB_MIGRATIONS_TABLE` | Keep set to `migrations_hub` to isolate the hub's migration history |
 

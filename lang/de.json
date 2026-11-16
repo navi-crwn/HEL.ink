@@ -918,7 +918,6 @@
     "Disable 2FA": "2FA deaktivieren",
     "Your account lives here; your content lives in each app. Download both.": "Dein Konto lebt hier, deine Inhalte in jeder App. Lade beides herunter.",
     "Account data (JSON)": "Kontodaten (JSON)",
-    "Profile, roles, recent sign-ins, activity log and API token names.": "Profil, Rollen, letzte Anmeldungen, Aktivitätsprotokoll und Namen der API-Tokens.",
     "Download JSON": "JSON herunterladen",
     "Export in :app": "In :app exportieren",
     "Nothing to export": "Nichts zu exportieren",
@@ -1153,5 +1152,6 @@
     "Send more feedback": "Weiteres Feedback senden",
     "Feedback:": "Feedback:",
     "When you send feedback we keep what you wrote, the kind of report, the app and screen it came from, the app version, your browser and screen size, your language, your IP address, your HOP ID username if you were signed in, and the screenshot if you added one. A screenshot is saved again as a new image, so details hidden in the file, such as the location of a photo, are removed. Only the people who run HOP can read reports, and the form is a single page at hub.hel.ink: the other HOP apps receive nothing from it.": "Wenn Sie Feedback senden, speichern wir, was Sie geschrieben haben, die Art der Meldung, die App und die Seite, von der sie kam, die App-Version, Ihren Browser und Ihre Bildschirmgröße, Ihre Sprache, Ihre IP-Adresse, Ihren HOP-ID-Benutzernamen, wenn Sie angemeldet waren, und den Screenshot, falls Sie einen hinzugefügt haben. Ein Screenshot wird als neues Bild erneut gespeichert, sodass in der Datei versteckte Angaben, etwa der Aufnahmeort eines Fotos, entfernt werden. Nur die Menschen, die HOP betreiben, können Meldungen lesen, und das Formular ist eine einzelne Seite auf hub.hel.ink: Die anderen HOP-Apps erhalten daraus nichts.",
-    "The IP address on a feedback report is deleted after 30 days; a finished report after 180 days; any other report after 12 months.": "Die IP-Adresse einer Feedback-Meldung wird nach 30 Tagen gelöscht, eine erledigte Meldung nach 180 Tagen, jede andere Meldung nach 12 Monaten."
+    "The IP address on a feedback report is deleted after 30 days; a finished report after 180 days; any other report after 12 months.": "Die IP-Adresse einer Feedback-Meldung wird nach 30 Tagen gelöscht, eine erledigte Meldung nach 180 Tagen, jede andere Meldung nach 12 Monaten.",
+    "Profile, roles, recent sign-ins, activity log, API token names and the feedback you sent.": "Profil, Rollen, letzte Anmeldungen, Aktivitätsprotokoll, Namen der API-Tokens und das von Ihnen gesendete Feedback."
 }

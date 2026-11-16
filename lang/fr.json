@@ -918,7 +918,6 @@
     "Disable 2FA": "Désactiver la 2FA",
     "Your account lives here; your content lives in each app. Download both.": "Votre compte est ici, votre contenu dans chaque app. Téléchargez les deux.",
     "Account data (JSON)": "Données du compte (JSON)",
-    "Profile, roles, recent sign-ins, activity log and API token names.": "Profil, rôles, connexions récentes, journal d’activité et noms des jetons d’API.",
     "Download JSON": "Télécharger le JSON",
     "Export in :app": "Exporter dans :app",
     "Nothing to export": "Rien à exporter",
@@ -1153,5 +1152,6 @@
     "Send more feedback": "Envoyer un autre retour",
     "Feedback:": "Commentaires :",
     "When you send feedback we keep what you wrote, the kind of report, the app and screen it came from, the app version, your browser and screen size, your language, your IP address, your HOP ID username if you were signed in, and the screenshot if you added one. A screenshot is saved again as a new image, so details hidden in the file, such as the location of a photo, are removed. Only the people who run HOP can read reports, and the form is a single page at hub.hel.ink: the other HOP apps receive nothing from it.": "Quand vous envoyez un retour, nous conservons ce que vous avez écrit, le type de message, l’app et l’écran d’origine, la version de l’app, votre navigateur et la taille de votre écran, votre langue, votre adresse IP, votre nom d’utilisateur HOP ID si vous étiez connecté, et la capture d’écran si vous en avez ajouté une. La capture est enregistrée de nouveau comme une nouvelle image, ce qui supprime les détails cachés dans le fichier, comme le lieu d’une photo. Seules les personnes qui gèrent HOP peuvent lire les messages, et le formulaire est une page unique sur hub.hel.ink : les autres apps HOP n’en reçoivent rien.",
-    "The IP address on a feedback report is deleted after 30 days; a finished report after 180 days; any other report after 12 months.": "L’adresse IP d’un message de retour est supprimée après 30 jours ; un message traité, après 180 jours ; tout autre message, après 12 mois."
+    "The IP address on a feedback report is deleted after 30 days; a finished report after 180 days; any other report after 12 months.": "L’adresse IP d’un message de retour est supprimée après 30 jours ; un message traité, après 180 jours ; tout autre message, après 12 mois.",
+    "Profile, roles, recent sign-ins, activity log, API token names and the feedback you sent.": "Profil, rôles, connexions récentes, journal d’activité, noms des jetons d’API et les commentaires que vous avez envoyés."
 }

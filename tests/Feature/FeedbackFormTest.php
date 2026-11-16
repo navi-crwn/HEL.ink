@@ -207,7 +207,7 @@ test('the form and its refusals follow the language in all nine languages', func
 test('a failed security check refuses a guest, and a member is not asked', function () {
     config(['services.turnstile.secret' => 'secret']);
     Http::fake(['challenges.cloudflare.com/*' => Http::response(['success' => false])]);
-    fbSend($this, ['cf-turnstile-response' => 'bad'])->assertSessionHasErrors(['turnstile' => 'The security check failed. Please try again.'])
+    fbSend($this, ['cf-turnstile-response' => 'bad'])->assertSessionHasErrors(['security' => 'The security check failed. Please try again.'])
         ->assertSessionHasInput('message');
     expect(FeedbackReport::count())->toBe(0);
     Http::swap(new HttpFactory);
@@ -223,7 +223,7 @@ test('in production without Turnstile keys a guest is refused, a member is not',
     app()->detectEnvironment(fn () => 'production'); // outside "testing" the CSRF check is on, so this test skips it
     $this->withoutMiddleware(ValidateCsrfToken::class);
     config(['services.turnstile.secret' => '']);
-    fbSend($this)->assertSessionHasErrors('turnstile');
+    fbSend($this)->assertSessionHasErrors('security');
     expect(FeedbackReport::count())->toBe(0);
     fbSend($this->actingAs(User::factory()->create()))->assertRedirect(route('feedback.sent'));
     app()->detectEnvironment(fn () => 'testing');
@@ -466,4 +466,19 @@ describe('on two hosts', function () {
         expect($html)->toContain('https://hub.hel.test/feedback?app=hub&amp;from=help');
         $this->withoutVite()->get('https://hel.test/contact')->assertOk()->assertSee('Send feedback');
     });
+});
+
+test('a suspended member is signed out and nothing is saved', function () {
+    $user = User::factory()->create(['status' => User::STATUS_SUSPENDED]);
+    fbSend($this->actingAs($user))->assertRedirect(route('suspended'));
+    expect(FeedbackReport::count())->toBe(0);
+    $this->assertGuest();
+});
+
+test('a form sent with an expired page token goes back with the typed text and a notice', function () {
+    app()->detectEnvironment(fn () => 'production'); // outside "testing" the CSRF check is on
+    $this->from('/feedback?app=pixelhop')->post('/feedback', ['kind' => 'problem', 'message' => 'Typed before the session ended.', 'app' => 'pixelhop'])
+        ->assertRedirect('/feedback?app=pixelhop')->assertSessionHas('session_expired')->assertSessionHasInput('message', 'Typed before the session ended.');
+    expect(FeedbackReport::count())->toBe(0);
+    app()->detectEnvironment(fn () => 'testing');
 });

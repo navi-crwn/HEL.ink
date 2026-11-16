@@ -411,7 +411,7 @@
                         <div class="flex flex-wrap items-center justify-between gap-3">
                             <div>
                                 <h4 class="font-medium text-ink">{{ __('Account data (JSON)') }}</h4>
-                                <p class="mt-1 text-sm text-muted">{{ __('Profile, roles, recent sign-ins, activity log and API token names.') }}</p>
+                                <p class="mt-1 text-sm text-muted">{{ __('Profile, roles, recent sign-ins, activity log, API token names and the feedback you sent.') }}</p>
                             </div>
                             <form method="POST" action="{{ route('settings.export.account') }}">
                                 @csrf

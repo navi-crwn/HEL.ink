@@ -84,7 +84,8 @@ class FeedbackController extends Controller
             return $back($validator->errors()->toArray());
         }
         if (! $user && ! $this->turnstile->verify($request->input('cf-turnstile-response'), $request->ip())) {
-            return $back(['turnstile' => __('The security check failed. Please try again.')]);
+            // Not named turnstile: the check's own widget would print this message a second time, away from the top.
+            return $back(['security' => __('The security check failed. Please try again.')]);
         }
 
         // The screenshot is checked and drawn again before anything is saved; a refused one keeps the typed text.

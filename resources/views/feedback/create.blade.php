@@ -63,7 +63,6 @@
                         </label>
                     @endforeach
                 </div>
-                <x-input-error :messages="$errors->get('kind')" class="mt-2" />
             </fieldset>
 
             <div>
@@ -74,7 +73,6 @@
                 <textarea id="fb-message" name="message" rows="7" required minlength="10" maxlength="4000" data-fb-message
                           placeholder="{{ __('What happened, or what would you like to see?') }}"
                           class="input h-auto min-h-40 py-3 leading-relaxed">{{ $typed }}</textarea>
-                <x-input-error :messages="$errors->get('message')" class="mt-2" />
             </div>
 
             <div>
@@ -87,7 +85,6 @@
                         <button type="button" class="btn-secondary btn-sm" data-fb-remove>{{ __('Remove image') }}</button>
                     </div>
                     <p class="mt-2 hidden text-sm text-red-600 dark:text-red-400" role="alert" data-fb-image-error></p>
-                    <x-input-error :messages="$errors->get('image')" class="mt-2" />
                 </div>
             </div>
 
@@ -102,10 +99,6 @@
             @if ($turnstile)
                 <x-turnstile size="flexible" />
             @endif
-            @if (! $member)
-                <x-input-error :messages="$errors->get('turnstile')" class="mt-2" />
-            @endif
-            <x-input-error :messages="$errors->get('limit')" class="mt-2" />
 
             {{-- Everything that goes along with the text, said plainly before the button. --}}
             <div class="rounded-xl border border-slate-200/80 bg-slate-100/60 p-4 text-sm dark:border-white/10 dark:bg-white/5" data-fb-sent-box>

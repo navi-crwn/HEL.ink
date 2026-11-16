@@ -4,6 +4,7 @@ use App\Http\Controllers\FeedbackController;
 use App\Models\FeedbackReport;
 use App\Models\HopApp;
 use App\Models\User;
+use App\Support\FeedbackQuota;
 use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Http\UploadedFile;
@@ -11,7 +12,6 @@ use Illuminate\Routing\RouteCollection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\MessageBag;
@@ -84,8 +84,9 @@ function fbFile(string $name, string $bytes): UploadedFile
 function fbSend($test, array $over = [], ?UploadedFile $image = null, bool $reset = true)
 {
     if ($reset) {
-        RateLimiter::clear('feedback:g:127.0.0.1:h');
-        RateLimiter::clear('feedback:g:127.0.0.1:d');
+        foreach (['feedback:g:127.0.0.1:h', 'feedback:g:127.0.0.1:d', 'feedback:ga:127.0.0.1:h'] as $key) {
+            FeedbackQuota::clear($key);
+        }
     }
     $data = array_merge(['kind' => 'problem', 'message' => 'The Save button does nothing when I click it.', 'app' => 'pixelhop',
         'from' => 'view', 'v' => '3.14.0', 'viewport' => '1440x900'], $over);
@@ -270,10 +271,8 @@ test('a guest may send 3 an hour and 10 a day per address, with a 429 that keeps
     $this->withServerVariables(['REMOTE_ADDR' => '198.51.100.9'])->post('/feedback', ['kind' => 'idea', 'message' => 'A different visitor entirely.'])->assertRedirect(route('feedback.sent'));
     // The day limit: ten in a day, even when each hour is free.
     $this->withServerVariables(['REMOTE_ADDR' => '127.0.0.1']);
-    RateLimiter::clear('feedback:g:127.0.0.1:h');
-    for ($i = 0; $i < 10; $i++) {
-        RateLimiter::hit('feedback:g:127.0.0.1:d', 86400);
-    }
+    FeedbackQuota::clear('feedback:g:127.0.0.1:h');
+    FeedbackQuota::set('feedback:g:127.0.0.1:d', 10, 86400);
     fbSend($this, ['message' => 'Over the daily limit already.'], null, false)->assertStatus(429);
 });
 
@@ -370,7 +369,7 @@ test('a broken picture, a huge claimed size and a file over 5 MB are refused', f
     // 8000 x 7000 = 56 million pixels, declared in a header of a few bytes: refused before anything is decoded.
     $ihdr = pack('N', 8000).pack('N', 7000)."\x08\x02\x00\x00\x00";
     $bomb = "\x89PNG\r\n\x1a\n".pack('N', 13).'IHDR'.$ihdr.pack('N', crc32('IHDR'.$ihdr));
-    fbSend($this, [], fbFile('bomb.png', $bomb))->assertSessionHasErrors(['image' => 'That image is too large. Use one up to 5 MB.']);
+    fbSend($this, [], fbFile('bomb.png', $bomb))->assertSessionHasErrors(['image' => PIXELS_MESSAGE]);
     $big = fbJpeg().str_repeat("\0", 5 * 1024 * 1024 + 1);
     fbSend($this, [], fbFile('big.jpg', $big))->assertSessionHasErrors(['image' => 'That image is too large. Use one up to 5 MB.']);
     expect(FeedbackReport::count())->toBe(0)->and(Storage::disk('local')->allFiles())->toBe([]);
@@ -503,7 +502,7 @@ test('a message that is not valid UTF-8 is refused before any work, with an ordi
     $r = fbSend($this, ['message' => "\xFF\xFEaaaaaaaaaaaaaaaa"], fbFile('s.png', fbPng()));
     $r->assertSessionHasErrors(['message' => 'That text could not be read. Remove unusual characters and try again.']);
     expect(FeedbackReport::count())->toBe(0)->and(Storage::disk('local')->allFiles())->toBe([])
-        ->and(RateLimiter::attempts('feedback:g:127.0.0.1:h'))->toBe(0); // a typing mistake is free
+        ->and(FeedbackQuota::used('feedback:g:127.0.0.1:h'))->toBe(0); // a typing mistake is free
 });
 
 test('control characters are dropped from the text, new lines and tabs stay', function () {
@@ -540,22 +539,83 @@ test('when saving fails the picture is removed, nothing of the report reaches th
 
 // ---- the limits count attempts ------------------------------------------------
 
-test('failed attempts count too: three failed security checks use up the hour of a guest', function () {
+test('wrong security checks use up no place: ten of them do not stop the eleventh visitor who passes', function () {
     config(['services.turnstile.secret' => 'secret']);
     Http::fake(['challenges.cloudflare.com/*' => Http::response(['success' => false])]);
-    foreach ([1, 2, 3] as $i) {
-        fbSend($this, ['message' => "Attempt $i with a security check that fails.", 'cf-turnstile-response' => 'bad'], null, false)->assertSessionHasErrors('security');
+    foreach (range(1, 10) as $i) {
+        fbSend($this, ['message' => "Attempt $i with a security check that fails.", 'cf-turnstile-response' => 'junk'], null, false)->assertSessionHasErrors('security');
     }
-    fbSend($this, ['message' => 'Attempt 4, refused before the check.', 'cf-turnstile-response' => 'bad'], null, false)->assertStatus(429);
-    Http::assertSentCount(3); // the fourth never reached Cloudflare
+    expect(FeedbackQuota::used('feedback:g:127.0.0.1:h'))->toBe(0)->and(FeedbackQuota::used('feedback:g:127.0.0.1:d'))->toBe(0);
+    Http::swap(new HttpFactory);
+    Http::fake(['challenges.cloudflare.com/*' => Http::response(['success' => true])]);
+    fbSend($this, ['message' => 'The eleventh, with a check that passes.', 'cf-turnstile-response' => 'good'], null, false)->assertRedirect(route('feedback.sent'));
+    expect(FeedbackReport::count())->toBe(1)->and(FeedbackQuota::used('feedback:g:127.0.0.1:h'))->toBe(1);
 });
 
-test('a refused picture counts as an attempt for a member', function () {
-    $user = User::factory()->create();
-    foreach (range(1, 10) as $i) {
-        fbSend($this->actingAs($user), ['message' => "Attempt $i with something that is not a picture."], fbFile('x.png', 'not a picture'))->assertSessionHasErrors('image');
+test('tries of any kind are limited loosely: 20 an hour for a guest, 30 for a member, before the security check is asked', function () {
+    config(['services.turnstile.secret' => 'secret']);
+    Http::fake(['challenges.cloudflare.com/*' => Http::response(['success' => false])]);
+    foreach (range(1, 20) as $i) {
+        fbSend($this, ['message' => "Try $i, with a check that fails.", 'cf-turnstile-response' => 'junk'], null, false)->assertSessionHasErrors('security');
     }
-    fbSend($this->actingAs($user), ['message' => 'The eleventh attempt, refused as too many.'])->assertStatus(429);
+    $r = fbSend($this, ['message' => 'Try 21, which must not reach the check.', 'cf-turnstile-response' => 'junk'], null, false);
+    $r->assertStatus(429)->assertSee('You have sent a lot of feedback already')->assertSee('Try 21, which must not reach the check.')->assertHeader('Retry-After');
+    Http::assertSentCount(20);
+    // Another address is its own count, and a member has 30.
+    $user = User::factory()->create();
+    foreach (range(1, 30) as $i) {
+        fbSend($this->actingAs($user), ['message' => "Try $i of a member with something that is not a picture."], fbFile('x.png', 'not a picture'))->assertSessionHasErrors('image');
+    }
+    fbSend($this->actingAs($user), ['message' => 'Try 31 of the member, refused as too many.'])->assertStatus(429);
+});
+
+test('a refused picture, a busy server and a failed save give the place back; a saved report keeps it', function () {
+    $user = User::factory()->create();
+    $place = 'feedback:u:'.$user->id.':h';
+    fbSend($this->actingAs($user), ['message' => 'A refused picture, which costs no place.'], fbFile('x.png', 'not a picture'))->assertSessionHasErrors('image');
+    expect(FeedbackQuota::used($place))->toBe(0);
+    config(['hop.feedback.decode_wait_seconds' => 1]);
+    $lock = Cache::lock('feedback:decode', 60);
+    $lock->get();
+    fbSend($this->actingAs($user), ['message' => 'A busy server, which costs no place.'], fbFile('s.png', fbPng()))->assertSessionHasErrors('image');
+    $lock->release();
+    expect(FeedbackQuota::used($place))->toBe(0);
+    $fail = true;
+    FeedbackReport::creating(function () use (&$fail) {
+        if ($fail) {
+            throw new RuntimeException('no');
+        }
+    });
+    fbSend($this->actingAs($user), ['message' => 'A failed save, which costs no place.'])->assertSessionHasErrors('limit');
+    expect(FeedbackQuota::used($place))->toBe(0);
+    $fail = false;
+    fbSend($this->actingAs($user), ['message' => 'A saved report, which keeps its place.'])->assertRedirect(route('feedback.sent'));
+    expect(FeedbackQuota::used($place))->toBe(1);
+    // Sent twice by a double click: the second is not a second report, and does not use a place either.
+    fbSend($this->actingAs($user), ['message' => 'A saved report, which keeps its place.'])->assertRedirect(route('feedback.sent'));
+    expect(FeedbackQuota::used($place))->toBe(1)->and(FeedbackReport::count())->toBe(1);
+});
+
+test('a place is reserved while the work runs, so requests at the same time cannot all take the last one', function () {
+    $user = User::factory()->create();
+    $place = 'feedback:u:'.$user->id.':h';
+    FeedbackQuota::set($place, 9, 3600); // one place left
+    $seen = null;
+    $parallel = null;
+    FeedbackReport::creating(function () use ($place, &$seen, &$parallel) {
+        $seen = FeedbackQuota::used($place); // this request is still working
+        $parallel = FeedbackQuota::take([[$place, 10, 3600]]); // a second request that arrives now
+    });
+    fbSend($this->actingAs($user), ['message' => 'The last place of the hour is mine.'])->assertRedirect(route('feedback.sent'));
+    expect($seen)->toBe(10)->and($parallel)->toBeInt()->toBeGreaterThan(0)->and(FeedbackQuota::used($place))->toBe(10);
+    // The quota itself: two takes with one place left, one wins; a refusal leaves the counters as they were.
+    FeedbackQuota::set('q:one', 2, 3600);
+    FeedbackQuota::set('q:two', 0, 86400);
+    expect(FeedbackQuota::take([['q:one', 3, 3600], ['q:two', 10, 86400]]))->toBeNull()
+        ->and(FeedbackQuota::take([['q:one', 3, 3600], ['q:two', 10, 86400]]))->toBeInt()
+        ->and(FeedbackQuota::used('q:one'))->toBe(3)->and(FeedbackQuota::used('q:two'))->toBe(1);
+    FeedbackQuota::give([['q:one', 3, 3600], ['q:two', 10, 86400]]);
+    expect(FeedbackQuota::used('q:one'))->toBe(2)->and(FeedbackQuota::used('q:two'))->toBe(0);
 });
 
 test('an IPv6 guest is counted per /64, not per address', function () {
@@ -564,12 +624,17 @@ test('an IPv6 guest is counted per /64, not per address', function () {
     }
     $this->withServerVariables(['REMOTE_ADDR' => '2001:db8:1:2:aaaa::7'])->post('/feedback', ['kind' => 'idea', 'message' => 'The fourth, from the same network.'])->assertStatus(429);
     $this->withServerVariables(['REMOTE_ADDR' => '2001:db8:1:3::1'])->post('/feedback', ['kind' => 'idea', 'message' => 'Another /64 has its own count.'])->assertRedirect(route('feedback.sent'));
+    expect(FeedbackController::addressKey('::ffff:203.0.113.9'))->toBe('203.0.113.9')
+        ->and(FeedbackController::addressKey('::ffff:203.0.113.10'))->toBe('203.0.113.10')
+        ->and(FeedbackController::addressKey('::1'))->toEndWith('/64');
     expect(FeedbackController::addressKey('203.0.113.9'))->toBe('203.0.113.9')
         ->and(FeedbackController::addressKey('2001:db8:1:2::1'))->toBe(FeedbackController::addressKey('2001:db8:1:2:ffff::9'))
         ->and(FeedbackController::addressKey('2001:db8:1:2::1'))->not->toBe(FeedbackController::addressKey('2001:db8:1:3::1'));
 });
 
 // ---- decoding: the size of what the picture claims, memory, one at a time ------
+
+const PIXELS_MESSAGE = 'That picture has too many pixels. Make it smaller first (up to 25 million pixels, for example 5000 × 5000).';
 
 /** A PNG that is only a header: it says how large the picture is, and cannot be decoded. */
 function fbPngHeader(int $w, int $h, int $depth = 8, int $color = 2): string
@@ -585,7 +650,7 @@ test('what a picture claims is limited to 25 million pixels in every format, bef
     foreach (['png 39 MP' => ['a.png', fbPngHeader(6500, 6000)], 'png 16-bit 39 MP' => ['a.png', fbPngHeader(6500, 6000, 16, 6)], 'webp 36 MP' => ['a.webp', $webp], 'jpeg 30 MP' => ['a.jpg', $jpeg]] as $label => [$name, $bytes]) {
         expect(getimagesizefromstring($bytes))->not->toBeFalse("$label is a header PHP reads");
         fbSend($this, ['message' => "A picture that claims too much ($label)."], fbFile($name, $bytes))
-            ->assertSessionHasErrors(['image' => 'That image is too large. Use one up to 5 MB.']);
+            ->assertSessionHasErrors(['image' => PIXELS_MESSAGE]);
     }
     expect(FeedbackReport::count())->toBe(0)->and(Storage::disk('local')->allFiles())->toBe([]);
     // A 5K screenshot (14.7 million) is still welcome: its header passes the size check and only then fails to decode.
@@ -593,18 +658,47 @@ test('what a picture claims is limited to 25 million pixels in every format, bef
         ->assertSessionHasErrors(['image' => 'That file could not be read as an image.']);
 });
 
-test('the memory guard refuses a picture that would not fit before it is opened, and lets it in when there is room', function () {
+test('the memory guard refuses a picture that would not fit before it is opened, and the limit is raised for one picture when it can be', function () {
     $old = ini_get('memory_limit');
     try {
         $file = fn () => fbFile('a.png', fbPngHeader(6000, 4000)); // 24 million pixels: 288 MB + 32 MB by the guard's count
-        ini_set('memory_limit', (string) (memory_get_usage() + 250 * 1048576)); // 250 MB of room: less than the 320 MB the guard asks for
-        fbSend($this, ['message' => 'Picture too big for the memory left.'], $file())->assertSessionHasErrors(['image' => 'That image is too large. Use one up to 5 MB.']);
-        ini_set('memory_limit', '2G');
+        $room = (string) (memory_get_usage() + 250 * 1048576); // 250 MB of room: less than the 320 MB the guard asks for
+        ini_set('memory_limit', $room);
+        config(['hop.feedback.decode_memory' => $room]); // nothing to raise to
+        fbSend($this, ['message' => 'Picture too big for the memory left.'], $file())->assertSessionHasErrors(['image' => PIXELS_MESSAGE]);
+        config(['hop.feedback.decode_memory' => '2G']); // raised for this picture only
         fbSend($this, ['message' => 'Picture with plenty of memory left.'], $file())->assertSessionHasErrors(['image' => 'That file could not be read as an image.']);
+        expect(ini_get('memory_limit'))->toBe($room); // and put back afterwards
     } finally {
         ini_set('memory_limit', $old);
     }
     expect(FeedbackReport::count())->toBe(0);
+});
+
+test('with the usual 128 MB limit a 4K screenshot and a 12 megapixel photo are accepted, a picture over 25 megapixels is told so', function () {
+    $old = ini_get('memory_limit');
+    try {
+        ini_set('memory_limit', (string) (memory_get_usage() + 100 * 1048576)); // too little for the guard's count of a 4K picture, as 128 MB is
+        $png = imagecreatetruecolor(3840, 2160);
+        imagefilledrectangle($png, 0, 0, 3000, 1000, imagecolorallocate($png, 20, 120, 220));
+        ob_start();
+        imagepng($png);
+        $fourK = (string) ob_get_clean();
+        unset($png);
+        fbSend($this, ['message' => 'A 4K screenshot with the usual memory limit.'], fbFile('4k.png', $fourK))->assertRedirect(route('feedback.sent'));
+        $photo = imagecreatetruecolor(4000, 3000);
+        imagefilledrectangle($photo, 0, 0, 2000, 1500, imagecolorallocate($photo, 220, 120, 20));
+        ob_start();
+        imagejpeg($photo, null, 80);
+        $jpeg = (string) ob_get_clean();
+        unset($photo);
+        expect(strlen($jpeg))->toBeLessThan(5 * 1024 * 1024);
+        fbSend($this, ['message' => 'A 12 megapixel photo with the usual limit.'], fbFile('photo.jpg', $jpeg))->assertRedirect(route('feedback.sent'));
+        fbSend($this, ['message' => 'A picture over twenty-five megapixels.'], fbFile('huge.png', fbPngHeader(6500, 6000)))->assertSessionHasErrors(['image' => PIXELS_MESSAGE]);
+    } finally {
+        ini_set('memory_limit', $old);
+    }
+    expect(FeedbackReport::count())->toBe(2);
 });
 
 test('pictures are drawn again one at a time: whoever does not get the turn is asked to try again', function () {

@@ -1156,5 +1156,6 @@
     "Profile, roles, recent sign-ins, activity log, API token names and the feedback you sent.": "プロフィール、ロール、最近のサインイン、アクティビティログ、API トークン名、送信したフィードバック。",
     "That text could not be read. Remove unusual characters and try again.": "テキストを読み取れませんでした。特殊な文字を削除して、もう一度お試しください。",
     "The server is busy with another picture. Please try again in a moment.": "サーバーが別の画像を処理中です。少し待ってからもう一度お試しください。",
-    "Your report could not be saved. Please try again.": "報告を保存できませんでした。もう一度お試しください。"
+    "Your report could not be saved. Please try again.": "報告を保存できませんでした。もう一度お試しください。",
+    "That picture has too many pixels. Make it smaller first (up to 25 million pixels, for example 5000 × 5000).": "この画像はピクセル数が多すぎます。先に小さくしてください（最大 2,500 万ピクセル、例: 5000 × 5000）。"
 }

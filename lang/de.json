@@ -1156,5 +1156,6 @@
     "Profile, roles, recent sign-ins, activity log, API token names and the feedback you sent.": "Profil, Rollen, letzte Anmeldungen, Aktivitätsprotokoll, Namen der API-Tokens und das von Ihnen gesendete Feedback.",
     "That text could not be read. Remove unusual characters and try again.": "Der Text konnte nicht gelesen werden. Entfernen Sie ungewöhnliche Zeichen und versuchen Sie es erneut.",
     "The server is busy with another picture. Please try again in a moment.": "Der Server verarbeitet gerade ein anderes Bild. Bitte versuchen Sie es gleich noch einmal.",
-    "Your report could not be saved. Please try again.": "Ihre Meldung konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+    "Your report could not be saved. Please try again.": "Ihre Meldung konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+    "That picture has too many pixels. Make it smaller first (up to 25 million pixels, for example 5000 × 5000).": "Das Bild hat zu viele Pixel. Verkleinern Sie es zuerst (bis zu 25 Millionen Pixel, zum Beispiel 5000 × 5000)."
 }

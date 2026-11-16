@@ -34,7 +34,7 @@ final class FeedbackImage
     /**
      * Stores the picture and returns its path on the private disk.
      *
-     * @throws FeedbackImageRejected with reason type | too_large | unreadable | no_room | busy
+     * @throws FeedbackImageRejected with reason type | too_large (the file) | pixels (the picture) | unreadable | no_room | busy
      */
     public static function store(UploadedFile $file): string
     {
@@ -51,7 +51,7 @@ final class FeedbackImage
         }
         [$w, $h, $type] = $info;
         if ($w < 1 || $h < 1 || $w * $h > self::MAX_PIXELS) {
-            throw new FeedbackImageRejected('too_large');
+            throw new FeedbackImageRejected('pixels');
         }
 
         $lock = Cache::lock('feedback:decode', 60);
@@ -60,13 +60,24 @@ final class FeedbackImage
         } catch (LockTimeoutException) {
             throw new FeedbackImageRejected('busy');
         }
+        // Only one picture is drawn at a time, so this request may take more memory than a normal one (a 4K screenshot needs more than
+        // the 128 MB a server starts with). The limit goes back when the picture is done.
+        $before = ini_get('memory_limit');
+        $target = self::limitBytes((string) config('hop.feedback.decode_memory', '512M'));
+        $raised = false;
+        if ($before !== false && self::limitBytes($before) !== -1 && self::limitBytes($before) < $target) {
+            $raised = @ini_set('memory_limit', (string) $target) !== false;
+        }
         try {
             // Asked inside the turn, so the memory that is left is what this picture really has.
             if (! self::fitsMemory($w, $h)) {
-                throw new FeedbackImageRejected('too_large');
+                throw new FeedbackImageRejected('pixels');
             }
             $bytes = self::draw($real, $type);
         } finally {
+            if ($raised) {
+                @ini_set('memory_limit', (string) $before);
+            }
             $lock->release();
         }
 
@@ -128,20 +139,29 @@ final class FeedbackImage
     /** Whether decoding a w x h picture fits the memory PHP has left; a fatal error would be a 500 page. */
     private static function fitsMemory(int $w, int $h): bool
     {
-        $limit = ini_get('memory_limit');
-        if ($limit === '-1' || $limit === false) {
+        $bytes = self::limitBytes((string) ini_get('memory_limit'));
+        if ($bytes === -1) {
             return true;
         }
+
+        return $w * $h * self::BYTES_PER_PIXEL + self::SPARE_BYTES < $bytes - memory_get_usage();
+    }
+
+    /** A memory_limit setting ("128M", "1G", "-1", a plain number of bytes) as bytes; -1 for no limit. */
+    private static function limitBytes(string $limit): int
+    {
+        $limit = trim($limit);
+        if ($limit === '' || $limit === '-1') {
+            return -1;
+        }
         $bytes = (int) $limit;
-        $unit = strtolower(substr(trim($limit), -1));
-        $bytes *= match ($unit) {
+
+        return $bytes * match (strtolower(substr($limit, -1))) {
             'g' => 1073741824,
             'm' => 1048576,
             'k' => 1024,
             default => 1,
         };
-
-        return $w * $h * self::BYTES_PER_PIXEL + self::SPARE_BYTES < $bytes - memory_get_usage();
     }
 
     /** A phone photo can say "turn me" in its EXIF; the stored copy has no EXIF, so the turn is done here. */

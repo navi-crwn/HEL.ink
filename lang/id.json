@@ -1156,5 +1156,6 @@
     "Profile, roles, recent sign-ins, activity log, API token names and the feedback you sent.": "Profil, peran, riwayat masuk terakhir, log aktivitas, nama token API, dan masukan yang Anda kirim.",
     "That text could not be read. Remove unusual characters and try again.": "Teks tidak bisa dibaca. Hapus karakter yang tidak biasa lalu coba lagi.",
     "The server is busy with another picture. Please try again in a moment.": "Server sedang memproses gambar lain. Coba lagi sebentar lagi.",
-    "Your report could not be saved. Please try again.": "Laporan Anda tidak bisa disimpan. Silakan coba lagi."
+    "Your report could not be saved. Please try again.": "Laporan Anda tidak bisa disimpan. Silakan coba lagi.",
+    "That picture has too many pixels. Make it smaller first (up to 25 million pixels, for example 5000 × 5000).": "Gambar ini punya terlalu banyak piksel. Kecilkan dulu (paling banyak 25 juta piksel, misalnya 5000 × 5000)."
 }

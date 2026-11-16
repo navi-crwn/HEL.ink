@@ -309,6 +309,8 @@ return [
         'max_folder_mb' => (int) env('HOP_FEEDBACK_MAX_MB', 1024),
         // How long a visitor waits for the turn to have a picture drawn again (one at a time) before being asked to try again.
         'decode_wait_seconds' => 8,
+        // The memory limit while one picture is drawn again (raised for that request only, when the server's own limit is lower).
+        'decode_memory' => '512M',
     ],
 
     // Days a released username stays unavailable to other people.

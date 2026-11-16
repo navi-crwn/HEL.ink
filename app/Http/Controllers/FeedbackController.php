@@ -8,6 +8,7 @@ use App\Services\UserAgentService;
 use App\Support\Feedback;
 use App\Support\FeedbackImage;
 use App\Support\FeedbackImageRejected;
+use App\Support\FeedbackQuota;
 use App\Support\HopApps;
 use App\Support\Input;
 use Illuminate\Http\RedirectResponse;
@@ -15,7 +16,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
@@ -34,6 +34,11 @@ class FeedbackController extends Controller
 
     public const MEMBER_PER_HOUR = 10;
 
+    /** Tries of any outcome an hour (a wrong security check, a refused picture, a typing mistake): well above the reports. */
+    public const GUEST_TRIES_PER_HOUR = 20;
+
+    public const MEMBER_TRIES_PER_HOUR = 30;
+
     public function __construct(private readonly TurnstileService $turnstile) {}
 
     /** GET /feedback?app=&from=&v= : parameters that are not valid are dropped, never an error. */
@@ -51,6 +56,16 @@ class FeedbackController extends Controller
         $this->ensureOn();
         $user = $request->user();
         $params = $this->params($request->all() + $request->query());
+        $address = self::addressKey((string) $request->ip());
+
+        // First of all, whatever the outcome: a loose limit on tries, so nobody can flood the security check and the
+        // picture work. (It is not the limit on reports, which is taken further down and given back when nothing is saved.)
+        $tries = $user
+            ? [['feedback:ua:'.$user->id.':h', self::MEMBER_TRIES_PER_HOUR, 3600]]
+            : [['feedback:ga:'.$address.':h', self::GUEST_TRIES_PER_HOUR, 3600]];
+        if (($wait = FeedbackQuota::take($tries)) !== null) {
+            return $this->tooMany($request, $params, $wait);
+        }
 
         // The trap field is invisible to people: a robot that fills it is answered as if it worked, and nothing is kept.
         if (filled($request->input('company_url'))) {
@@ -78,26 +93,38 @@ class FeedbackController extends Controller
         if ($validator->fails()) {
             return $back($validator->errors()->toArray());
         }
-
-        // Send limits count attempts from here on (a refusal for a typing mistake above is free; the security check and the
-        // picture are the expensive parts): a guest by address (an IPv6 visitor by its /64), a member by account.
-        $address = self::addressKey((string) $request->ip());
-        $keys = $user
-            ? [['feedback:u:'.$user->id.':h', self::MEMBER_PER_HOUR, 3600]]
-            : [['feedback:g:'.$address.':h', self::GUEST_PER_HOUR, 3600], ['feedback:g:'.$address.':d', self::GUEST_PER_DAY, 86400]];
-        foreach ($keys as [$key, $max, $decay]) {
-            if (RateLimiter::hit($key, $decay) > $max) {
-                return response()->view('feedback.create', $this->viewData($request, $params, $request->only('kind', 'message'))
-                    + ['errors' => $this->bag(['limit' => __('You have sent a lot of feedback already. Please try again later.')])], 429)
-                    ->header('Retry-After', (string) RateLimiter::availableIn($key));
-            }
-        }
-
         if (! $user && ! $this->turnstile->verify($request->input('cf-turnstile-response'), $request->ip())) {
             // Not named turnstile: the check's own widget would print this message a second time, away from the top.
             return $back(['security' => __('The security check failed. Please try again.')]);
         }
 
+        // The limit on reports: a place is reserved now, before the expensive work (so requests that run at the same time are
+        // all counted), and given back below when this request ends without a saved report.
+        $places = $user
+            ? [['feedback:u:'.$user->id.':h', self::MEMBER_PER_HOUR, 3600]]
+            : [['feedback:g:'.$address.':h', self::GUEST_PER_HOUR, 3600], ['feedback:g:'.$address.':d', self::GUEST_PER_DAY, 86400]];
+        if (($wait = FeedbackQuota::take($places)) !== null) {
+            return $this->tooMany($request, $params, $wait);
+        }
+        $saved = false;
+        try {
+            $response = $this->keep($request, $user, $params, $message, $validator->validated()['kind'], $back, $saved);
+        } finally {
+            if (! $saved) {
+                FeedbackQuota::give($places);
+            }
+        }
+
+        return $response;
+    }
+
+    /**
+     * The picture and the row. Sets $saved when a report was written.
+     *
+     * @param  array{app: string, from: ?string, v: ?string}  $params
+     */
+    private function keep(Request $request, mixed $user, array $params, string $message, string $kind, \Closure $back, bool &$saved): RedirectResponse|Response
+    {
         // The screenshot is checked and drawn again before anything is saved; a refused one keeps the typed text.
         $path = null;
         $noRoom = false;
@@ -129,7 +156,7 @@ class FeedbackController extends Controller
 
         try {
             FeedbackReport::create([
-                'kind' => $validator->validated()['kind'], 'status' => 'new', 'app' => $params['app'], 'page' => $params['from'],
+                'kind' => $kind, 'status' => 'new', 'app' => $params['app'], 'page' => $params['from'],
                 'app_version' => $params['v'], 'message' => $message, 'user_id' => $user?->id, 'username' => $user?->username,
                 'ip_address' => $request->ip(), 'user_agent' => mb_substr(mb_scrub((string) $request->userAgent(), 'UTF-8'), 0, 300) ?: null,
                 'viewport' => Feedback::viewport($request->input('viewport')), 'locale' => app()->getLocale(), 'screenshot_path' => $path,
@@ -145,8 +172,17 @@ class FeedbackController extends Controller
 
             return $back(['limit' => __('Your report could not be saved. Please try again.')]);
         }
+        $saved = true;
 
         return $this->redirectSent($params['app'], $noRoom);
+    }
+
+    /** @param array{app: string, from: ?string, v: ?string} $params */
+    private function tooMany(Request $request, array $params, int $wait): Response
+    {
+        return response()->view('feedback.create', $this->viewData($request, $params, $request->only('kind', 'message'))
+            + ['errors' => $this->bag(['limit' => __('You have sent a lot of feedback already. Please try again later.')])], 429)
+            ->header('Retry-After', (string) $wait);
     }
 
     /** GET /feedback/sent: the thank-you page. Reloading it only shows it again. */
@@ -185,6 +221,9 @@ class FeedbackController extends Controller
     {
         if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             $packed = inet_pton($ip);
+            if ($packed !== false && str_starts_with($packed, str_repeat("\0", 10)."\xFF\xFF")) {
+                return (string) inet_ntop(substr($packed, 12)); // an IPv4 address written the IPv6 way is that IPv4 address
+            }
 
             return $packed === false ? $ip : bin2hex(substr($packed, 0, 8)).'/64';
         }
@@ -233,6 +272,7 @@ class FeedbackController extends Controller
         return match ($reason) {
             'type' => __('Use a PNG, JPEG or WebP image.'),
             'too_large' => __('That image is too large. Use one up to 5 MB.'),
+            'pixels' => __('That picture has too many pixels. Make it smaller first (up to 25 million pixels, for example 5000 × 5000).'),
             'busy' => __('The server is busy with another picture. Please try again in a moment.'),
             default => __('That file could not be read as an image.'),
         };

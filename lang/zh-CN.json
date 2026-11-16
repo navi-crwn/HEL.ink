@@ -1156,5 +1156,6 @@
     "Profile, roles, recent sign-ins, activity log, API token names and the feedback you sent.": "个人资料、角色、最近登录、活动记录、API 令牌名称和您发送的反馈。",
     "That text could not be read. Remove unusual characters and try again.": "无法读取这段文字。请删除特殊字符后重试。",
     "The server is busy with another picture. Please try again in a moment.": "服务器正在处理另一张图片，请稍后再试。",
-    "Your report could not be saved. Please try again.": "无法保存您的报告，请重试。"
+    "Your report could not be saved. Please try again.": "无法保存您的报告，请重试。",
+    "That picture has too many pixels. Make it smaller first (up to 25 million pixels, for example 5000 × 5000).": "这张图片的像素太多。请先缩小（最多 2500 万像素，例如 5000 × 5000）。"
 }

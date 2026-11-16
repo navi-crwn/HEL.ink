@@ -1156,5 +1156,6 @@
     "Profile, roles, recent sign-ins, activity log, API token names and the feedback you sent.": "Профиль, роли, последние входы, журнал действий, названия API-токенов и отправленные вами отзывы.",
     "That text could not be read. Remove unusual characters and try again.": "Не удалось прочитать текст. Удалите необычные символы и попробуйте ещё раз.",
     "The server is busy with another picture. Please try again in a moment.": "Сервер обрабатывает другое изображение. Попробуйте ещё раз через минуту.",
-    "Your report could not be saved. Please try again.": "Не удалось сохранить ваше сообщение. Попробуйте ещё раз."
+    "Your report could not be saved. Please try again.": "Не удалось сохранить ваше сообщение. Попробуйте ещё раз.",
+    "That picture has too many pixels. Make it smaller first (up to 25 million pixels, for example 5000 × 5000).": "В изображении слишком много пикселей. Сначала уменьшите его (не более 25 миллионов пикселей, например 5000 × 5000)."
 }

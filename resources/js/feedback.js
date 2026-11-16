@@ -27,8 +27,16 @@ if (form) {
     stamp();
     window.addEventListener('resize', stamp);
 
+    // Letters are counted as the server counts them, one per character (an emoji is one, not two); the box itself has no
+    // maxlength because that would count the halves of an emoji.
+    const LIMIT = 4000;
     message.addEventListener('input', () => {
-        count.textContent = message.value.length.toLocaleString('en-US');
+        let chars = Array.from(message.value);
+        if (chars.length > LIMIT) {
+            chars = chars.slice(0, LIMIT);
+            message.value = chars.join('');
+        }
+        count.textContent = chars.length.toLocaleString('en-US');
     });
 
     const clear = () => {

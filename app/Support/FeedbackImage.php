@@ -2,29 +2,39 @@
 
 namespace App\Support;
 
+use Illuminate\Contracts\Cache\LockTimeoutException;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 /**
  * The screenshot of a report: checked by its content (not its name), measured before it is opened, drawn again
  * with GD as a new JPEG (so EXIF and anything hidden in the file are gone) and kept on the private disk under a
  * path the server makes up. Nothing from the visitor becomes part of that path.
+ *
+ * Decoding a picture takes much more memory than the file, and the server also runs other apps, so only one picture is
+ * drawn again at a time (a cache lock); a visitor who does not get the turn within a few seconds is asked to try again.
  */
 final class FeedbackImage
 {
     public const MAX_KB = 5120;
 
-    /** A small file can claim a huge picture; decoding takes about 4 bytes a pixel. */
-    public const MAX_PIXELS = 40_000_000;
+    /** A small file can claim a huge picture. 25 million pixels still fit a 5K screenshot (14.7 million). */
+    public const MAX_PIXELS = 25_000_000;
 
     public const MAX_SIDE = 2560;
+
+    /** What decoding can take per pixel at most (a turned JPEG, WebP and 16-bit PNG hold two or three copies), and room for the rest. */
+    private const BYTES_PER_PIXEL = 12;
+
+    private const SPARE_BYTES = 32 * 1048576;
 
     private const TYPES = [IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_WEBP];
 
     /**
      * Stores the picture and returns its path on the private disk.
      *
-     * @throws FeedbackImageRejected with reason type | too_large | unreadable | no_room
+     * @throws FeedbackImageRejected with reason type | too_large | unreadable | no_room | busy
      */
     public static function store(UploadedFile $file): string
     {
@@ -40,19 +50,48 @@ final class FeedbackImage
             throw new FeedbackImageRejected('type');
         }
         [$w, $h, $type] = $info;
-        if ($w < 1 || $h < 1 || $w * $h > self::MAX_PIXELS || ! self::fitsMemory($w, $h)) {
+        if ($w < 1 || $h < 1 || $w * $h > self::MAX_PIXELS) {
             throw new FeedbackImageRejected('too_large');
         }
+
+        $lock = Cache::lock('feedback:decode', 60);
+        try {
+            $lock->block(max(0, (int) config('hop.feedback.decode_wait_seconds', 8)));
+        } catch (LockTimeoutException) {
+            throw new FeedbackImageRejected('busy');
+        }
+        try {
+            // Asked inside the turn, so the memory that is left is what this picture really has.
+            if (! self::fitsMemory($w, $h)) {
+                throw new FeedbackImageRejected('too_large');
+            }
+            $bytes = self::draw($real, $type);
+        } finally {
+            $lock->release();
+        }
+
+        if (self::folderBytes() + strlen($bytes) > max(0, (int) config('hop.feedback.max_folder_mb')) * 1048576) {
+            throw new FeedbackImageRejected('no_room');
+        }
+        $path = 'feedback/'.now()->format('Y/m').'/'.bin2hex(random_bytes(20)).'.jpg';
+        Storage::disk('local')->put($path, $bytes);
+
+        return $path;
+    }
+
+    /** The picture drawn again as JPEG bytes (the longest side at most MAX_SIDE, transparency as white, EXIF gone). */
+    private static function draw(string $path, int $type): string
+    {
         $src = match ($type) {
-            IMAGETYPE_PNG => @imagecreatefrompng($real),
-            IMAGETYPE_JPEG => @imagecreatefromjpeg($real),
-            default => @imagecreatefromwebp($real),
+            IMAGETYPE_PNG => @imagecreatefrompng($path),
+            IMAGETYPE_JPEG => @imagecreatefromjpeg($path),
+            default => @imagecreatefromwebp($path),
         };
         if ($src === false) {
             throw new FeedbackImageRejected('unreadable');
         }
         if ($type === IMAGETYPE_JPEG) {
-            $src = self::upright($src, $real);
+            $src = self::upright($src, $path);
         }
         $w = imagesx($src);
         $h = imagesy($src);
@@ -62,21 +101,16 @@ final class FeedbackImage
         $dst = imagecreatetruecolor($tw, $th);
         imagefill($dst, 0, 0, imagecolorallocate($dst, 255, 255, 255)); // transparency becomes white
         imagecopyresampled($dst, $src, 0, 0, 0, 0, $tw, $th, $w, $h);
+        unset($src); // the big picture goes before it is encoded
         ob_start();
         imagejpeg($dst, null, 88);
         $bytes = (string) ob_get_clean();
-        imagedestroy($src);
-        imagedestroy($dst);
+        unset($dst);
         if ($bytes === '') {
             throw new FeedbackImageRejected('unreadable');
         }
-        if (self::folderBytes() + strlen($bytes) > max(0, (int) config('hop.feedback.max_folder_mb')) * 1048576) {
-            throw new FeedbackImageRejected('no_room');
-        }
-        $path = 'feedback/'.now()->format('Y/m').'/'.bin2hex(random_bytes(20)).'.jpg';
-        Storage::disk('local')->put($path, $bytes);
 
-        return $path;
+        return $bytes;
     }
 
     /** Bytes in the screenshot folder. */
@@ -107,8 +141,7 @@ final class FeedbackImage
             default => 1,
         };
 
-        // The decoded picture, plus the resized copy and the encoder's working room.
-        return $w * $h * 5 + 8_000_000 < $bytes - memory_get_usage();
+        return $w * $h * self::BYTES_PER_PIXEL + self::SPARE_BYTES < $bytes - memory_get_usage();
     }
 
     /** A phone photo can say "turn me" in its EXIF; the stored copy has no EXIF, so the turn is done here. */
@@ -128,7 +161,11 @@ final class FeedbackImage
             return $img;
         }
         $turned = imagerotate($img, $angle, 0);
+        if ($turned === false) {
+            return $img;
+        }
+        unset($img); // PHP frees the first bitmap once nothing holds it (imagedestroy does nothing since PHP 8)
 
-        return $turned === false ? $img : $turned;
+        return $turned;
     }
 }

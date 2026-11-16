@@ -29,8 +29,11 @@ return new class extends Migration
             $table->timestamp('read_at')->nullable();
             $table->timestamp('done_at')->nullable();
             $table->timestamps();
-            $table->index(['status', 'created_at']);
-            $table->index('app');
+            // The list (newest first, by status or app), the clean-up by age, and the clean-up of finished reports.
+            $table->index(['status', 'id']);
+            $table->index(['app', 'id']);
+            $table->index('created_at');
+            $table->index(['status', 'done_at']);
         });
     }
 

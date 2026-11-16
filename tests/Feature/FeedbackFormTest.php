@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FeedbackController;
 use App\Models\FeedbackReport;
 use App\Models\HopApp;
 use App\Models\User;
@@ -7,7 +8,9 @@ use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\RouteCollection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -77,8 +80,13 @@ function fbFile(string $name, string $bytes): UploadedFile
 }
 
 /** @param array<string, mixed> $over */
-function fbSend($test, array $over = [], ?UploadedFile $image = null)
+/** A send. The guest counters are cleared first (each test is "a new visitor") unless the test is about the counters. */
+function fbSend($test, array $over = [], ?UploadedFile $image = null, bool $reset = true)
 {
+    if ($reset) {
+        RateLimiter::clear('feedback:g:127.0.0.1:h');
+        RateLimiter::clear('feedback:g:127.0.0.1:d');
+    }
     $data = array_merge(['kind' => 'problem', 'message' => 'The Save button does nothing when I click it.', 'app' => 'pixelhop',
         'from' => 'view', 'v' => '3.14.0', 'viewport' => '1440x900'], $over);
     if ($image) {
@@ -253,9 +261,9 @@ test('a second quick send with a screenshot does not leave a second file behind'
 
 test('a guest may send 3 an hour and 10 a day per address, with a 429 that keeps the text', function () {
     foreach ([1, 2, 3] as $i) {
-        fbSend($this, ['message' => "Report number $i from the same address."])->assertRedirect(route('feedback.sent'));
+        fbSend($this, ['message' => "Report number $i from the same address."], null, false)->assertRedirect(route('feedback.sent'));
     }
-    $r = fbSend($this, ['message' => 'The fourth one, which must not be lost.']);
+    $r = fbSend($this, ['message' => 'The fourth one, which must not be lost.'], null, false);
     $r->assertStatus(429)->assertSee('You have sent a lot of feedback already')->assertSee('The fourth one, which must not be lost.')->assertHeader('Retry-After');
     expect(FeedbackReport::count())->toBe(3);
     // Another address has its own count.
@@ -266,7 +274,7 @@ test('a guest may send 3 an hour and 10 a day per address, with a 429 that keeps
     for ($i = 0; $i < 10; $i++) {
         RateLimiter::hit('feedback:g:127.0.0.1:d', 86400);
     }
-    fbSend($this, ['message' => 'Over the daily limit already.'])->assertStatus(429);
+    fbSend($this, ['message' => 'Over the daily limit already.'], null, false)->assertStatus(429);
 });
 
 test('a member may send 10 an hour per account, not per address', function () {
@@ -461,6 +469,12 @@ describe('on two hosts', function () {
         expect(FeedbackReport::sole()->username)->toBe('helena');
     });
 
+    test('with the switch off the public host does not send visitors on either', function () {
+        config(['hop.feedback.enabled' => false]);
+        $this->get('https://hel.test/feedback')->assertNotFound();
+        $this->get('https://hel.test/feedback/sent')->assertNotFound();
+    });
+
     test('the links on the public host go to the form on the hub host', function () {
         $html = $this->withoutVite()->get('https://hel.test/help')->assertOk()->getContent();
         expect($html)->toContain('https://hub.hel.test/feedback?app=hub&amp;from=help');
@@ -481,4 +495,167 @@ test('a form sent with an expired page token goes back with the typed text and a
         ->assertRedirect('/feedback?app=pixelhop')->assertSessionHas('session_expired')->assertSessionHasInput('message', 'Typed before the session ended.');
     expect(FeedbackReport::count())->toBe(0);
     app()->detectEnvironment(fn () => 'testing');
+});
+
+// ---- text that is not text, and a save that fails -----------------------------
+
+test('a message that is not valid UTF-8 is refused before any work, with an ordinary message', function () {
+    $r = fbSend($this, ['message' => "\xFF\xFEaaaaaaaaaaaaaaaa"], fbFile('s.png', fbPng()));
+    $r->assertSessionHasErrors(['message' => 'That text could not be read. Remove unusual characters and try again.']);
+    expect(FeedbackReport::count())->toBe(0)->and(Storage::disk('local')->allFiles())->toBe([])
+        ->and(RateLimiter::attempts('feedback:g:127.0.0.1:h'))->toBe(0); // a typing mistake is free
+});
+
+test('control characters are dropped from the text, new lines and tabs stay', function () {
+    fbSend($this, ['message' => "Line one\x00 with a NUL\x07 and a bell\n\tindented line two"]);
+    expect(FeedbackReport::sole()->message)->toBe("Line one with a NUL and a bell\n\tindented line two");
+});
+
+test('a User-Agent that is not valid UTF-8 is cleaned and the report is still saved', function () {
+    $this->withHeader('User-Agent', "Mozilla/5.0 \xFF\xFE broken")->post('/feedback', ['kind' => 'problem', 'message' => 'A report from a browser with a broken name.'])
+        ->assertRedirect(route('feedback.sent'));
+    $ua = FeedbackReport::sole()->user_agent;
+    expect(mb_check_encoding($ua, 'UTF-8'))->toBeTrue()->and($ua)->toStartWith('Mozilla/5.0 ');
+});
+
+test('when saving fails the picture is removed, nothing of the report reaches the log, and a retry works', function () {
+    Log::spy();
+    $fail = true;
+    FeedbackReport::creating(function () use (&$fail) {
+        if ($fail) {
+            throw new RuntimeException('SQLSTATE secret-text-of-the-report 203.0.113.9 helena');
+        }
+    });
+    $r = fbSend($this, ['message' => 'secret-text-of-the-report, long enough to send.'], fbFile('s.png', fbPng()));
+    $r->assertSessionHasErrors(['limit' => 'Your report could not be saved. Please try again.'])->assertSessionHasInput('message');
+    expect($r->status())->toBe(302)->and(FeedbackReport::count())->toBe(0)->and(Storage::disk('local')->allFiles())->toBe([]);
+    Log::shouldHaveReceived('warning')->withArgs(function ($message, $context = []) {
+        return $message === 'A feedback report could not be saved' && ! str_contains(json_encode($context), 'secret') && ! str_contains(json_encode($context), '203.0.113.9');
+    })->once();
+    // The same text again is not mistaken for a double send.
+    $fail = false;
+    fbSend($this, ['message' => 'secret-text-of-the-report, long enough to send.'], fbFile('s.png', fbPng()))->assertRedirect(route('feedback.sent'));
+    expect(FeedbackReport::count())->toBe(1)->and(Storage::disk('local')->allFiles('feedback'))->toHaveCount(1);
+});
+
+// ---- the limits count attempts ------------------------------------------------
+
+test('failed attempts count too: three failed security checks use up the hour of a guest', function () {
+    config(['services.turnstile.secret' => 'secret']);
+    Http::fake(['challenges.cloudflare.com/*' => Http::response(['success' => false])]);
+    foreach ([1, 2, 3] as $i) {
+        fbSend($this, ['message' => "Attempt $i with a security check that fails.", 'cf-turnstile-response' => 'bad'], null, false)->assertSessionHasErrors('security');
+    }
+    fbSend($this, ['message' => 'Attempt 4, refused before the check.', 'cf-turnstile-response' => 'bad'], null, false)->assertStatus(429);
+    Http::assertSentCount(3); // the fourth never reached Cloudflare
+});
+
+test('a refused picture counts as an attempt for a member', function () {
+    $user = User::factory()->create();
+    foreach (range(1, 10) as $i) {
+        fbSend($this->actingAs($user), ['message' => "Attempt $i with something that is not a picture."], fbFile('x.png', 'not a picture'))->assertSessionHasErrors('image');
+    }
+    fbSend($this->actingAs($user), ['message' => 'The eleventh attempt, refused as too many.'])->assertStatus(429);
+});
+
+test('an IPv6 guest is counted per /64, not per address', function () {
+    foreach (['2001:db8:1:2::1', '2001:db8:1:2:ffff::9', '2001:db8:1:2:1:2:3:4'] as $i => $ip) {
+        $this->withServerVariables(['REMOTE_ADDR' => $ip])->post('/feedback', ['kind' => 'idea', 'message' => "Report $i from the same /64 network."])->assertRedirect(route('feedback.sent'));
+    }
+    $this->withServerVariables(['REMOTE_ADDR' => '2001:db8:1:2:aaaa::7'])->post('/feedback', ['kind' => 'idea', 'message' => 'The fourth, from the same network.'])->assertStatus(429);
+    $this->withServerVariables(['REMOTE_ADDR' => '2001:db8:1:3::1'])->post('/feedback', ['kind' => 'idea', 'message' => 'Another /64 has its own count.'])->assertRedirect(route('feedback.sent'));
+    expect(FeedbackController::addressKey('203.0.113.9'))->toBe('203.0.113.9')
+        ->and(FeedbackController::addressKey('2001:db8:1:2::1'))->toBe(FeedbackController::addressKey('2001:db8:1:2:ffff::9'))
+        ->and(FeedbackController::addressKey('2001:db8:1:2::1'))->not->toBe(FeedbackController::addressKey('2001:db8:1:3::1'));
+});
+
+// ---- decoding: the size of what the picture claims, memory, one at a time ------
+
+/** A PNG that is only a header: it says how large the picture is, and cannot be decoded. */
+function fbPngHeader(int $w, int $h, int $depth = 8, int $color = 2): string
+{
+    $ihdr = pack('N', $w).pack('N', $h).chr($depth).chr($color)."\x00\x00\x00";
+
+    return "\x89PNG\r\n\x1a\n".pack('N', 13).'IHDR'.$ihdr.pack('N', crc32('IHDR'.$ihdr));
+}
+
+test('what a picture claims is limited to 25 million pixels in every format, before anything is decoded', function () {
+    $webp = 'RIFF'.pack('V', 22).'WEBPVP8X'.pack('V', 10)."\x00\x00\x00\x00".substr(pack('V', 5999), 0, 3).substr(pack('V', 5999), 0, 3); // 6000 x 6000
+    $jpeg = "\xFF\xD8\xFF\xC0".pack('n', 17)."\x08".pack('n', 5000).pack('n', 6000)."\x03\x01\x22\x00\x02\x11\x01\x03\x11\x01\xFF\xD9"; // 6000 x 5000
+    foreach (['png 39 MP' => ['a.png', fbPngHeader(6500, 6000)], 'png 16-bit 39 MP' => ['a.png', fbPngHeader(6500, 6000, 16, 6)], 'webp 36 MP' => ['a.webp', $webp], 'jpeg 30 MP' => ['a.jpg', $jpeg]] as $label => [$name, $bytes]) {
+        expect(getimagesizefromstring($bytes))->not->toBeFalse("$label is a header PHP reads");
+        fbSend($this, ['message' => "A picture that claims too much ($label)."], fbFile($name, $bytes))
+            ->assertSessionHasErrors(['image' => 'That image is too large. Use one up to 5 MB.']);
+    }
+    expect(FeedbackReport::count())->toBe(0)->and(Storage::disk('local')->allFiles())->toBe([]);
+    // A 5K screenshot (14.7 million) is still welcome: its header passes the size check and only then fails to decode.
+    fbSend($this, ['message' => 'A 5K screenshot header, which is allowed in.'], fbFile('a.png', fbPngHeader(5120, 2880)))
+        ->assertSessionHasErrors(['image' => 'That file could not be read as an image.']);
+});
+
+test('the memory guard refuses a picture that would not fit before it is opened, and lets it in when there is room', function () {
+    $old = ini_get('memory_limit');
+    try {
+        $file = fn () => fbFile('a.png', fbPngHeader(6000, 4000)); // 24 million pixels: 288 MB + 32 MB by the guard's count
+        ini_set('memory_limit', (string) (memory_get_usage() + 250 * 1048576)); // 250 MB of room: less than the 320 MB the guard asks for
+        fbSend($this, ['message' => 'Picture too big for the memory left.'], $file())->assertSessionHasErrors(['image' => 'That image is too large. Use one up to 5 MB.']);
+        ini_set('memory_limit', '2G');
+        fbSend($this, ['message' => 'Picture with plenty of memory left.'], $file())->assertSessionHasErrors(['image' => 'That file could not be read as an image.']);
+    } finally {
+        ini_set('memory_limit', $old);
+    }
+    expect(FeedbackReport::count())->toBe(0);
+});
+
+test('pictures are drawn again one at a time: whoever does not get the turn is asked to try again', function () {
+    config(['hop.feedback.decode_wait_seconds' => 1]);
+    $lock = Cache::lock('feedback:decode', 60);
+    expect($lock->get())->toBeTrue();
+    fbSend($this, ['message' => 'Sent while another picture is being drawn.'], fbFile('s.png', fbPng()))
+        ->assertSessionHasErrors(['image' => 'The server is busy with another picture. Please try again in a moment.'])->assertSessionHasInput('message');
+    expect(FeedbackReport::count())->toBe(0);
+    $lock->release();
+    fbSend($this, ['message' => 'Sent when the turn is free again.'], fbFile('s.png', fbPng()))->assertRedirect(route('feedback.sent'));
+    // The turn is given back also when drawing fails.
+    fbSend($this, ['message' => 'A broken picture gives the turn back.'], fbFile('b.png', substr(fbPng(), 0, 40)))->assertSessionHasErrors('image');
+    expect(Cache::lock('feedback:decode', 5)->get())->toBeTrue();
+});
+
+test('a 16-bit PNG, a turned phone photo and a big WebP come out as ordinary JPEG pictures', function () {
+    // 8 x 8, 16 bits per channel, with transparency
+    $rows = '';
+    for ($y = 0; $y < 8; $y++) {
+        $rows .= "\x00".str_repeat("\x40\x00\x80\x00\xC0\x00\xFF\xFF", 8);
+    }
+    $ihdr = pack('N', 8).pack('N', 8)."\x10\x06\x00\x00\x00";
+    $idat = gzcompress($rows);
+    $png16 = "\x89PNG\r\n\x1a\n".pack('N', 13).'IHDR'.$ihdr.pack('N', crc32('IHDR'.$ihdr)).pack('N', strlen($idat)).'IDAT'.$idat.pack('N', crc32('IDAT'.$idat)).pack('N', 0).'IEND'.pack('N', crc32('IEND'));
+    fbSend($this, ['message' => 'A sixteen bit picture with transparency.'], fbFile('deep.png', $png16))->assertRedirect(route('feedback.sent'));
+    $im = fbJpeg(200, 100);
+    $tiff = "II*\x00\x08\x00\x00\x00\x01\x00\x12\x01\x03\x00\x01\x00\x00\x00\x06\x00\x00\x00\x00\x00\x00\x00"; // Orientation = 6 (turn right)
+    $payload = "Exif\x00\x00".$tiff;
+    $turned = substr($im, 0, 2)."\xFF\xE1".pack('n', strlen($payload) + 2).$payload.substr($im, 2);
+    fbSend($this, ['message' => 'A photo that says it must be turned.'], fbFile('turned.jpg', $turned))->assertRedirect(route('feedback.sent'));
+    $big = imagecreatetruecolor(4000, 3000);
+    ob_start();
+    imagewebp($big, null, 40);
+    fbSend($this, ['message' => 'A big WebP picture, flat colour.'], fbFile('big.webp', (string) ob_get_clean()))->assertRedirect(route('feedback.sent'));
+    $reports = FeedbackReport::orderBy('id')->get();
+    expect($reports)->toHaveCount(3);
+    foreach ($reports as $r) {
+        expect(getimagesizefromstring(Storage::disk('local')->get($r->screenshot_path))[2])->toBe(IMAGETYPE_JPEG);
+    }
+    if (function_exists('exif_read_data')) {
+        $size = getimagesizefromstring(Storage::disk('local')->get($reports[1]->screenshot_path));
+        expect([$size[0], $size[1]])->toBe([100, 200]); // turned upright
+    }
+    $size = getimagesizefromstring(Storage::disk('local')->get($reports[2]->screenshot_path));
+    expect(max($size[0], $size[1]))->toBe(2560);
+});
+
+test('a picture with a script appended to it comes out as a plain picture', function () {
+    $polyglot = fbPng().'<?php system($_GET["c"]); ?><script>alert(1)</script>';
+    fbSend($this, [], fbFile('poly.png', $polyglot))->assertRedirect(route('feedback.sent'));
+    $bytes = Storage::disk('local')->get(FeedbackReport::sole()->screenshot_path);
+    expect($bytes)->not->toContain('<?php')->not->toContain('<script>')->not->toContain('PNG');
 });

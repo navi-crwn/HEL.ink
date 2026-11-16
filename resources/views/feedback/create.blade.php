@@ -70,7 +70,7 @@
                     <x-input-label for="fb-message" :value="__('Your message')" />
                     <span class="text-xs {{ $muted }}" aria-live="off"><span data-fb-count>{{ number_format(mb_strlen($typed)) }}</span> / 4,000</span>
                 </div>
-                <textarea id="fb-message" name="message" rows="7" required minlength="10" maxlength="4000" data-fb-message
+                <textarea id="fb-message" name="message" rows="7" required minlength="10" data-fb-message
                           placeholder="{{ __('What happened, or what would you like to see?') }}"
                           class="input h-auto min-h-40 py-3 leading-relaxed">{{ $typed }}</textarea>
             </div>
@@ -90,7 +90,7 @@
 
             <p class="text-sm {{ $muted }}">
                 @if ($member)
-                    {{ __('Sending as @:name', ['name' => $member->username]) }}
+                    {{ __('Sending as @:name', ['name' => $member->username ?: $member->name]) }}
                 @else
                     {{ __('Sending as a guest') }} · <a href="{{ route('login') }}" class="underline underline-offset-2 hover:text-slate-900 dark:hover:text-white">{{ __('Sign in') }}</a>
                 @endif
@@ -111,7 +111,7 @@
                     <dt>{{ __('Browser and screen size') }}</dt><dd class="break-words">{{ $browser ?? __('Unknown') }} · <span data-fb-screen>{{ __('Unknown') }}</span></dd>
                     <dt>{{ __('Language') }}</dt><dd>{{ $locale }}</dd>
                     <dt>{{ __('IP address') }}</dt><dd>{{ $ip }}</dd>
-                    @if ($member)
+                    @if ($member && $member->username)
                         <dt>HOP ID</dt><dd>{{ '@'.$member->username }}</dd>
                     @endif
                 </dl>

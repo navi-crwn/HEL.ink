@@ -96,6 +96,15 @@ class SourceContract(unittest.TestCase):
             2,
         )
 
+    def test_feedback_form_too_large_body_goes_back_to_the_form(self):
+        # The hel.ink block and the hub.hel.ink block both send a too-large Feedback post back to the form, not to a bare 413 page.
+        self.assertEqual(self.source.count("error_page 413 = @feedback_too_large;"), 2)
+        named = re.findall(r"location @feedback_too_large \{(.*?)\n    \}", self.source, re.DOTALL)
+        self.assertEqual(len(named), 2)
+        for body in named:
+            self.assertIn("if ($uri = /feedback) { return 303 /feedback?e=size&$args; }", body)
+            self.assertIn("return 413;", body)
+
     def test_all_single_segment_hub_pages_in_map(self):
         map_match = re.search(r'map \$uri \$hop_hub_page\s*\{(.*?)\}', self.source, re.DOTALL)
         self.assertIsNotNone(map_match, "map $uri $hop_hub_page not found in source")

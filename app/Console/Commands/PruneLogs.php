@@ -5,7 +5,9 @@ namespace App\Console\Commands;
 use App\Models\FeedbackReport;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 
 class PruneLogs extends Command
 {
@@ -54,6 +56,29 @@ class PruneLogs extends Command
                 }
             });
         }
-        $this->line(sprintf('%-16s %d addresses emptied, %d deleted', 'feedback_reports', $ips, $deleted));
+        $this->line(sprintf('%-16s %d addresses emptied, %d deleted, %d stray files removed', 'feedback_reports', $ips, $deleted, $this->sweepFeedbackFiles()));
+    }
+
+    /**
+     * Picture files that no report points at (a save that failed after the picture was written, or a delete that failed) and
+     * that are more than a day old, so a picture that is just being saved is never taken. Returns how many were removed.
+     */
+    private function sweepFeedbackFiles(): int
+    {
+        $disk = Storage::disk('local');
+        $used = array_flip(DB::table('feedback_reports')->whereNotNull('screenshot_path')->pluck('screenshot_path')->all());
+        $removed = 0;
+        foreach ($disk->allFiles('feedback') as $file) {
+            if (isset($used[$file]) || $disk->lastModified($file) > now()->subDay()->getTimestamp()) {
+                continue;
+            }
+            if ($disk->delete($file)) {
+                $removed++;
+            } else {
+                Log::warning('A stray feedback image could not be deleted', ['path' => $file]);
+            }
+        }
+
+        return $removed;
     }
 }

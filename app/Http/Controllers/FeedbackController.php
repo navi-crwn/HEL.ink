@@ -14,6 +14,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -56,19 +57,13 @@ class FeedbackController extends Controller
             return $this->redirectSent($params['app'], false);
         }
 
-        // Send limits: a guest by address, a member by account.
-        $keys = $user
-            ? [['feedback:u:'.$user->id.':h', self::MEMBER_PER_HOUR, 3600]]
-            : [['feedback:g:'.$request->ip().':h', self::GUEST_PER_HOUR, 3600], ['feedback:g:'.$request->ip().':d', self::GUEST_PER_DAY, 86400]];
-        foreach ($keys as [$key, $max]) {
-            if (RateLimiter::tooManyAttempts($key, $max)) {
-                return response()->view('feedback.create', $this->viewData($request, $params, $request->only('kind', 'message'))
-                    + ['errors' => $this->bag(['limit' => __('You have sent a lot of feedback already. Please try again later.')])], 429)
-                    ->header('Retry-After', (string) RateLimiter::availableIn($key));
-            }
+        // What was typed must be text before any work is done: bytes that are not UTF-8 would be refused by the database.
+        $raw = Input::text($request->input('message'));
+        if (! mb_check_encoding($raw, 'UTF-8')) {
+            return back()->withInput($request->only('kind', 'app'))->withErrors(['message' => __('That text could not be read. Remove unusual characters and try again.')]);
         }
-
-        $message = trim(str_replace(["\r\n", "\r"], "\n", Input::text($request->input('message'))));
+        // Control characters other than new lines and tabs have no place in a report.
+        $message = trim(preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', str_replace(["\r\n", "\r"], "\n", $raw)) ?? '');
         $validator = Validator::make(['kind' => $request->input('kind'), 'message' => $message], [
             'kind' => ['required', 'string', 'in:'.implode(',', FeedbackReport::KINDS)],
             'message' => ['required', 'string', 'min:10', 'max:4000'],
@@ -83,6 +78,21 @@ class FeedbackController extends Controller
         if ($validator->fails()) {
             return $back($validator->errors()->toArray());
         }
+
+        // Send limits count attempts from here on (a refusal for a typing mistake above is free; the security check and the
+        // picture are the expensive parts): a guest by address (an IPv6 visitor by its /64), a member by account.
+        $address = self::addressKey((string) $request->ip());
+        $keys = $user
+            ? [['feedback:u:'.$user->id.':h', self::MEMBER_PER_HOUR, 3600]]
+            : [['feedback:g:'.$address.':h', self::GUEST_PER_HOUR, 3600], ['feedback:g:'.$address.':d', self::GUEST_PER_DAY, 86400]];
+        foreach ($keys as [$key, $max, $decay]) {
+            if (RateLimiter::hit($key, $decay) > $max) {
+                return response()->view('feedback.create', $this->viewData($request, $params, $request->only('kind', 'message'))
+                    + ['errors' => $this->bag(['limit' => __('You have sent a lot of feedback already. Please try again later.')])], 429)
+                    ->header('Retry-After', (string) RateLimiter::availableIn($key));
+            }
+        }
+
         if (! $user && ! $this->turnstile->verify($request->input('cf-turnstile-response'), $request->ip())) {
             // Not named turnstile: the check's own widget would print this message a second time, away from the top.
             return $back(['security' => __('The security check failed. Please try again.')]);
@@ -108,7 +118,8 @@ class FeedbackController extends Controller
 
         // The same sender with the same text within a minute is one report, not two.
         $sender = $user ? 'u'.$user->id : 'g'.$request->ip();
-        if (! Cache::add('feedback:dup:'.sha1($sender."\n".$message), 1, 60)) {
+        $dup = 'feedback:dup:'.sha1($sender."\n".$message);
+        if (! Cache::add($dup, 1, 60)) {
             if ($path) {
                 Storage::disk('local')->delete($path);
             }
@@ -116,14 +127,23 @@ class FeedbackController extends Controller
             return $this->redirectSent($params['app'], $noRoom);
         }
 
-        FeedbackReport::create([
-            'kind' => $validator->validated()['kind'], 'status' => 'new', 'app' => $params['app'], 'page' => $params['from'],
-            'app_version' => $params['v'], 'message' => $message, 'user_id' => $user?->id, 'username' => $user?->username,
-            'ip_address' => $request->ip(), 'user_agent' => mb_substr((string) $request->userAgent(), 0, 300) ?: null,
-            'viewport' => Feedback::viewport($request->input('viewport')), 'locale' => app()->getLocale(), 'screenshot_path' => $path,
-        ]);
-        foreach ($keys as [$key, , $decay]) {
-            RateLimiter::hit($key, $decay);
+        try {
+            FeedbackReport::create([
+                'kind' => $validator->validated()['kind'], 'status' => 'new', 'app' => $params['app'], 'page' => $params['from'],
+                'app_version' => $params['v'], 'message' => $message, 'user_id' => $user?->id, 'username' => $user?->username,
+                'ip_address' => $request->ip(), 'user_agent' => mb_substr(mb_scrub((string) $request->userAgent(), 'UTF-8'), 0, 300) ?: null,
+                'viewport' => Feedback::viewport($request->input('viewport')), 'locale' => app()->getLocale(), 'screenshot_path' => $path,
+            ]);
+        } catch (\Throwable $e) {
+            // The picture goes with the failed save, and the log gets no word of the report (a database error repeats the text,
+            // the address and the name in its message).
+            if ($path) {
+                Storage::disk('local')->delete($path);
+            }
+            Cache::forget($dup);
+            Log::warning('A feedback report could not be saved', ['error' => get_class($e), 'code' => (string) $e->getCode()]);
+
+            return $back(['limit' => __('Your report could not be saved. Please try again.')]);
         }
 
         return $this->redirectSent($params['app'], $noRoom);
@@ -145,6 +165,7 @@ class FeedbackController extends Controller
     /** On the public host the form lives on the hub host, where the sign-in session is: send the visitor there. */
     public function toHub(Request $request): RedirectResponse
     {
+        $this->ensureOn();
         $query = $request->getQueryString();
 
         return redirect()->to(hub_url($request->path()).($query ? '?'.$query : ''));
@@ -157,6 +178,18 @@ class FeedbackController extends Controller
         session()->put('feedback.sent', ['app' => $app, 'no_room' => $noRoom]);
 
         return redirect()->route('feedback.sent');
+    }
+
+    /** The part of an address that counts as one visitor: the whole of an IPv4 address, the first 64 bits of an IPv6 one. */
+    public static function addressKey(string $ip): string
+    {
+        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            $packed = inet_pton($ip);
+
+            return $packed === false ? $ip : bin2hex(substr($packed, 0, 8)).'/64';
+        }
+
+        return $ip;
     }
 
     private function ensureOn(): void
@@ -200,6 +233,7 @@ class FeedbackController extends Controller
         return match ($reason) {
             'type' => __('Use a PNG, JPEG or WebP image.'),
             'too_large' => __('That image is too large. Use one up to 5 MB.'),
+            'busy' => __('The server is busy with another picture. Please try again in a moment.'),
             default => __('That file could not be read as an image.'),
         };
     }

@@ -9,6 +9,7 @@ use App\Models\HopAudit;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -96,42 +97,50 @@ class HopFeedbackController extends Controller
         if (! is_string($action) || ! in_array($action, self::ACTIONS, true)) {
             return $this->fail('bad_action', 'action must be one of '.implode(', ', self::ACTIONS), 400);
         }
-        $report = $this->find($id);
-        if (! $report) {
+        if (! $this->find($id)) {
             return $this->notFound();
         }
-        $now = now();
-        $changed = false;
-        switch ($action) {
-            case 'read':
-                if ($report->status === 'new') {
-                    $report->update(['status' => 'read', 'read_at' => $now]);
-                    $changed = true;
-                }
-                break;
-            case 'done':
-                if ($report->status !== 'done') {
-                    $report->update(['status' => 'done', 'done_at' => $now, 'read_at' => $report->read_at ?? $now]);
-                    $changed = true;
-                }
-                break;
-            case 'reopen':
-                if ($report->status === 'done') {
-                    $report->update(['status' => 'read', 'done_at' => null]);
-                    $changed = true;
-                }
-                break;
-            case 'delete':
-                $report->delete(); // the model removes the image file with the row
-                $this->audit($request, 'feedback.delete', $report);
 
-                return response()->json(['ok' => true]);
-        }
-        if ($changed && $action !== 'read') {
-            $this->audit($request, 'feedback.'.$action, $report);
-        }
+        // The change and its audit row stand or fall together; the report is read again inside, so two calls at once
+        // (two admins pressing Done) change it once and write one audit row.
+        return DB::transaction(function () use ($request, $action, $id) {
+            $report = FeedbackReport::whereKey((int) $id)->lockForUpdate()->first();
+            if (! $report) {
+                return $this->notFound();
+            }
+            $now = now();
+            $changed = false;
+            switch ($action) {
+                case 'read':
+                    if ($report->status === 'new') {
+                        $report->update(['status' => 'read', 'read_at' => $now]);
+                        $changed = true;
+                    }
+                    break;
+                case 'done':
+                    if ($report->status !== 'done') {
+                        $report->update(['status' => 'done', 'done_at' => $now, 'read_at' => $report->read_at ?? $now]);
+                        $changed = true;
+                    }
+                    break;
+                case 'reopen':
+                    if ($report->status === 'done') {
+                        $report->update(['status' => 'read', 'done_at' => null]);
+                        $changed = true;
+                    }
+                    break;
+                case 'delete':
+                    $this->audit($request, 'feedback.delete', $report);
+                    $report->delete(); // the model removes the image file with the row
 
-        return response()->json(['ok' => true, 'data' => $this->detail($report->fresh())]);
+                    return response()->json(['ok' => true]);
+            }
+            if ($changed && $action !== 'read') {
+                $this->audit($request, 'feedback.'.$action, $report);
+            }
+
+            return response()->json(['ok' => true, 'data' => $this->detail($report->fresh())]);
+        });
     }
 
     // ---- helpers ----------------------------------------------------------
@@ -163,7 +172,7 @@ class HopFeedbackController extends Controller
         return [
             'id' => (string) $r->id, 'kind' => $r->kind, 'status' => $r->status, 'app' => $r->app,
             'page' => $this->blank($r->page), 'app_version' => $this->blank($r->app_version), 'message' => $r->message,
-            'user' => $r->user_id ? ['id' => (int) $r->user_id, 'username' => (string) $r->username] : null,
+            'user' => $r->user_id ? ['id' => (int) $r->user_id, 'username' => $this->blank($r->username)] : null,
             'ip' => $this->blank($r->ip_address), 'user_agent' => $this->blank($r->user_agent),
             'viewport' => $this->blank($r->viewport), 'locale' => $this->blank($r->locale),
             'has_screenshot' => $r->screenshot_path !== null, 'created_at' => $this->iso($r->created_at),
@@ -186,7 +195,7 @@ class HopFeedbackController extends Controller
     {
         /** @var HopApp $app */
         $app = $request->attributes->get('hop_app');
-        HopAudit::create(['actor' => (string) $request->header('X-HOP-Actor', 'system'), 'app_slug' => $app->slug, 'action' => $action,
+        HopAudit::create(['actor' => mb_substr(mb_scrub((string) $request->header('X-HOP-Actor', 'system'), 'UTF-8'), 0, 64), 'app_slug' => $app->slug, 'action' => $action,
             'target_type' => 'feedback', 'target_id' => (string) $r->id, 'reason' => null, 'params' => ['app' => $r->app, 'kind' => $r->kind]]);
     }
 

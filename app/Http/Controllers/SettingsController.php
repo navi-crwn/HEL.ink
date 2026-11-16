@@ -44,11 +44,6 @@ class SettingsController extends Controller
         ]);
     }
 
-    /**
-     * Everything the hub stores about the account (right of access): profile,
-     * roles, recent sign-ins, the activity log and the API token names. Each
-     * app exports its own content (links, bio pages, images) from its settings.
-     */
     /** The reports this account sent: what kind, about which app, the text and the date (the screenshot is not part of it). */
     private function feedbackExport(int $userId): array
     {
@@ -60,6 +55,11 @@ class SettingsController extends Controller
             ->map(fn (FeedbackReport $r) => ['kind' => $r->kind, 'app' => $r->app, 'message' => $r->message, 'created_at' => $r->created_at?->toIso8601String()])->all();
     }
 
+    /**
+     * Everything the hub stores about the account (right of access): profile,
+     * roles, recent sign-ins, the activity log and the API token names. Each
+     * app exports its own content (links, bio pages, images) from its settings.
+     */
     public function exportAccount(Request $request)
     {
         $user = $request->user();

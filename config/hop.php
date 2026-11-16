@@ -307,6 +307,8 @@ return [
         'enabled' => filter_var(env('HOP_FEEDBACK_ENABLED', true), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? true,
         // Total size of the screenshot folder; over it, reports are kept without their image.
         'max_folder_mb' => (int) env('HOP_FEEDBACK_MAX_MB', 1024),
+        // How long a visitor waits for the turn to have a picture drawn again (one at a time) before being asked to try again.
+        'decode_wait_seconds' => 8,
     ],
 
     // Days a released username stays unavailable to other people.

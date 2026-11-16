@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -41,8 +42,9 @@ class FeedbackReport extends Model
     protected static function booted(): void
     {
         static::deleted(function (self $report) {
-            if ($report->screenshot_path) {
-                Storage::disk('local')->delete($report->screenshot_path);
+            if ($report->screenshot_path && ! Storage::disk('local')->delete($report->screenshot_path) && Storage::disk('local')->exists($report->screenshot_path)) {
+                // The path is made by the server and holds nothing of the report; the clean-up sweep tries again.
+                Log::warning('A feedback image could not be deleted', ['path' => $report->screenshot_path]);
             }
         });
     }

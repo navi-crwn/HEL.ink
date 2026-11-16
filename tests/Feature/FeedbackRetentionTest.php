@@ -164,3 +164,25 @@ test('the migration is safe to run twice and does not touch other tables', funct
     expect(Schema::hasColumns('feedback_reports', ['id', 'kind', 'status', 'app', 'page', 'app_version', 'message', 'user_id',
         'username', 'ip_address', 'user_agent', 'viewport', 'locale', 'screenshot_path', 'read_at', 'done_at', 'created_at', 'updated_at']))->toBeTrue();
 });
+
+test('the clean-up removes picture files that no report points at and are over a day old, and nothing else', function () {
+    $kept = fbrReport();
+    $disk = Storage::disk('local');
+    $disk->put('feedback/2026/11/stray-old.jpg', "\xFF\xD8\xFFold");
+    $disk->put('feedback/2026/11/stray-new.jpg', "\xFF\xD8\xFFnew");
+    $disk->put('other/keep-me.txt', 'not a feedback file');
+    touch($disk->path('feedback/2026/11/stray-old.jpg'), time() - 2 * 86400);
+    touch($disk->path($kept->screenshot_path), time() - 5 * 86400); // referenced, however old
+    $this->artisan('hop:prune-logs')->assertSuccessful()->expectsOutputToContain('1 stray files removed');
+    expect($disk->exists('feedback/2026/11/stray-old.jpg'))->toBeFalse()
+        ->and($disk->exists('feedback/2026/11/stray-new.jpg'))->toBeTrue()
+        ->and($disk->exists($kept->screenshot_path))->toBeTrue()
+        ->and($disk->exists('other/keep-me.txt'))->toBeTrue();
+});
+
+test('the indexes match how the list and the clean-up ask', function () {
+    $columns = collect(Schema::getIndexes('feedback_reports'))->map(fn ($i) => implode(',', $i['columns']))->all();
+    foreach (['status,id', 'app,id', 'created_at', 'status,done_at'] as $want) {
+        expect($columns)->toContain($want);
+    }
+});

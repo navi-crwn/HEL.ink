@@ -297,3 +297,34 @@ test('the API keeps answering when the form is switched off, so reports already 
     config(['hop.feedback.enabled' => false]);
     fba($this, 'GET', '/api/hop/feedback')->assertOk()->assertJsonPath('page.total', 1);
 });
+
+test('a member without a username is null in the report, not an empty text', function () {
+    $mem = User::factory()->create(['username' => null]);
+    $r = fbaReport(['user_id' => $mem->id, 'username' => null]);
+    $d = fba($this, 'GET', '/api/hop/feedback/'.$r->id)->assertOk()->json('data');
+    expect($d['user'])->toBe(['id' => $mem->id, 'username' => null]);
+    expect(fba($this, 'GET', '/api/hop/feedback')->json('data.0.username'))->toBeNull();
+});
+
+test('an actor header that is too long or not text is cut for the audit, and the change still stands', function () {
+    $r = fbaReport();
+    $url = '/api/hop/feedback/'.$r->id.'/actions';
+    fba($this, 'POST', $url, ['action' => 'done'], 'imperium', '7:'.str_repeat('x', 200))->assertOk()->assertJsonPath('data.status', 'done');
+    $row = HopAudit::sole();
+    expect(mb_strlen($row->actor))->toBe(64)->and($r->fresh()->status)->toBe('done');
+    fba($this, 'POST', $url, ['action' => 'reopen'], 'imperium', "9:\xFF\xFE bad bytes")->assertOk();
+    expect(HopAudit::count())->toBe(2)->and(mb_check_encoding(HopAudit::orderByDesc('id')->first()->actor, 'UTF-8'))->toBeTrue();
+});
+
+test('a change and its audit row are one: done twice writes one row, and a failing audit undoes the change', function () {
+    $r = fbaReport();
+    $url = '/api/hop/feedback/'.$r->id.'/actions';
+    fba($this, 'POST', $url, ['action' => 'done']);
+    fba($this, 'POST', $url, ['action' => 'done']);
+    expect(HopAudit::where('action', 'feedback.done')->count())->toBe(1);
+    // The audit table refuses the row: the report is not left half changed.
+    $r2 = fbaReport();
+    HopAudit::creating(fn () => throw new RuntimeException('audit refused'));
+    $res = fba($this, 'POST', '/api/hop/feedback/'.$r2->id.'/actions', ['action' => 'done']);
+    expect($res->status())->toBe(500)->and($r2->fresh()->status)->toBe('new')->and($r2->fresh()->done_at)->toBeNull();
+});

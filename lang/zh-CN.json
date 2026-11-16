@@ -1153,5 +1153,8 @@
     "Feedback:": "反馈：",
     "When you send feedback we keep what you wrote, the kind of report, the app and screen it came from, the app version, your browser and screen size, your language, your IP address, your HOP ID username if you were signed in, and the screenshot if you added one. A screenshot is saved again as a new image, so details hidden in the file, such as the location of a photo, are removed. Only the people who run HOP can read reports, and the form is a single page at hub.hel.ink: the other HOP apps receive nothing from it.": "当您发送反馈时，我们会保存您写的内容、报告类型、来源的应用和页面、应用版本、您的浏览器和屏幕尺寸、语言、IP 地址、已登录时的 HOP ID 用户名，以及您添加的截图。截图会被重新保存为新图片，因此文件中隐藏的细节（例如照片的拍摄位置）会被移除。只有运营 HOP 的人员可以阅读报告；该表单是 hub.hel.ink 上的单一页面，其他 HOP 应用不会从中收到任何内容。",
     "The IP address on a feedback report is deleted after 30 days; a finished report after 180 days; any other report after 12 months.": "反馈报告上的 IP 地址在 30 天后删除；已处理的报告在 180 天后删除；其他报告在 12 个月后删除。",
-    "Profile, roles, recent sign-ins, activity log, API token names and the feedback you sent.": "个人资料、角色、最近登录、活动记录、API 令牌名称和您发送的反馈。"
+    "Profile, roles, recent sign-ins, activity log, API token names and the feedback you sent.": "个人资料、角色、最近登录、活动记录、API 令牌名称和您发送的反馈。",
+    "That text could not be read. Remove unusual characters and try again.": "无法读取这段文字。请删除特殊字符后重试。",
+    "The server is busy with another picture. Please try again in a moment.": "服务器正在处理另一张图片，请稍后再试。",
+    "Your report could not be saved. Please try again.": "无法保存您的报告，请重试。"
 }

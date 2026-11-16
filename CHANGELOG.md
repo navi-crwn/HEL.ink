@@ -4,6 +4,20 @@ All notable changes to HEL.ink (the HOP hub and HOP ID) are listed here, written
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-11-16 - Send feedback from every app
+
+### Added
+
+- **Feedback page.** Anyone, signed in or not, can now send feedback on one page: choose Problem, Idea or suggestion or Other, write a message and add one screenshot by choosing a file or pasting it. The page shows exactly what is sent along (the app and screen you came from, its version, your browser and screen size, your language, your IP address and, when you are signed in, your HOP ID username) and says that reports are read but not answered one by one. It opens on the hub address and also on the main address. Reason: reporting a problem needed an e-mail, and most people never wrote one.
+- **Feedback links.** The sidebar of the dashboard now has Feedback as its second item, right after Help, and the page footer, Help, Contact and the sign-in pages link to the same page. The other HOP apps will link here too. Reason: a form nobody can find does not help.
+- **Screenshots.** A screenshot must be a PNG, JPEG or WebP picture up to 5 MB. It is saved again as a new picture, so hidden details such as the place where a photo was taken are removed, and it is kept where it cannot be opened from any web address; only the people who run HOP can see it. Reason: a screenshot can show private things.
+
+### Changed
+
+- **Privacy page.** It now says what a feedback report keeps and for how long: the IP address is deleted after 30 days, a finished report after 180 days and any other report after 12 months. Reason: the page has to say what the hub really does.
+- **Your account data.** Deleting your account now also deletes the reports you sent, together with their screenshots, and the download of your account data lists them. Reason: what you wrote is your data too.
+- **Usernames.** The name feedback can no longer be chosen as a username. Reason: it is now an address of the site.
+
 ## [1.5.1] - 2026-11-16 - Clearer pages for search engines
 
 ### Fixed

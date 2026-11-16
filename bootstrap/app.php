@@ -16,6 +16,7 @@ use App\Http\Middleware\VerifyHopSignature;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\Request;
 use Illuminate\Session\TokenMismatchException;
@@ -56,6 +57,15 @@ return Application::configure(basePath: dirname(__DIR__))
             return $request->routeIs('sso.ticket') && $request->query('prompt') === 'none'
                 ? SsoController::silentReply($request, 'temporarily_unavailable')
                 : null;
+        });
+        // A Feedback form sent with more than PHP accepts (a huge screenshot, no page script to warn first): PHP threw the whole
+        // body away, so nothing but the address is left. Back to the empty form with the reason, not a bare 413 page.
+        $exceptions->render(function (PostTooLargeException $e, Request $request) {
+            if (! $request->isMethod('POST') || ! $request->is('feedback') || $request->expectsJson()) {
+                return null;
+            }
+
+            return redirect('/feedback?'.http_build_query(array_merge(array_intersect_key($request->query(), array_flip(['app', 'from', 'v'])), ['e' => 'size'])));
         });
         // An expired CSRF token (session timed out while the page stayed open) is not an
         // attack worth a bare "419 Page Expired" page. CSRF stays on; only the reply changes.

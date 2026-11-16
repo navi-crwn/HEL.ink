@@ -2,14 +2,18 @@
 
 namespace App\Console\Commands;
 
+use App\Models\FeedbackReport;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 
 class PruneLogs extends Command
 {
     protected $signature = 'hop:prune-logs {--days=90 : Delete records older than this many days}';
 
-    protected $description = 'Delete account activity and sign-in records older than the retention period (90 days by default)';
+    protected $description = 'Delete account activity and sign-in records older than the retention period (90 days by default), and apply the Feedback report schedule (IP 30 days, finished 180 days, all 365 days)';
 
     public function handle(): int
     {
@@ -24,7 +28,57 @@ class PruneLogs extends Command
             }
             $this->line(sprintf('%-16s %d deleted', $table, $deleted));
         }
+        $this->pruneFeedback();
 
         return self::SUCCESS;
+    }
+
+    /**
+     * Feedback reports: the IP address goes after 30 days, a finished report 180 days after it was finished, any report
+     * after 365 days. Rows are deleted through the model, so every image file goes with its row.
+     */
+    private function pruneFeedback(): void
+    {
+        if (! Schema::hasTable('feedback_reports')) {
+            return;
+        }
+        $ips = DB::table('feedback_reports')->whereNotNull('ip_address')
+            ->where('created_at', '<', now()->subDays(FeedbackReport::IP_DAYS))->update(['ip_address' => null]);
+        $deleted = 0;
+        foreach ([
+            FeedbackReport::where('status', 'done')->where('done_at', '<', now()->subDays(FeedbackReport::DONE_DAYS)),
+            FeedbackReport::where('created_at', '<', now()->subDays(FeedbackReport::MAX_DAYS)),
+        ] as $query) {
+            $query->chunkById(200, function ($reports) use (&$deleted) {
+                foreach ($reports as $report) {
+                    $report->delete();
+                    $deleted++;
+                }
+            });
+        }
+        $this->line(sprintf('%-16s %d addresses emptied, %d deleted, %d stray files removed', 'feedback_reports', $ips, $deleted, $this->sweepFeedbackFiles()));
+    }
+
+    /**
+     * Picture files that no report points at (a save that failed after the picture was written, or a delete that failed) and
+     * that are more than a day old, so a picture that is just being saved is never taken. Returns how many were removed.
+     */
+    private function sweepFeedbackFiles(): int
+    {
+        $disk = Storage::disk('local');
+        $used = array_flip(DB::table('feedback_reports')->whereNotNull('screenshot_path')->pluck('screenshot_path')->all());
+        $removed = 0;
+        foreach ($disk->allFiles('feedback') as $file) {
+            if (isset($used[$file]) || $disk->lastModified($file) > now()->subDay()->getTimestamp()) {
+                continue;
+            }
+            if ($disk->delete($file)) {
+                $removed++;
+            } else {
+                Log::warning('A stray feedback image could not be deleted', ['path' => $file]);
+            }
+        }
+
+        return $removed;
     }
 }

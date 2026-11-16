@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AppAccountController;
 use App\Http\Controllers\Api\HopAdminController;
 use App\Http\Controllers\Api\HopAnnouncementController;
 use App\Http\Controllers\Api\HopController;
+use App\Http\Controllers\Api\HopFeedbackController;
 use App\Http\Controllers\LegalArtifactController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,6 +53,11 @@ Route::middleware(['hop.signed', 'throttle:600,1,hop'])->prefix('hop')->group(fu
         Route::get('/announcements/{announcement}', [HopAnnouncementController::class, 'show'])->missing($missingAnnouncement);
         Route::put('/announcements/{announcement}', [HopAnnouncementController::class, 'update'])->missing($missingAnnouncement);
         Route::post('/announcements/{announcement}/actions', [HopAnnouncementController::class, 'act'])->missing($missingAnnouncement);
+        // Reports of the Feedback form (ids are plain numbers; anything else answers not_found as JSON).
+        Route::get('/feedback', [HopFeedbackController::class, 'index']);
+        Route::get('/feedback/{id}', [HopFeedbackController::class, 'show']);
+        Route::get('/feedback/{id}/screenshot', [HopFeedbackController::class, 'screenshot']);
+        Route::post('/feedback/{id}/actions', [HopFeedbackController::class, 'act']);
         Route::get('/audit', [HopAdminController::class, 'audit']);
         Route::get('/search', [HopAdminController::class, 'search']);
     });

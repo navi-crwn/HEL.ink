@@ -136,6 +136,8 @@ IMPERIUM_REQUIRE_MFA=1         # admins need two-factor sign-in at the hub
 
 At the hub, set `HOP_CONTROL_URL` and `HOP_SSO_SECRET_IMPERIUM`, then run the seeder from step 3: it registers Imperium as a hidden app that may call the admin API. In LinkHop and BioHop set `HOP_CONTROL_URL`, in PixelHop `PIXELHOP_CONTROL_URL`, so their `/admin` sends admins to Imperium. Only accounts with an admin role at the hub get in.
 
+The Feedback form at `/feedback` is on by default and only works once Imperium is registered as above, because Imperium is where the reports are read. Set `HOP_FEEDBACK_ENABLED=false` to switch it off: the page then answers not found and the hub shows no link to it. Screenshots are kept on the private disk in `storage/app/private/feedback` (never on a public address); `HOP_FEEDBACK_MAX_MB` (1024 by default) limits that folder, and over it a report is kept without its picture. Back up that folder together with the database if you want to keep screenshots: `scripts/backup.sh` copies only the database. The daily `hop:prune-logs` empties the IP address after 30 days and deletes finished reports after 180 days and any report after 365 days.
+
 Imperium is a control panel: keep it off the open internet (a VPN such as Tailscale or WireGuard, or an access proxy) and serve it over HTTPS. `deploy/imperium.service` is a hardened systemd unit you can reuse. The other files in `deploy/` and `scripts/` (nginx for `imperium.hel.ink`, the Cloudflare tunnel, `tahap*.sh`, `deploy-*.sh`, `hop-backup.sh`) are the hel.ink production setup: read them as examples, not as an installer.
 
 ## Running one app, or the family

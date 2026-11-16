@@ -12,6 +12,7 @@
             <p class="text-lg {{ $muted }}">
                 {{ __('Practical guides and instructions for using HOP ID and every application in the HOP family.') }}
             </p>
+            @include('partials.feedback-link')
         </div>
 
         {{-- Guide 1: Getting Started with HOP ID --}}

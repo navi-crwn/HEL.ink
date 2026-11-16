@@ -23,6 +23,34 @@ final class Seo
         return $locale === null || $locale === Locales::DEFAULT ? $url : $url.'?lang='.$locale;
     }
 
+    /**
+     * A meta description of at most $max characters: whole sentences while they fit (and say enough), else cut at a word.
+     * Tags and extra white space are removed first.
+     */
+    public static function description(string $text, int $max = 155): string
+    {
+        $text = trim((string) preg_replace('/\s+/u', ' ', strip_tags($text)));
+        if (mb_strlen($text) <= $max) {
+            return $text;
+        }
+        $out = '';
+        foreach (preg_split('/(?<=[.!?])\s+|(?<=[。！？])/u', $text, -1, PREG_SPLIT_NO_EMPTY) ?: [] as $sentence) {
+            $next = $out === '' ? $sentence : $out.' '.$sentence;
+            if (mb_strlen($next) > $max) {
+                break;
+            }
+            $out = $next;
+        }
+        // Whole sentences read best, but a lone short first sentence says too little: then cut at a word instead.
+        if (mb_strlen($out) >= 70) {
+            return $out;
+        }
+        $cut = mb_substr($text, 0, $max - 1);
+        $space = mb_strrpos($cut, ' ');
+
+        return rtrim($space !== false && $space > 40 ? mb_substr($cut, 0, $space) : $cut, ' ,;:.-').'…';
+    }
+
     /** The canonical URL of the page being served: its path, plus ?lang= when the request asked for a language. */
     public static function canonical(Request $request): string
     {

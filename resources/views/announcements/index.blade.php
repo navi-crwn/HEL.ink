@@ -1,4 +1,4 @@
-<x-marketing-layout :title="__('HOP announcements')" :themed="true">
+<x-marketing-layout :title="__('HOP announcements')" :description="__('News and notices from HOP: new features, planned maintenance and anything that affects your account or your apps.')" :themed="true">
     <section class="mx-auto max-w-3xl px-4 py-12 sm:px-6">
         <h1 class="text-3xl font-bold text-slate-900 dark:text-white">{{ __('Announcements') }}</h1>
         <p class="mt-2 text-sm text-slate-600 dark:text-white/70">{{ __('Changes to any HOP app are announced here first, as the terms promise.') }}</p>

@@ -1,9 +1,42 @@
 {
   "schema": 2,
   "sources": {
-    "HEL.ink": "1.5.0"
+    "HEL.ink": "1.5.1"
   },
   "entries": [
+    {
+      "kind": "tag",
+      "date": "2026-11-16T00:00:00Z",
+      "title": "Clearer pages for search engines",
+      "url": "https://github.com/navi-crwn/HEL.ink/releases/tag/v1.5.1",
+      "id": "v1.5.1",
+      "app": "HOP ID",
+      "repo": "HEL.ink",
+      "version": "1.5.1",
+      "summary": "",
+      "items": [
+        {
+          "type": "fixed",
+          "where": "Pages of PayHop and FileHop on the hub",
+          "text": "The \"All Features\" button on these two pages led to an address that does not exist, so it is gone; the other four apps keep it. Reason: a button that opens an error page is a dead end for visitors and counts against the site in search results."
+        },
+        {
+          "type": "fixed",
+          "where": "Home page, Learn more",
+          "text": "Each \"Learn more\" link now says which app it is about (for example \"Learn more about LinkHop\") for screen readers and search engines, in all nine languages. It looks the same as before. Reason: five links with the same words do not tell anyone where they lead."
+        },
+        {
+          "type": "changed",
+          "where": "Page descriptions",
+          "text": "Every public page now has its own short description for search results and link previews, in all nine languages, instead of one shared sentence on 15 pages. The descriptions of the app pages are cut at the end of a sentence so they are not shortened in the middle by search engines. Reason: search engines treat many pages with the same description as pages about the same thing."
+        },
+        {
+          "type": "changed",
+          "where": "Server settings",
+          "text": "Asking for the file name index.php directly now answers \"not found\" every time. Reason: it was seen answering a server error now and then, which search engines read as a fault of the site."
+        }
+      ]
+    },
     {
       "kind": "tag",
       "date": "2026-11-14T00:00:00Z",

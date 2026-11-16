@@ -1098,5 +1098,21 @@
     "Signed up with Google? You have no password yet. On the sign-in page, choose \"Forgot your password\" to set one.": "通过 Google 注册？你还没有密码。请在登录页选择“忘记密码”来设置一个。",
     "This email address is already linked to a different Google account. Sign in with your password, or reset it, instead.": "此邮箱地址已关联另一个 Google 账号。请改用密码登录，或先重置密码。",
     "This email address cannot be used. Please use another address.": "无法使用此邮箱地址，请换一个地址。",
-    "Back to your dashboard": "返回控制台"
+    "Back to your dashboard": "返回控制台",
+    "HOP is a small family of free apps for short links, link pages, images, notes and files, all opened with one HOP ID and built in the open.": "HOP 是一个小型免费应用家族，提供短链接、链接主页、图片、笔记和文件工具。一个 HOP ID 即可打开全部应用，并且代码公开。",
+    "Meet the HOP apps: LinkHop, BioHop, PixelHop, NoteHop, FileHop and PayHop. Each does one job well, and one free HOP ID opens them all.": "认识 HOP 应用：LinkHop、BioHop、PixelHop、NoteHop、FileHop 和 PayHop。每个应用专注做好一件事，一个免费 HOP ID 即可全部打开。",
+    "How HOP works: one account at the hub, one sign-in for every app, one sign-out, and what each app can and cannot see about you.": "HOP 的工作方式：在中心站点只有一个账号，一次登录即可进入所有应用，一次退出即全部退出，以及各应用能看到你的哪些信息。",
+    "How HOP keeps accounts and visitors safe: hashed passwords, two-factor codes, link checks, visitor privacy and end-to-end encrypted notes.": "HOP 如何保护账号和访客：密码哈希存储、双重验证码、链接安全检查、访客隐私保护，以及端到端加密的笔记。",
+    "HOP is open source. Read the code of every app on GitHub, see the licence, report a problem or suggest a change.": "HOP 是开源项目。你可以在 GitHub 上阅读每个应用的代码、查看许可协议、报告问题或提出修改建议。",
+    "Create a free HOP ID in a minute with your email or Google, confirm your address, and open every HOP app already signed in.": "用邮箱或 Google 账号在一分钟内免费创建 HOP ID，确认邮箱地址后，即可直接登录并打开所有 HOP 应用。",
+    "Every HOP app is free. See the usage limits for guests and for free HOP ID accounts, and why the limits exist.": "所有 HOP 应用都是免费的。了解访客和免费 HOP ID 账号的使用额度，以及为什么需要设置这些额度。",
+    "Answers to common questions about HOP: accounts, privacy, languages, open source and how the apps work together.": "关于 HOP 常见问题的解答：账号、隐私、语言、开源，以及各个应用如何协同工作。",
+    "Practical guides for HOP ID and every HOP app: registering, two-factor codes, opening apps, shortening links, and backing up or deleting your data.": "HOP ID 和各个 HOP 应用的实用指南：注册、双重验证码、打开应用、缩短链接，以及备份或删除你的数据。",
+    "Live status of every HOP app: whether each one is working right now, and any failures in the last 24 hours.": "每个 HOP 应用的实时状态：当前是否正常运行，以及过去 24 小时内出现过的故障。",
+    "What changed in HOP and when, in plain words: new features, fixes and improvements, with the reason for each change.": "用通俗的话说明 HOP 何时改变了什么：新功能、修复和改进，并说明每项改动的原因。",
+    "News and notices from HOP: new features, planned maintenance and anything that affects your account or your apps.": "来自 HOP 的新闻和通知：新功能、计划内维护，以及任何会影响你的账号或应用的事项。",
+    "How to reach HOP: GitHub for bugs and questions, help with your HOP ID, and the private way to report a security problem.": "如何联系 HOP：在 GitHub 上反馈错误和提问、获取 HOP ID 方面的帮助，以及私下报告安全问题的方式。",
+    "The HOP privacy policy: what data the apps keep, how long they keep it, who can see it, and how to download or delete it all.": "HOP 隐私政策：各应用保存哪些数据、保存多久、谁可以查看，以及如何下载或删除全部数据。",
+    "The terms for using HOP: what you may do with the apps, what you must not do, and what happens if the rules are broken.": "使用 HOP 的条款：你可以用这些应用做什么、不可以做什么，以及违反规则时会发生什么。",
+    "Learn more about :app": "了解更多关于 :app"
 }

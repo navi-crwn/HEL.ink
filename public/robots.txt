@@ -13,6 +13,8 @@ Allow: /contact
 Allow: /b/
 
 # Protect private areas
+# Click links of bio pages shown on this host (/b/...); the more specific rule wins over Allow: /b/
+Disallow: /b/click/
 Disallow: /admin
 Disallow: /dashboard
 Disallow: /api/

@@ -1,4 +1,4 @@
-<x-marketing-layout :title="__('How it works').' · HOP'" :themed="true">
+<x-marketing-layout :title="__('How it works').' · HOP'" :description="__('How HOP works: one account at the hub, one sign-in for every app, one sign-out, and what each app can and cannot see about you.')" :themed="true">
     <section class="mx-auto max-w-3xl px-4 py-10 sm:px-6">
         <h1 class="text-3xl font-bold text-slate-900 sm:text-4xl dark:text-white">{{ __('How it works') }}</h1>
         <div class="mt-6 space-y-4 text-slate-700 dark:text-white/80">

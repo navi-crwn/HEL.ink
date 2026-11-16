@@ -1,4 +1,4 @@
-<x-marketing-layout :title="__('Usage tiers') . ' · HOP'" :themed="true">
+<x-marketing-layout :title="__('Usage tiers') . ' · HOP'" :description="__('Every HOP app is free. See the usage limits for guests and for free HOP ID accounts, and why the limits exist.')" :themed="true">
     <section class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
         <h1 class="text-3xl font-bold text-slate-900 dark:text-white">{{ __('Usage tiers') }}</h1>
         <p class="mt-2 text-slate-600 dark:text-white/70">{{ __('Every HOP app is free. Limits exist only to keep the service healthy for everyone.') }}</p>

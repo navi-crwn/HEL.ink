@@ -1,4 +1,4 @@
-<x-marketing-layout :title="__('The HOP apps') . ' · HOP'" :themed="true">
+<x-marketing-layout :title="__('The HOP apps') . ' · HOP'" :description="__('Meet the HOP apps: LinkHop, BioHop, PixelHop, NoteHop, FileHop and PayHop. Each does one job well, and one free HOP ID opens them all.')" :themed="true">
     <section class="mx-auto max-w-5xl px-4 py-14 sm:px-6">
         <h1 class="text-3xl font-bold text-slate-900 dark:text-white">{{ __('The HOP apps') }}</h1>
         <p class="mt-2 text-slate-600 dark:text-white/70">{{ __('Each app does one thing. Your HOP ID works in all of them.') }}</p>

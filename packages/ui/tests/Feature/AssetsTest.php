@@ -88,3 +88,18 @@ test('the footer shows a brand slot instead of the family row when one is given'
 
     expect($html)->toContain('hop-footer-brand')->toContain('Custom brand')->not->toContain('Part of');
 });
+
+test('the footer has no Feedback link unless the app gives a feedback address', function () {
+    $html = Blade::render('<x-hop::footer app="linkhop" name="LinkHop" />');
+
+    expect($html)->not->toContain('Feedback')->toContain('>Help<')->toContain('>FAQ<');
+});
+
+test('the footer shows one Feedback link after Help when a feedback address is given', function () {
+    $html = Blade::render('<x-hop::footer app="linkhop" name="LinkHop" feedback-url="https://hel.ink/feedback?a=1&b=2" />');
+
+    expect(substr_count($html, '>Feedback<'))->toBe(1)
+        ->and($html)->toContain('href="https://hel.ink/feedback?a=1&amp;b=2"')
+        ->and(strpos($html, '>Help<'))->toBeLessThan(strpos($html, '>Feedback<'))
+        ->and(strpos($html, '>Feedback<'))->toBeLessThan(strpos($html, '>FAQ<'));
+});
